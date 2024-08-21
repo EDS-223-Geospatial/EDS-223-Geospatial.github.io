@@ -1,0 +1,35 @@
+---
+title: "Week 1: Intro to Spatial Data"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+Assignment 1 posted Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Welcome to EDS 223](https://docs.google.com/presentation/d/1WWYmnEuwRApjeYMHpaAVZf1qMDOxt5jYblzeo5yYQ8Q/present?usp=sharing){target="_blank"} | [Template](templates/week1.qmd) <br> [Answer key](labs/week1.html) |
+| Discussion | Making maps | [Template](templates/week1-discussion.qmd) <br> [Answer key](discussions/week1-discussion.html) |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [*Geocomputation with R*, Chapter 9](https://geocompr.robinlovelace.net/adv-map.html){target="_blank"}
+- [*GIS Fundamentals*, Chapter 2](readings/Bolstad-chapter2-part1.pdf){target="_blank"}
+- [*GIS Fundamentals*, Chapter 3](readings/Bolstad-chapter3.pdf){target="_blank"}
+- [*A Gentle Introduction to GIS*, Chapter 8](https://docs.qgis.org/3.34/en/docs/gentle_gis_introduction/coordinate_reference_systems.html){target="_blank"}
+- [Geographic vs projected coordinate systems](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/){target="_blank"} (Esri)
+
+## Technical Background
+- [tmap: thematic maps in R documentation](https://r-tmap.github.io/tmap/){target="_blank"}
+- [tmap overview](https://r-tmap.github.io/tmap-book/){target="_blank"}
+- [Creating thematic maps in R](https://mtennekes.github.io/downloads/presentations/tmap_opengeo_muenster.pdf){target="_blank"}
+
+## Additional Resources
+- [John Snow: A Legacy of Disease Detectives ](https://blogs.cdc.gov/publichealthmatters/2017/03/a-legacy-of-disease-detectives/){target="_blank"} (CDC)
+- [How the north ended up on top of the map](http://america.aljazeera.com/opinions/2014/2/maps-cartographycolonialismnortheurocentricglobe.html){target="_blank"} (Al Jazeera)
+- [Why maps point North on top?](https://www.geospatialworld.net/blogs/why-maps-point-north-on-top/){target="_blank"} (Geospatial World)
+- [Why all world maps are wrong](https://www.youtube.com/watch?v=kIID5FDi2JQ&t=3s){target="_blank"} (Vox)

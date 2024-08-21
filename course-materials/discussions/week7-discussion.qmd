@@ -1,0 +1,76 @@
+---
+title: "Discssuion Week 7"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Allie Caughmam"
+date: last-modified
+format:
+  html:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequsites 
+
+```{r}
+library(sf)
+library(tidyverse)
+library(terra)
+```
+
+```{r}
+# practice filtering a raster
+elev <- rast(nrows = 6, ncols = 6, resolution = 0.5,
+             xmin = -1.5, xmax = 1.5, ymin = -1.5, ymax = 1.5,
+             vals = 1:36)
+
+plot(elev)
+
+# set all cells to NA based on condition
+elev[elev < 20] <- NA
+
+plot(elev)
+
+
+# let's practice combining (or unioning) geometries
+# read in shapefile of the counties of North Carolina
+nc = st_read(system.file("shape/nc.shp", package="sf"))
+
+plot(nc["AREA"])
+
+# combines all geometries without resolving borders
+nc_combine <- st_combine(nc)
+
+plot(nc_combine)
+
+# finds the union of all geometries
+nc_union <- st_union(nc)
+
+plot(nc_union)
+
+# let's exploring removing geometries
+# pick a few counties to remove
+counties <- nc %>%
+  filter(NAME %in% c("Ashe", "Alleghany", "Surry")) %>%
+  st_union()
+
+# plot counties on top of the unioned version of NC
+ggplot() +
+  geom_sf(data = nc_union, fill = "grey", color = "transparent") +
+  geom_sf(data = counties, fill = "black", color = "transparent")
+
+# create a new geometry that is the difference between the unioned version of NC and the counties
+
+nc_difference <- st_difference(nc_union, counties)
+nc_disjoint <- st_disjoint(nc_union, counties)
+nc_intersection <- st_intersection(nc_union, counties)
+
+# plot the difference on top of the unioned version of NC
+# counties should be missing!
+ggplot() + 
+  geom_sf(data = nc_difference, fill = "grey", color = "transparent")
+ggplot() + 
+  geom_sf(data = nc_intersection, fill = "grey", color = "transparent")
+```

@@ -1,0 +1,29 @@
+---
+title: "Week 3: Vector Operations"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+Assignment 2 posted Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Intro to subsetting, aggregating, summarizing, and simplifying ](https://docs.google.com/presentation/d/1H0kwdJ3rzF6pJkgLYC5KzmMBmYzBV-NJRb1I-3zePYg/present?usp=sharing){target="_blank"} | [Template](templates/week3.qmd) <br> [Answer key](labs/week3.html) |
+| Discussion | | [Template](templates/week3-discussion.qmd) <br> [Answer key](discussions/week3-discussion.html) |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [Geocomputation with R, Chapter 4](https://r.geocompx.org/spatial-operations.html){target="_blank"}
+- [Geocomputation with R, Chapter 5](https://r.geocompx.org/geometry-operations.html){target="_blank"}
+- [GIS Fundamentals, Chapter 9 Part 1](readings/Bolstad-chapter9-part1.pdf){target="_blank"}
+- [Douglas–Peucker Algorithm](https://cartography-playground.gitlab.io/playgrounds/douglas-peucker-algorithm/){target="_blank"} (Cartography Playground)
+- [Line Simplification with Visvalingam–Whyatt Algorithm](https://bost.ocks.org/mike/simplify/){target="_blank"} (Mike Bostok)
+
+## Technical Background
+- [sf overview](https://r-spatial.github.io/sf/index.html){target="_blank"}
+- [sf cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf){target="_blank"}
+- [Introduction to sf and stars](https://r-spatial.org/book/07-Introsf.html){target="_blank"}

@@ -1,0 +1,32 @@
+---
+title: "Week 10: Active Remote Sensing"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+Assignment 4 due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+::: {.callout-tip}
+## Reminder
+Portfolio due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Fundamentals of LiDAR and RADAR ](https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?usp=sharing){target="_blank"} | [Download data](https://drive.google.com/file/d/1Nbxc1K9rYuU0qvFvsBfR8-Uw-xyvUlTR/view) <br>  [Template](templates/week10.qmd) <br> [Answer key](labs/week10.html)
+| Discussion | Workflows and maps | [Download data](https://drive.google.com/file/d/1S80sEE_vCPkRQF03Nj1KfakoF364_S4k/view) <br> [Template](templates/week10-discussion.qmd) <br> [Answer key](discussions/week10-discussion.html) |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [Remote Sensing of the Environment, Chapter 9](/readings/Jensen-chapter9.pdf){target="_blank"}
+- [Introduction to Interpreting Digital RADAR Images](/readings/MicroImages-RADAR-tutorial.pdf){target="_blank"}
+- [Introduction to Light Detection and Ranging (Lidar) Remote Sensing Data](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/){target="_blank"} (Earth Lab, CU Boulder)
+- [What is Synthetic Aperture Radar?](https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar){target="_blank"} (NASA)
+- [Get To Know SAR: Polarimetry](https://nisar.jpl.nasa.gov/mission/get-to-know-sar/polarimetry/){target="_blank"} (NASA)
+
+## Additional Resources
+- [Explore Lidar Points in Plas.io](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/explore-lidar-point-clouds-plasio/){target="_blank"} (Earth Lab, CU Boulder)

@@ -1,0 +1,149 @@
+---
+title: "Discssuion Week 3: Assignment 2"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "FirstName LastName"
+date: last-modified
+---
+
+The following exercises are modified from [Chapters 3](https://geocompr.robinlovelace.net/attr.html), [4](https://geocompr.robinlovelace.net/spatial-operations.html), [5](https://geocompr.robinlovelace.net/geometry-operations.html) of Geocomputation with R by Rovin Lovelace.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+Let's load all necessary packages:
+
+```{r load, message=FALSE, warning=FALSE}
+library(sf)
+library(spData)
+library(tidyverse)
+```
+
+Let's load all necessary data frames:
+
+```{r}
+us_states <- us_states %>% 
+  janitor::clean_names()
+
+us_states_df <- us_states_df %>% 
+  janitor::clean_names()
+
+nz_height <- nz_height %>%  
+  janitor::clean_names()
+
+nz <- nz %>%  
+  janitor::clean_names()
+```
+
+## United States
+
+Let's find the states that belong to the West region:
+
+```{r}
+
+```
+
+And from these states, the states with more than 5,000,000 residents in 2015:
+
+```{r}
+
+```
+
+Next, what was the total population of the US in 2015? 
+
+```{r}
+
+```
+
+Let's now create a new variable named `us_states_stats` by adding variables from **us_states_df** to **us_states**:
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+What is the class of the new object? 
+
+- "sf"
+- "data.frame"
+
+Now, calculate the percent change in population density between 2010 and 2015 in each state:
+
+```{r}
+
+```
+
+In how many states did population density decrease? 
+
+```{r}
+
+```
+
+Create a new object representing all of the states the geographically intersect with Colorado.
+
+- Hint: use the **us_states** dataset. The most concise way to do this is with the subsetting method "[".
+
+```{r}
+
+```
+
+Create another object representing all the objects that touch (have a shared boundary with) Colorado and plot the result.
+
+- Hint: remember you can use the argument *op = st_intersects* and other spatial relations during spatial subsetting operations in base R.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+## New Zealand
+
+How many of New Zealand's high points are in the Canterbury region?
+
+```{r}
+
+```
+
+This could also be achieved by spatial joining then filter
+
+```{r}
+
+```
+
+Which region has the second highest number of **nz_height** points? And how many does it have? 
+
+```{r}
+
+```
+
+Generate simplified versions of the **nz** dataset. Experiment with different values of keep (ranging from 0.5 to 0.00005) for `ms_simplify()` and dTolerance (from 100 to 100,000) for `st_simplify()`.
+
+```{r}
+
+```
+
+Map the results to show how the simplification changes as you change values.
+
+```{r}
+
+```
+
+How many points from the **nz_height** dataset are within 100km of the Canterbury region?
+
+```{r}
+
+```
+
+Find the geographic centroid of the country of New Zealand. How far is it from the geographic centroid of Canterbury?
+
+```{r}
+
+```

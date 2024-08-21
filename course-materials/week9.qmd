@@ -1,0 +1,27 @@
+---
+title: "Week 9: Land Cover Classification"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+[Check-in Quiz 4](https://forms.gle/mLyY6mhDufxbziNw8) due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+::: {.callout-tip}
+## Reminder
+Assignment 4 due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+::: {.callout-tip}
+## Reminder
+Portfolio due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Image classification and supervised approach ](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"} | [Download data](https://drive.google.com/file/d/1ON8FbDqcTjg2PKHmNGgyN7odTqpOnXla/view) <br>  [Template](templates/week9.qmd) <br> [Answer key](labs/week9.html) |
+| Discussion | TBD | [Download data](https://drive.google.com/file/d/1S80sEE_vCPkRQF03Nj1KfakoF364_S4k/view) <br>  [Template](templates/week9-discussion.qmd) <br> [Answer key](discussions/week9-discussion.html) |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 

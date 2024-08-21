@@ -1,0 +1,39 @@
+---
+title: "Resources"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title-block-banner: false
+toc: true
+---
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "75%" 
+#| fig-alt: ""
+knitr::include_graphics("images/we-believe-in-you.png")
+```
+
+::: {.gray-text .center-text}
+Artwork by [Allison Horst](https://allisonhorst.com/){target="_blank"}
+:::
+
+## R Programming
+- [Tidyverse style guide](https://style.tidyverse.org/){target="_blank"}
+- [Tidy design principles](https://design.tidyverse.org/){target="_blank"}
+- [r-spatial](https://r-spatial.org/){target="_blank"}
+- [*Spatial Statistics for Data Science: Theory and Practice with R*](https://www.paulamoraga.com/book-spatial/){target="_blank"}. Paula Moraga, 2023.
+
+## Coordinate Systems and Projections
+- [Geographic vs projected coordinate systems](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/){target="_blank"} (Esri)
+- [Coordinate Reference System and Spatial Projection](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/intro-to-coordinate-reference-systems/){target="_blank"} (Earth Lab, CU Boulder)
+- [Guide to map projections](https://www.axismaps.com/guide/map-projections){target="_blank"} (Axis Maps)
+- [Choosing a projection](https://www.e-education.psu.edu/geog486/node/677){target="_blank"} (Penn State)
+- [Discover coordinate systems](https://epsg.io/){target="_blank"}
+
+## Mapmaking
+- [Color palette finder with paletteer](https://r-graph-gallery.com/color-palette-finder){target="_blank"}
+- [ColorBrewer 2.0](https://colorbrewer2.org/){target="_blank"}
+- [Intro to Color Visualization](https://earthobservatory.nasa.gov/resources/blogs/intro_to_color_for_visualization.pdf){target="_blank"} (NASA)
+- [GIS icons](https://viglino.github.io/font-gis/){target="_blank"}
+- [Guide to common errors in map production](https://files.taylorandfrancis.com/TJOM-suppmaterial-quick-guide.pdf){target="_blank"} (Journal of Maps)

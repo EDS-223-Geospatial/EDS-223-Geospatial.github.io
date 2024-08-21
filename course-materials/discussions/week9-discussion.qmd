@@ -1,0 +1,161 @@
+---
+title: "Discssuion Week 9: Functions for Assignment 4"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Allie Caughmam"
+date: last-modified
+format:
+  html:
+    toc: true
+---
+
+```{r setup, include=FALSE,error=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = TRUE,error=FALSE,message=FALSE)
+```
+
+## Prerequsites 
+
+```{r}
+library(tidyverse)
+library(sf)
+library(terra)
+library(kableExtra)
+```
+
+Load in the CPAD_2023a_SuperUnits.shp and the gHM_masked.tif files.
+
+```{r}
+cpad_super <- st_read(here::here("course-materials", "data", "week9-discussion", "CPAD_2023a_SuperUnits.shp"), quiet = TRUE) %>%
+  sf::st_transform("EPSG:4326") %>%
+  janitor::clean_names() %>%
+  mutate(ID = row_number())
+
+ghm <- rast(here::here("course-materials", "data", "week9-discussion", "gHM_masked.tif")) %>%
+  project("EPSG:4326")
+```
+
+```{r}
+plot(cpad_super["suid_nma"])
+plot(ghm)
+```
+
+## Exercises
+
+1. Let's rasterize the cpad dataset a few times! This is necessary to do zonal statistics!
+
+```{r}
+id_rast = rasterize(cpad_super, ghm, field = "suid_nma") #rasterize by PA id
+plot(id_rast)
+
+access_rast = rasterize(cpad_super, ghm, field = "access_typ") #rasterize by PA access type
+plot(access_rast)
+```
+
+2. Let's say you're interested in finding protected areas with intermediate levels of human modification. How could you do this?
+
+a) masking and zonal statistics
+
+```{r}
+rcl = matrix(c(-Inf, 0.4, NA, #create reclassification matrix 
+                 0.4, 0.6, 1, 
+                 0.6, Inf, NA), ncol = 3, byrow = TRUE)
+
+mod_dis <- classify(ghm, rcl = rcl) #reclassify ghm
+
+plot(mod_dis) #plot to check
+```
+
+Say you want to make this more complicated, and you want two groups?
+
+```{r}
+rcl2 = matrix(c(-Inf, 0.4, NA, #create reclassification matrix 
+                 0.4, 0.5, 1,
+                 0.5, 0.6, 2,
+                 0.6, Inf, NA), ncol = 3, byrow = TRUE)
+
+mod_dis2 <- classify(ghm, rcl = rcl2) #reclassify ghm
+
+plot(mod_dis2) #plot to check
+```
+
+Or you just want to group them generally! 
+
+```{r}
+rcl3 = matrix(c(-Inf, 0.25, 1, #create reclassification matrix 
+                 0.25, 0.5, 2,
+                 0.5, 0.75, 3,
+                 0.75, Inf, 4), ncol = 3, byrow = TRUE)
+
+mod_dis3 <- classify(ghm, rcl = rcl3) #reclassify ghm
+
+plot(mod_dis3) #plot to check
+```
+
+Now let's use zonal statistics to get a mean
+
+```{r}
+ghm_zonal <- zonal(mod_dis, id_rast, fun = "mean", na.rm = TRUE) %>% #calculate the "mean" - this is just an indicator of if 1 is present or not
+  filter(!is.na(gHM)) %>% #remove NAs 
+  mutate(method = "Method 1") #add a method for comparison
+
+head(ghm_zonal)
+```
+
+b) combining and filtering 
+
+```{r}
+cpad_ghm_values <- terra::extract(x = ghm, y = cpad_super) #extract all ghm values from cpad
+```
+
+Summarize the mean of human modification within each protected area
+
+```{r}
+cpad_ghm_summary <- cpad_ghm_values %>%
+  group_by(ID) %>%
+  summarize(gHM_mean = mean(gHM)) #calculate mean by protected area
+```
+
+Join this summary with the protected area database. Plot these values
+
+```{r}
+cpad_ghm <- full_join(cpad_super, cpad_ghm_summary) #join summary back with
+```
+
+Now we can filter! 
+
+```{r}
+cpad_ghm_sub <- cpad_ghm %>% 
+  st_drop_geometry() %>%  #remove geometry for speed
+  filter(gHM_mean < 0.6 & gHM_mean > 0.4) %>% #filter 
+  distinct() %>% 
+  select(suid_nma, gHM_mean) %>% 
+  mutate(method = "Method 2") #set method for comparison
+```
+
+3. These do give slightly different results however... can you identify the difference? 
+
+```{r}
+method_sum <- full_join(ghm_zonal, cpad_ghm_sub) #join two methods
+
+method_count <- method_sum %>% 
+  group_by(suid_nma) %>% 
+  summarize(count = as.factor(n())) %>%  #deterine which PAs are selected in both
+  full_join(method_sum) #rejoin with full method data
+```
+
+```{r}
+ggplot(method_count) +
+  geom_jitter(aes(method, suid_nma, color = count, alpha = count), height = 0) +
+  theme_bw() +
+  scale_color_manual(values = c("red", "darkgrey")) +
+  scale_alpha_manual(values = c(1, 0.5))
+```
+
+4. Let's use zonal statistics to summarize human modification by access type!
+
+```{r}
+access_zonal <- zonal(ghm, access_rast, fun = "mean", na.rm = TRUE) #get mean of ghm within access level types
+
+access_zonal %>% #create nice table
+  kable(digits = 2, col.names = c("Access Level", "Human Modification Index")) %>% #adjust digits and column names
+  kable_minimal()
+```

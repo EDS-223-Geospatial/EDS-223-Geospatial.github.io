@@ -1,0 +1,199 @@
+---
+title: "Discssuion Week 3: Assignment 2"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Ruth Oliver"
+date: last-modified
+format:
+  html:
+    toc: true
+---
+
+The following exercises are modified from [Chapters 3](https://geocompr.robinlovelace.net/attr.html), [4](https://geocompr.robinlovelace.net/spatial-operations.html), [5](https://geocompr.robinlovelace.net/geometry-operations.html) of Geocomputation with R by Rovin Lovelace.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+Let's load all necessary packages:
+
+```{r load, include=TRUE, message=FALSE, warning=FALSE}
+library(sf)
+library(spData)
+library(tidyverse)
+```
+
+Let's load all necessary data frames:
+
+```{r}
+us_states <- us_states %>% 
+  janitor::clean_names()
+
+us_states_df <- us_states_df %>% 
+  janitor::clean_names()
+
+nz_height <- nz_height %>%  
+  janitor::clean_names()
+
+nz <- nz %>%  
+  janitor::clean_names()
+```
+
+## United States
+
+Let's find the states that belong to the West region:
+
+```{r}
+west_states <- dplyr::filter(us_states, region == "West")
+dplyr::pull(west_states, name)
+```
+
+And from these states, the states with more than 5,000,000 residents in 2015:
+
+```{r}
+us_states %>% 
+  dplyr::filter(total_pop_15 > 5000000) %>% 
+  dplyr::pull(name)
+```
+
+Next, what was the total population of the US in 2015? 
+
+```{r include=TRUE}
+us_states %>% 
+  dplyr::summarise(pop_2015 = sum(total_pop_15, na.rm = TRUE)) %>% 
+  dplyr::pull(pop_2015)
+```
+
+Let's now create a new variable named `us_states_stats` by adding variables from **us_states_df** to **us_states**:
+
+```{r}
+class(us_states_df)
+names(us_states_df)
+```
+
+```{r message=FALSE}
+us_states_df <- us_states_df %>% 
+  dplyr::rename(name = state)
+
+us_states_stats <- dplyr::full_join(us_states, us_states_df)
+```
+
+What is the class of the new object? 
+
+- "sf"
+- "data.frame"
+
+Now, calculate the percent change in population density between 2010 and 2015 in each state:
+
+```{r include=TRUE}
+pop_change <- mutate(us_states_stats, percent_change_pop = 
+                       (total_pop_15 - total_pop_10)/total_pop_10 * 100)
+```
+
+In how many states did population density decrease? 
+
+```{r include=TRUE}
+pop_change %>% 
+  dplyr::filter(percent_change_pop < 0) %>% 
+  nrow()
+```
+
+Create a new object representing all of the states the geographically intersect with Colorado.
+
+- Hint: use the **us_states** dataset. The most concise way to do this is with the subsetting method "[".
+
+```{r}
+colorado <- us_states %>% 
+  dplyr::filter(name == "Colorado")
+
+colorado_intersect <- us_states[colorado, , op = st_intersects]
+```
+
+Create another object representing all the objects that touch (have a shared boundary with) Colorado and plot the result.
+
+- Hint: remember you can use the argument *op = st_intersects* and other spatial relations during spatial subsetting operations in base R.
+
+```{r}
+colorado_touches <- us_states[colorado, , op = st_touches]
+```
+
+```{r}
+plot(colorado_intersect["name"])
+
+plot(colorado_touches["name"])
+```
+
+## New Zealand
+
+How many of New Zealand's high points are in the Canterbury region?
+
+```{r include=TRUE}
+names(nz)
+names(nz_height)
+
+canterbury <- nz  %>% 
+  dplyr::filter(name == "Canterbury")
+
+canterbury_height <- nz_height[canterbury, ]
+nrow(canterbury_height)
+```
+
+This could also be achieved by spatial joining then filter
+
+```{r}
+sf::st_join(nz, nz_height) %>% 
+  dplyr::filter(name == "Canterbury") %>% 
+  nrow()
+```
+
+Which region has the second highest number of **nz_height** points? And how many does it have? 
+
+```{r include=TRUE}
+nz_join <- sf::st_join(nz, nz_height) 
+
+nz_join %>% 
+  dplyr::group_by(name) %>% 
+  dplyr::summarise(n = n()) %>% 
+  dplyr::arrange(dplyr::desc(n))
+```
+
+Generate simplified versions of the **nz** dataset. Experiment with different values of keep (ranging from 0.5 to 0.00005) for `ms_simplify()` and dTolerance (from 100 to 100,000) for `st_simplify()`.
+
+```{r}
+nz_simp1 <- st_simplify(nz, dTolerance = 100)
+nz_simp4 <- st_simplify(nz, dTolerance = 100000)
+nz_simp2 <- st_simplify(nz, dTolerance = 1000)
+nz_simp3 <- st_simplify(nz, dTolerance = 10000)
+```
+
+Map the results to show how the simplification changes as you change values.
+
+```{r include=TRUE}
+plot(nz_simp1["name"])
+plot(nz_simp2["name"])
+plot(nz_simp3["name"])
+plot(nz_simp4["name"])
+```
+
+How many points from the **nz_height** dataset are within 100km of the Canterbury region?
+
+```{r include=TRUE}
+cant_buffer <- sf::st_buffer(canterbury, dist = 100000)
+
+cant_buffer_height <- nz_height[cant_buffer, ]
+nrow(cant_buffer_height)
+```
+
+Find the geographic centroid of the country of New Zealand. How far is it from the geographic centroid of Canterbury?
+
+```{r include=TRUE, warning=FALSE}
+nz_agg <- nz %>% 
+  dplyr::summarize(population = sum(population))
+
+nz_centroid <- sf::st_centroid(nz_agg)
+
+cant_centroid <- sf::st_centroid(canterbury) 
+
+sf::st_distance(nz_centroid, cant_centroid)
+```

@@ -1,0 +1,159 @@
+---
+title: "Week 2: Lab"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "FirstName LastName"
+date: last-modified
+---
+
+In this lab, we'll explore the basics of manipulating vector data in R using the **sf** package. The following materials are modified from [Chapter 3 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/attr.html).
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+Let's load all necessary packages:
+
+```{r load, include=TRUE, message=FALSE, warning= FALSE}
+rm(list = ls())
+library(sf)
+library(spData)
+library(tmap)
+library(tidyverse)
+```
+
+## Handling sf objects
+
+Let's start by looking at how we can construct a **sf** object. First, we create a geometry for London by supplying a point and CRS. Then, we supply some non-geographic attributes!
+
+```{r}
+
+```
+
+We can also check out what the CRS looks like:
+
+```{r}
+
+```
+
+Now let's look at an existing **sf** object representing countries of the world:
+
+```{r}
+
+```
+
+We can see that this object contains both spatial data ("geom" column) and attributes about those geometries. We can perform operations on the attribute data, just like we would with a normal data frame.
+
+```{r}
+
+```
+
+The geometry column is "sticky", meaning it will stick around unless we explicitly get rid of it. To convert this object into a data frame, we need to drop the geometry column.
+
+```{r}
+
+```
+
+## Vector attribute subsetting
+The especially great things about **sf** objects is that we can use **tidyverse** functions on them!
+
+We can select columns...
+```{r}
+
+```
+
+Or remove columns...
+```{r}
+
+```
+
+Or select AND rename columns
+```{r}
+
+```
+
+Or filter observations based on variables
+```{r}
+
+```
+
+## Chaining commands with pipes
+Because we can use **dplyr** functions with **sf** objects, we can chain together commands using the pipe operator.
+
+Let's try to find the country in Asia with the highest life expectancy
+```{r}
+
+```
+
+## Vector attribute aggregation
+Aggregation is the process of summarizing data with one or more 'grouping' variables. For example, using the 'world' which provides information on countries of the world, we might want to aggregate to the level of continents. It is important to note that aggregating data *attributes* is a different process from aggregating *geographic* data, which we will cover later.
+
+Let's try to find the total population within each continent:
+```{r}
+
+```
+
+Let's also find the total area and number of countries in each continent:
+```{r}
+
+```
+
+Building on this, let's find the population density of each continent, find the continent's with highest density and arrange by the number of countries. We'll drop the geometry column to speed things up.
+```{r}
+
+```
+
+## Vector attribute joining
+
+A critical part of many data science workflows is combining data sets based on common attributes. In R, we do this using multiple join functions, which follow SQL conventions.
+
+Let's start by looking a data set on national coffee production:
+```{r}
+
+```
+
+We can combine this with the world data set, but joining based on country's names:
+```{r}
+
+```
+
+And plot what this looks like...
+```{r}
+
+```
+
+If we just wanted to keep countries that do have coffee data, we could use an inner join:
+```{r}
+
+```
+
+It looks like we lost some countries with coffee data, so let's figure out what's going on. We can find rows that didn't match using the **setdiff** function.
+```{r}
+
+```
+
+We see that one of the issues is that the two data sets use different naming conventions for the Democratic Republic of the Congo. We can use a string matching function to figure out what the DRC is called in the world data set.
+```{r}
+
+```
+
+Now we can update the coffee data set with the matching name for the DRC:
+```{r}
+
+```
+
+And we can try the inner join again and hopefully the DRC now matches:
+```{r}
+
+```
+
+Let's visualize what a the inner join did to our spatial object:
+```{r}
+
+```
+
+And let's test what would happen if we flipped the order of the data sets in the join:
+```{r}
+
+```

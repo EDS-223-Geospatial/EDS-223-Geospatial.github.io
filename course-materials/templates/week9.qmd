@@ -1,0 +1,158 @@
+---
+title: "Week 9: Lab"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "FirstName LastName"
+date: last-modified
+---
+
+Monitoring the distribution and change in land cover types can help us understand the impacts of phenomena like climate change, natural disasters, deforestation, and urbanization. Determining land cover types over large areas is a major application of remote sensing because we are able to distinguish different materials based on their spectral reflectance. 
+
+Classifying remotely sensed imagery into land cover classes enables us to understand the distribution and change in land cover types over large areas. 
+
+There are many approaches for performing land cover classification:
+
+- *Supervised* approaches use training data labeled by the user
+- *Unsupervised* approaches use algorithms to create groups which are identified by the user afterward
+
+This lab is based on a materials developed by Chris Kibler.
+
+## Task
+In this lab, we are using a form of supervised classification, a decision tree classifier. 
+
+[Decision trees](https://medium.com/@ml.at.berkeley/machine-learning-crash-course-part-5-decision-trees-and-ensemble-models-dcc5a36af8cd) classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data. 
+
+In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: (1) green vegetation; (2) dry grass or soil; (3) urban; and (4) water. 
+
+Our goals in this lab are:
+
+- Load and process Landsat scene
+- Crop and mask Landsat data to study area
+- Extract spectral data at training sites
+- Train and apply decision tree classifier
+- Plot results
+
+## Data
+
+**Landsat 5 Thematic Mapper**
+
+- [Landsat 5](https://www.usgs.gov/landsat-missions/landsat-5)
+-  1 scene from September 25, 2007\
+- Bands: 1, 2, 3, 4, 5, 7
+- Collection 2 surface reflectance product
+
+**Study area and training data**
+
+- Polygon representing southern Santa Barbara county
+- Polygons representing training sites
+  - *type*: character string with land cover type
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+We'll be working with vector and raster data, so will need both **sf** and **terra**. To train our classification algorithm and plot the results, we'll use the `rpart` and `rpart.plot` packages.
+
+Set your working directory to the folder that holds the data for this lab.\
+- **Note:** my filepaths may look different than yours!
+
+Let's load all necessary packages:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+library(sf)
+library(terra)
+library(here)
+library(dplyr)
+library(rpart)
+library(rpart.plot)
+library(tmap)
+```
+
+## Load Landsat data
+Let's create a raster stack. Each file name ends with the band number (e.g. **B1.tif**). 
+
+- Notice that we are missing a file for band 6
+- Band 6 corresponds to thermal data, which we will not be working with for this lab
+
+To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the `rast` function. We'll then update the names of the layers to match the spectral bands and plot a true color image to see what we're working with.
+
+```{r}
+
+```
+
+## Load study area
+We want to constrain our analysis to the southern portion of the county where we have training data, so we'll read in a file that defines the area we would like to study.
+
+```{r}
+
+```
+
+## Crop and mask Landsat data to study area
+Now, we can crop and mask the Landsat data to our study area. 
+
+- **Why**? This reduces the amount of data we'll be working with and therefore saves computational time
+- **Bonus**: We can also remove any objects we're no longer working with to save space 
+
+```{r}
+
+```
+
+## Convert Landsat values to reflectance
+Now we need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any [scaling factors](https://www.usgs.gov/faqs/how-do-i-use-scale-factor-landsat-level-2-science-products#:~:text=Landsat%20Collection%202%20surface%20temperature,the%20scale%20factor%20is%20applied.) to convert to reflectance.
+
+In this case, we are working with [Landsat Collection 2](https://www.usgs.gov/landsat-missions/landsat-collection-2).
+
+- The valid range of pixel values for this collection goes from 7,273 to 43,636...
+  - with a multiplicative scale factor of 0.0000275
+  - with an additive scale factor of -0.2
+  
+Let's reclassify any erroneous values as `NA` and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-100%!
+
+```{r}
+
+```
+
+
+## Classify image
+
+Let's begin by extracting reflectance values for training data!
+
+1. We will load the shapefile identifying different locations within our study area as containing one of our 4 land cover types.
+2. We can then extract the spectral values at each site to create a data frame that relates land cover types to their spectral reflectance.
+
+```{r}
+
+```
+
+Next, let's train the decision tree classifier!
+
+To train our decision tree, we first need to establish our model formula (i.e. what our response and predictor variables are). 
+
+- The `rpart` function implements the [CART algorithm](https://medium.com/geekculture/decision-trees-with-cart-algorithm-7e179acee8ff)
+- The `rpart` function needs to know the model formula and training data you would like to use
+- Because we are performing a classification, we set `method = "class"`
+- We also set `na.action = na.omit` to remove any pixels with `NA`s from the analysis.
+
+To understand how our decision tree will classify pixels, we can plot the results! 
+
+- Note: The decision tree is comprised of a hierarchy of binary decisions. Each decision rule has 2 outcomes based on a conditional statement pertaining to values in each spectral band.   
+
+```{r}
+
+```
+
+...and apply the decision tree!
+
+The `terra` package includes a `predict()` function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The `predict()` function will return a raster layer with integer values. These integer values correspond to the *factor levels* in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data. 
+
+```{r}
+
+```
+
+## Plot results
+Now we can plot the results and check out our land cover map!
+
+```{r}
+
+```

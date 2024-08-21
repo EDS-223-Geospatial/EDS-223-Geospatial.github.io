@@ -1,0 +1,110 @@
+---
+title: "Discssuion Week 6: Bringing Vector and Raster Together"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Allie Caughmam"
+date: last-modified
+format:
+  html:
+    toc: true
+---
+
+The following exercises are modified from [Chapter 6 of Geocomputation with R by Rovin Lovelace](https://r.geocompx.org/raster-vector).
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+```{r load, include=TRUE, message=FALSE, warning=FALSE}
+library(sf)
+library(terra)
+library(spData)
+library(spDataLarge)
+library(tidyverse)
+```
+
+```{r}
+zion_points <- read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
+srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+
+ch <- sf::st_combine(zion_points) %>%
+  sf::st_convex_hull() %>% 
+  sf::st_as_sf()
+
+grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
+```
+
+```{r}
+plot(srtm)
+plot(st_geometry(zion_points), add = TRUE)
+plot(ch, add = TRUE)
+```
+
+## Exercises
+
+1. Crop the srtm raster using (1) the zion_points dataset and (2) the ch dataset. Are there any differences in the output maps? Next, mask srtm using these two datasets. Can you see any difference now?
+
+```{r}
+srtm_crop1 <- terra::crop(srtm, zion_points)
+srtm_crop2 <- terra::crop(srtm, ch)
+plot(srtm_crop1)
+plot(srtm_crop2)
+
+srtm_mask1 <- terra::mask(srtm, zion_points)
+srtm_mask2 <- terra::mask(srtm, ch)
+plot(srtm_mask1)
+plot(srtm_mask2)
+```
+
+2. Subset points higher than 3100 meters in New Zealand (the nz_height object) and create a template raster with a resolution of 3 km for the extent of the new point dataset. Using these two new objects:
+
+```{r}
+nz_height3100 <- nz_height %>% 
+  filter(elevation > 3100)
+
+nz_template <- terra::rast(ext(nz_height3100), resolution = 3000, crs = crs(nz_height3100))
+```
+
+2a. Count numbers of the highest points in each grid cell.
+
+```{r}
+nz_raster <- rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
+plot(nz_raster)
+plot(st_geometry(nz_height3100), add = TRUE)
+```
+
+2b. Find the maximum elevation in each grid cell.
+
+```{r}
+nz_raster2 = rasterize(nz_height3100, nz_template, 
+                       field = "elevation", fun = max)
+plot(nz_raster2)
+plot(st_geometry(nz_height3100), add = TRUE)
+```
+
+3. Aggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result. Resample the lower resolution raster back to the original resolution of 3 km. 
+
+```{r}
+nz_raster_low = raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
+
+nz_resample = resample(nz_raster_low, nz_raster)
+plot(nz_raster_low)
+plot(nz_resample) # the results are spread over a greater area and there are border issues
+plot(nz_raster)
+```
+
+4. Polygonize the grain dataset and filter all squares representing clay.
+
+```{r}
+grain_poly = as.polygons(grain) %>% 
+  st_as_sf()
+
+plot(grain)
+plot(grain_poly)
+
+clay = grain_poly %>% 
+  filter(grain == "clay")
+plot(clay)
+```
+

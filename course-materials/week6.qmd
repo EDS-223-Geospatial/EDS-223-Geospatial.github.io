@@ -1,0 +1,21 @@
+---
+title: "Week 6: Intro to Remote Sensing"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+Assignment 3 posted Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Remote sensing basics and raster geometry operations ](https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present?usp=sharing){target="_blank"} | [Template](templates/week4.qmd) <br> [Answer key](labs/week4.html) |
+| Discussion | Bringing vector and raster together | [Template](templates/week6-discussion.qmd) <br> [Answer key](discussions/week6-discussion.html) |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [Remote Sensing of the Environment, Chapter 1](/readings/Jensen-chapter1.pdf){target="_blank"}
+- [Remote Sensing of the Environment, Chapter 2](/readings/Jensen-chapter2.pdf){target="_blank"}

@@ -1,0 +1,98 @@
+---
+title: "Geospatial Analysis & Remote Sensing"
+subtitle: "Master of Environmental Data Science (MEDS)"
+description: "Fall 2024"
+title-block-banner: false
+toc: false
+---
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "100%" 
+#| fig-alt: ""
+knitr::include_graphics("images/usgs_sat.jpeg")
+```
+
+::: {.gray-text .center-text}
+Mississippi River, south of Memphis, TN, USA. [USGS](https://unsplash.com/@usgs){target="_blank"}.
+:::
+
+## Course Description
+
+This course introduces the spatial modeling and analytic techniques of geographic information science to data science students. The emphasis is on deep understanding of spatial data models and the analytic operations they enable. Recognizing remotely sensed data as a key data type within environmental data science, this course will also introduce fundamental concepts and applications of remote sensing. In addition to this theoretical background, students will become familiar with libraries, packages, and APIs that support spatial analysis in R.
+
+## Weekly Schedule
+
+- Lecture: Monday 12:30-3:15 PM at Bren Hall 1424
+- Discussion Section 1: Thursday 1:00-1:50 PM at Bren Hall 3526
+- Discussion Section 2: Thursday 2:00-2:50 PM at Bren Hall 3526
+
+## Readings and References
+
+- [Geocompuation with R](https://r.geocompx.org/index.html)
+- [Spatial Data Science with Applications in R](https://r-spatial.org/book/)
+- [A Gentle Introduction to GIS](https://docs.qgis.org/3.34/en/docs/gentle_gis_introduction/index.html)
+
+## Course Requirements
+
+- [Meet minimum MEDS device requirements](https://ucsb-meds.github.io/computer_reqs.html)
+- [Install or update to R version 4.40](https://ucsb-meds.github.io/MEDS-installation-guide/#install-R)
+- [Install or update RStudio](https://ucsb-meds.github.io/MEDS-installation-guide/#install-RStudio)
+- [Create a GitHub account](https://ucsb-meds.github.io/MEDS-installation-guide/#GitHub)
+
+## Teaching Team
+
+<br>
+
+::: {.grid}
+
+::: {.g-col-12 .g-col-md-6}
+
+::: {.center-text .body-text-l}
+**Instructor**
+:::
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "45%" 
+knitr::include_graphics("images/ruth.png")
+```
+
+::: {.center-text}
+[**Ruth Oliver**]{.teal-text}  
+**Email:** [rutholiver@ucsb.edu](mailto::rutholiver@ucsb.edu)  
+**Learn more:** [ryoliver-lab.github.io](https://ryoliver-lab.github.io/)  
+:::
+
+:::
+
+::: {.g-col-12 .g-col-md-6}
+
+::: {.center-text .body-text-l}
+**TA**
+:::
+
+```{r}
+#| eval: true 
+#| echo: false
+#| fig-align: "center"
+#| out-width: "45%" 
+knitr::include_graphics("images/alessandra.png")
+```
+
+::: {.center-text}
+[**Alessandra Vidal Meza**]{.teal-text}  
+**Email:** [avidalmeza@ucsb.edu](mailto::avidalmeza@ucsb.edu)   
+**Learn more:** [avidalmeza.github.io](https://avidalmeza.github.io/)
+:::
+
+:::
+:::
+
+## Acknowledgements
+
+This website was designed by [Sam Csik](https://samanthacsik.github.io/){target="_blank"}.

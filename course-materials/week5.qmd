@@ -1,0 +1,12 @@
+---
+title: "Week 5: Lorem Ipsum"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Looking ahead in EDS 223 ](https://docs.google.com/presentation/d/19cLN2bmrSJdDl8QQ1wzbCIC1Wyxywh85uwwjDXoI4ig/present?usp=sharing){target="_blank"} | |
+| Discussion | | |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 

@@ -1,0 +1,27 @@
+---
+title: "Week 4: Raster Operations"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+[Check-in Quiz 1](https://forms.gle/WrVEYtckwERWCnfz8) due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+::: {.callout-tip}
+## Reminder
+Assignment 2 due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Intro to raster data model ](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present?usp=sharing){target="_blank"} | [Template](templates/week4.qmd) <br> [Answer key](labs/week4.html) |
+| Discussion | Raster operation basics | [Template](templates/week4-discussion.qmd) <br> [Answer key](discussions/week4-discussion.html) |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [Geocomputation with R, Chapter 3](https://r.geocompx.org/attr.html){target="_blank"}
+- [Geocomputation with R, Chapter 4](https://r.geocompx.org/spatial-operations.html){target="_blank"}
+- [Geocomputation with R, Chapter 5](https://r.geocompx.org/geometry-operations.html){target="_blank"}

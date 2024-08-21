@@ -1,0 +1,63 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "!templates/"
+    - "!data/"
+
+website:
+  favicon: images/favicon.png
+  navbar:
+    title: "EDS 223"
+    right:
+      - href: index.qmd
+        text: home
+      - text: syllabus
+        href: https://docs.google.com/document/d/1uEfXTgl5TAkB50B46yjDWe_gEkgBNy38ghjwXqk40bs/view
+        target: _blank
+      - text: resources
+        href: resources.qmd
+      - text: weekly materials
+        menu: 
+          - text: week 1
+            href: course-materials/week1.qmd
+          - text: week 2
+            href: course-materials/week2.qmd
+          - text: week 3
+            href: course-materials/week3.qmd
+          - text: week 4
+            href: course-materials/week4.qmd
+          - text: week 5
+            href: course-materials/week5.qmd
+          - text: week 6
+            href: course-materials/week6.qmd
+          - text: week 7
+            href: course-materials/week7.qmd
+          - text: week 8
+            href: course-materials/week8.qmd
+          - text: week 9
+            href: course-materials/week9.qmd
+          - text: week 10
+            href: course-materials/week10.qmd
+      - icon: github
+        href: https://github.com/EDS-223-Geospatial
+        target: _blank
+  page-footer:
+    background: dark
+    right: This website is built with [{{< fa brands github title="the github octocat logo" >}}](https://github.com/samanthacsik/EDS-212-essential-math), [{{< fa brands r-project title="R Project" >}}](https://www.r-project.org/about.html) and [Quarto](https://quarto.org/)
+    left: |
+      <img src="images/bren-logo.png" alt="The Bren School of Environmental Science & Management logo" width="250"/>
+
+
+format:
+  html:
+    theme: meds-website-styles.scss
+    toc: true
+    title-block-banner: true
+    page-layout: full
+
+editor: source
+
+
+

@@ -1,0 +1,30 @@
+---
+title: "Week 8: Remote Sensing of Vegetation"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+[Check-in Quiz 3](https://forms.gle/oW9fHFXdzu3BqteJ9) due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+::: {.callout-tip}
+## Reminder
+Assignment 4 posted Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+::: {.callout-tip}
+## Reminder
+Portfolio due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Remote sensing of vegetation (leaf, canopy, and landscape) ](https://docs.google.com/presentation/d/1-psgXQYkCCVh_k3h0ATDBZWqPh75_GpcYcE8qwgHnDc/present?usp=sharing){target="_blank"} | [Download data](https://drive.google.com/file/d/1e9ZwWoC6kmqy5r7WtDOkabYa02jMx_sd/view) <br> [Template](templates/week8.qmd) <br> [Answer key](labs/week8.html) |
+| Discussion | | |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [Remote Sensing of the Environment, Chapter 10](/readings/Jensen-chapter10.pdf){target="_blank"}

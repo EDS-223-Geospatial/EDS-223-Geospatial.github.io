@@ -1,0 +1,260 @@
+---
+title: "Week 1: Lab"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "FirstName LastName"
+date: last-modified
+---
+
+In this lab, we'll explore the basics of map-making in R using the **tmap** package. The following materials are modified from [Chapter 9 of *Geocomputation with R* by Rovin Lovelace](https://geocompr.robinlovelace.net/adv-map.html)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+Let's load all necessary packages:
+
+```{r eval=FALSE}
+install.packages("sf")
+install.packages("terra")
+install.packages("spData")
+install.packages("spDataLarge", repos = "https://geocompr.r-universe.dev")
+remotes::install_github("r-tmap/tmap@v4")
+```
+
+```{r load, include=TRUE, message=FALSE, warning=FALSE}
+library(sf)
+library(terra)
+library(dplyr)
+library(spData)
+library(spDataLarge)
+library(tmap) # for static and interactive maps
+```
+
+Let's also read in some data from the **spDataLarge** package to work with later.
+
+```{r spDataLarge, include=TRUE}
+nz_elev <- rast(system.file("raster/nz_elev.tif", package = "spDataLarge"))
+```
+
+## Map-making basics
+
+Let's start with a pre-loaded spatial object representing the states of New Zealand
+
+```{r include=TRUE}
+nz
+```
+
+We're going to start by using the **tmap** package to make some basic maps. 
+
+- **tmap** can work with spatial objects of a variety of classes, meaning it's highly versatile
+- This approach relies on a series of functions that typically start with "tm\_"
+- The first element is always `tm_shape()`
+
+```{r include=TRUE}
+
+```
+
+Now let's plot just the boundaries:
+
+```{r include=TRUE}
+
+```
+
+...and the shapes and boundaries together:
+
+```{r include=TRUE}
+
+```
+
+## Map objects
+**tmap** can store maps as *objects*. This means that we store a base map and add additional layers later.
+
+```{r include=TRUE}
+
+```
+
+```{r include=TRUE}
+
+```
+
+- We can add new shapes on top of the base map
+- When we add a new shape, all subsequent aesthetic functions refer to it, until we add a new shape
+
+In this case, we're adding a layer with information on elevation and this layer to have 70% transparency.
+
+```{r include=TRUE}
+
+```
+
+We can add points designating high points in the country:
+
+```{r include=TRUE}
+
+```
+
+## Aesthetic basics
+
+Up until now, we've been working with the default aesthetics. There are 2 types of aesthetics: 
+- Fixed aesthetics
+- Aesthetics that change with the value of a variable
+
+Note: **tmap** works differently than **ggplot2** and doesn't use the "aes()" function.
+
+Let's start by changing some fixed aesthetics...First, let's change the color used to fill the NZ shapes.
+
+```{r include=TRUE}
+
+```
+
+Now change the color of the boundaries...
+
+```{r include=TRUE}
+
+```
+
+...and the width of the boundary lines...
+
+```{r include=TRUE}
+
+```
+
+...and the line type of the boundary lines...
+
+```{r include=TRUE}
+
+```
+
+...all together now!
+
+```{r include=TRUE}
+
+```
+
+Now let's change the colors based on a value.
+
+For example, the New Zealand dataset has a column with each state's land area.
+
+```{r eval=FALSE, include=TRUE}
+
+```
+
+Let's try to plot the Land_area column. We might think that the following works, but it doesn't!
+
+```{r include=TRUE, eval=FALSE}
+
+```
+
+Instead, **tmap** is expecting a character string naming the attribute associated with the geometry:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+We can also add an argument that updates the title of the legend:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+We can even make it more precise using the "expression" function:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+## Color settings
+
+Note, how we set and define colors can radically change the interpretation of our map.
+
+-   The style argument has several options for breaking data into bins:
+    -   **style = "pretty"** (default) rounds breaks into evenly spaced whole numbers, where possible
+    -   **style = "equal"** divides input values into bins with equal range (best for uniform distributions)
+    -   **style = "quantile"** puts the same number of observations into each bin
+    -   **style = "jenks"** identifies groups of similar values and maximizes differences between bins
+
+Notice how the following maps display the same data, but look quite different:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+We can also define custom bins:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+But in some cases we might not want to use bins: 
+
+- **style = "cont"** displays colors as a continuous spectrum 
+- **style = "cat"** uses a unique vale for each categorical value
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+## Map layout
+
+Now that we have the basics, we can turn to all the other elements that make a cohesive map...**tmap** has lots of options, but we will explore just a few!
+
+To clearly give readers the context of our map, we can include a compass and scale bar:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+Instead of using a compass and scale bar, we could add latitude/longitudes graticules:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+We can also update the background color:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+## Faceted and animated maps
+
+We might have data that varies over time and we want to look at the how it changes. One approach is by using faceted plots, a series of plots:
+
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+## Interactive maps
+**tmap** is especially powerful because it allows us to make interactive maps using the same syntax.
+
+Let's enter the interactive mode:
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```
+
+
+```{r include=TRUE}
+
+```
+
+To go back to regular plotting, we just need enter plotting mode:
+```{r include=TRUE, message=FALSE, warning=FALSE}
+
+```

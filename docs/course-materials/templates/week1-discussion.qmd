@@ -1,0 +1,140 @@
+---
+title: "Discssuion Week 1: Making Maps"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "FirstName LastName"
+date: last-modified
+---
+
+The following exercises are modified from [Chapter 9 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/adv-map.html)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prerequisites
+
+Let's load all necessary packages:
+
+```{r load, include=TRUE, message=FALSE, warning=FALSE}
+library(sf)
+library(raster)
+library(terra)
+library(spData)
+library(spDataLarge)
+library(tidyverse)
+library(ggspatial)
+library(patchwork)
+```
+
+## Exercise 1
+These exercises rely on a new data object based on the **world** and **worldbank_df** datasets from the **spData** package.
+
+```{r}
+
+```
+
+### Map 1
+Create a map showing the geographic distribution of the Human Development Index (HDI) across Africa.  
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Map 2
+Now, let's update the map so the legend has three bins:
+- **High** where HDI is above 0.7
+- **Medium** where HDI is between 0.55 and 0.7
+- **Low** where HDI is below 0.55
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Map 3
+Next, let's represent Africa's sub regions on the map:
+- Change the color palette 
+- Change the legend title 
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+Let's use **patchwork** to combine this map with the previous map into a single plot:
+
+```{r}
+
+```
+
+
+## Exercise 2
+Here, we will use the **zion** and **nlcd** datasets from the **spDataLarge** package:
+
+```{r}
+
+```
+
+```{r eval=FALSE}
+# For spDataLarge version 2.0.X
+data(nlcd, package = "spDataLarge")
+force(nlcd)
+```
+
+```{r}
+# For spDataLarge version 2.1.1
+nlcd <- terra::rast(system.file("raster/nlcd.tif", package = "spDataLarge"))
+```
+
+First, we need to convert the raster into a dataframe:
+```{r}
+
+```
+
+### Map 4
+Let's create a land cover map of Zion National Park:
+
+- Change the default colors to match your perception of land cover categories   
+- Move the map legend outside of the map to improve readability 
+- Add a scale bar and north arrow
+- Change the position of the scale bar and north arrow to improve the maps aesthetics 
+- Add the park boundaries on top of the land cover map    
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+### Map 5
+Now, let's add an inset of Zion's location in the context of the state of Utah. Hint: an object representing Utah can be subset from the **us_states** dataset.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+Let's use **patchwork** again to combine elements:
+
+```{r}
+
+```

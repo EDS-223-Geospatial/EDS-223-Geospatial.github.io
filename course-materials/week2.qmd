@@ -1,0 +1,28 @@
+---
+title: "Week 2: Intro to Vector Data"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+---
+
+::: {.callout-tip}
+## Reminder
+Assignment 1 due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
+:::
+
+## Class Materials
+
+| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
+|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| Lecture  | [Intro to spatial/vector data models and sf](https://docs.google.com/presentation/d/1ywgmLUhRjI1uO5Ln2LgZ9lvG1KvZtvt1Zh_YQRz2kCs/present?usp=sharing){target="_blank"} | [Template](templates/week2.qmd) <br> [Answer key](labs/week2.html) |
+| Discussion | | |
+: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+
+## Background Reading
+- [*GIS Fundamentals*, Chapter 2 Part 2](readings/Bolstad-chapter2-part2.pdf){target="_blank"}
+- [*Geocomputation with R*, Chapter 2](https://r.geocompx.org/spatial-class.html){target="_blank"}
+- [*Geocomputation with R*, Chapter 3](https://r.geocompx.org/attr.html){target="_blank"}
+- [*Geocomputation with R*, Chapter 7](https://r.geocompx.org/reproj-geo-data){target="_blank"}
+
+## Technical Background
+- [sf overview](https://r-spatial.github.io/sf/index.html){target="_blank"}
+- [sf cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf){target="_blank"}
+- [Introduction to sf and stars](https://r-spatial.org/book/07-Introsf.html){target="_blank"}
