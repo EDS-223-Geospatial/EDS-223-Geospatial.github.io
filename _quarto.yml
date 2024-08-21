@@ -56,6 +56,7 @@ format:
     toc: true
     title-block-banner: true
     page-layout: full
+    callout-icon: false
 
 editor: source
 
