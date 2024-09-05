@@ -936,5 +936,26 @@
     "title": "Geospatial Analysis & Remote Sensing",
     "section": "Acknowledgements",
     "text": "Acknowledgements\nThis website was designed by Sam Csik."
+  },
+  {
+    "objectID": "course-materials/resources/plotting.html",
+    "href": "course-materials/resources/plotting.html",
+    "title": "Plotting Geospatial Data",
+    "section": "",
+    "text": "TODO:"
+  },
+  {
+    "objectID": "course-materials/resources/plotting.html#vector-data",
+    "href": "course-materials/resources/plotting.html#vector-data",
+    "title": "Plotting Geospatial Data",
+    "section": "Vector Data",
+    "text": "Vector Data\nsf, tmap and ggplot2 specialize in vector data, which is tabular data.\nExamples of vector file formats:\n\nshapefiles (.shp and their auxillary files .shx, .dbf, .prj)\nGeoPackages (.gpkg)\nGeoParquet (.parquet)\nGeoJSON (.geojson)\n\nUse the gbif API to download species observations for polar bears from the Global Biodiversity Information Facility. Tabular downloaded straight to your working directory will not always have spatial metadata associated with it, so you may have to assign it using spatial package functions.\n\n# read in a list of items containing polar bear data, including metadata\npb_data &lt;- occ_search(scientificName = \"Ursus maritimus\", \n                      limit = 300)\n\n# subset the list to just the relevant dataframe and attributes\npb_obs &lt;- pb_data$data %&gt;% \n  select(decimalLongitude, \n         decimalLatitude, \n         year) %&gt;%\n  mutate(year = as.factor(year)) # year = categorical\n  \n# remove any rows with an NA value in any col\npb_obs &lt;- na.omit(pb_obs)\n\n\nsf\nPoint data in tabular format may separate latitude and longitude into separate columns and may not come with spatial metadata such as a coordinate reference system (CRS). sf can help create a geometry column from separate latitude and longitude columns and set the CRS to WGS84, EPSG:4326).\n\n# convert separate longitude and latitude columns into \n# cohesive point geometries, and set the CRS\npb_spatial &lt;- pb_obs %&gt;% \n  sf::st_as_sf(coords = c(\"decimalLongitude\", \"decimalLatitude\"),\n               crs = st_crs(4326)) %&gt;% \n              filter(st_is_valid(.))\n\n\n\nBase R plot()\nSimply plot the point data using the native R function plot().\n\nplot(st_geometry(pb_spatial),\n     main = \"Polar Bear Observations\",\n     col = \"black\",\n     pch = 16,\n     axes = TRUE,\n     xlab = \"Longitude\",\n     ylab = \"Latitude\")\n\n\n\n\n\n\n\n\nThat plot is pretty simple, and it has little context without a palette or a basemap. Make an interactive map with the color of the points representing the year of the observation, and a basemap. This can be done with either mapview or leaflet.\n\nmapview\n\nmapview(pb_spatial,\n        zcol = \"year\",\n        map.types = \"Esri.NatGeoWorldMap\",\n        legend = TRUE,\n        layer.name = \"Polar Bear Observations\")\n\n\n\n\n\nNote how the points are clickable, and metadata pops up.\n\n\nleaflet\n\npalette &lt;- colorFactor(\n  palette = 'viridis',\n  domain = pb_spatial$year\n)\n\nleaflet(data = pb_spatial) %&gt;%\n  addProviderTiles(\"Esri.NatGeoWorldMap\") %&gt;% \n  addCircleMarkers(\n    radius = 5,\n    color = \"black\",  # point edges\n    fillColor = ~palette(year),\n    fillOpacity = 0.7,\n    stroke = TRUE,\n    weight = 1,  # point edge thickness\n    popup = ~paste(\"Year:\", year) # clickable points, show observation year\n  ) %&gt;%\n  addLegend(\n    \"bottomright\",\n    pal = palette, \n    values = ~year,\n    title = \"Polar Bear Observations\",\n    opacity = 1\n  )\n\n\n\n\n\n\n\n\nggplot\nsf and ggplot can be used in conjunction to plot the polar bear observations statically on a basemap.\n\n# load basemap using 'rnaturalearth' package\n# and retain countries only in the northern hemisphere\nworld &lt;- ne_countries(scale = \"medium\", returnclass = \"sf\") \n\nggplot(data = world) +\n  geom_sf() +\n  geom_sf(data = pb_spatial, \n          aes(fill = year),  # point color based on 'year'\n          color = \"black\",  # point edges black\n          shape = 21,\n          size = 2, \n          alpha = 0.7) +  # transparency\n  labs(title = \"Polar Bear Observations in the Arctic & sub-Arctic Region\",\n       x = \"Longitude\",\n       y = \"Latitude\",\n       fill = \"Year\") +\n  coord_sf(xlim = c(-180, 180), ylim = c(45, 90), expand = FALSE) + # limit map to polar bear habitat\n  # TODO: can we import a polygon of this?\n  theme_minimal() + \n  theme(legend.position = \"right\")\n\n\n\n\n\n\n\n\nggplot is also great for plotting polygon vector geometries.\n\n\ntmap\ntmap is based on ggplot, but is specifically designed for mapping rather than plotting."
+  },
+  {
+    "objectID": "course-materials/resources/plotting.html#raster-data",
+    "href": "course-materials/resources/plotting.html#raster-data",
+    "title": "Plotting Geospatial Data",
+    "section": "Raster Data",
+    "text": "Raster Data\nterra and tidyterra specialize in raster data processing, which are n-dimensional arrays.\nExamples of file formats:\n\nGeoTIFF (Tag Image File Format, .tif)\nnetCDF (Network Common Data Form, .nc)\nPNG or JPEG images (.png, .jpg)\n\n\nterra\n\n\ntidyterra"
   }
 ]

@@ -1,0 +1,218 @@
+---
+title: "Plotting Geospatial Data"
+author: Juliet Cohen
+date: 2024-09-04
+format: html
+---
+
+**TODO:**
+
+-   Include recs from guide screenshots (when to use which package)
+
+-   load in polygon and raster data (with API?), can be not related to the point data
+
+-   include visual to explain how polygon data can be overlaid on top of raster data / converted from points/lines to pixels
+
+-   consider folding chunks for API(s) so users can focus on the plotting code
+
+-   improve ggplot point map - colored/different basemap?
+
+-   increase limit for point data pulled in from GBIF
+
+-   check if sp and spDataLarge need to be added to installs? maybe just for build
+
+# Plotting Geospatial Data
+
+In R, various geospatial packages exist for visualizing and manipulating spatial data:
+
+-   `sf`
+-   `ggplot2`
+-   `mapview`
+-   `leaflet`
+-   `tmap`
+-   `terra`
+-   `tidyterra`
+
+Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This guide provides code examples and explanations for which are recommended to get the most out of your visualizations.
+
+```{r Import Packages, include = FALSE}
+# install all required packages if not already installed
+pkg <- c("sf", 
+         "terra", 
+         "tidyterra", 
+         "ggplot2", 
+         "tmap", 
+         "rgbif", 
+         "mapview",
+         "leaflet",
+         "rnaturalearth", 
+         "rnaturalearthdata")
+
+new.pkg <- pkg[!(pkg %in% installed.packages())]
+if (length(new.pkg)){install.packages(new.pkg)}
+
+## Load libraries, set directories
+lapply(pkg, library, character.only = TRUE)
+```
+
+## Vector Data
+
+`sf`, `tmap` and `ggplot2` specialize in vector data, which is tabular data.
+
+Examples of vector file formats:
+
+-   shapefiles (`.shp` and their auxillary files `.shx`, `.dbf`, `.prj`)
+-   GeoPackages (`.gpkg`)
+-   GeoParquet (`.parquet`)
+-   GeoJSON (`.geojson`)
+
+Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/). Tabular downloaded straight to your working directory will not always have spatial metadata associated with it, so you may have to assign it using spatial package functions.
+
+```{r}
+# read in a list of items containing polar bear data, including metadata
+pb_data <- occ_search(scientificName = "Ursus maritimus", 
+                      limit = 300)
+
+# subset the list to just the relevant dataframe and attributes
+pb_obs <- pb_data$data %>% 
+  select(decimalLongitude, 
+         decimalLatitude, 
+         year) %>%
+  mutate(year = as.factor(year)) # year = categorical
+  
+# remove any rows with an NA value in any col
+pb_obs <- na.omit(pb_obs)
+```
+
+### sf
+
+Point data in tabular format may separate latitude and longitude into separate columns and may not come with spatial metadata such as a coordinate reference system (CRS). `sf` can help create a `geometry` column from separate latitude and longitude columns and set the CRS to WGS84, `EPSG:4326`).
+
+```{r}
+# convert separate longitude and latitude columns into 
+# cohesive point geometries, and set the CRS
+pb_spatial <- pb_obs %>% 
+  sf::st_as_sf(coords = c("decimalLongitude", "decimalLatitude"),
+               crs = st_crs(4326)) %>% 
+              filter(st_is_valid(.))
+```
+
+### Base R plot()
+
+Simply plot the point data using the native R function `plot()`.
+
+```{r}
+plot(st_geometry(pb_spatial),
+     main = "Polar Bear Observations",
+     col = "black",
+     pch = 16,
+     axes = TRUE,
+     xlab = "Longitude",
+     ylab = "Latitude")
+```
+
+That plot is pretty simple, and it has little context without a palette or a basemap. Make an interactive map with the color of the points representing the year of the observation, and a basemap. This can be done with either `mapview` or `leaflet`.
+
+#### mapview
+
+```{r}
+mapview(pb_spatial,
+        zcol = "year",
+        map.types = "Esri.NatGeoWorldMap",
+        legend = TRUE,
+        layer.name = "Polar Bear Observations")
+```
+
+Note how the points are clickable, and metadata pops up.
+
+#### leaflet
+
+```{r}
+palette <- colorFactor(
+  palette = 'viridis',
+  domain = pb_spatial$year
+)
+
+leaflet(data = pb_spatial) %>%
+  addProviderTiles("Esri.NatGeoWorldMap") %>% 
+  addCircleMarkers(
+    radius = 5,
+    color = "black",  # point edges
+    fillColor = ~palette(year),
+    fillOpacity = 0.7,
+    stroke = TRUE,
+    weight = 1,  # point edge thickness
+    popup = ~paste("Year:", year) # clickable points, show observation year
+  ) %>%
+  addLegend(
+    "bottomright",
+    pal = palette, 
+    values = ~year,
+    title = "Polar Bear Observations",
+    opacity = 1
+  )
+```
+
+### ggplot
+
+`sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap.
+
+```{r}
+# load basemap using 'rnaturalearth' package
+# and retain countries only in the northern hemisphere
+world <- ne_countries(scale = "medium", returnclass = "sf") 
+
+ggplot(data = world) +
+  geom_sf() +
+  geom_sf(data = pb_spatial, 
+          aes(fill = year),  # point color based on 'year'
+          color = "black",  # point edges black
+          shape = 21,
+          size = 2, 
+          alpha = 0.7) +  # transparency
+  labs(title = "Polar Bear Observations in the Arctic & sub-Arctic Region",
+       x = "Longitude",
+       y = "Latitude",
+       fill = "Year") +
+  coord_sf(xlim = c(-180, 180), ylim = c(45, 90), expand = FALSE) + # limit map to polar bear habitat
+  # TODO: can we import a polygon of this?
+  theme_minimal() + 
+  theme(legend.position = "right")
+```
+
+`ggplot` is also great for plotting polygon vector geometries.
+
+```{r}
+
+```
+
+### tmap
+
+`tmap` is based on `ggplot`, but is specifically designed for *mapping* rather than *plotting*.
+
+```{r}
+
+```
+
+## Raster Data
+
+`terra` and `tidyterra` specialize in raster data processing, which are n-dimensional arrays.
+
+Examples of file formats:
+
+-   GeoTIFF (Tag Image File Format, `.tif`)
+-   netCDF (Network Common Data Form, `.nc`)
+-   PNG or JPEG images (`.png`, `.jpg`)
+
+### terra
+
+```{r}
+
+```
+
+### `tidyterra`
+
+```{r}
+
+
+```
