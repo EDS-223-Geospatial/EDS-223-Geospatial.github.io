@@ -15,11 +15,11 @@ format: html
 
 -   consider folding chunks for API(s) so users can focus on the plotting code
 
--   improve ggplot point map - colored/different basemap?
+-   add an enhanced ggplot point map - colored/different basemap, subtitle, etc.
 
--   increase limit for point data pulled in from GBIF
+-   increase limit for point data pulled in from GBIF?
 
--   check if sp and spDataLarge need to be added to installs? maybe just for build
+- interate plot_sf too?
 
 # Plotting Geospatial Data
 
@@ -46,7 +46,9 @@ pkg <- c("sf",
          "mapview",
          "leaflet",
          "rnaturalearth", 
-         "rnaturalearthdata")
+         "rnaturalearthdata",
+         "tidyverse",
+         "RColorBrewer")
 
 new.pkg <- pkg[!(pkg %in% installed.packages())]
 if (length(new.pkg)){install.packages(new.pkg)}
@@ -55,7 +57,7 @@ if (length(new.pkg)){install.packages(new.pkg)}
 lapply(pkg, library, character.only = TRUE)
 ```
 
-## Vector Data
+## Vector Data: Points
 
 `sf`, `tmap` and `ggplot2` specialize in vector data, which is tabular data.
 
@@ -73,16 +75,18 @@ Use the `gbif` API to download species observations for polar bears from the [Gl
 pb_data <- occ_search(scientificName = "Ursus maritimus", 
                       limit = 300)
 
-# subset the list to just the relevant dataframe and attributes
+# subset the imported data to just the relevant dataframe and attributes
 pb_obs <- pb_data$data %>% 
   select(decimalLongitude, 
          decimalLatitude, 
-         year) %>%
+         year,
+         country) %>%
   mutate(year = as.factor(year)) # year = categorical
   
-# remove any rows with an NA value in any col
+# remove any rows with an NA in any col
 pb_obs <- na.omit(pb_obs)
 ```
+
 
 ### sf
 
@@ -153,14 +157,12 @@ leaflet(data = pb_spatial) %>%
   )
 ```
 
-### ggplot
+### `ggplot` polygons
 
 `sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap.
 
 ```{r}
-# load basemap using 'rnaturalearth' package
-# and retain countries only in the northern hemisphere
-world <- ne_countries(scale = "medium", returnclass = "sf") 
+world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") 
 
 ggplot(data = world) +
   geom_sf() +
@@ -174,25 +176,107 @@ ggplot(data = world) +
        x = "Longitude",
        y = "Latitude",
        fill = "Year") +
-  coord_sf(xlim = c(-180, 180), ylim = c(45, 90), expand = FALSE) + # limit map to polar bear habitat
-  # TODO: can we import a polygon of this?
+  # limit map to polar bear habitat latitudes
+  coord_sf(xlim = c(-180, 180), ylim = c(45, 90), expand = FALSE) +
   theme_minimal() + 
   theme(legend.position = "right")
 ```
 
-`ggplot` is also great for plotting polygon vector geometries.
+
+### `tmap` points
+
+`tmap` is based on `ggplot`, but is specifically designed for *mapping* rather than *plotting* with many tailorable options. It recognizes spatial objects from `sf`, `terra`, and other geospatial packages. `tmap` can make both static and interactive maps, as it builds on `ggplot` and `leaflet`. More detailed basemaps, like those availble in `leaflet`, are only an option in interactive mode for `tmap`. For large-scale data, you can load in a simple world map to use as a basemap.  
+
+`tmap` allows for fine control over the locations of the title and legend. You can choose inside or outside the map, with values between 0-1 specified for the `x` and `y` position.
 
 ```{r}
+data(World)
 
+tm_shape(World) +
+  tm_borders(col = "black", lwd = 0.5) +
+  tm_fill(col = "white") +
+  tm_shape(pb_spatial) +
+  tm_dots(col = "year",
+          palette = 'viridis',
+          size = 0.1,
+          border.col = "black",
+          title = "Year") +
+  tm_layout(
+    bg.color = "lightblue",
+    frame = TRUE,
+    title.position = c(0.01, 0.5),
+    title.size = 1.2,
+    legend.position = c(0.01, 0.2),
+    title = "Polar Bear\nObservations"
+  )
 ```
 
-### tmap
+## Vector Data: Polygons
 
-`tmap` is based on `ggplot`, but is specifically designed for *mapping* rather than *plotting*.
+Polygon data is composed of multiple points connected by lines to create closed shapes. Since there are many polar bears in Canada, let's plot the polar bear observations on top of only Canada and Greenland polygons using both `tmap` and `ggplot`.
+
+First, we can subset the world's polygons from `rnaturalearth` to just those for Svalbard and Jan Mayen, based on the International Organization for Standardization (ISO) code.
 
 ```{r}
-
+canada_greenland <- rnaturalearth::ne_countries(scale = "medium", 
+                                                returnclass = "sf") %>% 
+                                   filter(admin %in% c("Canada", "Greenland"))
 ```
+
+We only want to plot the polar bear points that fit within these polygons, so we can execute a spatial join.
+
+```{r}
+pb_canada_greenland <- st_join(pb_spatial, 
+                               canada_greenland, 
+                               join = st_within,
+                               left = FALSE)
+```
+
+
+### `ggplot` points and polygons
+
+```{r}
+blue_palette <- RColorBrewer::brewer.pal(n = 2, name = "Blues")
+
+ggplot(data = canada_greenland) +
+  geom_sf(aes(fill = admin), color = "black") +
+  scale_fill_manual(values = blue_palette) +
+  geom_sf(data = pb_canada_greenland,
+          color = "red",
+          size = 1) +
+  theme_minimal() +
+  labs(title = "Canada and Greenland Polar Bear Observations",
+       fill = "Country",
+       xlab = "Longitude",
+       ylab = "Latitude")
+```
+
+### `tmap` points and polygons
+
+```{r}
+tm_shape(canada_greenland) + 
+  tm_fill(col = "admin", 
+          palette = blue_palette, 
+          title = "Country") +
+  tm_borders(col = "black") +
+  tm_shape(pb_canada_greenland) +
+  tm_dots(col = "red", size = 0.1) +
+  tm_grid(lines = TRUE,
+          col = "gray",
+          labels.inside.frame = TRUE,
+          n.x = 10, n.y = 10, # number of gridlines on x and y axes
+          alpha = 0.5) +
+  tm_layout(title = "Canada and Greenland\nPolar Bear Observations",
+            title.size = 1,
+            legend.title.size = 0.9,
+            legend.text.size = 0.8,
+            title.position = c(0.68, 0.31)) +
+  tm_xlab("Longitude") +
+  tm_ylab("Latitude")
+```
+
+
+###
 
 ## Raster Data
 
