@@ -55,13 +55,13 @@ Let's load three spatial data objects to plot:
 #| echo: false
 
 # raster of global elevations
-world_elevation <- read_stars(here("course-materials","labs","data","worldelevation.tif"))
+world_elevation <- read_stars(here("course-materials","data","worldelevation.tif"))
 
 # country boundaries
-world_vector <- read_sf(here("course-materials","labs","data","worldvector.gpkg"))
+world_vector <- read_sf(here("course-materials","data","worldvector.gpkg"))
 
 # major cities
-world_cities <- read_sf(here("course-materials","labs","data","worldcities.gpkg"))
+world_cities <- read_sf(here("course-materials","data","worldcities.gpkg"))
 
 ```
 
