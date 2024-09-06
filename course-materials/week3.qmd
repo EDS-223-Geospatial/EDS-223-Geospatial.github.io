@@ -1,6 +1,6 @@
 ---
 title: "Vector operations"
-subtitle: "Week 3"
+subtitle: "Week 3 test"
 ---
 
 
