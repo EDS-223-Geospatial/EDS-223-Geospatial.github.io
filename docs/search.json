@@ -79,28 +79,28 @@
   {
     "objectID": "course-materials/week3.html",
     "href": "course-materials/week3.html",
-    "title": "Week 3: Vector Operations",
+    "title": "Vector operations",
     "section": "",
-    "text": "Reminder\n\n\n\nAssignment 2 posted Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to subsetting, aggregating, summarizing, and simplifying\nTemplate  Answer key\n\n\nDiscussion\n\nTemplate  Answer key"
   },
   {
     "objectID": "course-materials/week3.html#class-materials",
     "href": "course-materials/week3.html#class-materials",
-    "title": "Week 3: Vector Operations",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to subsetting, aggregating, summarizing, and simplifying\nTemplate  Answer key\n\n\nDiscussion\n\nTemplate  Answer key"
+    "title": "Vector operations",
+    "section": "",
+    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to subsetting, aggregating, summarizing, and simplifying\nTemplate  Answer key\n\n\nDiscussion\n\nTemplate  Answer key"
   },
   {
     "objectID": "course-materials/week3.html#background-reading",
     "href": "course-materials/week3.html#background-reading",
-    "title": "Week 3: Vector Operations",
+    "title": "Vector operations",
     "section": "Background Reading",
     "text": "Background Reading\n\nGeocomputation with R, Chapter 4\nGeocomputation with R, Chapter 5\nGIS Fundamentals, Chapter 9 Part 1\nDouglas–Peucker Algorithm (Cartography Playground)\nLine Simplification with Visvalingam–Whyatt Algorithm (Mike Bostok)"
   },
   {
     "objectID": "course-materials/week3.html#technical-background",
     "href": "course-materials/week3.html#technical-background",
-    "title": "Week 3: Vector Operations",
+    "title": "Vector operations",
     "section": "Technical Background",
     "text": "Technical Background\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
   },
@@ -807,29 +807,29 @@
   {
     "objectID": "course-materials/week2.html",
     "href": "course-materials/week2.html",
-    "title": "Week 2: Intro to Vector Data",
+    "title": "Intro to spatial data models and coordinate reference systems",
     "section": "",
-    "text": "Reminder\n\n\n\nAssignment 1 due Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Lecture\n Lab\n Discussion Sections\n\n\n\n\nLecture\nIntro to spatial/vector data models\nManipulating vector data with simple featues sf\n\n\nDiscussion"
   },
   {
     "objectID": "course-materials/week2.html#class-materials",
     "href": "course-materials/week2.html#class-materials",
-    "title": "Week 2: Intro to Vector Data",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to spatial/vector data models and sf\nTemplate  Answer key\n\n\nDiscussion"
+    "title": "Intro to spatial data models and coordinate reference systems",
+    "section": "",
+    "text": "Lecture\n Lab\n Discussion Sections\n\n\n\n\nLecture\nIntro to spatial/vector data models\nManipulating vector data with simple featues sf\n\n\nDiscussion"
   },
   {
     "objectID": "course-materials/week2.html#background-reading",
     "href": "course-materials/week2.html#background-reading",
-    "title": "Week 2: Intro to Vector Data",
-    "section": "Background Reading",
+    "title": "Intro to spatial data models and coordinate reference systems",
+    "section": " Background Reading",
     "text": "Background Reading\n\nGIS Fundamentals, Chapter 2 Part 2\nGeocomputation with R, Chapter 2\nGeocomputation with R, Chapter 3\nGeocomputation with R, Chapter 7"
   },
   {
     "objectID": "course-materials/week2.html#technical-background",
     "href": "course-materials/week2.html#technical-background",
-    "title": "Week 2: Intro to Vector Data",
-    "section": "Technical Background",
+    "title": "Intro to spatial data models and coordinate reference systems",
+    "section": " Technical Background",
     "text": "Technical Background\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
   },
   {
@@ -999,5 +999,12 @@
     "title": "Week 3 Discussion Section",
     "section": "",
     "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests"
+  },
+  {
+    "objectID": "course-materials/week2.html#assignment-reminders",
+    "href": "course-materials/week2.html#assignment-reminders",
+    "title": "Intro to spatial data models and coordinate reference systems",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nPre-course reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
   }
 ]
