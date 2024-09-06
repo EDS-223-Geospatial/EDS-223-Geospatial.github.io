@@ -492,9 +492,9 @@
   {
     "objectID": "course-materials/discussions/week3-discussion.html",
     "href": "course-materials/discussions/week3-discussion.html",
-    "title": "Discssuion Week 3: Assignment 2",
+    "title": "Week 3 Discussion Section",
     "section": "",
-    "text": "The following exercises are modified from Chapters 3, 4, 5 of Geocomputation with R by Rovin Lovelace."
+    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests"
   },
   {
     "objectID": "course-materials/discussions/week3-discussion.html#prerequisites",
@@ -992,5 +992,12 @@
     "title": "Week 1 Discussion Section",
     "section": "",
     "text": "read in spatial objects\n\n(we should provide code)\n\ncreate map with single spatial object\ncreate map with multiple spatial objects\nuse different types of plotting formats (e.g. tm_polygons, tm_fill, tm_dots, etc.)\nadjust color palettes\ninclude essential map elements: scale bar & north arrow or graticules\ncreate an interactive map\nshould use tmap, but could include bonus challenge to reproduce map using ggplot2\nshould link to Juliet’s map making resource"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
+    "href": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
+    "title": "Week 3 Discussion Section",
+    "section": "",
+    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests"
   }
 ]

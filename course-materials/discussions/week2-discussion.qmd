@@ -1,0 +1,17 @@
+---
+title: "Week 2 Discussion Section"
+subtitle: "Manipulating vector data and coordinate reference systems"
+author: "Alessandra Vidal Meza"
+date: last-modified
+format:
+  html:
+    toc: true
+---
+
+## Learning objectives for discussion section:
+
+- read in multiple vector datasets of different types
+- check CRS
+- transform CRS to match across all datasets
+- perform attribute manipulations (e.g. filter, mutate, select)
+- plot data
