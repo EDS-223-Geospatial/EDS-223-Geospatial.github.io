@@ -12,11 +12,11 @@ toc: false
 #| fig-align: "center"
 #| out-width: "100%" 
 #| fig-alt: ""
-knitr::include_graphics("images/usgs_sat.jpeg")
+knitr::include_graphics("images/MEDS.png")
 ```
 
 ::: {.gray-text .center-text}
-Mississippi River, south of Memphis, TN, USA. [USGS](https://unsplash.com/@usgs){target="_blank"}.
+[Your Name in Landsat](https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/index.html){target="_blank"}
 :::
 
 ## Course Description
