@@ -16,9 +16,7 @@ website:
       - text: syllabus
         href: https://docs.google.com/document/d/1uEfXTgl5TAkB50B46yjDWe_gEkgBNy38ghjwXqk40bs/view
         target: _blank
-      - text: resources
-        href: resources.qmd
-      - text: weekly materials
+      - text: course materials
         menu: 
           - text: week 1
             href: course-materials/week1.qmd
@@ -40,6 +38,12 @@ website:
             href: course-materials/week9.qmd
           - text: week 10
             href: course-materials/week10.qmd
+      - text: assignments
+        href: assignments.qmd
+      - text: redeem tokens
+        href: https://forms.gle/u51tdaAhSAQerHxh6
+      - text: resources
+        href: resources.qmd
       - icon: github
         href: https://github.com/EDS-223-Geospatial
         target: _blank
