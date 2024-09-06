@@ -331,16 +331,16 @@
   {
     "objectID": "course-materials/labs/week1.html",
     "href": "course-materials/labs/week1.html",
-    "title": "Week 1: Lab",
+    "title": "Week 1 Lab",
     "section": "",
-    "text": "In this lab, we’ll explore the basics of map-making in R using the tmap package. The following materials are modified from Chapter 9 of Geocomputation with R by Rovin Lovelace."
+    "text": "In this lab, we’ll explore the basics of map-making in R using the tmap package. The following materials are modified from the tmap book."
   },
   {
     "objectID": "course-materials/labs/week1.html#set-up",
     "href": "course-materials/labs/week1.html#set-up",
-    "title": "Week 1: Lab",
-    "section": "Set Up",
-    "text": "Set Up\nLet’s load all necessary packages:\n\ninstall.packages(\"sf\")\ninstall.packages(\"terra\")\ninstall.packages(\"spData\")\ninstall.packages(\"spDataLarge\", repos = \"https://geocompr.r-universe.dev\")\nremotes::install_github(\"r-tmap/tmap@v4\")\n\n\nlibrary(sf)\nlibrary(terra)\nlibrary(dplyr)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tmap) # for static and interactive maps\n\nLet’s also read in some data from the spDataLarge package to work with later.\n\nnz_elev &lt;- rast(system.file(\"raster/nz_elev.tif\", package = \"spDataLarge\"))"
+    "title": "Week 1 Lab",
+    "section": "2. Set Up",
+    "text": "2. Set Up\n\nFork and clone this repository to create a version controlled project for Week 1.\nCreate a Quarto doc\nInstall and load all necessary packages\n\n\ninstall.packages(\"sf\")\ninstall.packages(\"stars\")\ninstall.packages(\"tmap\")\n\n\nlibrary(sf) # for vector data (more soon!)\nlibrary(stars) # for raster data (more soon!)\nlibrary(tmap) # for static and interactive maps\nlibrary(here)"
   },
   {
     "objectID": "course-materials/labs/week1.html#map-making-basics",
@@ -772,36 +772,36 @@
   {
     "objectID": "course-materials/week1.html",
     "href": "course-materials/week1.html",
-    "title": "Week 1: Intro to Spatial Data",
+    "title": "Intro to 223 and map making",
     "section": "",
-    "text": "Reminder\n\n\n\nAssignment 1 posted Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nWelcome to EDS 223, why spatial and making maps\nIntro to making maps with tmap\n\n\nDiscussion\nMaking maps\nMap making practice"
   },
   {
     "objectID": "course-materials/week1.html#class-materials",
     "href": "course-materials/week1.html#class-materials",
-    "title": "Week 1: Intro to Spatial Data",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nWelcome to EDS 223\nTemplate  Answer key\n\n\nDiscussion\nMaking maps\nTemplate  Answer key"
+    "title": "Intro to 223 and map making",
+    "section": "",
+    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nWelcome to EDS 223, why spatial and making maps\nIntro to making maps with tmap\n\n\nDiscussion\nMaking maps\nMap making practice"
   },
   {
     "objectID": "course-materials/week1.html#background-reading",
     "href": "course-materials/week1.html#background-reading",
-    "title": "Week 1: Intro to Spatial Data",
-    "section": "Background Reading",
+    "title": "Intro to 223 and map making",
+    "section": " Background Reading",
     "text": "Background Reading\n\nGeocomputation with R, Chapter 9\nGIS Fundamentals, Chapter 2\nGIS Fundamentals, Chapter 3\nA Gentle Introduction to GIS, Chapter 8\nGeographic vs projected coordinate systems (Esri)"
   },
   {
     "objectID": "course-materials/week1.html#technical-background",
     "href": "course-materials/week1.html#technical-background",
-    "title": "Week 1: Intro to Spatial Data",
-    "section": "Technical Background",
+    "title": "Intro to 223 and map making",
+    "section": " Technical Background",
     "text": "Technical Background\n\ntmap: thematic maps in R documentation\ntmap overview\nCreating thematic maps in R"
   },
   {
     "objectID": "course-materials/week1.html#additional-resources",
     "href": "course-materials/week1.html#additional-resources",
-    "title": "Week 1: Intro to Spatial Data",
-    "section": "Additional Resources",
+    "title": "Intro to 223 and map making",
+    "section": " Additional Resources",
     "text": "Additional Resources\n\nJohn Snow: A Legacy of Disease Detectives (CDC)\nHow the north ended up on top of the map (Al Jazeera)\nWhy maps point North on top? (Geospatial World)\nWhy all world maps are wrong (Vox)"
   },
   {
@@ -936,5 +936,54 @@
     "title": "Geospatial Analysis & Remote Sensing",
     "section": "Acknowledgements",
     "text": "Acknowledgements\nThis website was designed by Sam Csik."
+  },
+  {
+    "objectID": "course-materials/labs/week1.html#why-tmap",
+    "href": "course-materials/labs/week1.html#why-tmap",
+    "title": "Week 1 Lab",
+    "section": "1. Why tmap?",
+    "text": "1. Why tmap?\n\nThere are MANY ways to make maps in R, but tmap or “thematic maps” offers the most flexibility.\ntmap can handle vector and raster objects from the sf, sp, raster, and stars packages.\nThe syntax of tmap is based on ggplot2 and the Grammar of Graphics\ntmap supports static AND interactive maps (yay!)"
+  },
+  {
+    "objectID": "course-materials/labs/week1.html#specifying-spatial-data",
+    "href": "course-materials/labs/week1.html#specifying-spatial-data",
+    "title": "Week 1 Lab",
+    "section": "3. Specifying spatial data",
+    "text": "3. Specifying spatial data\nSimilar to plotting in ggplot2, in order to plot spatial data, at least two aspects need to be specified:\n\nthe spatial data object to plot (e.g. ggplot(data = ))\nand the plotting method (e.g. geom_points())\n\nLet’s load three spatial data objects to plot:\n\na raster (more on this next week!) of elevations of the world\na vector dataset (again, more soon!) of country boundaries\na vector dataset of locations of major cities\n\n\n# raster of global elevations\nworld_elevation &lt;- read_stars(here(\"data\",\"worldelevation.tif\"))\n\n# country boundaries\nworld_vector &lt;- read_sf(here(\"data\",\"worldvector.gpkg\"))\n\n# major cities\nworld_cities &lt;- read_sf(here(\"data\",\"worldcities.gpkg\"))\n\nIn tmap, the spatial object to plot needs to be defined within the function tm_shape(). This is analogous to defining the data frame to plot in ggplot2 (ggplot(data = )).\n\n# plotting a single spatial object\n\ntm_shape(world_vector) + # defines the spatial object to plot\n  tm_polygons() # defines how to plot the object\n\n\n\n\n\n\n\n\nSimilar to ggplot2, we can plot multiple datasets by adding layers. When multiple spatial objects are being plotted, each has to be defined in a separate tm_shape() call.\n\n# plotting two spatial objects\n\ntm_shape(world_vector) + # defines the FIRST spatial object to plot\n  tm_polygons() + # defines how to plot the FIRST object\ntm_shape(world_cities) + # defines the SECOND objet to plot\n  tm_dots() + # defines how to plot the SECOND object\n  tm_text(\"name\") # defines an additional way to plot the SECOND object"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Earning “Satisfactory” marks on Self-reflections (SRs) and Homework Assignments (HWs) will determine your letter grade (e.g. A, B, etc.) for this course.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course reflection (SR #1)\nMon 09/30/2024\nSat 10/12/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #2\nMon 01/22/2024\nSat 02/03/2024, 11:59pm PT\n\n\nSR\nMid-course reflection (SR #2)\nMon 02/05/2024\nSat 02/10/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #3\nMon 02/12/2024\nSat 02/24/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #4\nMon 02/26/2024\nSat 03/09/2024, 11:59pm PT\n\n\nSR\nEnd-of-course reflection (SR #3)\nMon 03/11/2024\nSat 03/16/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "assignments.html#assignments",
+    "href": "assignments.html#assignments",
+    "title": "Assignments",
+    "section": "",
+    "text": "Earning “Satisfactory” marks on Self-reflections (SRs) and Homework Assignments (HWs) will determine your letter grade (e.g. A, B, etc.) for this course.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course reflection (SR #1)\nMon 09/30/2024\nSat 10/12/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #2\nMon 01/22/2024\nSat 02/03/2024, 11:59pm PT\n\n\nSR\nMid-course reflection (SR #2)\nMon 02/05/2024\nSat 02/10/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #3\nMon 02/12/2024\nSat 02/24/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #4\nMon 02/26/2024\nSat 03/09/2024, 11:59pm PT\n\n\nSR\nEnd-of-course reflection (SR #3)\nMon 03/11/2024\nSat 03/16/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "assignments.html#end-of-class-surveys",
+    "href": "assignments.html#end-of-class-surveys",
+    "title": "Assignments",
+    "section": "End-of-class surveys",
+    "text": "End-of-class surveys\nEnd-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:55pm PT). Completing EOCs by the due dates / times will, in-part (along with class attendance), determine whether you earn a +/- on your course grade.\n\n\n\nEOC link\nDate Assigned\nDate Due\n\n\n\n\nEOC (week 1)\nMon 09/30/2024\nMon 09/30/2024, 11:55pm PT\n\n\nEOC (week 2)\nMon 10/07/2024\nMon 10/07/2024, 11:55pm PT\n\n\nEOC (week 3)\nMon 10/14/2024\nMon 10/14/2024, 11:55pm PT\n\n\nEOC (week 4)\nMon 10/21/2024\nMon 10/21/2024, 11:55pm PT\n\n\nEOC (week 5)\nMon 10/28/2024\nMon 10/28/2024, 11:55pm PT\n\n\nEOC (week 6)\nMon 11/04/2024\nMon 11/04/2024, 11:55pm PT\n\n\nNo lecture or EOC (week 7)\nNA\nNA\n\n\nEOC (week 8)\nMon 11/18/2024\nMon 11/18/2024, 11:55pm PT\n\n\nEOC (week 9)\nMon 11/25/2024\nMon 11/25/2024, 11:55pm PT\n\n\nEOC (week 10)\nMon 12/02/2024\nMon 12/02/2024, 11:55pm PT"
+  },
+  {
+    "objectID": "assignments.html#grade-tracker",
+    "href": "assignments.html#grade-tracker",
+    "title": "Assignments",
+    "section": "Grade Tracker",
+    "text": "Grade Tracker\nUse the Grade Tracker, below, to determine your course grade:\nRedeem tokens in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a “Not Yet” mark."
+  },
+  {
+    "objectID": "course-materials/week1.html#assignment-reminders",
+    "href": "course-materials/week1.html#assignment-reminders",
+    "title": "Intro to 223 and map making",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nPre-course reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
   }
 ]

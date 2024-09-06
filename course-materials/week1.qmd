@@ -1,35 +1,39 @@
 ---
-title: "Week 1: Intro to Spatial Data"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Intro to 223 and map making"
+subtitle: "Week 1"
 ---
 
-::: {.callout-tip}
-## Reminder
-Assignment 1 posted Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
-:::
 
-## Class Materials
+## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
 | {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
 |-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| Lecture  | [Welcome to EDS 223](https://docs.google.com/presentation/d/1WWYmnEuwRApjeYMHpaAVZf1qMDOxt5jYblzeo5yYQ8Q/present?usp=sharing){target="_blank"} | [Template](templates/week1.qmd) <br> [Answer key](labs/week1.html) |
-| Discussion | Making maps | [Template](templates/week1-discussion.qmd) <br> [Answer key](discussions/week1-discussion.html) |
+| Lecture  | [Welcome to EDS 223, why spatial and making maps](https://docs.google.com/presentation/d/1WWYmnEuwRApjeYMHpaAVZf1qMDOxt5jYblzeo5yYQ8Q/present?usp=sharing){target="_blank"} |  [Intro to making maps with `tmap`](labs/week1.qmd) |
+| Discussion | Making maps | [Map making practice](discussions/week1-discussion.qmd) |
 : {.hover .bordered tbl-colwidths="[20,40,40]"} 
 
-## Background Reading
+## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
+| Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
+|:---------------:|------------------------------------------------------------------------|----------------|----------------------------|
+| EOC             | [End-of-class survey (week 1)](https://forms.gle/aPGfCircFN1AZfSe9)    | Mon 01/08/2024 | Mon 01/08/2024, 11:55pm PT |
+| SR              | [Pre-course reflection (SR #1)](../assignments/SR1-precourse.qmd)      | Mon 01/08/2024 | Sat 01/13/2024, 11:59pm PT |
+| HW              | [Homework Assignment #1](../assignments/HW1.qmd)                       | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
 - [*Geocomputation with R*, Chapter 9](https://geocompr.robinlovelace.net/adv-map.html){target="_blank"}
 - [*GIS Fundamentals*, Chapter 2](readings/Bolstad-chapter2-part1.pdf){target="_blank"}
 - [*GIS Fundamentals*, Chapter 3](readings/Bolstad-chapter3.pdf){target="_blank"}
 - [*A Gentle Introduction to GIS*, Chapter 8](https://docs.qgis.org/3.34/en/docs/gentle_gis_introduction/coordinate_reference_systems.html){target="_blank"}
 - [Geographic vs projected coordinate systems](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/){target="_blank"} (Esri)
 
-## Technical Background
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Technical Background
 - [tmap: thematic maps in R documentation](https://r-tmap.github.io/tmap/){target="_blank"}
 - [tmap overview](https://r-tmap.github.io/tmap-book/){target="_blank"}
 - [Creating thematic maps in R](https://mtennekes.github.io/downloads/presentations/tmap_opengeo_muenster.pdf){target="_blank"}
 
-## Additional Resources
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
 - [John Snow: A Legacy of Disease Detectives ](https://blogs.cdc.gov/publichealthmatters/2017/03/a-legacy-of-disease-detectives/){target="_blank"} (CDC)
 - [How the north ended up on top of the map](http://america.aljazeera.com/opinions/2014/2/maps-cartographycolonialismnortheurocentricglobe.html){target="_blank"} (Al Jazeera)
 - [Why maps point North on top?](https://www.geospatialworld.net/blogs/why-maps-point-north-on-top/){target="_blank"} (Geospatial World)
 - [Why all world maps are wrong](https://www.youtube.com/watch?v=kIID5FDi2JQ&t=3s){target="_blank"} (Vox)
+
