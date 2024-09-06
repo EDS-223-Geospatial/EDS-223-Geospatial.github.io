@@ -9,17 +9,11 @@ format: html
 
 -   Include recs from guide screenshots (when to use which package)
 
--   load in polygon and raster data (with API?), can be not related to the point data
-
--   include visual to explain how polygon data can be overlaid on top of raster data / converted from points/lines to pixels
-
--   consider folding chunks for API(s) so users can focus on the plotting code
+-   consider folding chunks for API and CRS transformation so users can focus on the plotting code
 
 -   add an enhanced ggplot point map - colored/different basemap, subtitle, etc.
 
--   increase limit for point data pulled in from GBIF?
-
-- interate plot_sf too?
+-   integrate plot_sf and tidyterra too?
 
 # Plotting Geospatial Data
 
@@ -33,7 +27,7 @@ In R, various geospatial packages exist for visualizing and manipulating spatial
 -   `terra`
 -   `tidyterra`
 
-Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This guide provides code examples and explanations for which are recommended to get the most out of your visualizations.
+Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This guide provides explanations for which are recommended to get the most out of your visualizations alongisde examples of code.
 
 ```{r Import Packages, include = FALSE}
 # install all required packages if not already installed
@@ -48,7 +42,8 @@ pkg <- c("sf",
          "rnaturalearth", 
          "rnaturalearthdata",
          "tidyverse",
-         "RColorBrewer")
+         "RColorBrewer",
+         "here")
 
 new.pkg <- pkg[!(pkg %in% installed.packages())]
 if (length(new.pkg)){install.packages(new.pkg)}
@@ -59,16 +54,16 @@ lapply(pkg, library, character.only = TRUE)
 
 ## Vector Data: Points
 
-`sf`, `tmap` and `ggplot2` specialize in vector data, which is tabular data.
+`sf`, `tmap` and `ggplot2` specialize in vector data, which is tabular data such as points, lines, and polygons. 
 
 Examples of vector file formats:
 
--   shapefiles (`.shp` and their auxillary files `.shx`, `.dbf`, `.prj`)
--   GeoPackages (`.gpkg`)
+-   shapefile (`.shp` and their auxillary files `.shx`, `.dbf`, `.prj`)
+-   GeoPackage (`.gpkg`)
 -   GeoParquet (`.parquet`)
 -   GeoJSON (`.geojson`)
 
-Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/). Tabular downloaded straight to your working directory will not always have spatial metadata associated with it, so you may have to assign it using spatial package functions.
+Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/). Spatial data will not always have the critical spatial metadata associated with it, so you may have to manually assign it using spatial package functions before plotting.
 
 ```{r}
 # read in a list of items containing polar bear data, including metadata
@@ -103,7 +98,7 @@ pb_spatial <- pb_obs %>%
 
 ### Base R plot()
 
-Simply plot the point data using the native R function `plot()`.
+Start with the basics: plot the point data using the native R function `plot()`.
 
 ```{r}
 plot(st_geometry(pb_spatial),
@@ -115,7 +110,7 @@ plot(st_geometry(pb_spatial),
      ylab = "Latitude")
 ```
 
-That plot is pretty simple, and it has little context without a palette or a basemap. Make an interactive map with the color of the points representing the year of the observation, and a basemap. This can be done with either `mapview` or `leaflet`.
+That static plot is pretty bland, and it has little context without a palette or a basemap. Make an _interactive_ map with the color of the points representing the year of the observation on a basemap. This can be done with either `mapview` or `leaflet`.
 
 #### mapview
 
@@ -157,7 +152,8 @@ leaflet(data = pb_spatial) %>%
   )
 ```
 
-### `ggplot` polygons
+
+### `ggplot`: plotting polygons
 
 `sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap.
 
@@ -183,9 +179,9 @@ ggplot(data = world) +
 ```
 
 
-### `tmap` points
+### `tmap`: plotting points
 
-`tmap` is based on `ggplot`, but is specifically designed for *mapping* rather than *plotting* with many tailorable options. It recognizes spatial objects from `sf`, `terra`, and other geospatial packages. `tmap` can make both static and interactive maps, as it builds on `ggplot` and `leaflet`. More detailed basemaps, like those availble in `leaflet`, are only an option in interactive mode for `tmap`. For large-scale data, you can load in a simple world map to use as a basemap.  
+`tmap` is specifically designed for *mapping* spatial data with many highly tailorable options, making it more customizable than `ggplot`. It recognizes spatial objects from `sf`, `terra`, and other geospatial packages. `tmap` can make both static and interactive maps, as it builds on `ggplot` and `leaflet`. More detailed basemaps, like those availble from `leaflet` and ESRI, are only an option in _interactive_ mode for `tmap`. For large-scale static data, you can load in a simple world map to use as a basemap.  
 
 `tmap` allows for fine control over the locations of the title and legend. You can choose inside or outside the map, with values between 0-1 specified for the `x` and `y` position.
 
@@ -213,9 +209,7 @@ tm_shape(World) +
 
 ## Vector Data: Polygons
 
-Polygon data is composed of multiple points connected by lines to create closed shapes. Since there are many polar bears in Canada, let's plot the polar bear observations on top of only Canada and Greenland polygons using both `tmap` and `ggplot`.
-
-First, we can subset the world's polygons from `rnaturalearth` to just those for Svalbard and Jan Mayen, based on the International Organization for Standardization (ISO) code.
+Polygon data is composed of multiple points connected by lines to create closed shapes. Since there are many polar bears in Canada and Greenland, plot the polar bear observations on top of only Canada and Greenland polygons using both `tmap` and `ggplot`.
 
 ```{r}
 canada_greenland <- rnaturalearth::ne_countries(scale = "medium", 
@@ -223,7 +217,7 @@ canada_greenland <- rnaturalearth::ne_countries(scale = "medium",
                                    filter(admin %in% c("Canada", "Greenland"))
 ```
 
-We only want to plot the polar bear points that fit within these polygons, so we can execute a spatial join.
+We only want to plot the polar bear points that fit within these polygons, so execute a spatial join.
 
 ```{r}
 pb_canada_greenland <- st_join(pb_spatial, 
@@ -239,7 +233,8 @@ pb_canada_greenland <- st_join(pb_spatial,
 blue_palette <- RColorBrewer::brewer.pal(n = 2, name = "Blues")
 
 ggplot(data = canada_greenland) +
-  geom_sf(aes(fill = admin), color = "black") +
+  geom_sf(aes(fill = admin), 
+          color = "black") +
   scale_fill_manual(values = blue_palette) +
   geom_sf(data = pb_canada_greenland,
           color = "red",
@@ -269,14 +264,96 @@ tm_shape(canada_greenland) +
   tm_layout(title = "Canada and Greenland\nPolar Bear Observations",
             title.size = 1,
             legend.title.size = 0.9,
+            title.fontface = "bold",
             legend.text.size = 0.8,
-            title.position = c(0.68, 0.31)) +
+            title.position = c(0.66, 0.31)) +
   tm_xlab("Longitude") +
   tm_ylab("Latitude")
 ```
 
+Add a polygon for polar bear habitat range from the [International Union for Conservation of Nature (IUCN) Red List](https://www.iucnredlist.org/species/22823/14871490). This means we have 3 vector objects overlaid: polygons for country borders, points for polar bear observations, and 1 polygon for habitat.
 
-###
+#TODO: Add IUCN citation for data
+
+```{r}
+fp_habitat = "course-materials/resources/data/pb_range/data_0.shp"
+pb_habitat = st_read(here(fp_habitat))
+# convert from a "simple feature collection" with 15 fields
+# to just the geometry
+pb_habitat_poly <- st_geometry(pb_habitat)
+```
+
+```{r}
+plot(pb_habitat_poly,
+     main = "Polar Bear Observations",
+     col = "yellow",
+     axes = TRUE,
+     xlab = "Latitude",
+     ylab = "Longitude")
+```
+
+Check that the CRS matches for both spatial objects before plotting or performing spatial operations. 
+
+```{r}
+st_crs(pb_habitat_poly) == st_crs(pb_spatial)
+```
+
+### ggplot: points and polygons
+
+```{r}
+ggplot(data = canada_greenland) +
+  geom_sf(aes(fill = admin), 
+          color = "black") +
+  scale_fill_manual(values = blue_palette) +
+  geom_sf(data = pb_canada_greenland,
+          color = "red",
+          size = 1) +
+  geom_sf(data = pb_habitat_poly,
+          fill = "yellow",
+          color = "darkgoldenrod1",
+          alpha = 0.2) +
+  theme_minimal() +
+  labs(title = "Canada and Greenland Polar Bear Observations",
+       subtitle = "with habitat range",
+       fill = "Country",
+       xlab = "Longitude",
+       ylab = "Latitude") +
+  # limit map window: zoom into Canada and Greenland
+  coord_sf(
+    xlim = st_bbox(canada_greenland)[c("xmin", "xmax")],
+    ylim = st_bbox(canada_greenland)[c("ymin", "ymax")])
+```
+
+### tmap: points and polygons
+
+```{r}
+tm_shape(canada_greenland) + 
+  tm_fill(col = "admin", 
+          palette = blue_palette, 
+          title = "Country") +
+  tm_borders(col = "black") +
+  tm_shape(pb_canada_greenland) +
+  tm_dots(col = "red", size = 0.1) +
+  tm_grid(lines = TRUE,
+          col = "gray",
+          labels.inside.frame = TRUE,
+          n.x = 10, n.y = 10,
+          alpha = 0.5) +
+  tm_shape(pb_habitat_poly) +
+  tm_fill(col = "yellow", 
+          alpha = 0.2, 
+          title = "habitat") +
+  tm_borders(col = "darkgoldenrod1") +
+  tm_layout(title = "Canada and Greenland\nPolar Bear Observations\nwith Habitat Range",
+            title.size = 1,
+            title.fontface = "bold",
+            legend.title.size = 0.9,
+            legend.text.size = 0.8,
+            title.position = c(0.66, 0.31)) +
+  tm_xlab("Longitude") +
+  tm_ylab("Latitude")
+```
+
 
 ## Raster Data
 
@@ -290,13 +367,71 @@ Examples of file formats:
 
 ### terra
 
+Import a raster of sea ice that covers the area of Canada, Greenland, and more of the Arctic Circle:
+
+Source: https://noaadata.apps.nsidc.org/NOAA/G02135/north/monthly/geotiff/12_Dec/
+Metadata: https://nsidc.org/data/g02135/versions/3#anchor-data-access-tools
+
+```{r}
+fp_ice = "course-materials/resources/data/Arctic_ice/N_197812_concentration_v3.0.tif"
+arctic_ice <- terra::rast(here(fp_ice))
+
+terra::plot(arctic_ice,
+            main = "Arctic Sea Ice Concentration")
+```
+
+Make a histogram of the raster values using the base R `hist` to better understand the numerical data you're visualizing:
+
+```{r}
+hist(arctic_ice,
+     main = "Arctic Ice Concentration Raster Values",
+     xlab = "Values",
+     ylab = "Frequency",
+     col = "blue",
+     border = "black")
+```
+
+Check the CRS:
+
+```{r}
+st_crs(arctic_ice)
+```
+
+The CRS is projected and in units of meters. See metadata [here](https://nsidc.org/data/user-resources/help-center/guide-nsidcs-polar-stereographic-projection).
+
+In order to properly plot multiple spatial objects on top of one another, they must have the same CRS. Transform the CRS of the habitat polygon into the CRS of the raster for Arctic sea ice since they do not already match.
+
+```{r}
+pb_habitat_arctic <- st_transform(pb_habitat_poly, st_crs(arctic_ice))
+st_crs(pb_habitat_arctic) == st_crs(arctic_ice)
+```
+
+```{r}
+terra::plot(arctic_ice,
+            main = "Sea Ice Concentration and Polar Bear Habitat")
+terra::plot(pb_habitat_arctic, 
+            add = TRUE, 
+            border = "darkgoldenrod1", 
+            col = adjustcolor("yellow", alpha.f = 0.2))
+```
+
+
+### ggplot: rasters
+
 ```{r}
 
 ```
 
-### `tidyterra`
+
+### tmap: rasters
 
 ```{r}
 
+```
+
+
+### `tidyterra`
+
+```{r}
 
 ```
