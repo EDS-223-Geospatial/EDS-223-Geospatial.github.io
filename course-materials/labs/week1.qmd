@@ -1,6 +1,6 @@
 ---
 title: "Week 1: Lab"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+subtitle: "Making maps with `tmap`"
 author: "Ruth Oliver"
 date: last-modified
 format:
