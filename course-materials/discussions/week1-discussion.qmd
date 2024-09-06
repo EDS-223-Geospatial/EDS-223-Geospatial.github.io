@@ -1,174 +1,24 @@
 ---
-title: "Discssuion Week 1: Making Maps"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
-author: "Allie Caughmam"
+title: "Week 1 Discussion Section"
+subtitle: "Map making with `tmap` and beyond"
+author: "Alessandra Vidal Meza"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true
 ---
 
-The following exercises are modified from [Chapter 9 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/adv-map.html)
+## Learning objectives for discussion section:
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## Prerequisites
-
-Let's load all necessary packages:
-
-```{r load, include=TRUE, message=FALSE, warning=FALSE}
-library(sf)
-library(raster)
-library(terra)
-library(spData)
-library(spDataLarge)
-library(tidyverse)
-library(ggspatial)
-library(patchwork)
-```
-
-## Exercise 1
-These exercises rely on a new data object based on the **world** and **worldbank_df** datasets from the **spData** package.
-
-```{r include=TRUE}
-africa <- world %>% 
-  dplyr::filter(continent == "Africa", !is.na(iso_a2)) %>% 
-  dplyr::left_join(worldbank_df, by = "iso_a2") %>% 
-  dplyr::select(name, subregion, gdpPercap, HDI, pop_growth) %>% 
-  sf::st_transform("+proj=aea +lat_1=20 +lat_2=-23 +lat_0=0 +lon_0=25")
-```
-
-### Map 1
-Create a map showing the geographic distribution of the Human Development Index (HDI) across Africa.  
-
-```{r include=TRUE}
-m1 <- ggplot2::ggplot(africa) +
-  ggplot2::geom_sf(aes(fill = HDI)) +
-  ggplot2::theme_bw() 
-```
-
-```{r}
-m1
-```
-
-### Map 2
-Now, let's update the map so the legend has three bins:
-- **High** where HDI is above 0.7
-- **Medium** where HDI is between 0.55 and 0.7
-- **Low** where HDI is below 0.55
-
-```{r include=TRUE}
-m2 <- m1 + 
-  ggplot2::scale_fill_binned(breaks = c(.55, 0.7))
-```
-
-```{r include=TRUE}
-m2
-```
-
-### Map 3
-Next, let's represent Africa's sub regions on the map:
-- Change the color palette 
-- Change the legend title 
-
-```{r include=TRUE}
-m3 <- ggplot2::ggplot(africa) +
-  ggplot2::geom_sf(aes(fill = subregion)) +
-  ggplot2::theme_bw() +
-  ggplot2::scale_fill_viridis_d() +
-  ggplot2::labs(fill = "Subregion")
-```
-
-```{r}
-m3
-```
-
-Let's use **patchwork** to combine this map with the previous map into a single plot:
-
-```{r}
-m2 + m3
-```
-
-
-## Exercise 2
-Here, we will use the **zion** and **nlcd** datasets from the **spDataLarge** package:
-
-```{r include=TRUE, results='hide'}
-zion <- sf::st_read((system.file("vector/zion.gpkg", package = "spDataLarge")))
-```
-
-```{r eval=FALSE}
-# For spDataLarge version 2.0.X
-data(nlcd, package = "spDataLarge")
-force(nlcd)
-```
-
-```{r, results='hide'}
-# For spDataLarge version 2.1.1
-nlcd <- terra::rast(system.file("raster/nlcd.tif", package = "spDataLarge"))
-```
-
-First, we need to convert the raster into a dataframe
-```{r}
-nlcd_df <- as.data.frame(nlcd, xy = TRUE)
-```
-
-### Map 4
-
-Let's create a land cover map of Zion National Park:
-
-- Change the default colors to match your perception of land cover categories   
-- Move the map legend outside of the map to improve readability 
-- Add a scale bar and north arrow
-- Change the position of the scale bar and north arrow to improve the maps aesthetics 
-- Add the park boundaries on top of the land cover map    
-
-```{r include=TRUE}
-m4 <- ggplot2::ggplot() +
-  ggplot2::geom_raster(data = nlcd_df,
-                       aes(x = x, y = y, fill = levels)) + # layer_levels in spDataLarge 2.0.9
-  ggplot2::geom_sf(data = zion, aes(fill = NA), alpha = 0.2, linewidth = 1, color = "black") +
-  ggplot2::labs(fill = "Land Cover Type") +
-  ggplot2::theme_bw() +
-  ggplot2::scale_fill_manual(values = c("tan", "lightgreen", "darkgrey", "darkgreen", "green", "purple", "blue", "brown")) +
-  ggspatial::annotation_scale(plot_unit = "km") +
-  ggspatial::annotation_north_arrow(location = "br",
-                         pad_x = unit(0.2, "in"),
-                         pad_y = unit(0.2, "in"),
-                         style = ggspatial::north_arrow_nautical(fill = c("grey40", "white"),
-                                                                 line_col = "grey20"))
-```
-
-```{r}
-m4
-```
-
-### Map 5
-Now, let's add an inset of Zion's location in the context of the state of Utah. Hint: an object representing Utah can be subset from the **us_states** dataset.
-
-```{r}
-states <- us_states %>% 
-  janitor::clean_names() %>% 
-  dplyr::filter(name == "Utah")
-```
-
-```{r}
-m5 <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = states) + 
-  ggplot2::geom_sf(data = zion) +
-  ggplot2::theme_bw() +
-  ggplot2::theme(axis.text = element_blank(),
-                 axis.ticks = element_blank())
-```
-
-```{r}
-m5
-```
-
-Let's use **patchwork** again to combine elements:
-
-```{r}
-m4 + patchwork::inset_element(m5, 0.7, 0.7, 1, 1) + patchwork::plot_annotation(tag_levels = "A")
-```
+- read in spatial objects
+  - (we should provide code)
+- create map with single spatial object
+- create map with multiple spatial objects
+- use different types of plotting formats (e.g. `tm_polygons`, `tm_fill`, `tm_dots`, etc.)
+- adjust color palettes
+- include essential map elements: scale bar & north arrow or graticules
+- create an interactive map
+- should use `tmap`, but could include bonus challenge to reproduce map using `ggplot2`
+- should link to Juliet's map making resource
