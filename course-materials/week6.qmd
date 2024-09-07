@@ -1,21 +1,31 @@
 ---
-title: "Week 6: Intro to Remote Sensing"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Remote sensing data collection"
+subtitle: "Week 6"
 ---
 
-::: {.callout-tip}
-## Reminder
-Assignment 3 posted Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
-:::
+## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
-## Class Materials
+| Session                                                                         | Materials                                             |
+|---------------------------------------------------------------------------------|-------------------------------------------------------|
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Resolutions: spatial, temporal, spectral, radiometric](link){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [description](labs/week6.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [description](discussions/week6.qmd){target="_blank"} |
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| Lecture  | [Remote sensing basics and raster geometry operations ](https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present?usp=sharing){target="_blank"} | [Template](templates/week4.qmd) <br> [Answer key](labs/week4.html) |
-| Discussion | Bringing vector and raster together | [Template](templates/week6-discussion.qmd) <br> [Answer key](discussions/week6-discussion.html) |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
+| Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
+|:---------------:|------------------------------------------------------------------------|----------------|----------------------------|
+| EOC             | [End-of-class survey (week 1)](https://forms.gle/aPGfCircFN1AZfSe9){target="_blank"}    | Mon 01/08/2024 | Mon 01/08/2024, 11:55pm PT |
+| SR              | [Self reflection (SR #1)](../assignments/SR1-precourse.qmd){target="_blank"}      | Mon 01/08/2024 | Sat 01/13/2024, 11:59pm PT |
+| HW              | [Homework Assignment #1](../assignments/HW1.qmd){target="_blank"}                       | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
 
-## Background Reading
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
+
 - [Remote Sensing of the Environment, Chapter 1](/readings/Jensen-chapter1.pdf){target="_blank"}
 - [Remote Sensing of the Environment, Chapter 2](/readings/Jensen-chapter2.pdf){target="_blank"}
+- [How to Interpret a False-Color Satellite Image](https://earthobservatory.nasa.gov/features/FalseColor){target="_blank"}
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
+- [How raster functions map to stars functions](https://github.com/r-spatial/stars/wiki/How-%60raster%60-functions-map-to-%60stars%60-functions){target="_blank"}
+- [Spatiotemporal raster data handling with stars](https://tmieno2.github.io/R-as-GIS-for-Economists/stars-basics.html#stars-basics){target="_blank"}
+- [A comparison of terra and stars packages](https://www.r-bloggers.com/2021/05/a-comparison-of-terra-and-stars-packages/#:~:text=stars%20is%20set%2Dup%20to,stars%20can%20handle%20rotated%20grids.){target="_blank"}

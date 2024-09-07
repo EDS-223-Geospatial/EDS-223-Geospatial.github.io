@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Week 5: Lorem Ipsum</title>
+<title>Intro to remote sensing &amp; electromagnetism</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,15 +98,11 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="https://docs.google.com/document/d/1uEfXTgl5TAkB50B46yjDWe_gEkgBNy38ghjwXqk40bs/view" target="_blank"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../resources.html"> 
-<span class="menu-text">resources</span></a>
-  </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-weekly-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">weekly materials</span>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">course materials</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-weekly-materials">    
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
         <li>
     <a class="dropdown-item" href="../course-materials/week1.html">
  <span class="dropdown-text">week 1</span></a>
@@ -149,6 +145,18 @@ ul.task-list li input[type="checkbox"] {
   </li>  
     </ul>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../assignments.html"> 
+<span class="menu-text">assignments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://forms.gle/u51tdaAhSAQerHxh6"> 
+<span class="menu-text">redeem tokens</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../resources.html"> 
+<span class="menu-text">resources</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/EDS-223-Geospatial" target="_blank"> <i class="bi bi-github" role="img">
 </i> 
@@ -165,8 +173,8 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Week 5: Lorem Ipsum</h1>
-            <p class="subtitle lead">EDS 223: Geospatial Analysis &amp; Remote Sensing</p>
+      <h1 class="title">Intro to remote sensing &amp; electromagnetism</h1>
+            <p class="subtitle lead">Week 5</p>
                       </div>
   </div>
     
@@ -187,7 +195,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#class-materials" id="toc-class-materials" class="nav-link active" data-scroll-target="#class-materials">Class Materials</a></li>
+  <li><a href="#class-materials" id="toc-class-materials" class="nav-link active" data-scroll-target="#class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</a></li>
+  <li><a href="#assignment-reminders" id="toc-assignment-reminders" class="nav-link" data-scroll-target="#assignment-reminders"><i class="fa-solid fa-pencil" title="pencil" aria-label="pencil"></i> Assignment Reminders</a></li>
+  <li><a href="#background-reading" id="toc-background-reading" class="nav-link" data-scroll-target="#background-reading"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Background Reading</a></li>
   </ul>
 </nav>
     </div>
@@ -199,33 +209,69 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section id="class-materials" class="level2">
-<h2 class="anchored" data-anchor-id="class-materials">Class Materials</h2>
-<table class="table-hover table-bordered caption-top table">
-<colgroup>
-<col style="width: 20%">
-<col style="width: 40%">
-<col style="width: 40%">
-</colgroup>
+<h2 class="anchored" data-anchor-id="class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</h2>
+<table class="table">
 <thead>
 <tr class="header">
-<th><i class="fa-solid fa-calendar-day" title="A calendary with one day highlighted" aria-label="calendar-day"></i> Session</th>
-<th><i class="fa-solid fa-person-chalkboard" title="A person motioning at a chalkboard" aria-label="person-chalkboard"></i> Topic</th>
-<th><i class="fa-solid fa-laptop-code" title="A laptop with on-screen code" aria-label="laptop-code"></i> Lab</th>
+<th>Session</th>
+<th>Materials</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Lecture</td>
-<td><a href="https://docs.google.com/presentation/d/19cLN2bmrSJdDl8QQ1wzbCIC1Wyxywh85uwwjDXoI4ig/present?usp=sharing" target="_blank">Looking ahead in EDS 223</a></td>
-<td></td>
+<td><i class="fa-solid fa-person-chalkboard" title="A person motioning at a chalkboard" aria-label="person-chalkboard"></i> Lecture</td>
+<td><a href="https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present?usp=sharing" target="_blank">Fundamentals of electromagnetic radiation</a></td>
 </tr>
 <tr class="even">
-<td>Discussion</td>
-<td></td>
-<td></td>
+<td><i class="fa-solid fa-laptop-code" title="A laptop with on-screen code" aria-label="laptop-code"></i> Lab</td>
+<td><a href="labs/week#.qmd" target="_blank">Raster geometry operations: local, focal, and zonal</a></td>
+</tr>
+<tr class="odd">
+<td><i class="fa-solid fa-comments" title="two speech bubbles" aria-label="comments"></i> Discussion</td>
+<td><a href="discussions/week#.qmd" target="_blank">Practice with raster geomerty operations</a></td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="assignment-reminders" class="level2">
+<h2 class="anchored" data-anchor-id="assignment-reminders"><i class="fa-solid fa-pencil" title="pencil" aria-label="pencil"></i> Assignment Reminders</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Assignment Type</th>
+<th>Assignment Title</th>
+<th>Date Assigned</th>
+<th>Date Due</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">EOC</td>
+<td><a href="https://forms.gle/aPGfCircFN1AZfSe9" target="_blank">End-of-class survey (week 1)</a></td>
+<td>Mon 01/08/2024</td>
+<td>Mon 01/08/2024, 11:55pm PT</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">SR</td>
+<td><a href="../assignments/SR1-precourse.qmd" target="_blank">Self reflection (SR #1)</a></td>
+<td>Mon 01/08/2024</td>
+<td>Sat 01/13/2024, 11:59pm PT</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">HW</td>
+<td><a href="../assignments/HW1.qmd" target="_blank">Homework Assignment #1</a></td>
+<td>Mon 01/08/2024</td>
+<td>Sat 01/20/2024, 11:59pm PT</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="background-reading" class="level2">
+<h2 class="anchored" data-anchor-id="background-reading"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Background Reading</h2>
+<ul>
+<li><a href="../readings/Jensen-chapter1.pdf" target="_blank">Remote Sensing of the Environment, Chapter 1</a></li>
+<li><a href="../readings/Jensen-chapter2.pdf" target="_blank">Remote Sensing of the Environment, Chapter 2</a></li>
+</ul>
 
 
 </section>

@@ -1,15 +1,15 @@
 ---
-title: "Raster spatial and geometry operations"
-subtitle: "Week 4"
+title: "template {add topic}"
+subtitle: "Week #"
 ---
 
 ## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to raster data](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Basics of raster operations with `terra`](labs/week4.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with raster manipulations](discussions/week4.qmd){target="_blank"} |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [description](link){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [description](labs/week#.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [description](discussions/week#.qmd){target="_blank"} |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 | Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
@@ -21,6 +21,9 @@ subtitle: "Week 4"
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
 
-- [Geocomputation with R, Chapter 3](https://r.geocompx.org/attr.html){target="_blank"}
-- [Geocomputation with R, Chapter 4](https://r.geocompx.org/spatial-operations.html){target="_blank"}
-- [Geocomputation with R, Chapter 5](https://r.geocompx.org/geometry-operations.html){target="_blank"}
+-
+
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
+
+-

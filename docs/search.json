@@ -65,42 +65,42 @@
   {
     "objectID": "course-materials/week5.html",
     "href": "course-materials/week5.html",
-    "title": "Week 5: Lorem Ipsum",
+    "title": "Intro to remote sensing & electromagnetism",
     "section": "",
-    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nLooking ahead in EDS 223\n\n\n\nDiscussion"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nFundamentals of electromagnetic radiation\n\n\n Lab\nRaster geometry operations: local, focal, and zonal\n\n\n Discussion\nPractice with raster geomerty operations"
   },
   {
     "objectID": "course-materials/week5.html#class-materials",
     "href": "course-materials/week5.html#class-materials",
-    "title": "Week 5: Lorem Ipsum",
+    "title": "Intro to remote sensing & electromagnetism",
     "section": "",
-    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nLooking ahead in EDS 223\n\n\n\nDiscussion"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nFundamentals of electromagnetic radiation\n\n\n Lab\nRaster geometry operations: local, focal, and zonal\n\n\n Discussion\nPractice with raster geomerty operations"
   },
   {
     "objectID": "course-materials/week3.html",
     "href": "course-materials/week3.html",
-    "title": "Vector operations",
+    "title": "Spatial and geometry operations with vector data",
     "section": "",
-    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to subsetting, aggregating, summarizing, and simplifying\nTemplate  Answer key\n\n\nDiscussion\n\nTemplate  Answer key"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice with vector operations"
   },
   {
     "objectID": "course-materials/week3.html#class-materials",
     "href": "course-materials/week3.html#class-materials",
-    "title": "Vector operations",
+    "title": "Spatial and geometry operations with vector data",
     "section": "",
-    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to subsetting, aggregating, summarizing, and simplifying\nTemplate  Answer key\n\n\nDiscussion\n\nTemplate  Answer key"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice with vector operations"
   },
   {
     "objectID": "course-materials/week3.html#background-reading",
     "href": "course-materials/week3.html#background-reading",
-    "title": "Vector operations",
+    "title": "Spatial and geometry operations with vector data",
     "section": "Background Reading",
     "text": "Background Reading\n\nGeocomputation with R, Chapter 4\nGeocomputation with R, Chapter 5\nGIS Fundamentals, Chapter 9 Part 1\nDouglas–Peucker Algorithm (Cartography Playground)\nLine Simplification with Visvalingam–Whyatt Algorithm (Mike Bostok)"
   },
   {
     "objectID": "course-materials/week3.html#technical-background",
     "href": "course-materials/week3.html#technical-background",
-    "title": "Vector operations",
+    "title": "Spatial and geometry operations with vector data",
     "section": "Technical Background",
     "text": "Technical Background\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
   },
@@ -494,7 +494,7 @@
     "href": "course-materials/discussions/week3-discussion.html",
     "title": "Week 3 Discussion Section",
     "section": "",
-    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests"
+    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests\n\nResources: Chapters 4 and 5 of Geocomputation with R"
   },
   {
     "objectID": "course-materials/discussions/week3-discussion.html#prerequisites",
@@ -772,56 +772,56 @@
   {
     "objectID": "course-materials/week1.html",
     "href": "course-materials/week1.html",
-    "title": "Intro to 223 and map making",
+    "title": "Intro to EDS 223 and map making",
     "section": "",
-    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nWelcome to EDS 223, why spatial and making maps\nIntro to making maps with tmap\n\n\nDiscussion\nMaking maps\nMap making practice"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nWelcome to EDS 223, why spatial?, and fundamentals of good maps\n\n\n Lab\nMaking maps in R with tmap\n\n\n Discussion\nMap making practice"
   },
   {
     "objectID": "course-materials/week1.html#class-materials",
     "href": "course-materials/week1.html#class-materials",
-    "title": "Intro to 223 and map making",
+    "title": "Intro to EDS 223 and map making",
     "section": "",
-    "text": "Session\n Topic\n Lab\n\n\n\n\nLecture\nWelcome to EDS 223, why spatial and making maps\nIntro to making maps with tmap\n\n\nDiscussion\nMaking maps\nMap making practice"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nWelcome to EDS 223, why spatial?, and fundamentals of good maps\n\n\n Lab\nMaking maps in R with tmap\n\n\n Discussion\nMap making practice"
   },
   {
     "objectID": "course-materials/week1.html#background-reading",
     "href": "course-materials/week1.html#background-reading",
-    "title": "Intro to 223 and map making",
+    "title": "Intro to EDS 223 and map making",
     "section": " Background Reading",
     "text": "Background Reading\n\nGeocomputation with R, Chapter 9\nGIS Fundamentals, Chapter 2\nGIS Fundamentals, Chapter 3\nA Gentle Introduction to GIS, Chapter 8\nGeographic vs projected coordinate systems (Esri)"
   },
   {
     "objectID": "course-materials/week1.html#technical-background",
     "href": "course-materials/week1.html#technical-background",
-    "title": "Intro to 223 and map making",
+    "title": "Intro to EDS 223 and map making",
     "section": " Technical Background",
     "text": "Technical Background\n\ntmap: thematic maps in R documentation\ntmap overview\nCreating thematic maps in R"
   },
   {
     "objectID": "course-materials/week1.html#additional-resources",
     "href": "course-materials/week1.html#additional-resources",
-    "title": "Intro to 223 and map making",
+    "title": "Intro to EDS 223 and map making",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nJohn Snow: A Legacy of Disease Detectives (CDC)\nHow the north ended up on top of the map (Al Jazeera)\nWhy maps point North on top? (Geospatial World)\nWhy all world maps are wrong (Vox)"
   },
   {
     "objectID": "course-materials/week2.html",
     "href": "course-materials/week2.html",
-    "title": "Intro to spatial data models and coordinate reference systems",
+    "title": "Intro to spatial data models",
     "section": "",
-    "text": "Lecture\n Lab\n Discussion Sections\n\n\n\n\nLecture\nIntro to spatial/vector data models\nManipulating vector data with simple featues sf\n\n\nDiscussion"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to spatial/vector data models\n\n\n Lab\nSpatial operations with vector data\n\n\n Discussion\nWorking with multiple vector types"
   },
   {
     "objectID": "course-materials/week2.html#class-materials",
     "href": "course-materials/week2.html#class-materials",
-    "title": "Intro to spatial data models and coordinate reference systems",
+    "title": "Intro to spatial data models",
     "section": "",
-    "text": "Lecture\n Lab\n Discussion Sections\n\n\n\n\nLecture\nIntro to spatial/vector data models\nManipulating vector data with simple featues sf\n\n\nDiscussion"
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to spatial/vector data models\n\n\n Lab\nSpatial operations with vector data\n\n\n Discussion\nWorking with multiple vector types"
   },
   {
     "objectID": "course-materials/week2.html#background-reading",
     "href": "course-materials/week2.html#background-reading",
-    "title": "Intro to spatial data models and coordinate reference systems",
+    "title": "Intro to spatial data models",
     "section": " Background Reading",
     "text": "Background Reading\n\nGIS Fundamentals, Chapter 2 Part 2\nGeocomputation with R, Chapter 2\nGeocomputation with R, Chapter 3\nGeocomputation with R, Chapter 7"
   },
@@ -835,44 +835,44 @@
   {
     "objectID": "course-materials/week4.html",
     "href": "course-materials/week4.html",
-    "title": "Week 4: Raster Operations",
+    "title": "Raster spatial and geometry operations",
     "section": "",
-    "text": "Reminder\n\n\n\nCheck-in Quiz 1 due Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to raster data\n\n\n Lab\nBasics of raster operations with terra\n\n\n Discussion\nPractice with raster manipulations"
   },
   {
     "objectID": "course-materials/week4.html#class-materials",
     "href": "course-materials/week4.html#class-materials",
-    "title": "Week 4: Raster Operations",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nIntro to raster data model\nTemplate  Answer key\n\n\nDiscussion\nRaster operation basics\nTemplate  Answer key"
+    "title": "Raster spatial and geometry operations",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to raster data\n\n\n Lab\nBasics of raster operations with terra\n\n\n Discussion\nPractice with raster manipulations"
   },
   {
     "objectID": "course-materials/week4.html#background-reading",
     "href": "course-materials/week4.html#background-reading",
-    "title": "Week 4: Raster Operations",
-    "section": "Background Reading",
+    "title": "Raster spatial and geometry operations",
+    "section": " Background Reading",
     "text": "Background Reading\n\nGeocomputation with R, Chapter 3\nGeocomputation with R, Chapter 4\nGeocomputation with R, Chapter 5"
   },
   {
     "objectID": "course-materials/week6.html",
     "href": "course-materials/week6.html",
-    "title": "Week 6: Intro to Remote Sensing",
+    "title": "Remote sensing data collection",
     "section": "",
-    "text": "Reminder\n\n\n\nAssignment 3 posted Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nResolutions: spatial, temporal, spectral, radiometric\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week6.html#class-materials",
     "href": "course-materials/week6.html#class-materials",
-    "title": "Week 6: Intro to Remote Sensing",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nRemote sensing basics and raster geometry operations\nTemplate  Answer key\n\n\nDiscussion\nBringing vector and raster together\nTemplate  Answer key"
+    "title": "Remote sensing data collection",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nResolutions: spatial, temporal, spectral, radiometric\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week6.html#background-reading",
     "href": "course-materials/week6.html#background-reading",
-    "title": "Week 6: Intro to Remote Sensing",
-    "section": "Background Reading",
-    "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 1\nRemote Sensing of the Environment, Chapter 2"
+    "title": "Remote sensing data collection",
+    "section": " Background Reading",
+    "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 1\nRemote Sensing of the Environment, Chapter 2\nHow to Interpret a False-Color Satellite Image"
   },
   {
     "objectID": "course-materials/week8.html",
@@ -982,7 +982,7 @@
   {
     "objectID": "course-materials/week1.html#assignment-reminders",
     "href": "course-materials/week1.html#assignment-reminders",
-    "title": "Intro to 223 and map making",
+    "title": "Intro to EDS 223 and map making",
     "section": " Assignment Reminders",
     "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nPre-course reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
   },
@@ -998,13 +998,118 @@
     "href": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
     "title": "Week 3 Discussion Section",
     "section": "",
-    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests"
+    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests\n\nResources: Chapters 4 and 5 of Geocomputation with R"
   },
   {
     "objectID": "course-materials/week2.html#assignment-reminders",
     "href": "course-materials/week2.html#assignment-reminders",
-    "title": "Intro to spatial data models and coordinate reference systems",
+    "title": "Intro to spatial data models",
     "section": " Assignment Reminders",
     "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nPre-course reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html",
+    "href": "course-materials/discussions/week2-discussion.html",
+    "title": "Week 2 Discussion Section",
+    "section": "",
+    "text": "read in multiple vector datasets of different types\ncheck CRS\ntransform CRS to match across all datasets\nperform attribute manipulations (e.g. filter, mutate, select)\nplot data"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#learning-objectives-for-discussion-section",
+    "href": "course-materials/discussions/week2-discussion.html#learning-objectives-for-discussion-section",
+    "title": "Week 2 Discussion Section",
+    "section": "",
+    "text": "read in multiple vector datasets of different types\ncheck CRS\ntransform CRS to match across all datasets\nperform attribute manipulations (e.g. filter, mutate, select)\nplot data"
+  },
+  {
+    "objectID": "course-materials/week2.html#additional-resources",
+    "href": "course-materials/week2.html#additional-resources",
+    "title": "Intro to spatial data models",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
+  },
+  {
+    "objectID": "course-materials/week3.html#assignment-reminders",
+    "href": "course-materials/week3.html#assignment-reminders",
+    "title": "Spatial and geometry operations with vector data",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/week3.html#additional-resources",
+    "href": "course-materials/week3.html#additional-resources",
+    "title": "Spatial and geometry operations with vector data",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
+  },
+  {
+    "objectID": "course-materials/week4.html#assignment-reminders",
+    "href": "course-materials/week4.html#assignment-reminders",
+    "title": "Raster spatial and geometry operations",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/week5.html#assignment-reminders",
+    "href": "course-materials/week5.html#assignment-reminders",
+    "title": "Intro to remote sensing & electromagnetism",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/week5.html#background-reading",
+    "href": "course-materials/week5.html#background-reading",
+    "title": "Intro to remote sensing & electromagnetism",
+    "section": " Background Reading",
+    "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 1\nRemote Sensing of the Environment, Chapter 2"
+  },
+  {
+    "objectID": "course-materials/template.html",
+    "href": "course-materials/template.html",
+    "title": "template {add topic}",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\ndescription\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
+  },
+  {
+    "objectID": "course-materials/template.html#class-materials",
+    "href": "course-materials/template.html#class-materials",
+    "title": "template {add topic}",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\ndescription\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
+  },
+  {
+    "objectID": "course-materials/template.html#assignment-reminders",
+    "href": "course-materials/template.html#assignment-reminders",
+    "title": "template {add topic}",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/template.html#background-reading",
+    "href": "course-materials/template.html#background-reading",
+    "title": "template {add topic}",
+    "section": " Background Reading",
+    "text": "Background Reading"
+  },
+  {
+    "objectID": "course-materials/template.html#additional-resources",
+    "href": "course-materials/template.html#additional-resources",
+    "title": "template {add topic}",
+    "section": " Additional Resources",
+    "text": "Additional Resources"
+  },
+  {
+    "objectID": "course-materials/week6.html#assignment-reminders",
+    "href": "course-materials/week6.html#assignment-reminders",
+    "title": "Remote sensing data collection",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/week6.html#additional-resources",
+    "href": "course-materials/week6.html#additional-resources",
+    "title": "Remote sensing data collection",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nHow raster functions map to stars functions\nSpatiotemporal raster data handling with stars\nA comparison of terra and stars packages"
   }
 ]

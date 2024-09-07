@@ -1,12 +1,26 @@
 ---
-title: "Week 5: Lorem Ipsum"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Intro to remote sensing & electromagnetism"
+subtitle: "Week 5"
 ---
 
-## Class Materials
+## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| Lecture  | [Looking ahead in EDS 223 ](https://docs.google.com/presentation/d/19cLN2bmrSJdDl8QQ1wzbCIC1Wyxywh85uwwjDXoI4ig/present?usp=sharing){target="_blank"} | |
-| Discussion | | |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+| Session                                                                         | Materials                                             |
+|---------------------------------------------------------------------------------|-------------------------------------------------------|
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present?usp=sharing){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Raster geometry operations: local, focal, and zonal](labs/week#.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with raster geomerty operations](discussions/week#.qmd){target="_blank"} |
+
+## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
+| Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
+|:---------------:|------------------------------------------------------------------------|----------------|----------------------------|
+| EOC             | [End-of-class survey (week 1)](https://forms.gle/aPGfCircFN1AZfSe9){target="_blank"}    | Mon 01/08/2024 | Mon 01/08/2024, 11:55pm PT |
+| SR              | [Self reflection (SR #1)](../assignments/SR1-precourse.qmd){target="_blank"}      | Mon 01/08/2024 | Sat 01/13/2024, 11:59pm PT |
+| HW              | [Homework Assignment #1](../assignments/HW1.qmd){target="_blank"}                       | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
+
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
+
+- [Remote Sensing of the Environment, Chapter 1](/readings/Jensen-chapter1.pdf){target="_blank"}
+- [Remote Sensing of the Environment, Chapter 2](/readings/Jensen-chapter2.pdf){target="_blank"}
+

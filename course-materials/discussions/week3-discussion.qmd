@@ -14,3 +14,5 @@ format:
 - spatial and distance-based joins
 - big goal is to be able to understand the output of each of these operations
 - to help assist diagnosing output, practice writing error/warning messages and unit tests
+
+Resources: Chapters [4](https://r.geocompx.org/spatial-operations.html) and [5](https://r.geocompx.org/geometry-operations) of Geocomputation with R

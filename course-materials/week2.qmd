@@ -1,16 +1,16 @@
 ---
-title: "Intro to spatial data models and coordinate reference systems"
+title: "Intro to spatial data models"
 subtitle: "Week 2"
 ---
 
 
 ## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture  | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab  |  {{< fa comments title="two speech bubbles" >}} Discussion Sections |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| Lecture  | [Intro to spatial/vector data models](https://docs.google.com/presentation/d/1ywgmLUhRjI1uO5Ln2LgZ9lvG1KvZtvt1Zh_YQRz2kCs/present?usp=sharing){target="_blank"} | [Manipulating vector data with simple featues `sf`](labs/week2.qmd) |
-| Discussion | | |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
+| Session                                                                         | Materials                                             |
+|---------------------------------------------------------------------------------|-------------------------------------------------------|
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to spatial/vector data models](https://docs.google.com/presentation/d/1ywgmLUhRjI1uO5Ln2LgZ9lvG1KvZtvt1Zh_YQRz2kCs/present?usp=sharing){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Spatial operations with vector data](labs/week2.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Working with multiple vector types](discussions/week2.qmd){target="_blank"} |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 | Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
@@ -25,7 +25,7 @@ subtitle: "Week 2"
 - [*Geocomputation with R*, Chapter 3](https://r.geocompx.org/attr.html){target="_blank"}
 - [*Geocomputation with R*, Chapter 7](https://r.geocompx.org/reproj-geo-data){target="_blank"}
 
-## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Technical Background
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
 - [sf overview](https://r-spatial.github.io/sf/index.html){target="_blank"}
 - [sf cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf){target="_blank"}
 - [Introduction to sf and stars](https://r-spatial.org/book/07-Introsf.html){target="_blank"}
