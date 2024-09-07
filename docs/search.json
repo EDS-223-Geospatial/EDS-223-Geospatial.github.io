@@ -25,14 +25,14 @@
     "href": "course-materials/week9.html",
     "title": "Week 9: Land Cover Classification",
     "section": "",
-    "text": "Reminder\n\n\n\nCheck-in Quiz 4 due Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with random forests\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week9.html#class-materials",
     "href": "course-materials/week9.html#class-materials",
     "title": "Week 9: Land Cover Classification",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nImage classification and supervised approach\nDownload data  Template  Answer key\n\n\nDiscussion\nTBD\nDownload data  Template  Answer key"
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with random forests\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week7.html",
@@ -107,29 +107,29 @@
   {
     "objectID": "course-materials/week10.html",
     "href": "course-materials/week10.html",
-    "title": "Week 10: Active Remote Sensing",
+    "title": "Intro to active remote sensing",
     "section": "",
-    "text": "Reminder\n\n\n\nAssignment 4 due Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week10.html#class-materials",
     "href": "course-materials/week10.html#class-materials",
-    "title": "Week 10: Active Remote Sensing",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nFundamentals of LiDAR and RADAR\nDownload data  Template  Answer key\n\n\nDiscussion\nWorkflows and maps\nDownload data  Template  Answer key"
+    "title": "Intro to active remote sensing",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week10.html#background-reading",
     "href": "course-materials/week10.html#background-reading",
-    "title": "Week 10: Active Remote Sensing",
-    "section": "Background Reading",
+    "title": "Intro to active remote sensing",
+    "section": " Background Reading",
     "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 9\nIntroduction to Interpreting Digital RADAR Images\nIntroduction to Light Detection and Ranging (Lidar) Remote Sensing Data (Earth Lab, CU Boulder)\nWhat is Synthetic Aperture Radar? (NASA)\nGet To Know SAR: Polarimetry (NASA)"
   },
   {
     "objectID": "course-materials/week10.html#additional-resources",
     "href": "course-materials/week10.html#additional-resources",
-    "title": "Week 10: Active Remote Sensing",
-    "section": "Additional Resources",
+    "title": "Intro to active remote sensing",
+    "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
   },
   {
@@ -877,22 +877,22 @@
   {
     "objectID": "course-materials/week8.html",
     "href": "course-materials/week8.html",
-    "title": "Week 8: Remote Sensing of Vegetation",
+    "title": "Remote sensing of vegetation",
     "section": "",
-    "text": "Reminder\n\n\n\nCheck-in Quiz 3 due Weekday, DD-MM-YYYY at HH:MM AM/PM."
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week8.html#class-materials",
     "href": "course-materials/week8.html#class-materials",
-    "title": "Week 8: Remote Sensing of Vegetation",
-    "section": "Class Materials",
-    "text": "Class Materials\n\n\n\n\n\n\n\n\n Session\n Topic\n Lab\n\n\n\n\nLecture\nRemote sensing of vegetation (leaf, canopy, and landscape)\nDownload data  Template  Answer key\n\n\nDiscussion"
+    "title": "Remote sensing of vegetation",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\ndescription"
   },
   {
     "objectID": "course-materials/week8.html#background-reading",
     "href": "course-materials/week8.html#background-reading",
-    "title": "Week 8: Remote Sensing of Vegetation",
-    "section": "Background Reading",
+    "title": "Remote sensing of vegetation",
+    "section": " Background Reading",
     "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 10"
   },
   {
@@ -1111,5 +1111,26 @@
     "title": "Remote sensing data collection",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nHow raster functions map to stars functions\nSpatiotemporal raster data handling with stars\nA comparison of terra and stars packages"
+  },
+  {
+    "objectID": "course-materials/week8.html#assignment-reminders",
+    "href": "course-materials/week8.html#assignment-reminders",
+    "title": "Remote sensing of vegetation",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/week9.html#assignment-reminders",
+    "href": "course-materials/week9.html#assignment-reminders",
+    "title": "Week 9: Land Cover Classification",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/week10.html#assignment-reminders",
+    "href": "course-materials/week10.html#assignment-reminders",
+    "title": "Intro to active remote sensing",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
   }
 ]
