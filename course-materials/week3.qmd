@@ -9,7 +9,7 @@ subtitle: "Week 3"
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to basic spatial data and geometry operations with vector data](https://docs.google.com/presentation/d/1H0kwdJ3rzF6pJkgLYC5KzmMBmYzBV-NJRb1I-3zePYg/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Spatial joins, topological relationships, and distance relationships](labs/week3.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with vector operations](discussions/week#.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with vector operations](discussions/week3.qmd){target="_blank"} |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 | Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |

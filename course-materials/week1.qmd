@@ -10,7 +10,7 @@ subtitle: "Week 1"
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Welcome to EDS 223, why spatial?, and fundamentals of good maps](link){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Making maps in R with `tmap`](labs/week1.qmd.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Map making practice](discussion/week1-discussion.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Map making practice](discussions/week1-discussion.qmd){target="_blank"} |
 
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
