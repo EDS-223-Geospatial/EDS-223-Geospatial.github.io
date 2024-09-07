@@ -3,6 +3,8 @@ title: "Discssuion Week 7"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Allie Caughmam"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true
