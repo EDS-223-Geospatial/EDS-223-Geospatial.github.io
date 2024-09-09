@@ -6,9 +6,16 @@ date: last-modified
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
-In this lab, we'll explore the basics of map-making in R using the `tmap` package. The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
+:::
+
+In this lab, we'll explore the basics of map-making in R using the `tmap` package. 
 
 ## 1. Why `tmap`?
 
@@ -79,8 +86,11 @@ world_cities <- read_sf(here("data","worldcities.gpkg"))
 
 ```
 
+### Shapes and layers
+
 In `tmap`, the spatial object to plot needs to be defined within the function `tm_shape()`. This is analogous to defining the data frame to plot in `ggplot2` (`ggplot(data = )`). 
 
+Let's start by plotting the countries of the world.
 ```{r}
 # plotting a single spatial object
 
@@ -89,7 +99,16 @@ tm_shape(world_vector) + # defines the spatial object to plot
 
 ```
 
+### Shapes hierarchy
+
 Similar to `ggplot2`, we can plot multiple datasets by adding layers. When multiple spatial objects are being plotted, each has to be defined in a separate `tm_shape()` call.
+
+Now let's plot the following two spatial objects:
+
+- countries of the world
+- major cities of the world
+
+In the next section we'll unpack the difference between `tm_polygons()` and `tm_dots()`, but for now let's just pay attention to the syntax of how we plot multiple spatial objects. Each spatial object needs to be specified using `tm_shape()` followed by a function for how to plot it. 
 
 ```{r}
 # plotting two spatial objects
@@ -97,8 +116,225 @@ Similar to `ggplot2`, we can plot multiple datasets by adding layers. When multi
 tm_shape(world_vector) + # defines the FIRST spatial object to plot
   tm_polygons() + # defines how to plot the FIRST object
 tm_shape(world_cities) + # defines the SECOND objet to plot
-  tm_dots() + # defines how to plot the SECOND object
-  tm_text("name") # defines an additional way to plot the SECOND object
+  tm_dots() # defines how to plot the SECOND object
 
 ```
 
+So far, we've only tried plotting *vector* data (more on what this means next week!), but one of the major advantages of `tmap` is that it allows us to plot *vector* and *raster* on the same map.
+
+Let's try on example of this by adding information on global elevations to our previous map.
+
+```{r}
+# plotting vector and raster spatial objects
+
+tm_shape(world_elevation) + # plot global elevations
+  tm_raster() + # tm_raster for raster data
+tm_shape(world_vector) +
+  tm_borders() +
+tm_shape(world_cities) +
+  tm_dots() +
+  tm_text("name")
+```
+
+Similar to `ggplot2` the order of the "layers" matters! The order in which datasets are plotted defines how they are layered (think of this is as adding layers of paint). Spatial objects have extra features which additionally change this behavior: spatial extent and projection. When creating maps with `tmap`, whichever dataset is used in the first `tm_shape()` call sets the spatial extent and projection (more details next week!) for the entire map.
+
+For example, if we swapped the order of `tm_shape()` calls in the previous example, we'd end up with a different map.
+
+```{r}
+
+tm_shape(world_cities) + # plot world_cities first
+  tm_dots() +
+  tm_text("name") +
+tm_shape(world_elevation) +
+  tm_raster() +
+tm_shape(world_vector) +
+  tm_borders() 
+
+```
+
+Sometimes this can present sticky issues! Imagine the case where we want to use the spatial extent and projection from the `world_cities` data, but want it plotted on top of the other datasets. We can do this by changing the main *shape* using the `is.master` argument.
+
+```{r}
+
+tm_shape(world_elevation) + 
+  tm_raster() + 
+tm_shape(world_vector) +
+  tm_borders() +
+tm_shape(world_cities, is.master = TRUE) + # plot world_cities last, but set as main shape
+  tm_dots() +
+  tm_text("name")
+
+```
+
+### Map extent
+
+One thing to consider when making maps is what area we want to show on the map -- the spatial extent of our map. This isn't an issue when we want to map all of our data (spatial extent of our data matches our desired map extent). But often our data will represent a larger region than what we want to map.
+
+We have two options:
+
+- process our data to create a new spatial object for exactly what we want to map (fine, but annoying)
+- change the extent of a map
+
+`tmap` has a few options for changing the map extent. The first is by defining a bounding box that specifies the minimum and maximum coordinates in the x and y directions that we want to represent. The values need to be in the units of the original data or we can create a bounding box using `st_bbox()`.
+
+For example, let's restrict our previous map to just Europe using a set of min/max values.
+
+```{r}
+
+tm_shape(world_elevation, bbox = c(-15, 35, 45, 65)) + # add bounding box to restrict extent
+  tm_raster() + 
+tm_shape(world_vector) +
+  tm_borders() 
+
+```
+
+We can also restrict the extent of the map using the extent of a dataset. For example, we can restrict the map using the extent of the `world_cities` data.
+
+```{r}
+
+tm_shape(world_elevation, bbox = world_cities) + # bounding box = extent of world_cities
+  tm_raster() + 
+tm_shape(world_vector) +
+  tm_borders() 
+
+```
+
+::: {.callout-tip collapse=true}
+## Bonus Tip
+
+You can also restrict the map extent using an OpenStreetMap tool called Nominatim to automatically generate minimum and maximum coordinates in the x and y directions based on the provided query.
+
+```{r}
+
+tm_shape(world_elevation, bbox = "Europe") + # query the region of Europe
+  tm_raster(palette = terrain.colors(8))
+
+```
+
+:::
+
+## 4. Layers
+
+Again following the syntax of `ggplot2` which uses layers to plot data (e.g. `geom_point()`), `tmap` also uses layers! We've already used layers in our previous examples (e.g. `tm_borders()`), but now we'll dig into them in more detail. All possible layer types can be found in the table below:
+
+```{r}
+#| echo: false
+
+layers_basic_df = tibble::tribble(
+  ~Function, ~Element, ~Geometry,
+  "tm_polygons()", "polygons (borders and fill)", "polygons",
+  "tm_symbols()", "symbols", "points, polygons, and lines", 
+  "tm_lines()", "lines", "lines", 
+  "tm_raster()", "raster", "raster",
+  "tm_text()", "text", "points, polygons, and lines",
+  "tm_basemap()", "tile" , "",
+  "tm_tiles()", "tile", ""
+)
+layers_extended_df = tibble::tribble(
+  ~Function, ~Element, ~Geometry,
+  "tm_borders()", "polygons (borders)", "polygons",
+  "tm_fill()", "polygons (fill)", "polygons",
+  "tm_bubbles()", "bubbles", "points, polygons, and lines",
+  "tm_dots()", "dots", "points, polygons, and lines",
+  "tm_markers()", "marker symbols", "points, polygons, and lines",
+  "tm_square()", "squares", "points, polygons, and lines",
+  "tm_iso()", "lines with text labels", "lines",
+  "tm_rgb()/tm_rgba()", "raster (RGB image)", "raster"
+)
+layers_df = rbind(layers_basic_df, 
+                  layers_extended_df)
+
+library(kableExtra)
+knitr::kable(layers_df, 
+             caption = "Map layers.",
+             caption.short = "Map layers",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE) %>% 
+  kableExtra::pack_rows("Basic functions", 1, 7) %>%
+  kableExtra::pack_rows("Derived functions", 8, 15)
+```
+
+Let's practice by using a dataset that contains a polygon representing the perimeter of Easter Island.
+
+```{r}
+#| echo: false
+
+ei_borders <- read_sf(here("course-materials", "data", "easter_island", "ei_border.gpkg"))
+
+```
+
+```{r}
+#| eval: false
+
+ei_borders <- read_sf(here("data", "easter_island", "ei_border.gpkg"))
+
+```
+
+### Polygons
+
+The main function to visualize polygons is `tm_polygons()`. By default, it plots the internal area of the polygon in light grey and the polygon borders in slightly darker grey.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_polygons()
+
+```
+
+We modify the colors useing the `col` and `border.col` arguments and other arguments borrowed from `ggplot2`.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_polygons(col = "lightblue",
+              border.col = "black",
+              lwd = 0.5,
+              lty = "dashed")
+
+```
+
+But, you may have noticed in the previous table that `tm_polygons` isn't the only function we can use to plot polygon data. In fact, `tm_polygons` is a combination of two separate functions - `tm_fill()` and `tm_borders()`. 
+
+The `tm_borders()` function plots just the borders and the `tm_fill()` function fills polygons with a fixed color or a color palette representing a selected variable. 
+
+```{r}
+# plot just borders
+
+tm_shape(world_vector) +
+  tm_borders(col = "red")
+```
+
+```{r}
+# fill polygons with fixed color
+
+tm_shape(world_vector) +
+  tm_fill(col = "lightblue")
+
+```
+
+```{r}
+# fill polygons with a color palette representing a variable
+
+tm_shape(world_vector) +
+  tm_fill("CO2_emissions")
+```
+
+::: {.callout-warning icon=true}
+# Syntax differences
+
+Note that to change the border color in `tm_polygons()` we used the `border.col` argument, but in `tm_borders()` we used the `col` argument. This is necessary in `tm_polygons()` to differentiate between the settings for the polyons fill and borders.
+
+:::
+
+### Symbols
+
+
+
+## 5. Visual variables
+
+## 6. Layout
+
+## 7. Interactive options
