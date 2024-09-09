@@ -5,16 +5,6 @@ date: 2024-09-04
 format: html
 ---
 
-**TODO:**
-
--   Include recs from guide screenshots (when to use which package)
-
--   consider folding chunks for API and CRS transformation so users can focus on the plotting code
-
--   add an enhanced ggplot point map - colored/different basemap, subtitle, etc.
-
--   integrate plot_sf and tidyterra too?
-
 # Plotting Geospatial Data
 
 In R, various geospatial packages exist for visualizing and manipulating spatial data:
@@ -27,7 +17,20 @@ In R, various geospatial packages exist for visualizing and manipulating spatial
 -   `terra`
 -   `tidyterra`
 
-Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This guide provides explanations for which are recommended to get the most out of your visualizations alongisde examples of code.
+First, load the spatial file into R using the `sf` package for vector data, or the `terra` package for raster data.
+
+Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This resource provides example code and explanations for which packages are recommended to get the most out of your visualizations.
+
+## Which mapping package should I use?
+
+| Preference | Package |
+| ---------- | ------- |
+| Are you already familiar with `ggplot` for plotting, and you're interested in a static visualization? | `ggplot2` |
+| Are you interested in highly tailorable map features and the option to create an interactive visualization? | `tmap` |
+| Are you mapping raster data quickly with less code and less flexibility? | `terra::plot` |
+| Are you interested creating interactive maps with high flexibility? | `leaflet` |
+| Are you interested in exploring spatial objects of any sort interactively? | `mapview` |
+
 
 ```{r Import Packages, include = FALSE}
 # install all required packages if not already installed
@@ -63,7 +66,7 @@ Examples of vector file formats:
 -   GeoParquet (`.parquet`)
 -   GeoJSON (`.geojson`)
 
-Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/). Spatial data will not always have the critical spatial metadata associated with it, so you may have to manually assign it using spatial package functions before plotting.
+Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/).
 
 ```{r}
 # read in a list of items containing polar bear data, including metadata
@@ -85,7 +88,7 @@ pb_obs <- na.omit(pb_obs)
 
 ### sf
 
-Point data in tabular format may separate latitude and longitude into separate columns and may not come with spatial metadata such as a coordinate reference system (CRS). `sf` can help create a `geometry` column from separate latitude and longitude columns and set the CRS to WGS84, `EPSG:4326`).
+Spatial data will not always have the critical spatial metadata associated with it, so you may have to manually assign it using spatial package functions before plotting. For example, point data may contain latitude and longitude coordinates into separate columns and may not come with a set coordinate reference system (CRS). `sf` can help create a `geometry` column from separate latitude and longitude columns and set the CRS to WGS84, `EPSG:4326`.
 
 ```{r}
 # convert separate longitude and latitude columns into 
@@ -98,7 +101,7 @@ pb_spatial <- pb_obs %>%
 
 ### Base R plot()
 
-Start with the basics: plot the point data using the native R function `plot()`.
+Start with the basics: plot the point data using the native R function `plot()`, which does not include an interactive feature
 
 ```{r}
 plot(st_geometry(pb_spatial),
@@ -111,6 +114,8 @@ plot(st_geometry(pb_spatial),
 ```
 
 That static plot is pretty bland, and it has little context without a palette or a basemap. Make an _interactive_ map with the color of the points representing the year of the observation on a basemap. This can be done with either `mapview` or `leaflet`.
+
+### Interactive Maps
 
 #### mapview
 
@@ -153,7 +158,7 @@ leaflet(data = pb_spatial) %>%
 ```
 
 
-### `ggplot`: plotting polygons
+### `ggplot`: points on basemaps - static maps
 
 `sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap.
 
@@ -179,13 +184,18 @@ ggplot(data = world) +
 ```
 
 
-### `tmap`: plotting points
+### `tmap`: points on basemaps - static or interactive maps
 
 `tmap` is specifically designed for *mapping* spatial data with many highly tailorable options, making it more customizable than `ggplot`. It recognizes spatial objects from `sf`, `terra`, and other geospatial packages. `tmap` can make both static and interactive maps, as it builds on `ggplot` and `leaflet`. More detailed basemaps, like those availble from `leaflet` and ESRI, are only an option in _interactive_ mode for `tmap`. For large-scale static data, you can load in a simple world map to use as a basemap.  
 
 `tmap` allows for fine control over the locations of the title and legend. You can choose inside or outside the map, with values between 0-1 specified for the `x` and `y` position.
 
+Make a static `tmap`:
+
 ```{r}
+# clarify the default mode is static plot
+tmap_mode("plot")
+
 data(World)
 
 tm_shape(World) +
@@ -199,13 +209,38 @@ tm_shape(World) +
           title = "Year") +
   tm_layout(
     bg.color = "lightblue",
+    title = "Polar Bear\nObservations",
     frame = TRUE,
     title.position = c(0.01, 0.5),
     title.size = 1.2,
-    legend.position = c(0.01, 0.2),
-    title = "Polar Bear\nObservations"
+    legend.frame = TRUE,
+    legend.position = c(0.01, 0.2)
   )
 ```
+
+Make an interactive `tmap`:
+
+```{r }
+# set mode to interactive
+tmap_mode("view")
+
+tm_shape(World) +
+  tm_borders(col = "black", 
+             lwd = 0.5) +
+  tm_fill(col = "white", 
+          alpha = 0.5) +
+  tm_shape(pb_spatial) +
+  tm_dots(col = "year",
+          palette = "viridis",
+          size = 0.1,
+          border.col = "black",
+          title = "Year") +
+  tm_layout(bg.color = "lightblue",
+            title = "Polar Bear Observations",
+            title.size = 1.2,
+            legend.frame = TRUE)
+```
+
 
 ## Vector Data: Polygons
 
@@ -249,6 +284,9 @@ ggplot(data = canada_greenland) +
 ### `tmap` points and polygons
 
 ```{r}
+# static map
+tmap_mode("plot")
+
 tm_shape(canada_greenland) + 
   tm_fill(col = "admin", 
           palette = blue_palette, 
@@ -281,12 +319,10 @@ pb_habitat = st_read(here(fp_habitat))
 # convert from a "simple feature collection" with 15 fields
 # to just the geometry
 pb_habitat_poly <- st_geometry(pb_habitat)
-```
 
-```{r}
 plot(pb_habitat_poly,
      main = "Polar Bear Observations",
-     col = "yellow",
+     col = "lightyellow",
      axes = TRUE,
      xlab = "Latitude",
      ylab = "Longitude")
@@ -317,11 +353,10 @@ ggplot(data = canada_greenland) +
        subtitle = "with habitat range",
        fill = "Country",
        xlab = "Longitude",
-       ylab = "Latitude") +
+      ylab = "Latitude") +
   # limit map window: zoom into Canada and Greenland
-  coord_sf(
-    xlim = st_bbox(canada_greenland)[c("xmin", "xmax")],
-    ylim = st_bbox(canada_greenland)[c("ymin", "ymax")])
+  coord_sf(xlim = st_bbox(canada_greenland)[c("xmin", "xmax")],
+           ylim = st_bbox(canada_greenland)[c("ymin", "ymax")])
 ```
 
 ### tmap: points and polygons
@@ -380,7 +415,8 @@ terra::plot(arctic_ice,
             main = "Arctic Sea Ice Concentration")
 ```
 
-Make a histogram of the raster values using the base R `hist` to better understand the numerical data you're visualizing:
+
+Make a histogram of the raster values using the base R `hist` to understand the numerical data distribution:
 
 ```{r}
 hist(arctic_ice,
@@ -415,12 +451,40 @@ terra::plot(pb_habitat_arctic,
             col = adjustcolor("yellow", alpha.f = 0.2))
 ```
 
-
 ### ggplot: rasters
 
-```{r}
+Convert the array into a dataframe, because ggplot only accepts tabular data:
 
+```{r}
+arctic_ice_df <- terra::as.data.frame(arctic_ice,
+                               cells = FALSE, # do not create index col
+                               xy = TRUE)  %>% # include lat and long cols
+                 dplyr::rename(ice_concentration = N_197812_concentration_v3.0)
+
+head(arctic_ice_df)
 ```
+
+
+Plot the raster dataframe with `ggplot`:
+
+```{r}
+blue_palette <- RColorBrewer::brewer.pal(n = 9, name = "Blues")
+
+ggplot() +
+  geom_raster(data = arctic_ice_df, 
+              aes(x = x, y = y, 
+                  fill = ice_concentration)) +
+  scale_fill_gradientn(colors = blue_palette) +
+  geom_sf(data = pb_habitat, 
+          fill = "yellow",
+          color = "darkgoldenrod1",
+          size = 1) +
+  coord_sf() + # coord_fixed()
+  theme_minimal() +
+  labs(title = "Sea Ice Concentration",
+       fill = "Sea Ice Concentration")
+```
+
 
 
 ### tmap: rasters
