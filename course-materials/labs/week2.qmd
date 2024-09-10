@@ -6,24 +6,37 @@ date: last-modified
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ::: {.callout-note icon=true}
 # Source Materials
-he following materials are modified from [Chapter 3 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/attr.html) and the [tmap book](https://r-tmap.github.io/tmap-book/).
+ The following materials are modified from [Chapter 3 of Geocomputation with R](https://geocompr.robinlovelace.net/attr.html) and the [tmap book](https://r-tmap.github.io/tmap-book/).
 :::
 
 In this lab, we'll explore the basics of manipulating vector data in R using the `sf` package.
 
-## 1. Set Up
+## 1. Set up
+
+Install a new package to take advantage of some preloaded data.
+
+```{r}
+#| eval: false
+install.packages("spData")
+```
+
 
 Let's load all necessary packages:
 
 ```{r}
+#| message: false
+#| warning: false
 rm(list = ls())
-library(sf)
-library(tmap)
-library(tidyverse)
+library(sf) # for handling vector data
+library(tmap) # for making maps
+library(tidyverse) # because we love the tidyverse
+library(spData) # preloaded spatial data
 ```
 
 ## 2. Simple features in `sf`
@@ -35,7 +48,7 @@ Simple features is a hierarchical data model that represents a wide range of geo
 - polygons
 - and their respective 'multi' versions
 
-`sf`provides the same functionality that the `sp`, `rgdal`, and `rgeos` provided, but is more intuitive because it builds on the `tidyverse`. `sf` represents spatial objects as "simple feature" objects by storing them in a data frame with the geographic data stored in a special column (usually named `geom` or `geometry`).
+`sf`provides the same functionality that the `sp`, `rgdal`, and `rgeos` packages provided, but is more intuitive because it builds on the tidy data model and works well with the `tidyverse`. `sf` represents spatial objects as "simple feature" objects by storing them as a data frame with the geographic data stored in a special column (usually named `geom` or `geometry`).
 
 ### Simple features from scratch
 Let's start by looking at how we can construct a `sf` object. Typically we will load `sf` objects by reading in data. However, it can be helpful to see how `sf` objects are created from scratch.
@@ -54,8 +67,7 @@ lnd_geom <- st_sfc(lnd_point, crs = 4326)
 ```
 
 
-Then, we supply some non-geographic attributes by creating a data frame with attributes about London. And we attach the simple feature collection and data frame to create a `sf` object. Check out the class of the new object we created.
-
+Then, we supply some non-geographic attributes by creating a data frame with attributes about London. 
 ```{r}
 # create data frame of attributes about London
 lnd_attrib <- data.frame(
@@ -63,38 +75,54 @@ lnd_attrib <- data.frame(
   temperature = 25,
   date = as.Date("2017-06-21")
   )
+```
 
-# combine geomtery and data frame
+And we attach the simple feature collection and data frame to create a `sf` object. Check out the class of the new object we created.
+
+```{r}
+# combine geometry and data frame
 # simple feature object
 lnd_sf <- st_sf(lnd_attrib, geometry = lnd_geom)
 
 # check class
 class(lnd_sf)
+
 ```
 
 We can also check out what the CRS looks like:
 
-```{r include=TRUE}
+```{r}
 st_crs(lnd_sf)
 st_crs(lnd_sf)$IsGeographic
 st_crs(lnd_sf)$proj4string
 ```
 
-Now let's look at an existing **sf** object representing countries of the world:
+### Existing `sf` object
+Now let's look at an existing `sf` object representing countries of the world:
 
-```{r include=TRUE}
+```{r}
+world <- spData::world
 class(world)
 dim(world)
 names(world)
 ```
 
-We can see that this object contains both spatial data ("geom" column) and attributes about those geometries. We can perform operations on the attribute data, just like we would with a normal data frame.
+We can see that this object contains both spatial data (`geom` column) and attributes about those geometries. We can perform operations on the attribute data, just like we would with a normal data frame.
 
-```{r include=TRUE}
+```{r}
 summary(world$lifeExp)
 ```
 
-The geometry column is "sticky", meaning it will stick around unless we explicitly get rid of it. To convert this object into a data frame, we need to drop the geometry column.
+The geometry column is "sticky", meaning it will stick around unless we explicitly get rid of it. For example, `dplyr`'s `select()` function won't get rid of it.
+
+```{r}
+world_df <- world %>%
+  select(-geom) #doesn't actually remove the geom column
+
+colnames(world_df) # geom still shows up as a column
+```
+
+To drop the `geom` column and convert this `sf` object into a data frame, we need to drop the geometry column using the `st_drop_geometry()`.
 
 ```{r include=TRUE}
 world_df <- st_drop_geometry(world)
@@ -104,29 +132,45 @@ ncol(world)
 ncol(world_df)
 ```
 
-## Vector Attribute Subsetting
-The especially great things about **sf** objects is that we can use **tidyverse** functions on them!
+:::{.callout-tip icon=true}
+# `sf` syntax
+Note that all functions in the `sf` package start with the prefix `st_` NOT `sf_`. Why? `st_` stands for "spatiotemporal" as in data that varies in space and time. 
+:::
+
+## 3. Vector attribute subsetting
+
+Often we'll want to manipulate `sf` objects in the same ways as we might with tabular data in data frames. The great thing about the simple features data model, is we can largely treat spatial objects the same as data frames.
+
+### `dplyr` functions!
+This means that we can use all of our favorite `dplyr` functions on `sf` objects -- yay!
 
 We can select columns...
-```{r include=TRUE, results='hide'}
+```{r}
+#| eval: false
+
 world %>%
   select(name_long, pop)
 ```
 
 Or remove columns...
-```{r include=TRUE, results='hide'}
+```{r}
+#| eval: false
+
 world %>%
   select(-subregion, -area_km2)
 ```
 
 Or select AND rename columns
-```{r include=TRUE, results='hide'}
+```{r}
+#| eval: false
+  
 world %>%
   select(name = name_long, population = pop)
 ```
 
 Or filter observations based on variables
-```{r include=TRUE}
+```{r}
+
 world1 <- world %>%
   filter(area_km2 < 10000)
 
@@ -138,38 +182,41 @@ world2 <- world %>%
 nrow(world2)
 ```
 
-## Chaining Commands with Pipes
-Because we can use **dplyr** functions with **sf** objects, we can chain together commands using the pipe operator.
+### Chaining commands with pipes
+Because we can use `dplyr` functions with `sf` objects, we can chain together commands using the pipe operator.
 
 Let's try to find the country in Asia with the highest life expectancy
-```{r include=TRUE, results='hide'}
+```{r}
 world %>%
   filter(continent == "Asia") %>%
   select(name_long, continent, lifeExp) %>%
-  slice_max(lifeExp)
+  slice_max(lifeExp) %>%
+  st_drop_geometry()
 ```
 
-## Vector Attribute Aggregation
+### Vector attribute aggregation
 Aggregation is the process of summarizing data with one or more 'grouping' variables. For example, using the 'world' which provides information on countries of the world, we might want to aggregate to the level of continents. It is important to note that aggregating data *attributes* is a different process from aggregating *geographic* data, which we will cover later.
 
 Let's try to find the total population within each continent:
-```{r include=TRUE, results='hide'}
+```{r}
 world %>%
   group_by(continent) %>%
-  summarize(population = sum(pop, na.rm = TRUE))
+  summarize(population = sum(pop, na.rm = TRUE)) %>%
+  st_drop_geometry()
 ```
 
 Let's also find the total area and number of countries in each continent:
-```{r include=TRUE, results='hide'}
+```{r}
 world %>%
   group_by(continent) %>%
   summarize(population = sum(pop, na.rm = TRUE),
             area_km2 = sum(area_km2, na.rm = TRUE),
-            n_countries = n())
+            n_countries = n()) %>%
+  st_drop_geometry()
 ```
 
 Building on this, let's find the population density of each continent, find the continent's with highest density and arrange by the number of countries. We'll drop the geometry column to speed things up.
-```{r include=TRUE, results='hide'}
+```{r}
 world %>%
   st_drop_geometry() %>%
   group_by(continent) %>%
@@ -181,71 +228,92 @@ world %>%
   arrange(desc(n_countries))
 ```
 
-## Vector Attribute Joining
+## 4. Joins with vector attributes
 
 A critical part of many data science workflows is combining data sets based on common attributes. In R, we do this using multiple join functions, which follow SQL conventions.
 
-Let's start by looking a data set on national coffee production:
-```{r include=TRUE, results='hide'}
+Let's start by looking a data set on national coffee production from the `spData` package:
+```{r}
+coffee_data <- spData::coffee_data
 head(coffee_data)
 ```
 
-```{r include=TRUE}
+It appears that `coffee_data` contains information on the amount of coffee produced in 2016 and 2017 from a subset of countries.
+```{r}
 nrow(coffee_data)
 nrow(world)
 ```
 
-We can combine this with the world data set, but joining based on country's names:
-```{r include=TRUE}
+The coffee production dataset does not include any spatial information, so If we wanted to make a map of coffee production, we would need to combine `coffee_data` with the `world` dataset. We do this by joining based on countries' names.
+
+```{r}
 world_coffee <- left_join(world, coffee_data, by = "name_long")
 
 names(world_coffee)
 ```
 
 And plot what this looks like...
-```{r include=TRUE}
+```{r}
 tm_shape(world_coffee) +
-  tm_polygons(fill = "coffee_production_2017")
+  tm_fill(col = "coffee_production_2017",
+          title = "Coffee production (2017)")
 ```
 
-If we just wanted to keep countries that do have coffee data, we could use an inner join:
-```{r include=TRUE, message=FALSE}
-world_coffee_inner <- inner_join(world, coffee_data)
-nrow(world_coffee_inner)
+By using a left join, our previous result added the coffee production information onto all countries of the world. If we just wanted to keep countries that do have coffee data, we could use an inner join:
+```{r}
+world_coffee_inner <- inner_join(world, coffee_data, by = "name_long")
 ```
 
-It looks like we lost some countries with coffee data, so let's figure out what's going on. We can find rows that didn't match using the **setdiff** function.
-```{r include=TRUE, results='hide'}
+Let's build ourselves a warning message to make sure we don't lose any data because of incomplete matches.
+```{r}
+if (nrow(world_coffee_inner) != nrow(coffee_data)) {
+  warning("inner join does not match original data. potential data loss during join")
+}
+```
+
+It looks like we lost some countries with coffee data, so let's figure out what's going on. We can find rows that didn't match using the `setdiff()` function.
+```{r}
 setdiff(coffee_data$name_long, world$name_long)
 ```
 
 We see that one of the issues is that the two data sets use different naming conventions for the Democratic Republic of the Congo. We can use a string matching function to figure out what the DRC is called in the world data set.
-```{r include=TRUE}
+```{r}
+# search for the DRC in the world dataset
 drc <- stringr::str_subset(world$name_long, "Dem*.+Congo")
 ```
 
 Now we can update the coffee data set with the matching name for the DRC:
 ```{r include=TRUE}
-coffee_data$name_long[grepl("Congo,", coffee_data$name_long)] -> drc
+coffee_data$name_long[stringr::str_detect(coffee_data$name_long, "Congo")] <- drc
 ```
 
 And we can try the inner join again and hopefully the DRC now matches:
-```{r include=TRUE, message=FALSE, warning=FALSE}
-world_coffee_inner <- inner_join(world, coffee_data)
-nrow(world_coffee_inner)
+```{r}
+world_coffee_inner <- inner_join(world, coffee_data , by = "name_long")
+
+# update warning message conditional to include the mismatch for "others"
+if (nrow(world_coffee_inner) != nrow(coffee_data) & setdiff(coffee_data$name_long, world_coffee_inner$name_long) != "Others") {
+  warning("inner join does not match original data. potential data loss during join")
+}
 ```
 
-Let's visualize what a the inner join did to our spatial object:
-```{r include=TRUE, message=FALSE, warning=FALSE}
+Let's visualize what a the inner join did to our spatial object.
+```{r}
 tm_shape(world_coffee_inner) +
   tm_polygons(fill = "coffee_production_2017",
               title = "Coffee production (2017)") +
   tm_layout(legend.outside = TRUE)
 ```
 
-And let's test what would happen if we flipped the order of the data sets in the join:
+:::{.callout-note icon=true}
+# Critical thinking question
+What happens if we left join a `sf` object onto a data frame?
+
 ```{r include=TRUE}
 coffee_world <- left_join(coffee_data, world, by = "name_long")
 class(coffee_world)
 names(coffee_world)
 ```
+
+We end up with a data frame!
+:::
