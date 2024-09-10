@@ -58,11 +58,11 @@ First, we create a geometry for London by supplying a point and coordinate refer
 ```{r}
 # create st_point with longitude and latitude for London
 # simple feature geometry
-lnd_point <- st_point(c(0.1, 51.5))
+london_point <- st_point(c(0.1, 51.5))
 
 # add coordinate reference system
 # simple feature collection
-lnd_geom <- st_sfc(lnd_point, crs = 4326)
+london_geom <- st_sfc(london_point, crs = 4326)
 
 ```
 
@@ -70,7 +70,7 @@ lnd_geom <- st_sfc(lnd_point, crs = 4326)
 Then, we supply some non-geographic attributes by creating a data frame with attributes about London. 
 ```{r}
 # create data frame of attributes about London
-lnd_attrib <- data.frame(
+london_attrib <- data.frame(
   name = "London",
   temperature = 25,
   date = as.Date("2017-06-21")
@@ -82,19 +82,19 @@ And we attach the simple feature collection and data frame to create a `sf` obje
 ```{r}
 # combine geometry and data frame
 # simple feature object
-lnd_sf <- st_sf(lnd_attrib, geometry = lnd_geom)
+london_sf <- st_sf(london_attrib, geometry = london_geom)
 
 # check class
-class(lnd_sf)
+class(london_sf)
 
 ```
 
 We can also check out what the CRS looks like:
 
 ```{r}
-st_crs(lnd_sf)
-st_crs(lnd_sf)$IsGeographic
-st_crs(lnd_sf)$proj4string
+st_crs(london_sf)
+st_crs(london_sf)$IsGeographic
+st_crs(london_sf)$proj4string
 ```
 
 ### Existing `sf` object
@@ -137,7 +137,90 @@ ncol(world_df)
 Note that all functions in the `sf` package start with the prefix `st_` NOT `sf_`. Why? `st_` stands for "spatiotemporal" as in data that varies in space and time. 
 :::
 
-## 3. Vector attribute subsetting
+## 3. Coordinate reference systems and projections
+
+R handles coordinate reference systems using multiple formats:
+
+- an identifying string specifying the authority and code such as `EPSG:4325`
+  - these need to be passed as strings
+  - `sf` will accept the four digit code as an integer
+- `proj4strings` are now outdated, but you might see them around
+  - for example, `+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs`
+
+### Reprojecting data
+
+In some cases we will be working with data which is represented with different coordinate reference systems (CRS). Whenever we work with multiple spatial data objects, we need to check that the CRSs match.
+
+Let's create another `sf` object for London, but now represented with a project coordinate system.
+
+```{r}
+london_proj = data.frame(x = 530000, y = 180000) %>% 
+  st_as_sf(coords = c("x", "y"), crs = "EPSG:27700")
+```
+
+We can check the CRS of any data using the `st_crs()` function.
+```{r}
+st_crs(london_proj)
+```
+
+This is a lot of information to read, so if we wanted to use this point with our other London point, we need to check to see if they are using the same CRS.
+
+```{r}
+st_crs(london_proj) == st_crs(london_sf)
+```
+
+To transform the CRS of a dataset, we use the `st_transform()` function. In the `crs` argument, we need to specify the coordinate reference system. We can do this by either supplying a CRS code or specifying the CRS of another dataset using the `st_crs()` function. 
+```{r}
+london_sf_transform <- st_transform(london_sf, crs = st_crs(london_proj))
+```
+
+Now if we check, the CRS between the two datasets should match
+```{r}
+if(st_crs(london_sf_transform) == st_crs(london_proj)){
+  print("it's a match!")
+} else {
+  print("still not a match")
+}
+```
+
+:::{.callout-tip icon=true}
+# Building beautiful workflows
+Hopefully we're already thinking about how we could build checking coordinate reference systems into our workflows. 
+
+For example, we could add code like the following that transforms the CRS of `dataset2` to match `dataset1` and prints out a warning message.
+```{r}
+#| eval: false
+if(st_crs(dataset1) != st_crs(dataset2)){
+  warning("coordinate refrence systems do not match")
+  dataset2 <- st_transform(dataset1, crs = st_crs(dataset1))
+}
+```
+:::
+
+### Changing map projections
+Remember that whenever we make a map we are trying to display three dimensional data with only two dimensions. To display 3D data in 2D, we use projections. Which projection you use can have big implications for how you display information.
+
+To the projection of our data, we could:
+
+- reproject the underlying data
+- or in `tmap` we can specify the projection we want the map to use
+
+Let's compare global maps using two different projections:
+
+- Equal Earth is an equal-area pseudocylindrical projection (EPSG 8857)
+- Mercator is a conformal cylindrical map that preserves angles (EPSG 3395)
+
+
+```{r}
+tm_shape(world, projection = 8857) +
+  tm_fill(col = "area_km2")
+
+tm_shape(world, projection = 3395) +
+  tm_fill(col = "area_km2")
+```
+
+
+## 4. Vector attribute subsetting
 
 Often we'll want to manipulate `sf` objects in the same ways as we might with tabular data in data frames. The great thing about the simple features data model, is we can largely treat spatial objects the same as data frames.
 
@@ -228,7 +311,7 @@ world %>%
   arrange(desc(n_countries))
 ```
 
-## 4. Joins with vector attributes
+## 5. Joins with vector attributes
 
 A critical part of many data science workflows is combining data sets based on common attributes. In R, we do this using multiple join functions, which follow SQL conventions.
 
@@ -317,3 +400,4 @@ names(coffee_world)
 
 We end up with a data frame!
 :::
+
