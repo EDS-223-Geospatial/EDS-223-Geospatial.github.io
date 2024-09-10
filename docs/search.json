@@ -11,7 +11,7 @@
     "href": "course-materials/labs/week1.html#why-tmap",
     "title": "Week 1 Lab",
     "section": "1. Why tmap?",
-    "text": "1. Why tmap?\n\nThere are MANY ways to make maps in R, but tmap or “thematic maps” offers the most flexibility.\ntmap can handle vector and raster objects from the sf, sp, raster, and stars packages.\nThe syntax of tmap is based on ggplot2 and the Grammar of Graphics\ntmap supports static AND interactive maps (yay!)"
+    "text": "1. Why tmap?\n\nThere are MANY ways to make maps in R, but tmap or “thematic maps” offers the most flexibility.\ntmap can handle vector and raster objects from the sf, sp, raster, and stars packages.\nThe syntax of tmap is based on ggplot2 and the Grammar of Graphics\ntmap supports static AND interactive maps (yay!)\n\n\n\n\n\n\n\nMore map making in R\n\n\n\nThere are MANY different ways to make maps in R, all with different pros/cons. Check out this resource for examples of what map making looks like in ggplot2, leaflet, and more!"
   },
   {
     "objectID": "course-materials/labs/week1.html#set-up",

@@ -24,9 +24,16 @@ In this lab, we'll explore the basics of map-making in R using the `tmap` packag
 - The syntax of `tmap` is based on `ggplot2` and the Grammar of Graphics
 - `tmap` supports static AND interactive maps (yay!)
 
+::: {.callout-tip icon=true}
+# More map making in R
+
+There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](course-materials/resources/plotting.qmd) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
+
+:::
+
 ## 2. Set up
 
-- Fork and clone this [repository](ADD LINK) to create a version controlled project for Week 1.
+- Fork and clone this [repository](https://github.com/EDS-223-Geospatial/eds223-week1) to create a version controlled project for Week 1.
 - Create a Quarto doc
 - Install and load all necessary packages
 
