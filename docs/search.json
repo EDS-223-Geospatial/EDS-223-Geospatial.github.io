@@ -705,5 +705,334 @@
     "title": "Week 1 Lab",
     "section": "8. Saving maps",
     "text": "8. Saving maps\nMaps can be stored as objects for for adding additional layers and saving programmtically. Maps can be saved directly in tmap using the tm_shape() function.\n\nmap1 &lt;- tm_shape(world_vector) +\n  tm_fill(col = \"gdp_per_cap\",\n          palette = viridisLite::plasma(10),\n          title = \"GDP per capita\") +\n  tm_layout(main.title = \"Global gross domesic product\")\n\ntmap_save(map1, here(\"tmap-example.png\"))"
+  },
+  {
+    "objectID": "index.html#course-description",
+    "href": "index.html#course-description",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Course Description",
+    "text": "Course Description\nThis course introduces the spatial modeling and analytic techniques of geographic information science to data science students. The emphasis is on deep understanding of spatial data models and the analytic operations they enable. Recognizing remotely sensed data as a key data type within environmental data science, this course will also introduce fundamental concepts and applications of remote sensing. In addition to this theoretical background, students will become familiar with libraries, packages, and APIs that support spatial analysis in R."
+  },
+  {
+    "objectID": "index.html#weekly-schedule",
+    "href": "index.html#weekly-schedule",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Weekly Schedule",
+    "text": "Weekly Schedule\n\nLecture: Monday 12:30-3:15 PM at Bren Hall 1424\nDiscussion Section 1: Thursday 1:00-1:50 PM at Bren Hall 3526\nDiscussion Section 2: Thursday 2:00-2:50 PM at Bren Hall 3526"
+  },
+  {
+    "objectID": "index.html#readings-and-references",
+    "href": "index.html#readings-and-references",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Readings and References",
+    "text": "Readings and References\n\nGeocompuation with R\nSpatial Data Science with Applications in R\nA Gentle Introduction to GIS"
+  },
+  {
+    "objectID": "index.html#course-requirements",
+    "href": "index.html#course-requirements",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Course Requirements",
+    "text": "Course Requirements\n\nMeet minimum MEDS device requirements\nInstall or update to R version 4.40\nInstall or update RStudio\nCreate a GitHub account"
+  },
+  {
+    "objectID": "index.html#teaching-team",
+    "href": "index.html#teaching-team",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Teaching Team",
+    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nRuth Oliver\nEmail: rutholiver@ucsb.edu\nLearn more: ryoliver-lab.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nAlessandra Vidal Meza\nEmail: avidalmeza@ucsb.edu\nLearn more: avidalmeza.github.io"
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThis website was designed by Sam Csik."
+  },
+  {
+    "objectID": "course-materials/labs/week2.html",
+    "href": "course-materials/labs/week2.html",
+    "title": "Week 2: Lab",
+    "section": "",
+    "text": "In this lab, we’ll explore the basics of manipulating vector data in R using the sf package. The following materials are modified from Chapter 3 of Geocomputation with R by Rovin Lovelace."
+  },
+  {
+    "objectID": "course-materials/labs/week2.html#set-up",
+    "href": "course-materials/labs/week2.html#set-up",
+    "title": "Week 2: Lab",
+    "section": "Set Up",
+    "text": "Set Up\nLet’s load all necessary packages:\n\nrm(list = ls())\nlibrary(sf)\nlibrary(spData)\nlibrary(tmap)\nlibrary(tidyverse)"
+  },
+  {
+    "objectID": "course-materials/labs/week2.html#handling-sf-objects",
+    "href": "course-materials/labs/week2.html#handling-sf-objects",
+    "title": "Week 2: Lab",
+    "section": "Handling sf Objects",
+    "text": "Handling sf Objects\nLet’s start by looking at how we can construct a sf object. First, we create a geometry for London by supplying a point and CRS. Then, we supply some non-geographic attributes!\n\nlnd_point &lt;- st_point(c(0.1, 51.5))\n\nlnd_geom &lt;- st_sfc(lnd_point, crs = 4326)\n\nlnd_attrib &lt;- data.frame(\n  name = \"London\",\n  temperature = 25,\n  date = as.Date(\"2017-06-21\")\n  )\n\nlnd_sf &lt;- st_sf(lnd_attrib, geometry = lnd_geom)\n\nclass(lnd_sf)\n\n[1] \"sf\"         \"data.frame\"\n\n\nWe can also check out what the CRS looks like:\n\nst_crs(lnd_sf)\n\nCoordinate Reference System:\n  User input: EPSG:4326 \n  wkt:\nGEOGCRS[\"WGS 84\",\n    ENSEMBLE[\"World Geodetic System 1984 ensemble\",\n        MEMBER[\"World Geodetic System 1984 (Transit)\"],\n        MEMBER[\"World Geodetic System 1984 (G730)\"],\n        MEMBER[\"World Geodetic System 1984 (G873)\"],\n        MEMBER[\"World Geodetic System 1984 (G1150)\"],\n        MEMBER[\"World Geodetic System 1984 (G1674)\"],\n        MEMBER[\"World Geodetic System 1984 (G1762)\"],\n        MEMBER[\"World Geodetic System 1984 (G2139)\"],\n        ELLIPSOID[\"WGS 84\",6378137,298.257223563,\n            LENGTHUNIT[\"metre\",1]],\n        ENSEMBLEACCURACY[2.0]],\n    PRIMEM[\"Greenwich\",0,\n        ANGLEUNIT[\"degree\",0.0174532925199433]],\n    CS[ellipsoidal,2],\n        AXIS[\"geodetic latitude (Lat)\",north,\n            ORDER[1],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n        AXIS[\"geodetic longitude (Lon)\",east,\n            ORDER[2],\n            ANGLEUNIT[\"degree\",0.0174532925199433]],\n    USAGE[\n        SCOPE[\"Horizontal component of 3D system.\"],\n        AREA[\"World.\"],\n        BBOX[-90,-180,90,180]],\n    ID[\"EPSG\",4326]]\n\nst_crs(lnd_sf)$IsGeographic\n\n[1] TRUE\n\nst_crs(lnd_sf)$proj4string\n\n[1] \"+proj=longlat +datum=WGS84 +no_defs\"\n\n\nNow let’s look at an existing sf object representing countries of the world:\n\nclass(world)\n\n[1] \"sf\"         \"tbl_df\"     \"tbl\"        \"data.frame\"\n\ndim(world)\n\n[1] 177  11\n\nnames(world)\n\n [1] \"iso_a2\"    \"name_long\" \"continent\" \"region_un\" \"subregion\" \"type\"     \n [7] \"area_km2\"  \"pop\"       \"lifeExp\"   \"gdpPercap\" \"geom\"     \n\n\nWe can see that this object contains both spatial data (“geom” column) and attributes about those geometries. We can perform operations on the attribute data, just like we would with a normal data frame.\n\nsummary(world$lifeExp)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's \n  50.62   64.96   72.87   70.85   76.78   83.59      10 \n\n\nThe geometry column is “sticky”, meaning it will stick around unless we explicitly get rid of it. To convert this object into a data frame, we need to drop the geometry column.\n\nworld_df &lt;- st_drop_geometry(world)\nclass(world_df)\n\n[1] \"tbl_df\"     \"tbl\"        \"data.frame\"\n\nnames(world_df)\n\n [1] \"iso_a2\"    \"name_long\" \"continent\" \"region_un\" \"subregion\" \"type\"     \n [7] \"area_km2\"  \"pop\"       \"lifeExp\"   \"gdpPercap\"\n\nncol(world)\n\n[1] 11\n\nncol(world_df)\n\n[1] 10"
+  },
+  {
+    "objectID": "course-materials/labs/week2.html#vector-attribute-subsetting",
+    "href": "course-materials/labs/week2.html#vector-attribute-subsetting",
+    "title": "Week 2: Lab",
+    "section": "Vector Attribute Subsetting",
+    "text": "Vector Attribute Subsetting\nThe especially great things about sf objects is that we can use tidyverse functions on them!\nWe can select columns…\n\nworld %&gt;%\n  select(name_long, pop)\n\nOr remove columns…\n\nworld %&gt;%\n  select(-subregion, -area_km2)\n\nOr select AND rename columns\n\nworld %&gt;%\n  select(name = name_long, population = pop)\n\nOr filter observations based on variables\n\nworld1 &lt;- world %&gt;%\n  filter(area_km2 &lt; 10000)\n\nsummary(world1$area_km2)\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n   2417    4412    6207    5986    7614    9225 \n\nworld2 &lt;- world %&gt;%\n  filter(lifeExp &gt;= 80)\n\nnrow(world2)\n\n[1] 24"
+  },
+  {
+    "objectID": "course-materials/labs/week2.html#chaining-commands-with-pipes",
+    "href": "course-materials/labs/week2.html#chaining-commands-with-pipes",
+    "title": "Week 2: Lab",
+    "section": "Chaining Commands with Pipes",
+    "text": "Chaining Commands with Pipes\nBecause we can use dplyr functions with sf objects, we can chain together commands using the pipe operator.\nLet’s try to find the country in Asia with the highest life expectancy\n\nworld %&gt;%\n  filter(continent == \"Asia\") %&gt;%\n  select(name_long, continent, lifeExp) %&gt;%\n  slice_max(lifeExp)"
+  },
+  {
+    "objectID": "course-materials/labs/week2.html#vector-attribute-aggregation",
+    "href": "course-materials/labs/week2.html#vector-attribute-aggregation",
+    "title": "Week 2: Lab",
+    "section": "Vector Attribute Aggregation",
+    "text": "Vector Attribute Aggregation\nAggregation is the process of summarizing data with one or more ‘grouping’ variables. For example, using the ‘world’ which provides information on countries of the world, we might want to aggregate to the level of continents. It is important to note that aggregating data attributes is a different process from aggregating geographic data, which we will cover later.\nLet’s try to find the total population within each continent:\n\nworld %&gt;%\n  group_by(continent) %&gt;%\n  summarize(population = sum(pop, na.rm = TRUE))\n\nLet’s also find the total area and number of countries in each continent:\n\nworld %&gt;%\n  group_by(continent) %&gt;%\n  summarize(population = sum(pop, na.rm = TRUE),\n            area_km2 = sum(area_km2, na.rm = TRUE),\n            n_countries = n())\n\nBuilding on this, let’s find the population density of each continent, find the continent’s with highest density and arrange by the number of countries. We’ll drop the geometry column to speed things up.\n\nworld %&gt;%\n  st_drop_geometry() %&gt;%\n  group_by(continent) %&gt;%\n  summarize(population = sum(pop, na.rm = TRUE),\n            area_km2 = sum(area_km2, na.rm = TRUE),\n            n_countries = n()) %&gt;%\n  mutate(density = round(population/area_km2)) %&gt;%\n  slice_max(density, n = 3) %&gt;%\n  arrange(desc(n_countries))"
+  },
+  {
+    "objectID": "course-materials/labs/week2.html#vector-attribute-joining",
+    "href": "course-materials/labs/week2.html#vector-attribute-joining",
+    "title": "Week 2: Lab",
+    "section": "Vector Attribute Joining",
+    "text": "Vector Attribute Joining\nA critical part of many data science workflows is combining data sets based on common attributes. In R, we do this using multiple join functions, which follow SQL conventions.\nLet’s start by looking a data set on national coffee production:\n\nhead(coffee_data)\n\n\nnrow(coffee_data)\n\n[1] 47\n\nnrow(world)\n\n[1] 177\n\n\nWe can combine this with the world data set, but joining based on country’s names:\n\nworld_coffee &lt;- left_join(world, coffee_data, by = \"name_long\")\n\nnames(world_coffee)\n\n [1] \"iso_a2\"                 \"name_long\"              \"continent\"             \n [4] \"region_un\"              \"subregion\"              \"type\"                  \n [7] \"area_km2\"               \"pop\"                    \"lifeExp\"               \n[10] \"gdpPercap\"              \"geom\"                   \"coffee_production_2016\"\n[13] \"coffee_production_2017\"\n\n\nAnd plot what this looks like…\n\ntm_shape(world_coffee) +\n  tm_polygons(fill = \"coffee_production_2017\")\n\n\n\n\n\n\n\n\nIf we just wanted to keep countries that do have coffee data, we could use an inner join:\n\nworld_coffee_inner &lt;- inner_join(world, coffee_data)\nnrow(world_coffee_inner)\n\n[1] 45\n\n\nIt looks like we lost some countries with coffee data, so let’s figure out what’s going on. We can find rows that didn’t match using the setdiff function.\n\nsetdiff(coffee_data$name_long, world$name_long)\n\nWe see that one of the issues is that the two data sets use different naming conventions for the Democratic Republic of the Congo. We can use a string matching function to figure out what the DRC is called in the world data set.\n\ndrc &lt;- stringr::str_subset(world$name_long, \"Dem*.+Congo\")\n\nNow we can update the coffee data set with the matching name for the DRC:\n\ncoffee_data$name_long[grepl(\"Congo,\", coffee_data$name_long)] -&gt; drc\n\nAnd we can try the inner join again and hopefully the DRC now matches:\n\nworld_coffee_inner &lt;- inner_join(world, coffee_data)\nnrow(world_coffee_inner)\n\n[1] 45\n\n\nLet’s visualize what a the inner join did to our spatial object:\n\ntm_shape(world_coffee_inner) +\n  tm_polygons(fill = \"coffee_production_2017\",\n              title = \"Coffee production (2017)\") +\n  tm_layout(legend.outside = TRUE)\n\n\n\n\n\n\n\n\nAnd let’s test what would happen if we flipped the order of the data sets in the join:\n\ncoffee_world &lt;- left_join(coffee_data, world, by = \"name_long\")\nclass(coffee_world)\n\n[1] \"tbl_df\"     \"tbl\"        \"data.frame\"\n\nnames(coffee_world)\n\n [1] \"name_long\"              \"coffee_production_2016\" \"coffee_production_2017\"\n [4] \"iso_a2\"                 \"continent\"              \"region_un\"             \n [7] \"subregion\"              \"type\"                   \"area_km2\"              \n[10] \"pop\"                    \"lifeExp\"                \"gdpPercap\"             \n[13] \"geom\""
+  },
+  {
+    "objectID": "course-materials/discussions/week9-discussion.html",
+    "href": "course-materials/discussions/week9-discussion.html",
+    "title": "Discssuion Week 9: Functions for Assignment 4",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(kableExtra)\n\nLoad in the CPAD_2023a_SuperUnits.shp and the gHM_masked.tif files.\n\ncpad_super &lt;- st_read(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"CPAD_2023a_SuperUnits.shp\"), quiet = TRUE) %&gt;%\n  sf::st_transform(\"EPSG:4326\") %&gt;%\n  janitor::clean_names() %&gt;%\n  mutate(ID = row_number())\n\nghm &lt;- rast(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"gHM_masked.tif\")) %&gt;%\n  project(\"EPSG:4326\")\n\n\nplot(cpad_super[\"suid_nma\"])\nplot(ghm)"
+  },
+  {
+    "objectID": "course-materials/discussions/week9-discussion.html#prerequsites",
+    "href": "course-materials/discussions/week9-discussion.html#prerequsites",
+    "title": "Discssuion Week 9: Functions for Assignment 4",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(kableExtra)\n\nLoad in the CPAD_2023a_SuperUnits.shp and the gHM_masked.tif files.\n\ncpad_super &lt;- st_read(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"CPAD_2023a_SuperUnits.shp\"), quiet = TRUE) %&gt;%\n  sf::st_transform(\"EPSG:4326\") %&gt;%\n  janitor::clean_names() %&gt;%\n  mutate(ID = row_number())\n\nghm &lt;- rast(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"gHM_masked.tif\")) %&gt;%\n  project(\"EPSG:4326\")\n\n\nplot(cpad_super[\"suid_nma\"])\nplot(ghm)"
+  },
+  {
+    "objectID": "course-materials/discussions/week9-discussion.html#exercises",
+    "href": "course-materials/discussions/week9-discussion.html#exercises",
+    "title": "Discssuion Week 9: Functions for Assignment 4",
+    "section": "Exercises",
+    "text": "Exercises\n\nLet’s rasterize the cpad dataset a few times! This is necessary to do zonal statistics!\n\n\nid_rast = rasterize(cpad_super, ghm, field = \"suid_nma\") #rasterize by PA id\nplot(id_rast)\n\naccess_rast = rasterize(cpad_super, ghm, field = \"access_typ\") #rasterize by PA access type\nplot(access_rast)\n\n\nLet’s say you’re interested in finding protected areas with intermediate levels of human modification. How could you do this?\n\n\nmasking and zonal statistics\n\n\nrcl = matrix(c(-Inf, 0.4, NA, #create reclassification matrix \n                 0.4, 0.6, 1, \n                 0.6, Inf, NA), ncol = 3, byrow = TRUE)\n\nmod_dis &lt;- classify(ghm, rcl = rcl) #reclassify ghm\n\nplot(mod_dis) #plot to check\n\nSay you want to make this more complicated, and you want two groups?\n\nrcl2 = matrix(c(-Inf, 0.4, NA, #create reclassification matrix \n                 0.4, 0.5, 1,\n                 0.5, 0.6, 2,\n                 0.6, Inf, NA), ncol = 3, byrow = TRUE)\n\nmod_dis2 &lt;- classify(ghm, rcl = rcl2) #reclassify ghm\n\nplot(mod_dis2) #plot to check\n\nOr you just want to group them generally!\n\nrcl3 = matrix(c(-Inf, 0.25, 1, #create reclassification matrix \n                 0.25, 0.5, 2,\n                 0.5, 0.75, 3,\n                 0.75, Inf, 4), ncol = 3, byrow = TRUE)\n\nmod_dis3 &lt;- classify(ghm, rcl = rcl3) #reclassify ghm\n\nplot(mod_dis3) #plot to check\n\nNow let’s use zonal statistics to get a mean\n\nghm_zonal &lt;- zonal(mod_dis, id_rast, fun = \"mean\", na.rm = TRUE) %&gt;% #calculate the \"mean\" - this is just an indicator of if 1 is present or not\n  filter(!is.na(gHM)) %&gt;% #remove NAs \n  mutate(method = \"Method 1\") #add a method for comparison\n\nhead(ghm_zonal)\n\n\ncombining and filtering\n\n\ncpad_ghm_values &lt;- terra::extract(x = ghm, y = cpad_super) #extract all ghm values from cpad\n\nSummarize the mean of human modification within each protected area\n\ncpad_ghm_summary &lt;- cpad_ghm_values %&gt;%\n  group_by(ID) %&gt;%\n  summarize(gHM_mean = mean(gHM)) #calculate mean by protected area\n\nJoin this summary with the protected area database. Plot these values\n\ncpad_ghm &lt;- full_join(cpad_super, cpad_ghm_summary) #join summary back with\n\nNow we can filter!\n\ncpad_ghm_sub &lt;- cpad_ghm %&gt;% \n  st_drop_geometry() %&gt;%  #remove geometry for speed\n  filter(gHM_mean &lt; 0.6 & gHM_mean &gt; 0.4) %&gt;% #filter \n  distinct() %&gt;% \n  select(suid_nma, gHM_mean) %&gt;% \n  mutate(method = \"Method 2\") #set method for comparison\n\n\nThese do give slightly different results however… can you identify the difference?\n\n\nmethod_sum &lt;- full_join(ghm_zonal, cpad_ghm_sub) #join two methods\n\nmethod_count &lt;- method_sum %&gt;% \n  group_by(suid_nma) %&gt;% \n  summarize(count = as.factor(n())) %&gt;%  #deterine which PAs are selected in both\n  full_join(method_sum) #rejoin with full method data\n\n\nggplot(method_count) +\n  geom_jitter(aes(method, suid_nma, color = count, alpha = count), height = 0) +\n  theme_bw() +\n  scale_color_manual(values = c(\"red\", \"darkgrey\")) +\n  scale_alpha_manual(values = c(1, 0.5))\n\n\nLet’s use zonal statistics to summarize human modification by access type!\n\n\naccess_zonal &lt;- zonal(ghm, access_rast, fun = \"mean\", na.rm = TRUE) #get mean of ghm within access level types\n\naccess_zonal %&gt;% #create nice table\n  kable(digits = 2, col.names = c(\"Access Level\", \"Human Modification Index\")) %&gt;% #adjust digits and column names\n  kable_minimal()"
+  },
+  {
+    "objectID": "course-materials/discussions/week6-discussion.html",
+    "href": "course-materials/discussions/week6-discussion.html",
+    "title": "Discssuion Week 6: Bringing Vector and Raster Together",
+    "section": "",
+    "text": "The following exercises are modified from Chapter 6 of Geocomputation with R by Rovin Lovelace."
+  },
+  {
+    "objectID": "course-materials/discussions/week6-discussion.html#prerequisites",
+    "href": "course-materials/discussions/week6-discussion.html#prerequisites",
+    "title": "Discssuion Week 6: Bringing Vector and Raster Together",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\nch &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  sf::st_as_sf()\n\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))\n\n\nplot(srtm)\nplot(st_geometry(zion_points), add = TRUE)\nplot(ch, add = TRUE)"
+  },
+  {
+    "objectID": "course-materials/discussions/week6-discussion.html#exercises",
+    "href": "course-materials/discussions/week6-discussion.html#exercises",
+    "title": "Discssuion Week 6: Bringing Vector and Raster Together",
+    "section": "Exercises",
+    "text": "Exercises\n\nCrop the srtm raster using (1) the zion_points dataset and (2) the ch dataset. Are there any differences in the output maps? Next, mask srtm using these two datasets. Can you see any difference now?\n\n\nsrtm_crop1 &lt;- terra::crop(srtm, zion_points)\nsrtm_crop2 &lt;- terra::crop(srtm, ch)\nplot(srtm_crop1)\nplot(srtm_crop2)\n\nsrtm_mask1 &lt;- terra::mask(srtm, zion_points)\nsrtm_mask2 &lt;- terra::mask(srtm, ch)\nplot(srtm_mask1)\nplot(srtm_mask2)\n\n\nSubset points higher than 3100 meters in New Zealand (the nz_height object) and create a template raster with a resolution of 3 km for the extent of the new point dataset. Using these two new objects:\n\n\nnz_height3100 &lt;- nz_height %&gt;% \n  filter(elevation &gt; 3100)\n\nnz_template &lt;- terra::rast(ext(nz_height3100), resolution = 3000, crs = crs(nz_height3100))\n\n2a. Count numbers of the highest points in each grid cell.\n\nnz_raster &lt;- rasterize(nz_height3100, nz_template, field = \"elevation\", fun = \"length\")\nplot(nz_raster)\nplot(st_geometry(nz_height3100), add = TRUE)\n\n2b. Find the maximum elevation in each grid cell.\n\nnz_raster2 = rasterize(nz_height3100, nz_template, \n                       field = \"elevation\", fun = max)\nplot(nz_raster2)\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\nAggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result. Resample the lower resolution raster back to the original resolution of 3 km.\n\n\nnz_raster_low = raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\nnz_resample = resample(nz_raster_low, nz_raster)\nplot(nz_raster_low)\nplot(nz_resample) # the results are spread over a greater area and there are border issues\nplot(nz_raster)\n\n\nPolygonize the grain dataset and filter all squares representing clay.\n\n\ngrain_poly = as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain)\nplot(grain_poly)\n\nclay = grain_poly %&gt;% \n  filter(grain == \"clay\")\nplot(clay)"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html",
+    "href": "course-materials/discussions/week3-discussion.html",
+    "title": "Week 3 Discussion Section",
+    "section": "",
+    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests\n\nResources: Chapters 4 and 5 of Geocomputation with R"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
+    "href": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
+    "title": "Week 3 Discussion Section",
+    "section": "",
+    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests\n\nResources: Chapters 4 and 5 of Geocomputation with R"
+  },
+  {
+    "objectID": "course-materials/discussions/week10-discussion.html",
+    "href": "course-materials/discussions/week10-discussion.html",
+    "title": "Discssuion Week 10: Workflows and Maps",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(patchwork)\nlibrary(sf)\nlibrary(terra)\nlibrary(stars)\nlibrary(ggspatial)\n\nLoad in the CPAD_2023a_SuperUnits.shp and the ghm.tif files. ghm.tif Transform both to EPSG:4326.\n\ncpad_super &lt;- st_read(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"CPAD_2023a_SuperUnits.shp\"), quiet = TRUE) %&gt;%\n  sf::st_transform(\"EPSG:4326\") %&gt;%\n  janitor::clean_names() %&gt;%\n  mutate(ID = row_number())\n\nghm &lt;- rast(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"gHM_masked.tif\")) %&gt;%\n  project(\"EPSG:4326\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week10-discussion.html#prerequsites",
+    "href": "course-materials/discussions/week10-discussion.html#prerequsites",
+    "title": "Discssuion Week 10: Workflows and Maps",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(patchwork)\nlibrary(sf)\nlibrary(terra)\nlibrary(stars)\nlibrary(ggspatial)\n\nLoad in the CPAD_2023a_SuperUnits.shp and the ghm.tif files. ghm.tif Transform both to EPSG:4326.\n\ncpad_super &lt;- st_read(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"CPAD_2023a_SuperUnits.shp\"), quiet = TRUE) %&gt;%\n  sf::st_transform(\"EPSG:4326\") %&gt;%\n  janitor::clean_names() %&gt;%\n  mutate(ID = row_number())\n\nghm &lt;- rast(here::here(\"course-materials\", \"data\", \"week9-discussion\", \"gHM_masked.tif\")) %&gt;%\n  project(\"EPSG:4326\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week10-discussion.html#exercises",
+    "href": "course-materials/discussions/week10-discussion.html#exercises",
+    "title": "Discssuion Week 10: Workflows and Maps",
+    "section": "Exercises",
+    "text": "Exercises\n\nLet’s make nice plots of the California Protected areas by access level\n\n\np1 &lt;- ggplot2::ggplot(data = cpad_super) +\n  geom_sf(aes(color = access_typ, fill = access_typ)) +\n  theme_bw() +\n  labs(\n    color = \"Access Type\",\n    fill = \"Access Type\"\n  ) +\n  annotation_scale(plot_unit = \"km\") +\n  annotation_north_arrow(\n    location = \"tr\",\n    pad_x = unit(0.2, \"in\"),\n    pad_y = unit(0.2, \"in\"),\n    style = ggspatial::north_arrow_nautical(\n      fill =\n        c(\"grey40\", \"white\"),\n      line_col = \"grey20\"\n    )\n  ) +\n  coord_sf() +\n  scale_color_viridis_d() +\n  scale_fill_viridis_d()\n\n\np1 +\n  facet_wrap(~access_typ) +\n  theme(strip.background = element_rect(fill = \"transparent\"))\n\n\nLet’s try plotting the ghm layers nicely too!\n\n\nggplot() +\n    geom_stars(data = st_as_stars(ghm)) +\n  coord_equal() +\n  theme_bw() +\n  labs(\n    x = \"\",\n    y = \"\",\n    fill = \"Global Human Modification\"\n  ) +\n  scale_fill_viridis_c() +\n  annotation_scale(plot_unit = \"km\") +\n  annotation_north_arrow(\n    location = \"tr\",\n    pad_x = unit(0.2, \"in\"),\n    pad_y = unit(0.2, \"in\"),\n    style = ggspatial::north_arrow_nautical(\n      fill =\n        c(\"grey40\", \"white\"),\n      line_col = \"grey20\"\n    )\n  )\n\n\nCreate a function to take 2 data sets (1 polygon and 1 raster) and create a boxplot of the values based on a specific layer\n\n\nsummary_boxplot &lt;- function(polygon, raster, my_layer, my_label) {\n  \n  # rasterize polygon by layer\n  id_rast &lt;- rasterize(polygon, raster, field = \"suid_nma\")\n  \n  #do mean zonal statistics\n  zonal_layer &lt;- zonal(raster, id_rast, fun = \"mean\", na.rm = TRUE)\n  \n  #join with polygon database\n  poly_join &lt;- full_join(polygon, zonal_layer) %&gt;% \n    select(suid_nma, gHM, my_layer)\n  \n  #create boxplot based on your layer\n  p1 &lt;- ggplot(poly_join) +\n    geom_boxplot(aes(gHM, .data[[my_layer]])) +\n    theme_bw() +\n    labs(x = \"Human Modification Index\", \n         y = my_label)\n  \n  return(p1)\n}\n\n\nLet’s select some layers and use our new function!\n\n\nnames(cpad_super)\n\n\naccess &lt;- summary_boxplot(cpad_super, ghm, \"access_typ\", \"Access Type\")\n\naccess\n\n\nlayer &lt;- summary_boxplot(cpad_super, ghm, \"layer\", \"Management Agency Type\")\n\nlayer"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Earning “Satisfactory” marks on Self-reflections (SRs) and Homework Assignments (HWs) will determine your letter grade (e.g. A, B, etc.) for this course.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course reflection (SR #1)\nMon 09/30/2024\nSat 10/12/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #2\nMon 01/22/2024\nSat 02/03/2024, 11:59pm PT\n\n\nSR\nMid-course reflection (SR #2)\nMon 02/05/2024\nSat 02/10/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #3\nMon 02/12/2024\nSat 02/24/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #4\nMon 02/26/2024\nSat 03/09/2024, 11:59pm PT\n\n\nSR\nEnd-of-course reflection (SR #3)\nMon 03/11/2024\nSat 03/16/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "assignments.html#assignments",
+    "href": "assignments.html#assignments",
+    "title": "Assignments",
+    "section": "",
+    "text": "Earning “Satisfactory” marks on Self-reflections (SRs) and Homework Assignments (HWs) will determine your letter grade (e.g. A, B, etc.) for this course.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course reflection (SR #1)\nMon 09/30/2024\nSat 10/12/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #2\nMon 01/22/2024\nSat 02/03/2024, 11:59pm PT\n\n\nSR\nMid-course reflection (SR #2)\nMon 02/05/2024\nSat 02/10/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #3\nMon 02/12/2024\nSat 02/24/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #4\nMon 02/26/2024\nSat 03/09/2024, 11:59pm PT\n\n\nSR\nEnd-of-course reflection (SR #3)\nMon 03/11/2024\nSat 03/16/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "assignments.html#end-of-class-surveys",
+    "href": "assignments.html#end-of-class-surveys",
+    "title": "Assignments",
+    "section": "End-of-class surveys",
+    "text": "End-of-class surveys\nEnd-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:55pm PT). Completing EOCs by the due dates / times will, in-part (along with class attendance), determine whether you earn a +/- on your course grade.\n\n\n\nEOC link\nDate Assigned\nDate Due\n\n\n\n\nEOC (week 1)\nMon 09/30/2024\nMon 09/30/2024, 11:55pm PT\n\n\nEOC (week 2)\nMon 10/07/2024\nMon 10/07/2024, 11:55pm PT\n\n\nEOC (week 3)\nMon 10/14/2024\nMon 10/14/2024, 11:55pm PT\n\n\nEOC (week 4)\nMon 10/21/2024\nMon 10/21/2024, 11:55pm PT\n\n\nEOC (week 5)\nMon 10/28/2024\nMon 10/28/2024, 11:55pm PT\n\n\nEOC (week 6)\nMon 11/04/2024\nMon 11/04/2024, 11:55pm PT\n\n\nNo lecture or EOC (week 7)\nNA\nNA\n\n\nEOC (week 8)\nMon 11/18/2024\nMon 11/18/2024, 11:55pm PT\n\n\nEOC (week 9)\nMon 11/25/2024\nMon 11/25/2024, 11:55pm PT\n\n\nEOC (week 10)\nMon 12/02/2024\nMon 12/02/2024, 11:55pm PT"
+  },
+  {
+    "objectID": "assignments.html#grade-tracker",
+    "href": "assignments.html#grade-tracker",
+    "title": "Assignments",
+    "section": "Grade Tracker",
+    "text": "Grade Tracker\nUse the Grade Tracker, below, to determine your course grade:\nRedeem tokens in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a “Not Yet” mark."
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html",
+    "href": "course-materials/discussions/week1-discussion.html",
+    "title": "Week 1 Discussion Section",
+    "section": "",
+    "text": "read in spatial objects\n\n(we should provide code)\n\ncreate map with single spatial object\ncreate map with multiple spatial objects\nuse different types of plotting formats (e.g. tm_polygons, tm_fill, tm_dots, etc.)\nadjust color palettes\ninclude essential map elements: scale bar & north arrow or graticules\ncreate an interactive map\nshould use tmap, but could include bonus challenge to reproduce map using ggplot2\nshould link to Juliet’s map making resource"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#learning-objectives-for-discussion-section",
+    "href": "course-materials/discussions/week1-discussion.html#learning-objectives-for-discussion-section",
+    "title": "Week 1 Discussion Section",
+    "section": "",
+    "text": "read in spatial objects\n\n(we should provide code)\n\ncreate map with single spatial object\ncreate map with multiple spatial objects\nuse different types of plotting formats (e.g. tm_polygons, tm_fill, tm_dots, etc.)\nadjust color palettes\ninclude essential map elements: scale bar & north arrow or graticules\ncreate an interactive map\nshould use tmap, but could include bonus challenge to reproduce map using ggplot2\nshould link to Juliet’s map making resource"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html",
+    "href": "course-materials/discussions/week2-discussion.html",
+    "title": "Week 2 Discussion Section",
+    "section": "",
+    "text": "read in multiple vector datasets of different types\ncheck CRS\ntransform CRS to match across all datasets\nperform attribute manipulations (e.g. filter, mutate, select)\nplot data"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#learning-objectives-for-discussion-section",
+    "href": "course-materials/discussions/week2-discussion.html#learning-objectives-for-discussion-section",
+    "title": "Week 2 Discussion Section",
+    "section": "",
+    "text": "read in multiple vector datasets of different types\ncheck CRS\ntransform CRS to match across all datasets\nperform attribute manipulations (e.g. filter, mutate, select)\nplot data"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html",
+    "href": "course-materials/discussions/week4-discussion.html",
+    "title": "Discssuion Week 4: Raster Operation Basics",
+    "section": "",
+    "text": "The following exercises are modified from Chapters 3, 4, 5 of Geocomputation with R by Rovin Lovelace."
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#prerequisites",
+    "href": "course-materials/discussions/week4-discussion.html#prerequisites",
+    "title": "Discssuion Week 4: Raster Operation Basics",
+    "section": "Prerequisites",
+    "text": "Prerequisites\n\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(geodata)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\ndem &lt;- rast(system.file(\"raster/dem.tif\", package = \"spDataLarge\"))\nlandsat &lt;- rast(system.file(\"raster/landsat.tif\", package = \"spDataLarge\"))\nperu_dem &lt;- geodata::elevation_30s(country = \"Peru\", path = \".\", mask = FALSE)\nsrtm &lt;- rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#exercise-1",
+    "href": "course-materials/discussions/week4-discussion.html#exercise-1",
+    "title": "Discssuion Week 4: Raster Operation Basics",
+    "section": "Exercise 1",
+    "text": "Exercise 1\nPlot the histogram and the boxplot of the dem.tif file from the spDataLarge package:\n\nhist(dem)"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#exercise-2",
+    "href": "course-materials/discussions/week4-discussion.html#exercise-2",
+    "title": "Discssuion Week 4: Raster Operation Basics",
+    "section": "Exercise 2",
+    "text": "Exercise 2\nLet’s manipulate rasters by eclassifying the elevation in three classes:\n\nLow (less than 300)\nMedium\nHigh (greater than 500)\n\n\nplot(dem)\n\nrcl &lt;- matrix(c(-Inf, 300, 0, 300, 500, 1, 500, Inf, 2), ncol = 3, byrow = TRUE)\n\ndem_rcl &lt;- terra::classify(dem, rcl = rcl)\n\nlevels(dem_rcl) &lt;- tibble::tibble(id = 0:2, cats = c(\"low\", \"medium\", \"high\"))\n\nplot(dem_rcl)\n\nAnd compute the mean elevation for each altitudinal class:\n\nelevation_mean &lt;- terra::zonal(dem, dem_rcl, fun = \"mean\")\nelevation_mean\n\nNext, let’s calculate the Normalized Difference Water Index (NDWI) of a Landsat image:\n\nNDWI = (green - NIR)/(green + NIR)\n\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir) / (green + nir)\n}\n\nndwi_rast &lt;- terra::lapp(landsat[[c(2, 4)]], fun = ndwi_fun)\nplot(ndwi_rast)\n\nCalculate a correlation between NDVI and NDWI for this area:\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red) / (nir + red)\n}\n\nndvi_rast &lt;- terra::lapp(landsat[[c(4, 3)]], fun = ndvi_fun)\n\n\ncombine &lt;- c(ndvi_rast, ndwi_rast)\n\nplot(combine)\n\nterra::layerCor(combine, fun = cor)\n\nUse terra::distance() to compute distances from all cells of Peru to it’s nearest coastline. According to the documentation, terra::distance() will calculate distance for all cells that are NA to the nearest cell that are not NA.\n\nperu_dem &lt;- terra::aggregate(peru_dem, fact = 20)\nplot(peru_dem)\n\nwater_mask &lt;- is.na(peru_dem)\nwater_mask[water_mask == 0] &lt;- NA\nplot(water_mask)\n\ndistance_to_coast &lt;- terra::distance(water_mask)\ndistance_to_coast_km &lt;- distance_to_coast / 1000\n\nplot(distance_to_coast_km, main = \"Distance to the coast (km)\")\n\nTry to modify the approach used in the above exercise by weighting the distance raster with the elevation raster:\n\nEvery 100 altitudinal meters should increase the distance to the coast by 10 km\nNext, compute and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation\n\n\ndistance_to_coast_km2 &lt;- distance_to_coast_km + ((peru_dem /100) * 10)\nplot(distance_to_coast_km2)"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#exercise-3",
+    "href": "course-materials/discussions/week4-discussion.html#exercise-3",
+    "title": "Discssuion Week 4: Raster Operation Basics",
+    "section": "Exercise 3",
+    "text": "Exercise 3\nLet’s try some geometry operations with rasters!\nThe srtm raster has a resolution of 0.00083 by 0.00083 degrees.\nYour task: change its resolution to 0.01 by 0.01 degrees using all of the method available in the terra package. And plot the results!\n\nplot(srtm)\n\nrast_template &lt;- terra::rast(terra::ext(srtm), res = 0.01)\n\nsrtm_resampl1 &lt;- terra::resample(srtm, y = rast_template, method = \"bilinear\")\nsrtm_resampl2 &lt;- terra::resample(srtm, y = rast_template, method = \"near\")\nsrtm_resampl3 &lt;- terra::resample(srtm, y = rast_template, method = \"cubic\")\nsrtm_resampl4 &lt;- terra::resample(srtm, y = rast_template, method = \"cubicspline\")\nsrtm_resampl5 &lt;- terra::resample(srtm, y = rast_template, method = \"lanczos\")\n\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nplot(srtm_resampl_all)"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html",
+    "href": "course-materials/discussions/week7-discussion.html",
+    "title": "Discssuion Week 7",
+    "section": "",
+    "text": "library(sf)\nlibrary(tidyverse)\nlibrary(terra)\n\n\n# practice filtering a raster\nelev &lt;- rast(nrows = 6, ncols = 6, resolution = 0.5,\n             xmin = -1.5, xmax = 1.5, ymin = -1.5, ymax = 1.5,\n             vals = 1:36)\n\nplot(elev)\n\n# set all cells to NA based on condition\nelev[elev &lt; 20] &lt;- NA\n\nplot(elev)\n\n\n# let's practice combining (or unioning) geometries\n# read in shapefile of the counties of North Carolina\nnc = st_read(system.file(\"shape/nc.shp\", package=\"sf\"))\n\nplot(nc[\"AREA\"])\n\n# combines all geometries without resolving borders\nnc_combine &lt;- st_combine(nc)\n\nplot(nc_combine)\n\n# finds the union of all geometries\nnc_union &lt;- st_union(nc)\n\nplot(nc_union)\n\n# let's exploring removing geometries\n# pick a few counties to remove\ncounties &lt;- nc %&gt;%\n  filter(NAME %in% c(\"Ashe\", \"Alleghany\", \"Surry\")) %&gt;%\n  st_union()\n\n# plot counties on top of the unioned version of NC\nggplot() +\n  geom_sf(data = nc_union, fill = \"grey\", color = \"transparent\") +\n  geom_sf(data = counties, fill = \"black\", color = \"transparent\")\n\n# create a new geometry that is the difference between the unioned version of NC and the counties\n\nnc_difference &lt;- st_difference(nc_union, counties)\nnc_disjoint &lt;- st_disjoint(nc_union, counties)\nnc_intersection &lt;- st_intersection(nc_union, counties)\n\n# plot the difference on top of the unioned version of NC\n# counties should be missing!\nggplot() + \n  geom_sf(data = nc_difference, fill = \"grey\", color = \"transparent\")\nggplot() + \n  geom_sf(data = nc_intersection, fill = \"grey\", color = \"transparent\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#prerequsites",
+    "href": "course-materials/discussions/week7-discussion.html#prerequsites",
+    "title": "Discssuion Week 7",
+    "section": "",
+    "text": "library(sf)\nlibrary(tidyverse)\nlibrary(terra)\n\n\n# practice filtering a raster\nelev &lt;- rast(nrows = 6, ncols = 6, resolution = 0.5,\n             xmin = -1.5, xmax = 1.5, ymin = -1.5, ymax = 1.5,\n             vals = 1:36)\n\nplot(elev)\n\n# set all cells to NA based on condition\nelev[elev &lt; 20] &lt;- NA\n\nplot(elev)\n\n\n# let's practice combining (or unioning) geometries\n# read in shapefile of the counties of North Carolina\nnc = st_read(system.file(\"shape/nc.shp\", package=\"sf\"))\n\nplot(nc[\"AREA\"])\n\n# combines all geometries without resolving borders\nnc_combine &lt;- st_combine(nc)\n\nplot(nc_combine)\n\n# finds the union of all geometries\nnc_union &lt;- st_union(nc)\n\nplot(nc_union)\n\n# let's exploring removing geometries\n# pick a few counties to remove\ncounties &lt;- nc %&gt;%\n  filter(NAME %in% c(\"Ashe\", \"Alleghany\", \"Surry\")) %&gt;%\n  st_union()\n\n# plot counties on top of the unioned version of NC\nggplot() +\n  geom_sf(data = nc_union, fill = \"grey\", color = \"transparent\") +\n  geom_sf(data = counties, fill = \"black\", color = \"transparent\")\n\n# create a new geometry that is the difference between the unioned version of NC and the counties\n\nnc_difference &lt;- st_difference(nc_union, counties)\nnc_disjoint &lt;- st_disjoint(nc_union, counties)\nnc_intersection &lt;- st_intersection(nc_union, counties)\n\n# plot the difference on top of the unioned version of NC\n# counties should be missing!\nggplot() + \n  geom_sf(data = nc_difference, fill = \"grey\", color = \"transparent\")\nggplot() + \n  geom_sf(data = nc_intersection, fill = \"grey\", color = \"transparent\")"
+  },
+  {
+    "objectID": "course-materials/labs/week10.html",
+    "href": "course-materials/labs/week10.html",
+    "title": "Week 10: Lab",
+    "section": "",
+    "text": "The National Science Foundation’s National Ecological Observatory Network (NEON) collects standardized, open-access ecological data at 81 freshwater and terrestrial field sites across the country. In addition to an amazing array of on-the-ground surveys, they also periodically collect Lidar data at the sites. All data is publicly available through the NEON Data Portal.\nFor this exercise, we will imagine that we are interested in studying canopy structure (tree height) at the San Joaquin Experimental Range in California. We’re interested in figuring out if we can rely on the Lidar data NEON is collecting by comparing tree height estimates to on-the-ground field surveys. If the estimates between the two methods are similar, we could save ourselves a lot of time and effort measuring trees!\nThis lab is based on materials developed by Edmund Hart, Leah Wasser, and Donal O’Leary for NEON."
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#task",
+    "href": "course-materials/labs/week10.html#task",
+    "title": "Week 10: Lab",
+    "section": "Task",
+    "text": "Task\nTo estimate tree height from Lidar data, we will create a canopy height model (CHM) from Lidar-derived digital surface and terrain models. We will then extract tree height estimates within the locations of on-the-ground surveys and compare Lidar estimates to measured tree height in each plot."
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#data",
+    "href": "course-materials/labs/week10.html#data",
+    "title": "Week 10: Lab",
+    "section": "Data",
+    "text": "Data\nLidar data\n\nSJER2013_DSM.tif, digital surface model (DSM)\nSJER2013_DTM.tif, digital terrain model (DTM)\nDSMs represent the elevation of the top of all objects\nDTMs represent the elevation of the ground (or terrain)\n\nVegetation plot geometries\n\nSJERPlotCentroids_Buffer.shp\nContains locations of vegetation surveys\nPolygons representing 20m buffer around plot centroids\n\nVegetation surveys\n\nD17_2013_vegStr.csv\nMeasurements for individual trees in each plot\nMetadata available in D17_2013_vegStr_metadata_desc.csv"
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#prerequisites",
+    "href": "course-materials/labs/week10.html#prerequisites",
+    "title": "Week 10: Lab",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nLet’s load all necessary packages:\n\nlibrary(terra)\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(tmap)\nlibrary(here)"
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#load-lidar-data",
+    "href": "course-materials/labs/week10.html#load-lidar-data",
+    "title": "Week 10: Lab",
+    "section": "Load Lidar data",
+    "text": "Load Lidar data\n\n# digital surface model (DSM)\ndsm &lt;- rast(here::here(\"course-materials\", \"data\", \"week10\", \"SJER2013_DSM.tif\"))\n\n# digital terrain model (DTM)\ndtm &lt;- rast(here::here(\"course-materials\", \"data\", \"week10\", \"SJER2013_DTM.tif\"))\n\nLet’s check if the DSM and DTM have the same resolution, position, and extent by creating a raster stack:\n\ntest_raster &lt;- c(dsm, dtm)\n\nCreate the canopy height model (CHM) or the height of all objects by finding the difference between the DSM and DTM:\n\nchm &lt;- dsm - dtm"
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#load-vegetation-plot-geometries",
+    "href": "course-materials/labs/week10.html#load-vegetation-plot-geometries",
+    "title": "Week 10: Lab",
+    "section": "Load vegetation plot geometries",
+    "text": "Load vegetation plot geometries\nThis includes the locations of study plots and the surveys of individual trees in each plot.\n\n# read in plot centroids\nplot_centroids &lt;- st_read(here::here(\"course-materials\", \"data\", \"week10\", \"PlotCentroids\", \"SJERPlotCentroids_Buffer.shp\"))\n\n# test if the plot CRS matches the Lidar CRS\nst_crs(plot_centroids) == st_crs(chm)\n\n\ntm_shape(chm) +\n  tm_raster() +\n  tm_shape(plot_centroids) +\n  tm_polygons()"
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#load-vegetation-survey-data",
+    "href": "course-materials/labs/week10.html#load-vegetation-survey-data",
+    "title": "Week 10: Lab",
+    "section": "Load vegetation survey data",
+    "text": "Load vegetation survey data\nLet’s find the maximum tree height in each plot:\n\n# read in the vegetation surveys, which include the height of each tree\n\n# setting this option will keep all character strings as characters\noptions(stringsAsFactors=FALSE)\n\n# read in survey data and find the maximum tree height in each plot\nveg_surveys &lt;- read.csv(here::here(\"course-materials\", \"data\", \"week10\", \"VegetationData\", \"D17_2013_vegStr.csv\")) %&gt;%\n  group_by(plotid) %&gt;%\n  summarise(\"survey_height\" = max(stemheight, na.rm = TRUE))\n\nNow find the maximum tree height in each plot as determined by the CHM:\n\nextract_chm_height &lt;- terra::extract(chm, plot_centroids, fun = max) %&gt;%\n  rename(chm_height = SJER2013_DSM) %&gt;%\n  select(chm_height)\n\nCombine tree height estimates from the Lidar and plot surveys:\n\nplot_centroids &lt;- cbind(plot_centroids, extract_chm_height) %&gt;%\n  left_join(.,veg_surveys, by = c(\"Plot_ID\" = \"plotid\"))"
+  },
+  {
+    "objectID": "course-materials/labs/week10.html#plot-results",
+    "href": "course-materials/labs/week10.html#plot-results",
+    "title": "Week 10: Lab",
+    "section": "Plot results",
+    "text": "Plot results\nLet’s compare the estimates between the two methods: Lidar and on-the-ground surveys\n\nTo make the comparison, we’ll add a 1:1 line\n\nIf all the points fall along this line it means that both methods give the same answer\n\nLet’s also add a regression line with confidence intervals to compare how the overall fit between methods compares to the 1:1 line\n\n\nggplot(plot_centroids, aes(y=chm_height, x= survey_height)) +\n  geom_abline(slope=1, intercept=0, alpha=.5, lty=2) + #plotting our \"1:1\" line\n  geom_point() +\n  geom_smooth(method = lm) + # add regression line and confidence interval\n  ggtitle(\"Validating Lidar measurements\") +\n  xlab(\"Maximum Measured Height (m)\") +\n  ylab(\"Maximum Lidar Height (m)\")\n\nWe’ve now compared Lidar estimates of tree height to on-the-ground measurements!\nIt looks like the Lidar estimates tend to underestimate tree height for shorter trees and overestimates tree height for taller trees. Or maybe human observers underestimate the height of tall trees because they’re challenging to measure? Or maybe the digital terrain model misjudged the elevation of the ground? There could be many reasons that the answers don’t line up! It’s then up to the researcher to figure out if the mismatch is important for their problem."
   }
 ]
