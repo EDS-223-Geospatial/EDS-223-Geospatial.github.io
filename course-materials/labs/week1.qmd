@@ -49,8 +49,8 @@ library(here)
 ## 3. Specifying spatial data
 Similar to plotting in `ggplot2`, in order to plot spatial data, at least two aspects need to be specified:
 
-- the spatial data object to plot (e.g. `ggplot(data = )`)
-- and the plotting method (e.g. `geom_points()`)
+- the spatial data object to plot (similar to `ggplot(data = )`)
+- and the plotting method (similar to `geom_points()`)
 
 Let's load three spatial data objects to plot:
 
@@ -88,7 +88,7 @@ world_cities <- read_sf(here("data","worldcities.gpkg"))
 
 ### Shapes and layers
 
-In `tmap`, the spatial object to plot needs to be defined within the function `tm_shape()`. This is analogous to defining the data frame to plot in `ggplot2` (`ggplot(data = )`). 
+In `tmap`, the spatial object to plot needs to be defined within the function `tm_shape()`. This is analogous to defining the data frame to plot in `ggplot2` using `ggplot(data = )`. 
 
 Let's start by plotting the countries of the world.
 ```{r}
@@ -257,22 +257,6 @@ knitr::kable(layers_df,
   kableExtra::pack_rows("Derived functions", 8, 15)
 ```
 
-Let's practice by using a dataset that contains a polygon representing the perimeter of Easter Island.
-
-```{r}
-#| echo: false
-
-ei_borders <- read_sf(here("course-materials", "data", "easter_island", "ei_border.gpkg"))
-
-```
-
-```{r}
-#| eval: false
-
-ei_borders <- read_sf(here("data", "easter_island", "ei_border.gpkg"))
-
-```
-
 ### Polygons
 
 The main function to visualize polygons is `tm_polygons()`. By default, it plots the internal area of the polygon in light grey and the polygon borders in slightly darker grey.
@@ -395,11 +379,20 @@ There are [dozens of packages](https://github.com/EmilHvitfeldt/r-color-palettes
 
 A vector of colors can be specified by name or hexidecimal. Importantly, the number of colors provided does not need to match the number of colors in the map legend. `tmap` automatically interpolates new colors in the case when a smaller number of colors is provided.
 
+::: {.callout-tip icon=true}
+# Updating legend titles
+
+Just like updating axis labels, we always need to update legend titles. In `tmap` we can do that directly by using the `title` argument in the attribute layer.
+
+:::
+
 ```{r}
 # vector of colors
 
 tm_shape(world_vector) +
-  tm_polygons("life_expectancy", palette = c("yellow", "darkgreen"))
+  tm_polygons("life_expectancy", 
+              palette = c("yellow", "darkgreen"),
+              title = "Life Expectancy (years)")
 
 ```
 
@@ -413,7 +406,9 @@ Another approach is to provide the output of a palette function. When using a pa
 library(viridisLite)
 
 tm_shape(world_vector) +
-  tm_polygons("life_expectancy", palette = viridis(8))
+  tm_polygons("life_expectancy", 
+              palette = viridis(8),
+              title = "Life Expectancy (years)")
 
 ```
 
@@ -423,7 +418,9 @@ Finally, the last approach is to use the name of one of the built-in color palet
 # built-in color palette
 
 tm_shape(world_vector) +
-  tm_polygons("life_expectancy", palette = "YlGn")
+  tm_polygons("life_expectancy", 
+              palette = "YlGn",
+              title = "Life Expectancy (years)")
 
 ```
 
@@ -510,6 +507,21 @@ tm_shape(world_vector) +
 
 ```
 
+### Layout options
+
+Similar to the `theme()` function in `ggplot2`, the `tm_layout()` function in `tmap` controls many of the map elements of the map layout.
+
+```{r}
+tm_shape(world_vector) +
+  tm_fill(col = "wb_income_region",
+          palette = viridisLite::plasma(5),
+          title = "Regional Income") +
+  tm_layout(bg.color = "grey95",
+            main.title = "Global income",
+            frame = FALSE)
+```
+
+
 
 ## 7. Interactive options
 
@@ -519,6 +531,30 @@ One of the most powerful aspects of `tmap` is the ease of creating interactive m
 tmap_mode("view")
 
 tm_shape(world_vector) +
-  tm_fill(col = "gdp_per_cap") 
+  tm_fill(col = "gdp_per_cap",
+          title = "GDP per capita") 
+```
+
+To return to regular plotting mode, simply reset `tmap_mode`.
+
+```{r}
+tmap_mode("plot")
+```
+
+## 8. Saving maps
+
+Maps can be stored as objects for for adding additional layers and saving programmtically. Maps can be saved directly in `tmap` using the `tm_shape()` function. 
+
+```{r}
+#| eval: false
+
+map1 <- tm_shape(world_vector) +
+  tm_fill(col = "gdp_per_cap",
+          palette = viridisLite::plasma(10),
+          title = "GDP per capita") +
+  tm_layout(main.title = "Global gross domesic product")
+
+tmap_save(map1, here("tmap-example.png"))
+
 ```
 
