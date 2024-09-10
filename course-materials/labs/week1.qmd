@@ -6,9 +6,16 @@ date: last-modified
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
-In this lab, we'll explore the basics of map-making in R using the `tmap` package. The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
+:::
+
+In this lab, we'll explore the basics of map-making in R using the `tmap` package. 
 
 ## 1. Why `tmap`?
 
@@ -17,9 +24,16 @@ In this lab, we'll explore the basics of map-making in R using the `tmap` packag
 - The syntax of `tmap` is based on `ggplot2` and the Grammar of Graphics
 - `tmap` supports static AND interactive maps (yay!)
 
-## 2. Set Up
+::: {.callout-tip icon=true}
+# More map making in R
 
-- Fork and clone this [repository](ADD LINK) to create a version controlled project for Week 1.
+There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](course-materials/resources/plotting.qmd) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
+
+:::
+
+## 2. Set up
+
+- Fork and clone this [repository](https://github.com/EDS-223-Geospatial/eds223-week1) to create a version controlled project for Week 1.
 - Create a Quarto doc
 - Install and load all necessary packages
 
@@ -42,8 +56,8 @@ library(here)
 ## 3. Specifying spatial data
 Similar to plotting in `ggplot2`, in order to plot spatial data, at least two aspects need to be specified:
 
-- the spatial data object to plot (e.g. `ggplot(data = )`)
-- and the plotting method (e.g. `geom_points()`)
+- the spatial data object to plot (similar to `ggplot(data = )`)
+- and the plotting method (similar to `geom_points()`)
 
 Let's load three spatial data objects to plot:
 
@@ -79,8 +93,11 @@ world_cities <- read_sf(here("data","worldcities.gpkg"))
 
 ```
 
-In `tmap`, the spatial object to plot needs to be defined within the function `tm_shape()`. This is analogous to defining the data frame to plot in `ggplot2` (`ggplot(data = )`). 
+### Shapes and layers
 
+In `tmap`, the spatial object to plot needs to be defined within the function `tm_shape()`. This is analogous to defining the data frame to plot in `ggplot2` using `ggplot(data = )`. 
+
+Let's start by plotting the countries of the world.
 ```{r}
 # plotting a single spatial object
 
@@ -89,7 +106,16 @@ tm_shape(world_vector) + # defines the spatial object to plot
 
 ```
 
+### Shapes hierarchy
+
 Similar to `ggplot2`, we can plot multiple datasets by adding layers. When multiple spatial objects are being plotted, each has to be defined in a separate `tm_shape()` call.
+
+Now let's plot the following two spatial objects:
+
+- countries of the world
+- major cities of the world
+
+In the next section we'll unpack the difference between `tm_polygons()` and `tm_dots()`, but for now let's just pay attention to the syntax of how we plot multiple spatial objects. Each spatial object needs to be specified using `tm_shape()` followed by a function for how to plot it. 
 
 ```{r}
 # plotting two spatial objects
@@ -97,8 +123,445 @@ Similar to `ggplot2`, we can plot multiple datasets by adding layers. When multi
 tm_shape(world_vector) + # defines the FIRST spatial object to plot
   tm_polygons() + # defines how to plot the FIRST object
 tm_shape(world_cities) + # defines the SECOND objet to plot
-  tm_dots() + # defines how to plot the SECOND object
-  tm_text("name") # defines an additional way to plot the SECOND object
+  tm_dots() # defines how to plot the SECOND object
+
+```
+
+So far, we've only tried plotting *vector* data (more on what this means next week!), but one of the major advantages of `tmap` is that it allows us to plot *vector* and *raster* on the same map.
+
+Let's try on example of this by adding information on global elevations to our previous map.
+
+```{r}
+# plotting vector and raster spatial objects
+
+tm_shape(world_elevation) + # plot global elevations
+  tm_raster() + # tm_raster for raster data
+tm_shape(world_vector) +
+  tm_borders() +
+tm_shape(world_cities) +
+  tm_dots() +
+  tm_text("name")
+```
+
+Similar to `ggplot2` the order of the "layers" matters! The order in which datasets are plotted defines how they are layered (think of this is as adding layers of paint). Spatial objects have extra features which additionally change this behavior: spatial extent and projection. When creating maps with `tmap`, whichever dataset is used in the first `tm_shape()` call sets the spatial extent and projection (more details next week!) for the entire map.
+
+For example, if we swapped the order of `tm_shape()` calls in the previous example, we'd end up with a different map.
+
+```{r}
+
+tm_shape(world_cities) + # plot world_cities first
+  tm_dots() +
+  tm_text("name") +
+tm_shape(world_elevation) +
+  tm_raster() +
+tm_shape(world_vector) +
+  tm_borders() 
+
+```
+
+Sometimes this can present sticky issues! Imagine the case where we want to use the spatial extent and projection from the `world_cities` data, but want it plotted on top of the other datasets. We can do this by changing the main *shape* using the `is.master` argument.
+
+```{r}
+
+tm_shape(world_elevation) + 
+  tm_raster() + 
+tm_shape(world_vector) +
+  tm_borders() +
+tm_shape(world_cities, is.master = TRUE) + # plot world_cities last, but set as main shape
+  tm_dots() +
+  tm_text("name")
+
+```
+
+### Map extent
+
+One thing to consider when making maps is what area we want to show on the map -- the spatial extent of our map. This isn't an issue when we want to map all of our data (spatial extent of our data matches our desired map extent). But often our data will represent a larger region than what we want to map.
+
+We have two options:
+
+- process our data to create a new spatial object for exactly what we want to map (fine, but annoying)
+- change the extent of a map
+
+`tmap` has a few options for changing the map extent. The first is by defining a bounding box that specifies the minimum and maximum coordinates in the x and y directions that we want to represent. The values need to be in the units of the original data or we can create a bounding box using `st_bbox()`.
+
+For example, let's restrict our previous map to just Europe using a set of min/max values.
+
+```{r}
+
+tm_shape(world_elevation, bbox = c(-15, 35, 45, 65)) + # add bounding box to restrict extent
+  tm_raster() + 
+tm_shape(world_vector) +
+  tm_borders() 
+
+```
+
+We can also restrict the extent of the map using the extent of a dataset. For example, we can restrict the map using the extent of the `world_cities` data.
+
+```{r}
+
+tm_shape(world_elevation, bbox = world_cities) + # bounding box = extent of world_cities
+  tm_raster() + 
+tm_shape(world_vector) +
+  tm_borders() 
+
+```
+
+::: {.callout-tip collapse=true}
+## Bonus Tip
+
+You can also restrict the map extent using an OpenStreetMap tool called Nominatim to automatically generate minimum and maximum coordinates in the x and y directions based on the provided query.
+
+```{r}
+
+tm_shape(world_elevation, bbox = "Europe") + # query the region of Europe
+  tm_raster(palette = terrain.colors(8))
+
+```
+
+:::
+
+## 4. Layers
+
+Again following the syntax of `ggplot2` which uses layers to plot data (e.g. `geom_point()`), `tmap` also uses layers! We've already used layers in our previous examples (e.g. `tm_borders()`), but now we'll dig into them in more detail. All possible layer types can be found in the table below:
+
+```{r}
+#| echo: false
+
+layers_basic_df = tibble::tribble(
+  ~Function, ~Element, ~Geometry,
+  "tm_polygons()", "polygons (borders and fill)", "polygons",
+  "tm_symbols()", "symbols", "points, polygons, and lines", 
+  "tm_lines()", "lines", "lines", 
+  "tm_raster()", "raster", "raster",
+  "tm_text()", "text", "points, polygons, and lines",
+  "tm_basemap()", "tile" , "",
+  "tm_tiles()", "tile", ""
+)
+layers_extended_df = tibble::tribble(
+  ~Function, ~Element, ~Geometry,
+  "tm_borders()", "polygons (borders)", "polygons",
+  "tm_fill()", "polygons (fill)", "polygons",
+  "tm_bubbles()", "bubbles", "points, polygons, and lines",
+  "tm_dots()", "dots", "points, polygons, and lines",
+  "tm_markers()", "marker symbols", "points, polygons, and lines",
+  "tm_square()", "squares", "points, polygons, and lines",
+  "tm_iso()", "lines with text labels", "lines",
+  "tm_rgb()/tm_rgba()", "raster (RGB image)", "raster"
+)
+layers_df = rbind(layers_basic_df, 
+                  layers_extended_df)
+
+library(kableExtra)
+knitr::kable(layers_df, 
+             caption = "Map layers.",
+             caption.short = "Map layers",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE) %>% 
+  kableExtra::pack_rows("Basic functions", 1, 7) %>%
+  kableExtra::pack_rows("Derived functions", 8, 15)
+```
+
+### Polygons
+
+The main function to visualize polygons is `tm_polygons()`. By default, it plots the internal area of the polygon in light grey and the polygon borders in slightly darker grey.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_polygons()
+
+```
+
+We modify the colors useing the `col` and `border.col` arguments and other arguments borrowed from `ggplot2`.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_polygons(col = "lightblue",
+              border.col = "black",
+              lwd = 0.5,
+              lty = "dashed")
+
+```
+
+But, you may have noticed in the previous table that `tm_polygons` isn't the only function we can use to plot polygon data. In fact, `tm_polygons` is a combination of two separate functions - `tm_fill()` and `tm_borders()`. 
+
+The `tm_borders()` function plots just the borders and the `tm_fill()` function fills polygons with a fixed color or a color palette representing a selected variable. 
+
+```{r}
+# plot just borders
+
+tm_shape(world_vector) +
+  tm_borders(col = "red")
+```
+
+```{r}
+# fill polygons with fixed color
+
+tm_shape(world_vector) +
+  tm_fill(col = "lightblue")
+
+```
+
+```{r}
+# fill polygons with a color palette representing a variable
+
+tm_shape(world_vector) +
+  tm_fill("CO2_emissions")
+```
+
+::: {.callout-warning icon=true}
+# Syntax differences
+
+Note that to change the border color in `tm_polygons()` we used the `border.col` argument, but in `tm_borders()` we used the `col` argument. This is necessary in `tm_polygons()` to differentiate between the settings for the polyons fill and borders.
+
+:::
+
+### Symbols
+
+Symbols are a very flexible layer type. They typically represent point data, but can also be used for lines and polygons (in this case located at the centroid of each feature). Symbols are also highly flexible in how they can be visualized. They can show the values of a given variable by the color, size, and shape of the symbol. 
+
+`tm_symbols()` is the main function in `tmap` to display and modify symbol elements. By default, this function draws a gray circle symbol with a black border for each element of an input feature.
+
+```{r}
+
+tm_shape(world_cities) +
+  tm_symbols()
+
+```
+
+`tm_symbols()` has a large number of arguments to flexible adjust how elements are displayed. While this allows adjusting its results to almost any need, it also makes this function complicated. Therefore, four additional layers are implemented in `tmap`: `tm_squares()`, `tm_bubbles()`, `tm_dots()`, `tm_markers()`. All of them use `tm_symbols()`, but with different default values.
+
+- `tm_squares()`: uses square symbols (`shape = 22`)
+- `tm_bubbles()`: uses large circle symbols
+- `tm_dots()`: uses small circle symbols (good for displaying many locations)
+- `tm_markers()`: uses marker icons
+
+```{r}
+
+tm_shape(world_cities) +
+  tm_squares()
+
+tm_shape(world_cities) +
+  tm_bubbles()
+
+tm_shape(world_cities) +
+  tm_dots()
+
+```
+
+
+## 5. Visual variables
+
+Following `ggplot2` yet again, `tmap` uses the basic visual variables of color, size, and shape to represent data. Which variables can be applied depends on the typ of the map layer.
+
+- Symbols: color, size, and shape
+- Lines: color and size
+- Polygons: color
+
+The type of data (quantitative or qualitative) also determines which visual variables can be used.
+
+- Color: quantitative or qualitative
+- Size: quantitative
+- Shape: qualitative
+
+### Color
+
+`tmap` uses the many ways that colors can be specified in R:
+
+- built-in color names (e.g. "red")
+- hexadecimal (e.g. #00FF00)
+- palettes
+
+There are [dozens of packages](https://github.com/EmilHvitfeldt/r-color-palettes) that contain hundreds of color palettes. The most popular are `RColorBrewer` and `viridis`. By default, `tmap` attempts to identify the type of the data being plotted and selects on of the built-in palettes.
+
+`tmap` offers three main ways to specify color palettes using the `palette` argument:
+
+- a vector of colors
+- a palette function
+- one of the built-in names
+
+A vector of colors can be specified by name or hexidecimal. Importantly, the number of colors provided does not need to match the number of colors in the map legend. `tmap` automatically interpolates new colors in the case when a smaller number of colors is provided.
+
+::: {.callout-tip icon=true}
+# Updating legend titles
+
+Just like updating axis labels, we always need to update legend titles. In `tmap` we can do that directly by using the `title` argument in the attribute layer.
+
+:::
+
+```{r}
+# vector of colors
+
+tm_shape(world_vector) +
+  tm_polygons("life_expectancy", 
+              palette = c("yellow", "darkgreen"),
+              title = "Life Expectancy (years)")
+
+```
+
+Another approach is to provide the output of a palette function. When using a palette function, you can specify the number of colors to use. Below we use the `viridis` palette from the `viridisLite` package.
+
+
+```{r}
+# palette function
+
+#install.packages("viridisLite")
+library(viridisLite)
+
+tm_shape(world_vector) +
+  tm_polygons("life_expectancy", 
+              palette = viridis(8),
+              title = "Life Expectancy (years)")
+
+```
+
+Finally, the last approach is to use the name of one of the built-in color palettes.
+
+```{r}
+# built-in color palette
+
+tm_shape(world_vector) +
+  tm_polygons("life_expectancy", 
+              palette = "YlGn",
+              title = "Life Expectancy (years)")
+
+```
+
+### Size
+
+Sizes can be used for points, lines (line widths), or text to represent quantitative (numerical) variables. By default, `tmap` represents points, lines, or text objects as the same size. The size of objects can be changed by using the `size` argument.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_polygons(col = "lightblue") +
+tm_shape(world_cities) +
+  tm_symbols(size = "pop2020")
+
+```
+
+
+## 6. Layout
+
+Just like in standard data visualiztions, maps have elements that need to be provided in order to interpret them correctly. Maps **need** to contain either a scale bar and north arrow OR grid lines or graticules. `tmap` provides these elements (and others) as the following additional attribute layers.
+
+
+```{r}
+#| echo: false
+attr_layers_df = tibble::tribble(
+  ~Function, ~Description,
+  "tm_grid()", "draws coordinate grid lines of the coordinate system of the main shape object",
+  "tm_graticules()", "draws latitude and longitude graticules", 
+  "tm_scale_bar()", "adds a scale bar", 
+  "tm_compass()", "adds a compass rose", 
+  "tm_credits()", "adds a text annotation", 
+  "tm_logo()", "adds a logo",
+  "tm_xlab()", "adds an x axis labels", 
+  "tm_ylab()", "adds an y axis labels",
+  "tm_minimap()", "adds minimap in the view mode only"
+)
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(attr_layers_df, 
+             caption = "Attribute layers.",
+             caption.short = "Attribute layers.",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE)
+```
+
+### Grid lines
+
+The `tmap` package offers two ways to draw coordinate lines - `tm_grid()` and `tm_graticules()`. `tm_grid()` represents the input data's coordinates.
+
+```{r}
+tm_shape(world_vector) +
+  tm_fill() +
+  tm_grid()
+```
+
+`tm_graticules()` shows latitude and longitude lines, with degrees as units
+
+```{r}
+tm_shape(world_vector) +
+  tm_fill() +
+  tm_graticules()
+```
+
+Both `tm_grid()` and `tm_graticules()` can be placed above or below other map layers.
+
+```{r}
+tm_shape(world_vector) +
+  tm_graticules() + # graticules below tm_fill()
+  tm_fill()
+```
+
+### Scale bar and north arrow
+
+A scale bar is a graphic indicator of the relation between a distance on a map and the corresponding distance in the real world. A north arrow, or a map compass or compass rose, indicates the orientation of the map. North arrows can be added to every map, but are not necessary on maps of large areas (e.g. global maps) where the orientation is obvious.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_fill() +
+  tm_scale_bar() +
+  tm_compass(position = c("left", "top"))
+
+```
+
+### Layout options
+
+Similar to the `theme()` function in `ggplot2`, the `tm_layout()` function in `tmap` controls many of the map elements of the map layout.
+
+```{r}
+tm_shape(world_vector) +
+  tm_fill(col = "wb_income_region",
+          palette = viridisLite::plasma(5),
+          title = "Regional Income") +
+  tm_layout(bg.color = "grey95",
+            main.title = "Global income",
+            frame = FALSE)
+```
+
+
+
+## 7. Interactive options
+
+One of the most powerful aspects of `tmap` is the ease of creating interactive maps. `tmap` has two modes `"plot"` which creates static maps and `"view"` which creates interactive maps that can be easily embedded in quarto docs. It's as easy as using the `tmap_mode()`!
+
+```{r}
+tmap_mode("view")
+
+tm_shape(world_vector) +
+  tm_fill(col = "gdp_per_cap",
+          title = "GDP per capita") 
+```
+
+To return to regular plotting mode, simply reset `tmap_mode`.
+
+```{r}
+tmap_mode("plot")
+```
+
+## 8. Saving maps
+
+Maps can be stored as objects for for adding additional layers and saving programmtically. Maps can be saved directly in `tmap` using the `tm_shape()` function. 
+
+```{r}
+#| eval: false
+
+map1 <- tm_shape(world_vector) +
+  tm_fill(col = "gdp_per_cap",
+          palette = viridisLite::plasma(10),
+          title = "GDP per capita") +
+  tm_layout(main.title = "Global gross domesic product")
+
+tmap_save(map1, here("tmap-example.png"))
 
 ```
 
