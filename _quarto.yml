@@ -1,10 +1,10 @@
 project:
   type: website
   output-dir: docs
-  render:
-    - "*.qmd"
+  # render:
+    # - "*.qmd"
     # - "!templates/"
-    - "!data/"
+    # - "!data/"
 
 website:
   favicon: images/favicon.png
