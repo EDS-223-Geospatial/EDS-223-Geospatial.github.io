@@ -24,7 +24,7 @@ In this lab, we'll explore the basics of map-making in R using the `tmap` packag
 - The syntax of `tmap` is based on `ggplot2` and the Grammar of Graphics
 - `tmap` supports static AND interactive maps (yay!)
 
-## 2. Set Up
+## 2. Set up
 
 - Fork and clone this [repository](ADD LINK) to create a version controlled project for Week 1.
 - Create a Quarto doc
@@ -331,10 +331,194 @@ Note that to change the border color in `tm_polygons()` we used the `border.col`
 
 ### Symbols
 
+Symbols are a very flexible layer type. They typically represent point data, but can also be used for lines and polygons (in this case located at the centroid of each feature). Symbols are also highly flexible in how they can be visualized. They can show the values of a given variable by the color, size, and shape of the symbol. 
+
+`tm_symbols()` is the main function in `tmap` to display and modify symbol elements. By default, this function draws a gray circle symbol with a black border for each element of an input feature.
+
+```{r}
+
+tm_shape(world_cities) +
+  tm_symbols()
+
+```
+
+`tm_symbols()` has a large number of arguments to flexible adjust how elements are displayed. While this allows adjusting its results to almost any need, it also makes this function complicated. Therefore, four additional layers are implemented in `tmap`: `tm_squares()`, `tm_bubbles()`, `tm_dots()`, `tm_markers()`. All of them use `tm_symbols()`, but with different default values.
+
+- `tm_squares()`: uses square symbols (`shape = 22`)
+- `tm_bubbles()`: uses large circle symbols
+- `tm_dots()`: uses small circle symbols (good for displaying many locations)
+- `tm_markers()`: uses marker icons
+
+```{r}
+
+tm_shape(world_cities) +
+  tm_squares()
+
+tm_shape(world_cities) +
+  tm_bubbles()
+
+tm_shape(world_cities) +
+  tm_dots()
+
+```
 
 
 ## 5. Visual variables
 
+Following `ggplot2` yet again, `tmap` uses the basic visual variables of color, size, and shape to represent data. Which variables can be applied depends on the typ of the map layer.
+
+- Symbols: color, size, and shape
+- Lines: color and size
+- Polygons: color
+
+The type of data (quantitative or qualitative) also determines which visual variables can be used.
+
+- Color: quantitative or qualitative
+- Size: quantitative
+- Shape: qualitative
+
+### Color
+
+`tmap` uses the many ways that colors can be specified in R:
+
+- built-in color names (e.g. "red")
+- hexadecimal (e.g. #00FF00)
+- palettes
+
+There are [dozens of packages](https://github.com/EmilHvitfeldt/r-color-palettes) that contain hundreds of color palettes. The most popular are `RColorBrewer` and `viridis`. By default, `tmap` attempts to identify the type of the data being plotted and selects on of the built-in palettes.
+
+`tmap` offers three main ways to specify color palettes using the `palette` argument:
+
+- a vector of colors
+- a palette function
+- one of the built-in names
+
+A vector of colors can be specified by name or hexidecimal. Importantly, the number of colors provided does not need to match the number of colors in the map legend. `tmap` automatically interpolates new colors in the case when a smaller number of colors is provided.
+
+```{r}
+# vector of colors
+
+tm_shape(world_vector) +
+  tm_polygons("life_expectancy", palette = c("yellow", "darkgreen"))
+
+```
+
+Another approach is to provide the output of a palette function. When using a palette function, you can specify the number of colors to use. Below we use the `viridis` palette from the `viridisLite` package.
+
+
+```{r}
+# palette function
+
+#install.packages("viridisLite")
+library(viridisLite)
+
+tm_shape(world_vector) +
+  tm_polygons("life_expectancy", palette = viridis(8))
+
+```
+
+Finally, the last approach is to use the name of one of the built-in color palettes.
+
+```{r}
+# built-in color palette
+
+tm_shape(world_vector) +
+  tm_polygons("life_expectancy", palette = "YlGn")
+
+```
+
+### Size
+
+Sizes can be used for points, lines (line widths), or text to represent quantitative (numerical) variables. By default, `tmap` represents points, lines, or text objects as the same size. The size of objects can be changed by using the `size` argument.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_polygons(col = "lightblue") +
+tm_shape(world_cities) +
+  tm_symbols(size = "pop2020")
+
+```
+
+
 ## 6. Layout
 
+Just like in standard data visualiztions, maps have elements that need to be provided in order to interpret them correctly. Maps **need** to contain either a scale bar and north arrow OR grid lines or graticules. `tmap` provides these elements (and others) as the following additional attribute layers.
+
+
+```{r}
+#| echo: false
+attr_layers_df = tibble::tribble(
+  ~Function, ~Description,
+  "tm_grid()", "draws coordinate grid lines of the coordinate system of the main shape object",
+  "tm_graticules()", "draws latitude and longitude graticules", 
+  "tm_scale_bar()", "adds a scale bar", 
+  "tm_compass()", "adds a compass rose", 
+  "tm_credits()", "adds a text annotation", 
+  "tm_logo()", "adds a logo",
+  "tm_xlab()", "adds an x axis labels", 
+  "tm_ylab()", "adds an y axis labels",
+  "tm_minimap()", "adds minimap in the view mode only"
+)
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(attr_layers_df, 
+             caption = "Attribute layers.",
+             caption.short = "Attribute layers.",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE)
+```
+
+### Grid lines
+
+The `tmap` package offers two ways to draw coordinate lines - `tm_grid()` and `tm_graticules()`. `tm_grid()` represents the input data's coordinates.
+
+```{r}
+tm_shape(world_vector) +
+  tm_fill() +
+  tm_grid()
+```
+
+`tm_graticules()` shows latitude and longitude lines, with degrees as units
+
+```{r}
+tm_shape(world_vector) +
+  tm_fill() +
+  tm_graticules()
+```
+
+Both `tm_grid()` and `tm_graticules()` can be placed above or below other map layers.
+
+```{r}
+tm_shape(world_vector) +
+  tm_graticules() + # graticules below tm_fill()
+  tm_fill()
+```
+
+### Scale bar and north arrow
+
+A scale bar is a graphic indicator of the relation between a distance on a map and the corresponding distance in the real world. A north arrow, or a map compass or compass rose, indicates the orientation of the map. North arrows can be added to every map, but are not necessary on maps of large areas (e.g. global maps) where the orientation is obvious.
+
+```{r}
+
+tm_shape(world_vector) +
+  tm_fill() +
+  tm_scale_bar() +
+  tm_compass(position = c("left", "top"))
+
+```
+
+
 ## 7. Interactive options
+
+One of the most powerful aspects of `tmap` is the ease of creating interactive maps. `tmap` has two modes `"plot"` which creates static maps and `"view"` which creates interactive maps that can be easily embedded in quarto docs. It's as easy as using the `tmap_mode()`!
+
+```{r}
+tmap_mode("view")
+
+tm_shape(world_vector) +
+  tm_fill(col = "gdp_per_cap") 
+```
+
