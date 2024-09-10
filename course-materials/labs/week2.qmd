@@ -1,6 +1,6 @@
 ---
-title: "Week 2: Lab"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Week 2 Lab"
+subtitle: "Intro to vector data with `sf` and coordinate reference systems"
 author: "Ruth Oliver"
 date: last-modified
 format:
@@ -8,41 +8,67 @@ format:
     toc: true
 ---
 
-In this lab, we'll explore the basics of manipulating vector data in R using the **sf** package. The following materials are modified from [Chapter 3 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/attr.html).
+::: {.callout-note icon=true}
+# Source Materials
+he following materials are modified from [Chapter 3 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/attr.html) and the [tmap book](https://r-tmap.github.io/tmap-book/).
+:::
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+In this lab, we'll explore the basics of manipulating vector data in R using the `sf` package.
 
-## Set Up
+## 1. Set Up
 
 Let's load all necessary packages:
 
-```{r load, include=TRUE, message=FALSE, warning= FALSE}
+```{r}
 rm(list = ls())
 library(sf)
-library(spData)
 library(tmap)
 library(tidyverse)
 ```
 
-## Handling sf Objects
+## 2. Simple features in `sf`
 
-Let's start by looking at how we can construct a **sf** object. First, we create a geometry for London by supplying a point and CRS. Then, we supply some non-geographic attributes!
+Simple features is a hierarchical data model that represents a wide range of geometry types. The `sf` package can represent all common vector geometry types:
 
-```{r include=TRUE}
+- points
+- lines
+- polygons
+- and their respective 'multi' versions
+
+`sf`provides the same functionality that the `sp`, `rgdal`, and `rgeos` provided, but is more intuitive because it builds on the `tidyverse`. `sf` represents spatial objects as "simple feature" objects by storing them in a data frame with the geographic data stored in a special column (usually named `geom` or `geometry`).
+
+### Simple features from scratch
+Let's start by looking at how we can construct a `sf` object. Typically we will load `sf` objects by reading in data. However, it can be helpful to see how `sf` objects are created from scratch.
+
+First, we create a geometry for London by supplying a point and coordinate reference system. 
+
+```{r}
+# create st_point with longitude and latitude for London
+# simple feature geometry
 lnd_point <- st_point(c(0.1, 51.5))
 
+# add coordinate reference system
+# simple feature collection
 lnd_geom <- st_sfc(lnd_point, crs = 4326)
 
+```
+
+
+Then, we supply some non-geographic attributes by creating a data frame with attributes about London. And we attach the simple feature collection and data frame to create a `sf` object. Check out the class of the new object we created.
+
+```{r}
+# create data frame of attributes about London
 lnd_attrib <- data.frame(
   name = "London",
   temperature = 25,
   date = as.Date("2017-06-21")
   )
 
+# combine geomtery and data frame
+# simple feature object
 lnd_sf <- st_sf(lnd_attrib, geometry = lnd_geom)
 
+# check class
 class(lnd_sf)
 ```
 
