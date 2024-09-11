@@ -2,8 +2,6 @@
 title: "Week 3: Lab"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Ruth Oliver"
-execute: 
-  eval: false
 date: last-modified
 execute: 
   eval: false
