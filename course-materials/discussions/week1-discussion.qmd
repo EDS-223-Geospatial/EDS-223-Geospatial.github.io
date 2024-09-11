@@ -1,22 +1,104 @@
 ---
-title: "Week 1 Discussion Section"
+title: "Week 1: Discussion Section"
 subtitle: "Map making with `tmap` and beyond"
 author: "Alessandra Vidal Meza"
 date: last-modified
 format:
   html:
     toc: true
+    code_folding: hide
 ---
 
-## Learning objectives for discussion section:
+::: {.callout-tip}
+## Reference
+Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource to get you started.
+:::
 
-- read in spatial objects
-  - (we should provide code)
-- create map with single spatial object
-- create map with multiple spatial objects
-- use different types of plotting formats (e.g. `tm_polygons`, `tm_fill`, `tm_dots`, etc.)
-- adjust color palettes
-- include essential map elements: scale bar & north arrow or graticules
-- create an interactive map
-- should use `tmap`, but could include bonus challenge to reproduce map using `ggplot2`
-- should link to Juliet's map making resource
+## Learning Objectives
+
+- Read in spatial objects
+- Create map with single spatial object
+- Create map with multiple spatial objects
+- Use different types of plotting formats (e.g. `tm_polygons`, `tm_fill`, `tm_dots`, etc.)
+- Adjust color palettes
+- Include essential map elements (e.g. scale bar, north arrow, graticules)
+- Create an interactive map
+- **Bonus Challenge**: Reproduce map using `ggplot2` instead of `tmap`
+
+## Get Started
+
+Let's load the necessary packages: 
+```{r message=FALSE, warning=FALSE}
+library(sf)
+library(stars)
+```
+
+And read in the spatial objects for Easter Island:
+- **ei_points**: file contains several points on the island
+- **ei_elev**: raster with elevation data
+- **ei_borders**: polygon with the island outline
+- **ei_roads**: lines contains a road network for the island
+
+```{r eval=FALSE}
+ei_points <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_points.gpkg"))
+volcanoes <- subset(ei_points, type == "volcano")
+ei_elev <- stars::read_stars(here::here("course-materials", "data", "week1", "easter_island", "ei_elev.tif"))
+ei_borders <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_border.gpkg"))
+ei_roads <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_roads.gpkg"))
+```
+
+Now, to meet our learning objectives, your task:
+1. Create a map of Easter Island
+2. Create a map of Easter Island and...
+  - ...denote the island's borders and continuous elevation
+  - ...denote the island's volcanoes and roads
+  - ...play with the color palette and essential map elements
+3. Create an interactive map of Easter Island
+
+## Answer Key
+
+The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
+
+```{r answer key, eval=FALSE}
+library(sf)
+library(stars)
+
+ei_elev <- stars::read_stars(here::here("course-materials", "data", "week1", "easter_island", "ei_elev.tif"))
+ei_borders <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_border.gpkg"))
+ei_roads <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_roads.gpkg"))
+
+tm_shape(ei_borders) + 
+  tm_layout(main.title = "Easter Island",
+            bg.color = "lightblue")
+
+tm_shape(ei_elev) +
+  tm_raster(style = "cont", palette = "-RdYlGn",
+            title = "Elevation (m asl)") +
+  tm_shape(ei_borders) + 
+  tm_borders() +
+  tm_shape(ei_roads) + 
+  tm_lines(lwd = "strokelwd", legend.lwd.show = FALSE) +
+  tm_shape(volcanoes) +
+  tm_symbols(shape = 24, size = "elevation",
+             title.size = "Volcanoes (m asl)") +
+  tm_layout(main.title = "Easter Island",
+            bg.color = "lightblue")
+
+my_map <- tm_shape(ei_elev) +
+  tm_raster(style = "cont", palette = "-RdYlGn",
+            title = "Elevation (m asl)") +
+  tm_shape(ei_borders) + 
+  tm_borders() +
+  tm_shape(ei_roads) + 
+  tm_lines(lwd = "strokelwd", legend.lwd.show = FALSE) +
+  tm_shape(volcanoes) +
+  tm_symbols(shape = 24, size = "elevation",
+             title.size = "Volcanoes (m asl)") +
+  tm_graticules() +
+  tm_compass(position = c("right", "top")) +
+  tm_scale_bar() +
+  tm_credits("Author, 2021") +
+  tm_add_legend(type = "line", col = "black", title = "Roads") +
+  tm_layout(main.title = "Easter Island",
+            bg.color = "lightblue")
+```
