@@ -3,6 +3,8 @@ title: "Week 1 Lab"
 subtitle: "Making maps with `tmap`"
 author: "Ruth Oliver"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true

@@ -3,6 +3,8 @@ title: "Week 1: Discussion Section"
 subtitle: "Map making with `tmap` and beyond"
 author: "Alessandra Vidal Meza"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true
