@@ -3,6 +3,9 @@ title: "Plotting Geospatial Data"
 author: Juliet Cohen
 date: 2024-09-04
 format: html
+html:
+  code-fold:true
+  code-summary: "Show the code"
 ---
 
 # Plotting Geospatial Data
@@ -15,7 +18,6 @@ In R, various geospatial packages exist for visualizing and manipulating spatial
 -   `leaflet`
 -   `tmap`
 -   `terra`
--   `tidyterra`
 
 First, load the spatial file into R using the `sf` package for vector data, or the `terra` package for raster data.
 
@@ -311,8 +313,6 @@ tm_shape(canada_greenland) +
 
 Add a polygon for polar bear habitat range from the [International Union for Conservation of Nature (IUCN) Red List](https://www.iucnredlist.org/species/22823/14871490). This means we have 3 vector objects overlaid: polygons for country borders, points for polar bear observations, and 1 polygon for habitat.
 
-#TODO: Add IUCN citation for data
-
 ```{r}
 fp_habitat = "course-materials/resources/data/pb_range/data_0.shp"
 pb_habitat = st_read(here(fp_habitat))
@@ -326,12 +326,6 @@ plot(pb_habitat_poly,
      axes = TRUE,
      xlab = "Latitude",
      ylab = "Longitude")
-```
-
-Check that the CRS matches for both spatial objects before plotting or performing spatial operations. 
-
-```{r}
-st_crs(pb_habitat_poly) == st_crs(pb_spatial)
 ```
 
 ### ggplot: points and polygons
@@ -408,8 +402,8 @@ Source: https://noaadata.apps.nsidc.org/NOAA/G02135/north/monthly/geotiff/12_Dec
 Metadata: https://nsidc.org/data/g02135/versions/3#anchor-data-access-tools
 
 ```{r}
-fp_ice = "course-materials/resources/data/Arctic_ice/N_197812_concentration_v3.0.tif"
-arctic_ice <- terra::rast(here(fp_ice))
+fp = "course-materials/resources/data/Arctic_ice/N_197812_concentration_v3.0.tif"
+arctic_ice <- terra::rast(here(fp))
 
 terra::plot(arctic_ice,
             main = "Arctic Sea Ice Concentration")
@@ -427,11 +421,6 @@ hist(arctic_ice,
      border = "black")
 ```
 
-Check the CRS:
-
-```{r}
-st_crs(arctic_ice)
-```
 
 The CRS is projected and in units of meters. See metadata [here](https://nsidc.org/data/user-resources/help-center/guide-nsidcs-polar-stereographic-projection).
 
@@ -451,7 +440,7 @@ terra::plot(pb_habitat_arctic,
             col = adjustcolor("yellow", alpha.f = 0.2))
 ```
 
-### ggplot: rasters
+### ggplot: rasters and polygons
 
 Convert the array into a dataframe, because ggplot only accepts tabular data:
 
@@ -460,8 +449,6 @@ arctic_ice_df <- terra::as.data.frame(arctic_ice,
                                cells = FALSE, # do not create index col
                                xy = TRUE)  %>% # include lat and long cols
                  dplyr::rename(ice_concentration = N_197812_concentration_v3.0)
-
-head(arctic_ice_df)
 ```
 
 
@@ -475,27 +462,40 @@ ggplot() +
               aes(x = x, y = y, 
                   fill = ice_concentration)) +
   scale_fill_gradientn(colors = blue_palette) +
-  geom_sf(data = pb_habitat, 
+  geom_sf(data = pb_habitat_arctic, 
           fill = "yellow",
           color = "darkgoldenrod1",
-          size = 1) +
+          size = 0.2,
+          alpha = 0.2) +
   coord_sf() + # coord_fixed()
   theme_minimal() +
-  labs(title = "Sea Ice Concentration",
-       fill = "Sea Ice Concentration")
+  labs(title = "Sea Ice Concentration\nand Polar Bear Habitat Range",
+       fill = "Sea Ice\nConcentration")
 ```
 
-
-
-### tmap: rasters
+### tmap: rasters and polygons
 
 ```{r}
-
+global(arctic_ice, fun = "isNA")
 ```
 
-
-### `tidyterra`
 
 ```{r}
+tmap_mode("plot")
 
+tm_shape(arctic_ice) +
+  tm_raster(palette = "Blues",
+            title = "Sea Ice\nConcentration",
+            style = "cont") +
+tm_shape(pb_habitat_arctic) +
+tm_polygons(col = "yellow",
+              border.col = "darkgoldenrod1",
+              lwd = 1,
+              alpha = 0.3) +
+tm_layout(title = "Sea Ice Concentration\nand Polar Bear Habitat Range",
+          main.title.size = 1,
+          bg.color = "grey",
+          legend.outside = TRUE,
+          legend.outside.position = "right")
 ```
+
