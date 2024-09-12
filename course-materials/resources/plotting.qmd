@@ -19,7 +19,7 @@ In R, various geospatial packages exist for visualizing and manipulating spatial
 -   `tmap`
 -   `terra`
 
-First, load the spatial file into R using the `sf` package for vector data, or the `terra` package for raster data.
+We can load the spatial file into R using the `sf` package for vector data, or the `terra` package for raster data.
 
 Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This resource provides example code and explanations for which packages are recommended to get the most out of your visualizations.
 
@@ -28,9 +28,9 @@ Visualizing vector data, raster data, or both overlaid can be accomplished in va
 | Preference | Package |
 | ---------- | ------- |
 | Are you already familiar with `ggplot` for plotting, and you're interested in a static visualization? | `ggplot2` |
-| Are you interested in highly tailorable map features and the option to create an interactive visualization? | `tmap` |
-| Are you mapping raster data quickly with less code and less flexibility? | `terra::plot` |
-| Are you interested creating interactive maps with high flexibility? | `leaflet` |
+| Are you interested in highly tailorable map features and options to create either static or interactive visualizations? | `tmap` |
+| Are you interested in mapping raster data quickly with less code and less flexibility? | `terra::plot` |
+| Are you interested creating interactive maps quickly with high flexibility? | `leaflet` |
 | Are you interested in exploring spatial objects of any sort interactively? | `mapview` |
 
 
@@ -38,7 +38,6 @@ Visualizing vector data, raster data, or both overlaid can be accomplished in va
 # install all required packages if not already installed
 pkg <- c("sf", 
          "terra", 
-         "tidyterra", 
          "ggplot2", 
          "tmap", 
          "rgbif", 
@@ -83,7 +82,7 @@ pb_obs <- pb_data$data %>%
          country) %>%
   mutate(year = as.factor(year)) # year = categorical
   
-# remove any rows with an NA in any col
+# remove rows with NA in any col
 pb_obs <- na.omit(pb_obs)
 ```
 
@@ -134,10 +133,8 @@ Note how the points are clickable, and metadata pops up.
 #### leaflet
 
 ```{r}
-palette <- colorFactor(
-  palette = 'viridis',
-  domain = pb_spatial$year
-)
+palette <- colorFactor(palette = 'viridis',
+                       domain = pb_spatial$year)
 
 leaflet(data = pb_spatial) %>%
   addProviderTiles("Esri.NatGeoWorldMap") %>% 
@@ -286,7 +283,8 @@ ggplot(data = canada_greenland) +
 ### `tmap` points and polygons
 
 ```{r}
-# static map
+# static map setting, this is the default, but
+# needs to be reset if previously set to "interactive"
 tmap_mode("plot")
 
 tm_shape(canada_greenland) + 
@@ -314,10 +312,16 @@ tm_shape(canada_greenland) +
 Add a polygon for polar bear habitat range from the [International Union for Conservation of Nature (IUCN) Red List](https://www.iucnredlist.org/species/22823/14871490). This means we have 3 vector objects overlaid: polygons for country borders, points for polar bear observations, and 1 polygon for habitat.
 
 ```{r}
-fp_habitat = "course-materials/resources/data/pb_range/data_0.shp"
-pb_habitat = st_read(here(fp_habitat))
-# convert from a "simple feature collection" with 15 fields
-# to just the geometry
+# search for file anywhere within "course-materials" dir
+hab_filename = "data_0.shp"
+hab_fp <- list.files(path = here("course-materials"),
+                 pattern = hab_filename,
+                 recursive = TRUE,
+                 full.names = TRUE)
+
+pb_habitat = st_read(hab_fp)
+# convert from a "simple feature collection" with 
+# 15 fields to just the geometry
 pb_habitat_poly <- st_geometry(pb_habitat)
 
 plot(pb_habitat_poly,
@@ -386,7 +390,7 @@ tm_shape(canada_greenland) +
 
 ## Raster Data
 
-`terra` and `tidyterra` specialize in raster data processing, which are n-dimensional arrays.
+`terra` specializes in raster data processing, which are n-dimensional arrays.
 
 Examples of file formats:
 
@@ -402,8 +406,13 @@ Source: https://noaadata.apps.nsidc.org/NOAA/G02135/north/monthly/geotiff/12_Dec
 Metadata: https://nsidc.org/data/g02135/versions/3#anchor-data-access-tools
 
 ```{r}
-fp = "course-materials/resources/data/Arctic_ice/N_197812_concentration_v3.0.tif"
-arctic_ice <- terra::rast(here(fp))
+ice_filename = "N_197812_concentration_v3.0.tif"
+ice_fp <- list.files(path = here("course-materials"),
+                 pattern = ice_filename,
+                 recursive = TRUE,
+                 full.names = TRUE)
+
+arctic_ice <- terra::rast(ice_fp)
 
 terra::plot(arctic_ice,
             main = "Arctic Sea Ice Concentration")
@@ -417,21 +426,18 @@ hist(arctic_ice,
      main = "Arctic Ice Concentration Raster Values",
      xlab = "Values",
      ylab = "Frequency",
-     col = "blue",
+     col = "deepskyblue",
      border = "black")
 ```
 
 
 The CRS is projected and in units of meters. See metadata [here](https://nsidc.org/data/user-resources/help-center/guide-nsidcs-polar-stereographic-projection).
 
-In order to properly plot multiple spatial objects on top of one another, they must have the same CRS. Transform the CRS of the habitat polygon into the CRS of the raster for Arctic sea ice since they do not already match.
+In order to properly plot multiple spatial objects on top of one another, they must have the same CRS. Transform the CRS of the habitat polygon into the CRS of the raster for Arctic sea ice.
 
 ```{r}
 pb_habitat_arctic <- st_transform(pb_habitat_poly, st_crs(arctic_ice))
-st_crs(pb_habitat_arctic) == st_crs(arctic_ice)
-```
 
-```{r}
 terra::plot(arctic_ice,
             main = "Sea Ice Concentration and Polar Bear Habitat")
 terra::plot(pb_habitat_arctic, 
@@ -442,19 +448,14 @@ terra::plot(pb_habitat_arctic,
 
 ### ggplot: rasters and polygons
 
-Convert the array into a dataframe, because ggplot only accepts tabular data:
+Convert the array into a dataframe, because `ggplot` only accepts tabular data:
 
 ```{r}
 arctic_ice_df <- terra::as.data.frame(arctic_ice,
                                cells = FALSE, # do not create index col
                                xy = TRUE)  %>% # include lat and long cols
                  dplyr::rename(ice_concentration = N_197812_concentration_v3.0)
-```
 
-
-Plot the raster dataframe with `ggplot`:
-
-```{r}
 blue_palette <- RColorBrewer::brewer.pal(n = 9, name = "Blues")
 
 ggplot() +
@@ -475,27 +476,33 @@ ggplot() +
 
 ### tmap: rasters and polygons
 
-```{r}
-global(arctic_ice, fun = "isNA")
-```
-
 
 ```{r}
 tmap_mode("plot")
 
-tm_shape(arctic_ice) +
+# scale the data 0-100:
+# there are no NA values in this raster but na.rm = TRUE is good practice
+range <- range(values(arctic_ice), na.rm = TRUE)
+arctic_ice_scaled <- (arctic_ice-range[1]) / (range[2]-range[1]) * 100
+
+tmap_options(max.categories = 9)
+
+tm_shape(arctic_ice_scaled) +
   tm_raster(palette = "Blues",
             title = "Sea Ice\nConcentration",
-            style = "cont") +
+            style = "cont",
+            breaks = seq(0, 100, length.out = 11),
+            midpoint = NA) +
 tm_shape(pb_habitat_arctic) +
 tm_polygons(col = "yellow",
               border.col = "darkgoldenrod1",
               lwd = 1,
               alpha = 0.3) +
-tm_layout(title = "Sea Ice Concentration\nand Polar Bear Habitat Range",
-          main.title.size = 1,
-          bg.color = "grey",
+tm_layout(title = "Sea Ice\nConcentration\n(scaled)\nand Polar Bear\nHabitat Range",
+          main.title.size = 0.8,
+          title.fontface = "bold",
           legend.outside = TRUE,
+          legend.title.size = 1,
           legend.outside.position = "right")
 ```
 
