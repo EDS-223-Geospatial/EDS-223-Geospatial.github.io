@@ -1,6 +1,6 @@
 ---
 title: "Week 1: Discussion Section"
-subtitle: "Map making with `tmap` and beyond"
+subtitle: "Making maps with `tmap` and beyond"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
@@ -15,7 +15,8 @@ format:
 ## Reference
 
 Refer to the [Plotting Geospatial
-Data](course-materials/resources/plotting.qmd) resource to get you
+Data](course-materials/resources/plotting.qmd) resource and [tmap
+book](https://r-tmap.github.io/tmap-book/) to get you
 started.
 :::
 
@@ -46,7 +47,7 @@ library(sf)
 library(tmap)
 ```
 
-And read in the spatial objects for Easter Island:
+And read in the spatial objects for Easter Island (Rapa Nui/Isla de Pascua):
 
 -   **ei_points**: file contains several points on the island
 -   **ei_elev**: raster with elevation data
@@ -87,10 +88,7 @@ Now, to meet our learning objectives, your task:
 
 ## Answer Key
 
-The following materials are modified from the [tmap
-book](https://r-tmap.github.io/tmap-book/).
-
-### Create a Map of Easter Island
+### Create a Map of Easter Island with `tmap`
 ```{r}
 #| message: false
 #| warning: false
@@ -113,7 +111,7 @@ tm_shape(ei_elev) +
   tm_title("Easter Island")
 ```
 
-### Create an Interactive Map of Easter Island
+### Create an Interactive Map of Easter Island with `tmap`
 ```{r}
 #| message: false
 #| warning: false
@@ -135,4 +133,31 @@ my_map <- tm_shape(ei_elev) +
 tmap_mode("view")
 my_map
 ```
+
+### Create a Map of Easter Island with `ggplot2`
+```{r}
+#| message: false
+#| warning: false
+#| eval: false
+
+volcanoes_point <- volcanoes %>%
+  mutate(lon = unlist(map(volcanoes$geom,1)),
+         lat = unlist(map(volcanoes$geom,2)))
+
+ggplot() +
+  geom_sf(data = ei_borders, color = "#212529") +
+  geom_stars(data = ei_elev) +
+  scale_fill_distiller(name = "Elevation (m asl)",
+                       palette = "RdYlGn", na.value = "transparent") +
+  geom_sf(data = ei_roads, color = "#343a40") +
+    geom_point(data = volcanoes_point, 
+             aes(x = lon, y = lat, size = elevation), 
+             shape = 17, color = "#22577a") +
+  scale_size_continuous(name = "Volcanoes (m asl)") +
+  ggspatial::annotation_north_arrow(location = "tr", which_north = "true") +
+  ggspatial::annotation_scale(location = "br", width_hint = 0.5) +
+  labs(title = "Easter Island") +
+  theme_minimal()
+```
+
 
