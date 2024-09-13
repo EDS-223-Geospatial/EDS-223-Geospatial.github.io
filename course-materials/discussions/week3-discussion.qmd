@@ -73,7 +73,7 @@ To meet our learning objectives, your task:
   - Show the different outputs from a spatial subset and a spatial join
   - **Bonus Challenge**: Try it out with a 5 km buffer around the protected areas too! 
 2. Find the protected areas within 15 km of a city in Santa Barbara County
-  - **Hint**: Use `filter()` to select a city from sb_city_boundaries
+  - **Hint**: Use `filter()` to select a city from  `sb_city_boundaries`
   - Explore the different outputs with `st_intersects`, `st_intersection`, and `st_within`
   - Practice a distance-based join with `st_is_within_distance`
 3. Find the distance between your city of choice and a protected area of your choice

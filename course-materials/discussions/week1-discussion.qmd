@@ -14,10 +14,8 @@ format:
 ::: callout-tip
 ## Reference
 
-Refer to the [Plotting Geospatial
-Data](course-materials/resources/plotting.qmd) resource and [tmap
-book](https://r-tmap.github.io/tmap-book/) to get you
-started.
+Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource and [tmap
+book](https://r-tmap.github.io/tmap-book/) to get you started.
 :::
 
 ## Learning Objectives
@@ -25,11 +23,9 @@ started.
 -   Read in spatial objects
 -   Create map with single spatial object
 -   Create map with multiple spatial objects
--   Use different types of plotting formats (e.g. `tm_polygons`,
-    `tm_fill`, `tm_dots`, etc.)
+-   Use different types of plotting formats (e.g. `tm_polygons`, `tm_fill`, `tm_dots`, etc.)
 -   Adjust color palettes
--   Include essential map elements (e.g. scale bar & north arrow or
-    graticules)
+-   Include essential map elements (e.g. scale bar & north arrow or graticules)
 -   Create an interactive map
 -   **Bonus Challenge**: Reproduce map using `ggplot2` instead of `tmap`
 
@@ -49,10 +45,10 @@ library(tmap)
 
 And read in the spatial objects for Easter Island (Rapa Nui/Isla de Pascua):
 
--   **ei_points**: file contains several points on the island
--   **ei_elev**: raster with elevation data
--   **ei_borders**: polygon with the island outline
--   **ei_roads**: lines contains a road network for the island
+-   `ei_points`: file contains several points on the island
+-   `ei_elev`: raster with elevation data
+-   `ei_borders`: polygon with the island outline
+-   `ei_roads`: lines contains a road network for the island
 
 ```{r}
 #| eval: false
