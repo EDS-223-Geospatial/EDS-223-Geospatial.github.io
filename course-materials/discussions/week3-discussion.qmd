@@ -1,18 +1,175 @@
 ---
-title: "Week 3 Discussion Section"
-subtitle: "Manipulating vector data and coordinate reference systems"
+title: "Week 3: Discussion Section"
+subtitle: "Practice vector operations"
 author: "Alessandra Vidal Meza"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true
 ---
 
-## Learning objectives for discussion section:
-- topological relationships (e.g. `st_intersects`, `st_touches`, `st_within`)
-- distance relationships (`st_distance`, `st_within_distance`) and buffers
-- spatial and distance-based joins
-- big goal is to be able to understand the output of each of these operations
-- to help assist diagnosing output, practice writing error/warning messages and unit tests
+::: callout-tip
+## Reference
 
-Resources: Chapters [4](https://r.geocompx.org/spatial-operations.html) and [5](https://r.geocompx.org/geometry-operations) of Geocomputation with R
+Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapter 5](https://r.geocompx.org/geometry-operations) of *Geocomputation with R* to get you
+started.
+:::
+
+## Learning Objectives
+
+- Explore topological relationships with `st_intersects`, `st_intersection`, `st_within`, etc.
+- Explore distance relationships with `st_distance`, `st_within_distance`, and `st_buffer`
+- Learn about spatial and distance-based joins
+- Practice writing error/warning messages and unit tests to diagnose outputs
+
+## Data
+
+- **Santa Barbara County's City Boundaries** ([Source](https://geodata.library.ucsb.edu/catalog/3853-s3_2003_s3_cities_polys))
+- **California Protected Areas Database** ([Source](https://data.cnra.ca.gov/dataset/california-protected-areas-database))
+- **iNaturalist Research-grade Observations, 2020-2024** ([Access](https://github.com/ropensci/rinat))
+
+## Get Started
+
+Let's load the necessary packages:
+
+```{r}
+library(sf)
+library(tmap)
+```
+
+And read in the spatial objects:
+
+```{r}
+#| echo: false
+
+sb_protected_areas <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+  sf::st_transform("ESRI:102009")
+sb_city_boundaries <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+  sf::st_transform("ESRI:102009")
+sb_county_boundary <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
+  sf::st_transform("ESRI:102009")
+aves <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+  sf::st_transform("ESRI:102009")
+```
+
+```{r}
+#| echo: false
+
+sb_protected_areas <- sf::read_sf(here::here("data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+  sf::st_transform("ESRI:102009")
+sb_city_boundaries <- sf::read_sf(here::here("data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+  sf::st_transform("ESRI:102009")
+sb_county_boundary <- sf::read_sf(here::here("data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
+  sf::st_transform("ESRI:102009")
+aves <- sf::read_sf(here::here("data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+  sf::st_transform("ESRI:102009")
+```
+
+To meet our learning objectives, your task:
+
+1. Find how many bird observations are within protected areas in Santa Barbara County
+  - Show the different outputs from a spatial subset and a spatial join
+  - **Bonus Challenge**: Try it out with a 5 km buffer around the protected areas too! 
+2. Find the protected areas within 15 km of a city in Santa Barbara County
+  - **Hint**: Use `filter()` to select a city from sb_city_boundaries
+  - Explore the different outputs with `st_intersects`, `st_intersection`, and `st_within`
+  - Practice a distance-based join with `st_is_within_distance`
+3. Find the distance between your city of choice and a protected area of your choice
+  - **Note**: `st_distance` finds the distance between the geometries' edges
+  
+## Answer Key
+
+### Bird Observations within Santa Barbara's PAs
+
+```{r}
+#| echo: false
+
+aves_PA_subset <- sb_protected_areas[aves, ]
+
+tm_shape(sb_county_boundary) +
+  tm_fill() +
+  tm_shape(sb_protected_areas) +
+  tm_borders(lwd = 1, col = "#fb8500") +
+  tm_shape(aves_PA_subset) +
+  tm_dots(col = "#023047")
+
+nrow(aves_PA_subset)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+aves_PA_join <- sf::st_join(aves, sb_protected_areas)
+
+tm_shape(sb_county_boundary) +
+  tm_fill() +
+  tm_shape(sb_protected_areas) +
+  tm_borders(lwd = 1) +
+  tm_shape(aves_PA_join) +
+  tm_dots(fill = "UNIT_NAME")
+
+nrow(aves_PA_join)
+```
+
+```{r}
+#| echo: false
+
+sf::st_crs(sb_protected_areas)$units
+PA_buffer_5km <- sf::st_buffer(sb_protected_areas, dist = 5000)
+
+aves_buffer_subset <- PA_buffer_5km[aves, ]
+
+tm_shape(sb_county_boundary) +
+  tm_fill() +
+  tm_shape(sb_protected_areas) +
+  tm_borders(lwd = 1, col = "#fb8500") +
+  tm_shape(aves_buffer_subset) +
+  tm_dots(col = "#023047")
+
+nrow(aves_buffer_subset)
+```
+
+### PAs within 15 km of Goleta 
+
+```{r}
+#| echo: false
+
+goleta <- sb_city_boundaries %>%
+  dplyr::filter(NAME == "Goleta")
+
+sf::st_crs(goleta)$units
+goleta_buffer_15km <- sf::st_buffer(goleta, dist = 15000)
+
+goleta_PAs_within <- sf::st_within(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_intersect <- sf::st_intersects(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_intersection <- sf::st_intersection(sb_protected_areas, goleta_buffer_15km)
+
+# Check class
+class(goleta_PAs_intersect) == class(goleta_PAs_intersection)
+
+# Distance-based join
+goleta_PAs_join <- sf::st_join(sb_protected_areas, goleta, st_is_within_distance, dist = 15000)
+
+nrow(goleta_PAs_intersection)
+nrow(goleta_PAs_join)
+```
+
+### Distance between Goleta and Dangermond Preserve
+
+```{r}
+dangermond <- sb_protected_areas %>%
+  dplyr::filter(UNIT_NAME == "Jack and Laura Dangermond Preserve")
+
+danger_dist <- sf::st_distance(goleta, dangermond)
+
+dangermond_centroid <- sf::st_centroid(dangermond)
+goleta_centroid <- sf::st_centroid(goleta)
+
+danger_dist_centroid <- sf::st_distance(goleta_centroid, dangermond_centroid)
+danger_dist == danger_dist_centroid
+```
+
