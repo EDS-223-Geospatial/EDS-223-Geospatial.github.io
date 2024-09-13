@@ -1,27 +1,26 @@
 ---
-title: "Week 4: Raster Operations"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Raster spatial and geometry operations"
+subtitle: "Week 4"
 ---
 
-::: {.callout-tip}
-## Reminder
-[Check-in Quiz 1](https://forms.gle/WrVEYtckwERWCnfz8) due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
-:::
+## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
-::: {.callout-tip}
-## Reminder
-Assignment 2 due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
-:::
+| Session                                                                         | Materials                                             |
+|---------------------------------------------------------------------------------|-------------------------------------------------------|
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to raster data](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present?usp=sharing){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Basics of raster operations with `terra`](labs/week4.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with raster manipulations](discussions/week4.qmd){target="_blank"} |
 
-## Class Materials
+## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
+| Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
+|:---------------:|------------------------------------------------------------------------|----------------|----------------------------|
+| EOC             | [End-of-class survey (week 1)](https://forms.gle/aPGfCircFN1AZfSe9){target="_blank"}    | Mon 01/08/2024 | Mon 01/08/2024, 11:55pm PT |
+| SR              | [Self reflection (SR #1)](../assignments/SR1-precourse.qmd){target="_blank"}      | Mon 01/08/2024 | Sat 01/13/2024, 11:59pm PT |
+| HW              | [Homework Assignment #1](../assignments/HW1.qmd){target="_blank"}                       | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| Lecture  | [Intro to raster data model ](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present?usp=sharing){target="_blank"} | [Template](templates/week4.qmd) <br> [Answer key](labs/week4.html) |
-| Discussion | Raster operation basics | [Template](templates/week4-discussion.qmd) <br> [Answer key](discussions/week4-discussion.html) |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
 
-## Background Reading
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
+
 - [Geocomputation with R, Chapter 3](https://r.geocompx.org/attr.html){target="_blank"}
 - [Geocomputation with R, Chapter 4](https://r.geocompx.org/spatial-operations.html){target="_blank"}
 - [Geocomputation with R, Chapter 5](https://r.geocompx.org/geometry-operations.html){target="_blank"}

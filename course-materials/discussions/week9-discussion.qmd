@@ -2,6 +2,8 @@
 title: "Discssuion Week 9: Functions for Assignment 4"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Allie Caughmam"
+execute: 
+  eval: false
 date: last-modified
 format:
   html:

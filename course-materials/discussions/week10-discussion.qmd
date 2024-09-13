@@ -2,6 +2,8 @@
 title: "Discssuion Week 10: Workflows and Maps"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Allie Caughmam"
+execute: 
+  eval: false
 date: last-modified
 format:
   html:

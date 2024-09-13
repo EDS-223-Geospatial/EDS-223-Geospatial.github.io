@@ -3,6 +3,8 @@ title: "Discssuion Week 4: Raster Operation Basics"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Allie Caughmam"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true

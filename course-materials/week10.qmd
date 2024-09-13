@@ -1,32 +1,32 @@
 ---
-title: "Week 10: Active Remote Sensing"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Intro to active remote sensing"
+subtitle: "Week 10"
 ---
 
-::: {.callout-tip}
-## Reminder
-Assignment 4 due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
-:::
+## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
-::: {.callout-tip}
-## Reminder
-Portfolio due Weekday, **DD-MM-YYYY** at HH:MM AM/PM.
-:::
+| Session                                                                         | Materials                                             |
+|---------------------------------------------------------------------------------|-------------------------------------------------------|
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of active remote sensing: LiDAR and RADAR](https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?usp=sharing){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Validating LiDAR tree height estimates](labs/week10.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [description](discussions/week10.qmd){target="_blank"} |
 
-## Class Materials
+## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
+| Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
+|:---------------:|------------------------------------------------------------------------|----------------|----------------------------|
+| EOC             | [End-of-class survey (week 1)](https://forms.gle/aPGfCircFN1AZfSe9){target="_blank"}    | Mon 01/08/2024 | Mon 01/08/2024, 11:55pm PT |
+| SR              | [Self reflection (SR #1)](../assignments/SR1-precourse.qmd){target="_blank"}      | Mon 01/08/2024 | Sat 01/13/2024, 11:59pm PT |
+| HW              | [Homework Assignment #1](../assignments/HW1.qmd){target="_blank"}                       | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
 
-| {{< fa calendar-day title="A calendary with one day highlighted" >}} Session  | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Topic  |  {{< fa laptop-code title="A laptop with on-screen code" >}} Lab |
-|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
-| Lecture  | [Fundamentals of LiDAR and RADAR ](https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?usp=sharing){target="_blank"} | [Download data](https://drive.google.com/file/d/1Nbxc1K9rYuU0qvFvsBfR8-Uw-xyvUlTR/view) <br>  [Template](templates/week10.qmd) <br> [Answer key](labs/week10.html)
-| Discussion | Workflows and maps | [Download data](https://drive.google.com/file/d/1S80sEE_vCPkRQF03Nj1KfakoF364_S4k/view) <br> [Template](templates/week10-discussion.qmd) <br> [Answer key](discussions/week10-discussion.html) |
-: {.hover .bordered tbl-colwidths="[20,40,40]"} 
 
-## Background Reading
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
 - [Remote Sensing of the Environment, Chapter 9](/readings/Jensen-chapter9.pdf){target="_blank"}
 - [Introduction to Interpreting Digital RADAR Images](/readings/MicroImages-RADAR-tutorial.pdf){target="_blank"}
 - [Introduction to Light Detection and Ranging (Lidar) Remote Sensing Data](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/){target="_blank"} (Earth Lab, CU Boulder)
 - [What is Synthetic Aperture Radar?](https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar){target="_blank"} (NASA)
 - [Get To Know SAR: Polarimetry](https://nisar.jpl.nasa.gov/mission/get-to-know-sar/polarimetry/){target="_blank"} (NASA)
 
-## Additional Resources
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
 - [Explore Lidar Points in Plas.io](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/explore-lidar-point-clouds-plasio/){target="_blank"} (Earth Lab, CU Boulder)

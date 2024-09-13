@@ -1,174 +1,138 @@
 ---
-title: "Discssuion Week 1: Making Maps"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
-author: "Allie Caughmam"
+title: "Week 1: Discussion Section"
+subtitle: "Map making with `tmap` and beyond"
+author: "Alessandra Vidal Meza"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true
+    code_folding: hide
 ---
 
-The following exercises are modified from [Chapter 9 of Geocomputation with R by Rovin Lovelace](https://geocompr.robinlovelace.net/adv-map.html)
+::: callout-tip
+## Reference
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+Refer to the [Plotting Geospatial
+Data](course-materials/resources/plotting.qmd) resource to get you
+started.
+:::
 
-## Prerequisites
+## Learning Objectives
 
-Let's load all necessary packages:
+-   Read in spatial objects
+-   Create map with single spatial object
+-   Create map with multiple spatial objects
+-   Use different types of plotting formats (e.g. `tm_polygons`,
+    `tm_fill`, `tm_dots`, etc.)
+-   Adjust color palettes
+-   Include essential map elements (e.g. scale bar & north arrow or
+    graticules)
+-   Create an interactive map
+-   **Bonus Challenge**: Reproduce map using `ggplot2` instead of `tmap`
 
-```{r load, include=TRUE, message=FALSE, warning=FALSE}
-library(sf)
-library(raster)
-library(terra)
-library(spData)
-library(spDataLarge)
+## Get Started
+
+Let's load the necessary packages:
+
+```{r}
+#| message: false
+#| warning: false
+
 library(tidyverse)
-library(ggspatial)
-library(patchwork)
+library(stars)
+library(sf)
+library(tmap)
 ```
 
-## Exercise 1
-These exercises rely on a new data object based on the **world** and **worldbank_df** datasets from the **spData** package.
+And read in the spatial objects for Easter Island:
 
-```{r include=TRUE}
-africa <- world %>% 
-  dplyr::filter(continent == "Africa", !is.na(iso_a2)) %>% 
-  dplyr::left_join(worldbank_df, by = "iso_a2") %>% 
-  dplyr::select(name, subregion, gdpPercap, HDI, pop_growth) %>% 
-  sf::st_transform("+proj=aea +lat_1=20 +lat_2=-23 +lat_0=0 +lon_0=25")
-```
+-   **ei_points**: file contains several points on the island
+-   **ei_elev**: raster with elevation data
+-   **ei_borders**: polygon with the island outline
+-   **ei_roads**: lines contains a road network for the island
 
-### Map 1
-Create a map showing the geographic distribution of the Human Development Index (HDI) across Africa.  
+```{r}
+#| eval: false
+#| echo: false
 
-```{r include=TRUE}
-m1 <- ggplot2::ggplot(africa) +
-  ggplot2::geom_sf(aes(fill = HDI)) +
-  ggplot2::theme_bw() 
+ei_points <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_points.gpkg"))
+volcanoes <- subset(ei_points, type == "volcano")
+ei_elev <- stars::read_stars(here::here("course-materials", "data", "week1", "easter_island", "ei_elev.tif"))
+ei_borders <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_border.gpkg"))
+ei_roads <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_roads.gpkg"))
 ```
 
 ```{r}
-m1
+#| eval: false
+
+ei_points <- sf::read_sf(here::here("data", "week1", "easter_island", "ei_points.gpkg"))
+volcanoes <- subset(ei_points, type == "volcano")
+ei_elev <- stars::read_stars(here::here("data", "week1", "easter_island", "ei_elev.tif"))
+ei_borders <- sf::read_sf(here::here("data", "week1", "easter_island", "ei_border.gpkg"))
+ei_roads <- sf::read_sf(here::here("data", "week1", "easter_island", "ei_roads.gpkg"))
 ```
 
-### Map 2
-Now, let's update the map so the legend has three bins:
-- **High** where HDI is above 0.7
-- **Medium** where HDI is between 0.55 and 0.7
-- **Low** where HDI is below 0.55
+Now, to meet our learning objectives, your task:
 
-```{r include=TRUE}
-m2 <- m1 + 
-  ggplot2::scale_fill_binned(breaks = c(.55, 0.7))
-```
+1.  Create a map of Easter Island
+2.  Create a map of Easter Island and...
 
-```{r include=TRUE}
-m2
-```
+-   ...denote the island's borders and continuous elevation
+-   ...denote the island's volcanoes and roads
+-   ...play with the color palette and essential map elements
 
-### Map 3
-Next, let's represent Africa's sub regions on the map:
-- Change the color palette 
-- Change the legend title 
+3.  Create an interactive map of Easter Island
 
-```{r include=TRUE}
-m3 <- ggplot2::ggplot(africa) +
-  ggplot2::geom_sf(aes(fill = subregion)) +
-  ggplot2::theme_bw() +
-  ggplot2::scale_fill_viridis_d() +
-  ggplot2::labs(fill = "Subregion")
-```
+## Answer Key
 
+The following materials are modified from the [tmap
+book](https://r-tmap.github.io/tmap-book/).
+
+### Create a Map of Easter Island
 ```{r}
-m3
+#| message: false
+#| warning: false
+#| eval: false
+
+tm_shape(ei_elev) +
+  tm_graticules() +
+  tm_raster(col.scale = tm_scale_continuous(),
+            col.legend = tm_legend("Elevation (m asl)")) +
+  tm_scale_continuous("rd_yl_gn") +
+  tm_shape(ei_borders) + 
+  tm_borders() +
+  tm_shape(ei_roads) +
+  tm_lines() +
+  tm_shape(volcanoes) +
+  tm_symbols(shape = 24, size = "elevation", 
+             size.legend = tm_legend("Volcanoes (m asl)")) +
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar() +
+  tm_title("Easter Island")
 ```
 
-Let's use **patchwork** to combine this map with the previous map into a single plot:
-
+### Create an Interactive Map of Easter Island
 ```{r}
-m2 + m3
+#| message: false
+#| warning: false
+#| eval: false
+
+my_map <- tm_shape(ei_elev) +
+  tm_raster(col.scale = tm_scale_continuous(),
+            col.legend = tm_legend("Elevation (m asl)")) +
+  tm_scale_continuous("rd_yl_gn") +
+  tm_shape(ei_borders) + 
+  tm_borders() +
+  tm_shape(ei_roads) +
+  tm_lines() +
+  tm_shape(volcanoes) +
+  tm_symbols(shape = 24, size = "elevation", 
+             size.legend = tm_legend("Volcanoes (m asl)")) +
+  tm_title("Easter Island")
+
+tmap_mode("view")
+my_map
 ```
 
-
-## Exercise 2
-Here, we will use the **zion** and **nlcd** datasets from the **spDataLarge** package:
-
-```{r include=TRUE, results='hide'}
-zion <- sf::st_read((system.file("vector/zion.gpkg", package = "spDataLarge")))
-```
-
-```{r eval=FALSE}
-# For spDataLarge version 2.0.X
-data(nlcd, package = "spDataLarge")
-force(nlcd)
-```
-
-```{r, results='hide'}
-# For spDataLarge version 2.1.1
-nlcd <- terra::rast(system.file("raster/nlcd.tif", package = "spDataLarge"))
-```
-
-First, we need to convert the raster into a dataframe
-```{r}
-nlcd_df <- as.data.frame(nlcd, xy = TRUE)
-```
-
-### Map 4
-
-Let's create a land cover map of Zion National Park:
-
-- Change the default colors to match your perception of land cover categories   
-- Move the map legend outside of the map to improve readability 
-- Add a scale bar and north arrow
-- Change the position of the scale bar and north arrow to improve the maps aesthetics 
-- Add the park boundaries on top of the land cover map    
-
-```{r include=TRUE}
-m4 <- ggplot2::ggplot() +
-  ggplot2::geom_raster(data = nlcd_df,
-                       aes(x = x, y = y, fill = levels)) + # layer_levels in spDataLarge 2.0.9
-  ggplot2::geom_sf(data = zion, aes(fill = NA), alpha = 0.2, linewidth = 1, color = "black") +
-  ggplot2::labs(fill = "Land Cover Type") +
-  ggplot2::theme_bw() +
-  ggplot2::scale_fill_manual(values = c("tan", "lightgreen", "darkgrey", "darkgreen", "green", "purple", "blue", "brown")) +
-  ggspatial::annotation_scale(plot_unit = "km") +
-  ggspatial::annotation_north_arrow(location = "br",
-                         pad_x = unit(0.2, "in"),
-                         pad_y = unit(0.2, "in"),
-                         style = ggspatial::north_arrow_nautical(fill = c("grey40", "white"),
-                                                                 line_col = "grey20"))
-```
-
-```{r}
-m4
-```
-
-### Map 5
-Now, let's add an inset of Zion's location in the context of the state of Utah. Hint: an object representing Utah can be subset from the **us_states** dataset.
-
-```{r}
-states <- us_states %>% 
-  janitor::clean_names() %>% 
-  dplyr::filter(name == "Utah")
-```
-
-```{r}
-m5 <- ggplot2::ggplot() +
-  ggplot2::geom_sf(data = states) + 
-  ggplot2::geom_sf(data = zion) +
-  ggplot2::theme_bw() +
-  ggplot2::theme(axis.text = element_blank(),
-                 axis.ticks = element_blank())
-```
-
-```{r}
-m5
-```
-
-Let's use **patchwork** again to combine elements:
-
-```{r}
-m4 + patchwork::inset_element(m5, 0.7, 0.7, 1, 1) + patchwork::plot_annotation(tag_levels = "A")
-```
