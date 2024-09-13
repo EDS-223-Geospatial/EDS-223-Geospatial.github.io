@@ -1,11 +1,10 @@
 ---
 title: "Plotting Geospatial Data"
 author: Juliet Cohen
-date: 2024-09-04
+date: last-modified
+execute: 
+  eval: false
 format: html
-html:
-  code-fold:true
-  code-summary: "Show the code"
 ---
 
 # Plotting Geospatial Data
