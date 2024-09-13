@@ -1,10 +1,14 @@
 ---
-title: "Plotting Geospatial Data"
+title: "Plotting Geospatial Data: Vectors and Rasters"
 author: Juliet Cohen
 date: last-modified
 execute: 
-  eval: false
-format: html
+  eval: true
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
 ---
 
 # Plotting Geospatial Data
@@ -51,7 +55,7 @@ pkg <- c("sf",
 new.pkg <- pkg[!(pkg %in% installed.packages())]
 if (length(new.pkg)){install.packages(new.pkg)}
 
-## Load libraries, set directories
+# load packages
 lapply(pkg, library, character.only = TRUE)
 ```
 
@@ -67,6 +71,7 @@ Examples of vector file formats:
 -   GeoJSON (`.geojson`)
 
 Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/).
+
 
 ```{r}
 # read in a list of items containing polar bear data, including metadata
@@ -99,7 +104,7 @@ pb_spatial <- pb_obs %>%
               filter(st_is_valid(.))
 ```
 
-### Base R plot()
+### Base R plot: points
 
 Start with the basics: plot the point data using the native R function `plot()`, which does not include an interactive feature
 
@@ -158,7 +163,7 @@ leaflet(data = pb_spatial) %>%
 
 ### `ggplot`: points on basemaps - static maps
 
-`sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap.
+`sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap. The default x and y gridlines and work well with latitude/longitude point data. 
 
 ```{r}
 world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") 
@@ -171,7 +176,7 @@ ggplot(data = world) +
           shape = 21,
           size = 2, 
           alpha = 0.7) +  # transparency
-  labs(title = "Polar Bear Observations in the Arctic & sub-Arctic Region",
+  labs(title = "Polar Bear Observations",
        x = "Longitude",
        y = "Latitude",
        fill = "Year") +
@@ -181,6 +186,35 @@ ggplot(data = world) +
   theme(legend.position = "right")
 ```
 
+`ggplot` can make more complex maps with colors, too: 
+
+```{r}
+ggplot() +
+  geom_sf(data = world, fill = "palegreen", color = "darkgreen") +  # Gray land with dark borders
+  geom_sf(data = pb_spatial, 
+          aes(fill = year),
+          color = "black",
+          shape = 21, 
+          size = 2, 
+          alpha = 0.7) +
+  # limit the map to polar bear habitat latitudes & add more gridlines
+  coord_sf(xlim = c(-180, 180),
+           ylim = c(45, 90),
+           expand = FALSE) +
+  scale_x_continuous(breaks = seq(-180, 180, by = 10)) +
+  scale_y_continuous(breaks = seq(45, 90, by = 10)) +
+  labs(title = "Polar Bear Observations",
+       subtitle = "CRS EPSG:4326",
+       x = "Longitude",
+       y = "Latitude",
+       fill = "Year") +
+  theme(panel.background = element_rect(fill = "lightblue"), # blue ocean
+        plot.title = element_text(hjust = 0.5), # center the title
+        plot.subtitle = element_text(hjust = 0.5),
+        legend.position = "right",
+        legend.box.background = element_rect(color = "black", 
+                                             size = 0.5)) 
+```
 
 ### `tmap`: points on basemaps - static or interactive maps
 
@@ -218,7 +252,7 @@ tm_shape(World) +
 
 Make an interactive `tmap`:
 
-```{r }
+```{r}
 # set mode to interactive
 tmap_mode("view")
 
@@ -308,9 +342,11 @@ tm_shape(canada_greenland) +
   tm_ylab("Latitude")
 ```
 
+### Base R plot: polygon
+
 Add a polygon for polar bear habitat range from the [International Union for Conservation of Nature (IUCN) Red List](https://www.iucnredlist.org/species/22823/14871490). This means we have 3 vector objects overlaid: polygons for country borders, points for polar bear observations, and 1 polygon for habitat.
 
-```{r}
+```{r output = FALSE}
 # search for file anywhere within "course-materials" dir
 hab_filename = "data_0.shp"
 hab_fp <- list.files(path = here("course-materials"),
@@ -322,7 +358,9 @@ pb_habitat = st_read(hab_fp)
 # convert from a "simple feature collection" with 
 # 15 fields to just the geometry
 pb_habitat_poly <- st_geometry(pb_habitat)
+```
 
+```{r}
 plot(pb_habitat_poly,
      main = "Polar Bear Observations",
      col = "lightyellow",
@@ -401,9 +439,6 @@ Examples of file formats:
 
 Import a raster of sea ice that covers the area of Canada, Greenland, and more of the Arctic Circle:
 
-Source: https://noaadata.apps.nsidc.org/NOAA/G02135/north/monthly/geotiff/12_Dec/
-Metadata: https://nsidc.org/data/g02135/versions/3#anchor-data-access-tools
-
 ```{r}
 ice_filename = "N_197812_concentration_v3.0.tif"
 ice_fp <- list.files(path = here("course-materials"),
@@ -418,6 +453,8 @@ terra::plot(arctic_ice,
 ```
 
 
+The CRS is projected and in units of meters, with each raster cell representing 25 km x 25 km. See CRS metadata [here](https://nsidc.org/data/user-resources/help-center/guide-nsidcs-polar-stereographic-projection).
+
 Make a histogram of the raster values using the base R `hist` to understand the numerical data distribution:
 
 ```{r}
@@ -428,9 +465,6 @@ hist(arctic_ice,
      col = "deepskyblue",
      border = "black")
 ```
-
-
-The CRS is projected and in units of meters. See metadata [here](https://nsidc.org/data/user-resources/help-center/guide-nsidcs-polar-stereographic-projection).
 
 In order to properly plot multiple spatial objects on top of one another, they must have the same CRS. Transform the CRS of the habitat polygon into the CRS of the raster for Arctic sea ice.
 
@@ -445,63 +479,93 @@ terra::plot(pb_habitat_arctic,
             col = adjustcolor("yellow", alpha.f = 0.2))
 ```
 
+`terra` automatically defines the x and y axes ticks based on the spatial metadata of the raster.
+
 ### ggplot: rasters and polygons
 
 Convert the array into a dataframe, because `ggplot` only accepts tabular data:
 
-```{r}
-arctic_ice_df <- terra::as.data.frame(arctic_ice,
-                               cells = FALSE, # do not create index col
-                               xy = TRUE)  %>% # include lat and long cols
-                 dplyr::rename(ice_concentration = N_197812_concentration_v3.0)
-
-blue_palette <- RColorBrewer::brewer.pal(n = 9, name = "Blues")
-
-ggplot() +
-  geom_raster(data = arctic_ice_df, 
-              aes(x = x, y = y, 
-                  fill = ice_concentration)) +
-  scale_fill_gradientn(colors = blue_palette) +
-  geom_sf(data = pb_habitat_arctic, 
-          fill = "yellow",
-          color = "darkgoldenrod1",
-          size = 0.2,
-          alpha = 0.2) +
-  coord_sf() + # coord_fixed()
-  theme_minimal() +
-  labs(title = "Sea Ice Concentration\nand Polar Bear Habitat Range",
-       fill = "Sea Ice\nConcentration")
-```
-
-### tmap: rasters and polygons
-
 
 ```{r}
-tmap_mode("plot")
+# reverse color palette to better match the default terra::plot palette values
+blue_palette <- rev(RColorBrewer::brewer.pal(n = 9, name = "Blues"))
 
 # scale the data 0-100:
 # there are no NA values in this raster but na.rm = TRUE is good practice
 range <- range(values(arctic_ice), na.rm = TRUE)
 arctic_ice_scaled <- (arctic_ice-range[1]) / (range[2]-range[1]) * 100
 
+arctic_ice_df <- terra::as.data.frame(arctic_ice_scaled,
+                               cells = FALSE, # do not create index col
+                               xy = TRUE)  %>% # include lat and long cols
+                 dplyr::rename(ice_concentration = N_197812_concentration_v3.0)
+
+ggplot() +
+  geom_raster(data = arctic_ice_df,
+              aes(x = x, y = y,
+                  fill = ice_concentration)) +
+  scale_fill_gradientn(colors = blue_palette) +
+  geom_sf(data = pb_habitat_arctic,
+          fill = "yellow",
+          color = "darkgoldenrod1",
+          size = 0.2,
+          alpha = 0.1) +
+  coord_sf(default_crs = st_crs(pb_habitat_arctic)) +
+  theme(panel.grid = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.background = element_rect(fill = "grey", color = NA),
+        plot.background = element_rect(fill = "grey", color = NA)) +
+  labs(title = "Sea Ice Concentration\nand Polar Bear Habitat Range",
+       subtitle = "Proj CRS: NSIDC Sea Ice Polar Stereographic North",
+       fill = "Sea Ice\nConcentration",
+       x = element_blank(),
+       y = element_blank())
+```
+
+Note that `ggplot` does _not_ automatically derive the units of meters from the projected CRS from the spatial metadata. Instead, it uses 4326 by default. As a result, we should mask the axes ticks, as shown above. Axes ticks can manually be defined with `scale_x_continuous` and `scale_y_continuous`
+
+### tmap: rasters and polygons
+
+```{r}
+tmap_mode("plot")
+
 tmap_options(max.categories = 9)
 
 tm_shape(arctic_ice_scaled) +
-  tm_raster(palette = "Blues",
+  tm_raster(palette = blue_palette,
             title = "Sea Ice\nConcentration",
             style = "cont",
             breaks = seq(0, 100, length.out = 11),
             midpoint = NA) +
 tm_shape(pb_habitat_arctic) +
-tm_polygons(col = "yellow",
+  tm_polygons(col = "yellow",
               border.col = "darkgoldenrod1",
               lwd = 1,
+              alpha = 0.1) +
+tm_graticules(n.x = 5, n.y = 5, 
+              labels.show = TRUE, 
+              labels.size = 0.6,
               alpha = 0.3) +
-tm_layout(title = "Sea Ice\nConcentration\n(scaled)\nand Polar Bear\nHabitat Range",
+tm_layout(title = "Sea Ice\nConcentration\nand Polar Bear\nHabitat Range",
           main.title.size = 0.8,
           title.fontface = "bold",
           legend.outside = TRUE,
           legend.title.size = 1,
-          legend.outside.position = "right")
+          legend.outside.position = "right",
+          inner.margins = c(0.1, 0.1, 0.1, 0.1)) +
+tm_scale_bar(position = c("left", "bottom"))
 ```
+
+## Data Citations
+
+| Dataset | Citation |
+| ------- | ---------|
+| GBIF, polar bear observation points | GBIF.org (01 September 2024) GBIF Occurrence Download  https://doi.org/10.15468/dl.79778w |
+| IUCN Red List, polar bear range polygon | IUCN. 2024. The IUCN Red List of Threatened Species. Version 2024-1. https://www.iucnredlist.org. Accessed on Septmeber 5, 2024. |
+| NSIDC, sea ice concentration raster | Fetterer, F., Knowles, K., Meier, W. N., Savoie, M. & Windnagel, A. K. (2017). Sea Ice Index. (G02135, Version 3). [Data Set]. Boulder, Colorado USA. National Snow and Ice Data Center. https://doi.org/10.7265/N5K072F8. [describe subset used if applicable]. Date Accessed 09-13-2024. |
+
+[NSIDC sea ice concentration metadata](https://nsidc.org/data/g02135/versions/3)
+
+
 
