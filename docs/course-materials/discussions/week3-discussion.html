@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-09-11">
+<meta name="dcterms.date" content="2024-09-16">
 
-<title>Week 3 Discussion Section</title>
+<title>Week 3: Discussion Section</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -175,8 +209,8 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Week 3 Discussion Section</h1>
-            <p class="subtitle lead">Manipulating vector data and coordinate reference systems</p>
+      <h1 class="title">Week 3: Discussion Section</h1>
+            <p class="subtitle lead">Practice vector operations</p>
                       </div>
   </div>
     
@@ -193,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 11, 2024</p>
+        <p class="date">September 16, 2024</p>
       </div>
     </div>
     
@@ -209,7 +243,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives-for-discussion-section" id="toc-learning-objectives-for-discussion-section" class="nav-link active" data-scroll-target="#learning-objectives-for-discussion-section">Learning objectives for discussion section:</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
+  <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
+  <ul class="collapse">
+  <li><a href="#bird-observations-within-santa-barbaras-pas" id="toc-bird-observations-within-santa-barbaras-pas" class="nav-link" data-scroll-target="#bird-observations-within-santa-barbaras-pas">Bird Observations within Santa Barbara’s PAs</a></li>
+  <li><a href="#pas-within-15-km-of-goleta" id="toc-pas-within-15-km-of-goleta" class="nav-link" data-scroll-target="#pas-within-15-km-of-goleta">PAs within 15 km of Goleta</a></li>
+  <li><a href="#distance-between-goleta-and-dangermond-preserve" id="toc-distance-between-goleta-and-dangermond-preserve" class="nav-link" data-scroll-target="#distance-between-goleta-and-dangermond-preserve">Distance between Goleta and Dangermond Preserve</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -220,18 +262,92 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="learning-objectives-for-discussion-section" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives-for-discussion-section">Learning objectives for discussion section:</h2>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Refer to <a href="https://r.geocompx.org/spatial-operations.html">Chapter 4</a> and <a href="https://r.geocompx.org/geometry-operations">Chapter 5</a> of <em>Geocomputation with R</em> to get you started.</p>
+</div>
+</div>
+<section id="learning-objectives" class="level2">
+<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <ul>
-<li>topological relationships (e.g.&nbsp;<code>st_intersects</code>, <code>st_touches</code>, <code>st_within</code>)</li>
-<li>distance relationships (<code>st_distance</code>, <code>st_within_distance</code>) and buffers</li>
-<li>spatial and distance-based joins</li>
-<li>big goal is to be able to understand the output of each of these operations</li>
-<li>to help assist diagnosing output, practice writing error/warning messages and unit tests</li>
+<li>Explore topological relationships with <code>st_intersects</code>, <code>st_intersection</code>, <code>st_within</code>, etc.</li>
+<li>Explore distance relationships with <code>st_distance</code>, <code>st_within_distance</code>, and <code>st_buffer</code></li>
+<li>Learn about spatial and distance-based joins</li>
+<li>Practice writing error/warning messages and unit tests to diagnose outputs</li>
 </ul>
-<p>Resources: Chapters <a href="https://r.geocompx.org/spatial-operations.html">4</a> and <a href="https://r.geocompx.org/geometry-operations">5</a> of Geocomputation with R</p>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<ul>
+<li><strong>Santa Barbara County’s City Boundaries</strong> (<a href="https://geodata.library.ucsb.edu/catalog/3853-s3_2003_s3_cities_polys">Source</a>)</li>
+<li><strong>California Protected Areas Database</strong> (<a href="https://data.cnra.ca.gov/dataset/california-protected-areas-database">Source</a>)</li>
+<li><strong>iNaturalist Research-grade Observations, 2020-2024</strong> (<a href="https://github.com/ropensci/rinat">Access</a>)</li>
+</ul>
+</section>
+<section id="get-started" class="level2">
+<h2 class="anchored" data-anchor-id="get-started">Get Started</h2>
+<p>Let’s load the necessary packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And read in the spatial objects:</p>
+<p>To meet our learning objectives, your task:</p>
+<ol type="1">
+<li>Find how many bird observations are within protected areas in Santa Barbara County</li>
+</ol>
+<ul>
+<li>Show the different outputs from a spatial subset and a spatial join</li>
+<li><strong>Bonus Challenge</strong>: Try it out with a 5 km buffer around the protected areas too!</li>
+</ul>
+<ol start="2" type="1">
+<li>Find the protected areas within 15 km of a city in Santa Barbara County</li>
+</ol>
+<ul>
+<li><strong>Hint</strong>: Use <code>filter()</code> to select a city from <code>sb_city_boundaries</code></li>
+<li>Explore the different outputs with <code>st_intersects</code>, <code>st_intersection</code>, and <code>st_within</code></li>
+<li>Practice a distance-based join with <code>st_is_within_distance</code></li>
+</ul>
+<ol start="3" type="1">
+<li>Find the distance between your city of choice and a protected area of your choice</li>
+</ol>
+<ul>
+<li><strong>Note</strong>: <code>st_distance</code> finds the distance between the geometries’ edges</li>
+</ul>
+</section>
+<section id="answer-key" class="level2">
+<h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
+<section id="bird-observations-within-santa-barbaras-pas" class="level3">
+<h3 class="anchored" data-anchor-id="bird-observations-within-santa-barbaras-pas">Bird Observations within Santa Barbara’s PAs</h3>
+</section>
+<section id="pas-within-15-km-of-goleta" class="level3">
+<h3 class="anchored" data-anchor-id="pas-within-15-km-of-goleta">PAs within 15 km of Goleta</h3>
+</section>
+<section id="distance-between-goleta-and-dangermond-preserve" class="level3">
+<h3 class="anchored" data-anchor-id="distance-between-goleta-and-dangermond-preserve">Distance between Goleta and Dangermond Preserve</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dangermond <span class="ot">&lt;-</span> sb_protected_areas <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(UNIT_NAME <span class="sc">==</span> <span class="st">"Jack and Laura Dangermond Preserve"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>danger_dist <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_distance</span>(goleta, dangermond)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dangermond_centroid <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_centroid</span>(dangermond)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>goleta_centroid <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_centroid</span>(goleta)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>danger_dist_centroid <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_distance</span>(goleta_centroid, dangermond_centroid)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>danger_dist <span class="sc">==</span> danger_dist_centroid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
