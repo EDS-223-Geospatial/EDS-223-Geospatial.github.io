@@ -228,7 +228,7 @@
     "href": "course-materials/discussions/week1-discussion.html",
     "title": "Week 1: Discussion Section",
     "section": "",
-    "text": "Reference\n\n\n\nRefer to the Plotting Geospatial Data resource to get you started."
+    "text": "Reference\n\n\n\nRefer to the Plotting Geospatial Data resource and tmap book to get you started."
   },
   {
     "objectID": "course-materials/discussions/week1-discussion.html#learning-objectives",
@@ -242,49 +242,42 @@
     "href": "course-materials/discussions/week1-discussion.html#get-started",
     "title": "Week 1: Discussion Section",
     "section": "Get Started",
-    "text": "Get Started\nLet’s load the necessary packages:\n\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)\n\nAnd read in the spatial objects for Easter Island:\n\nei_points: file contains several points on the island\nei_elev: raster with elevation data\nei_borders: polygon with the island outline\nei_roads: lines contains a road network for the island\n\n\nei_points &lt;- sf::read_sf(here::here(\"data\", \"week1\", \"easter_island\", \"ei_points.gpkg\"))\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\nei_elev &lt;- stars::read_stars(here::here(\"data\", \"week1\", \"easter_island\", \"ei_elev.tif\"))\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"week1\", \"easter_island\", \"ei_border.gpkg\"))\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"week1\", \"easter_island\", \"ei_roads.gpkg\"))\n\nNow, to meet our learning objectives, your task:\n\nCreate a map of Easter Island\nCreate a map of Easter Island and…\n\n\n…denote the island’s borders and continuous elevation\n…denote the island’s volcanoes and roads\n…play with the color palette and essential map elements\n\n\nCreate an interactive map of Easter Island"
+    "text": "Get Started\nLet’s load the necessary packages:\n\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)\n\nAnd read in the spatial objects for Easter Island (Rapa Nui/Isla de Pascua):\n\nei_points: file contains several points on the island\nei_elev: raster with elevation data\nei_borders: polygon with the island outline\nei_roads: lines contains a road network for the island\n\n\nei_points &lt;- sf::read_sf(here::here(\"data\", \"week1\", \"easter_island\", \"ei_points.gpkg\"))\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\nei_elev &lt;- stars::read_stars(here::here(\"data\", \"week1\", \"easter_island\", \"ei_elev.tif\"))\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"week1\", \"easter_island\", \"ei_border.gpkg\"))\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"week1\", \"easter_island\", \"ei_roads.gpkg\"))\n\nNow, to meet our learning objectives, your task:\n\nCreate a map of Easter Island\nCreate a map of Easter Island and…\n\n\n…denote the island’s borders and continuous elevation\n…denote the island’s volcanoes and roads\n…play with the color palette and essential map elements\n\n\nCreate an interactive map of Easter Island"
   },
   {
     "objectID": "course-materials/discussions/week1-discussion.html#answer-key",
     "href": "course-materials/discussions/week1-discussion.html#answer-key",
     "title": "Week 1: Discussion Section",
     "section": "Answer Key",
-    "text": "Answer Key\nThe following materials are modified from the tmap book.\n\nCreate a Map of Easter Island\n\ntm_shape(ei_elev) +\n  tm_graticules() +\n  tm_raster(col.scale = tm_scale_continuous(),\n            col.legend = tm_legend(\"Elevation (m asl)\")) +\n  tm_scale_continuous(\"rd_yl_gn\") +\n  tm_shape(ei_borders) + \n  tm_borders() +\n  tm_shape(ei_roads) +\n  tm_lines() +\n  tm_shape(volcanoes) +\n  tm_symbols(shape = 24, size = \"elevation\", \n             size.legend = tm_legend(\"Volcanoes (m asl)\")) +\n  tm_compass(position = c(\"right\", \"top\")) +\n  tm_scalebar() +\n  tm_title(\"Easter Island\")\n\n\n\nCreate an Interactive Map of Easter Island\n\nmy_map &lt;- tm_shape(ei_elev) +\n  tm_raster(col.scale = tm_scale_continuous(),\n            col.legend = tm_legend(\"Elevation (m asl)\")) +\n  tm_scale_continuous(\"rd_yl_gn\") +\n  tm_shape(ei_borders) + \n  tm_borders() +\n  tm_shape(ei_roads) +\n  tm_lines() +\n  tm_shape(volcanoes) +\n  tm_symbols(shape = 24, size = \"elevation\", \n             size.legend = tm_legend(\"Volcanoes (m asl)\")) +\n  tm_title(\"Easter Island\")\n\ntmap_mode(\"view\")\nmy_map"
+    "text": "Answer Key\n\nCreate a Map of Easter Island with tmap\n\ntm_shape(ei_elev) +\n  tm_graticules() +\n  tm_raster(col.scale = tm_scale_continuous(),\n            col.legend = tm_legend(\"Elevation (m asl)\")) +\n  tm_scale_continuous(\"rd_yl_gn\") +\n  tm_shape(ei_borders) + \n  tm_borders() +\n  tm_shape(ei_roads) +\n  tm_lines() +\n  tm_shape(volcanoes) +\n  tm_symbols(shape = 24, size = \"elevation\", \n             size.legend = tm_legend(\"Volcanoes (m asl)\")) +\n  tm_compass(position = c(\"right\", \"top\")) +\n  tm_scalebar() +\n  tm_title(\"Easter Island\")\n\n\n\nCreate an Interactive Map of Easter Island with tmap\n\nmy_map &lt;- tm_shape(ei_elev) +\n  tm_raster(col.scale = tm_scale_continuous(),\n            col.legend = tm_legend(\"Elevation (m asl)\")) +\n  tm_scale_continuous(\"rd_yl_gn\") +\n  tm_shape(ei_borders) + \n  tm_borders() +\n  tm_shape(ei_roads) +\n  tm_lines() +\n  tm_shape(volcanoes) +\n  tm_symbols(shape = 24, size = \"elevation\", \n             size.legend = tm_legend(\"Volcanoes (m asl)\")) +\n  tm_title(\"Easter Island\")\n\ntmap_mode(\"view\")\nmy_map\n\n\n\nCreate a Map of Easter Island with ggplot2\n\nvolcanoes_point &lt;- volcanoes %&gt;%\n  mutate(lon = unlist(map(volcanoes$geom,1)),\n         lat = unlist(map(volcanoes$geom,2)))\n\nggplot() +\n  geom_sf(data = ei_borders, color = \"#212529\") +\n  geom_stars(data = ei_elev) +\n  scale_fill_distiller(name = \"Elevation (m asl)\",\n                       palette = \"RdYlGn\", na.value = \"transparent\") +\n  geom_sf(data = ei_roads, color = \"#343a40\") +\n    geom_point(data = volcanoes_point, \n             aes(x = lon, y = lat, size = elevation), \n             shape = 17, color = \"#22577a\") +\n  scale_size_continuous(name = \"Volcanoes (m asl)\") +\n  ggspatial::annotation_north_arrow(location = \"tr\", which_north = \"true\") +\n  ggspatial::annotation_scale(location = \"br\", width_hint = 0.5) +\n  labs(title = \"Easter Island\") +\n  theme_minimal()"
   },
   {
     "objectID": "course-materials/discussions/week4-discussion.html",
     "href": "course-materials/discussions/week4-discussion.html",
-    "title": "Discssuion Week 4: Raster Operation Basics",
+    "title": "Week 4: Discussion Section",
     "section": "",
-    "text": "The following exercises are modified from Chapters 3, 4, 5 of Geocomputation with R by Rovin Lovelace."
+    "text": "Reference\n\n\n\nRefer to Chapter 3, Chapter 4, Chapter 5 of Geocomputation with R to get you started."
   },
   {
-    "objectID": "course-materials/discussions/week4-discussion.html#prerequisites",
-    "href": "course-materials/discussions/week4-discussion.html#prerequisites",
-    "title": "Discssuion Week 4: Raster Operation Basics",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(geodata)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\ndem &lt;- rast(system.file(\"raster/dem.tif\", package = \"spDataLarge\"))\nlandsat &lt;- rast(system.file(\"raster/landsat.tif\", package = \"spDataLarge\"))\nperu_dem &lt;- geodata::elevation_30s(country = \"Peru\", path = \".\", mask = FALSE)\nsrtm &lt;- rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))"
+    "objectID": "course-materials/discussions/week4-discussion.html#get-started",
+    "href": "course-materials/discussions/week4-discussion.html#get-started",
+    "title": "Week 4: Discussion Section",
+    "section": "Get Started",
+    "text": "Get Started\nLet’s load the necessary packages:\n\nlibrary(tidyverse)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(sf)\nlibrary(stars)\nlibrary(terra)\n\nAnd read in the spatial objects:\n\ndem &lt;- terra::rast(system.file(\"raster/dem.tif\", package = \"spDataLarge\"))\nlandsat &lt;- terra::rast(system.file(\"raster/landsat.tif\", package = \"spDataLarge\"))\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n# peru_dem &lt;- geodata::elevation_30s(country = \"Peru\", path = \".\", mask = FALSE)\nperu &lt;- stars::read_stars(here::here(\"course-materials\", \"data\", \"week4\", \"PER_elv.tif\"))\n\nNow, to meet our learning objectives, your task:\n\nPlot a histogram and boxplot of the DEM raster of Zion National Park from spDataLarge\nReclassify the DEM raster and compute the mean for the three classes:\n\n\nLow (less than 300)\nMedium\nHigh (greater than 500)\n\n\nCalculate the Normalized Difference Water Index (NDWI) of a Landsat 8 image of Zion National Park\n\n\nNote: \\(NDWI = (green - NIR)/(green + NIR)\\)\n\n\nFind a correlation between NDVI and NDWI\n\n\nFind distances across all peru_dem cells to it’s nearest coastline\n\n\nHint: Use terra::distance()\nNote: terra::distance() will calculate distance for all cells that are NA to the nearest cell that are not NA\n\n\nWeigh the distance raster with peru_dem and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation - Every 100 altitudinal meters should increase the distance to the coast by 10 km\n\n\nChange the resolution of the SRTM of the Zion National Park to 0.01 by 0.01 degrees\n\n\nUse all of the method available in the terra package\nNote: The srtm raster has a resolution of 0.00083 by 0.00083 degrees"
   },
   {
-    "objectID": "course-materials/discussions/week4-discussion.html#exercise-1",
-    "href": "course-materials/discussions/week4-discussion.html#exercise-1",
-    "title": "Discssuion Week 4: Raster Operation Basics",
-    "section": "Exercise 1",
-    "text": "Exercise 1\nPlot the histogram and the boxplot of the dem.tif file from the spDataLarge package:\n\nhist(dem)"
+    "objectID": "course-materials/discussions/week4-discussion.html#answer-key",
+    "href": "course-materials/discussions/week4-discussion.html#answer-key",
+    "title": "Week 4: Discussion Section",
+    "section": "Answer Key",
+    "text": "Answer Key\n\nPlot a histogram and boxplot of the DEM raster\n\nhist(dem)"
   },
   {
-    "objectID": "course-materials/discussions/week4-discussion.html#exercise-2",
-    "href": "course-materials/discussions/week4-discussion.html#exercise-2",
-    "title": "Discssuion Week 4: Raster Operation Basics",
-    "section": "Exercise 2",
-    "text": "Exercise 2\nLet’s manipulate rasters by eclassifying the elevation in three classes:\n\nLow (less than 300)\nMedium\nHigh (greater than 500)\n\n\nplot(dem)\n\nrcl &lt;- matrix(c(-Inf, 300, 0, 300, 500, 1, 500, Inf, 2), ncol = 3, byrow = TRUE)\n\ndem_rcl &lt;- terra::classify(dem, rcl = rcl)\n\nlevels(dem_rcl) &lt;- tibble::tibble(id = 0:2, cats = c(\"low\", \"medium\", \"high\"))\n\nplot(dem_rcl)\n\nAnd compute the mean elevation for each altitudinal class:\n\nelevation_mean &lt;- terra::zonal(dem, dem_rcl, fun = \"mean\")\nelevation_mean\n\nNext, let’s calculate the Normalized Difference Water Index (NDWI) of a Landsat image:\n\nNDWI = (green - NIR)/(green + NIR)\n\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir) / (green + nir)\n}\n\nndwi_rast &lt;- terra::lapp(landsat[[c(2, 4)]], fun = ndwi_fun)\nplot(ndwi_rast)\n\nCalculate a correlation between NDVI and NDWI for this area:\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red) / (nir + red)\n}\n\nndvi_rast &lt;- terra::lapp(landsat[[c(4, 3)]], fun = ndvi_fun)\n\n\ncombine &lt;- c(ndvi_rast, ndwi_rast)\n\nplot(combine)\n\nterra::layerCor(combine, fun = cor)\n\nUse terra::distance() to compute distances from all cells of Peru to it’s nearest coastline. According to the documentation, terra::distance() will calculate distance for all cells that are NA to the nearest cell that are not NA.\n\nperu_dem &lt;- terra::aggregate(peru_dem, fact = 20)\nplot(peru_dem)\n\nwater_mask &lt;- is.na(peru_dem)\nwater_mask[water_mask == 0] &lt;- NA\nplot(water_mask)\n\ndistance_to_coast &lt;- terra::distance(water_mask)\ndistance_to_coast_km &lt;- distance_to_coast / 1000\n\nplot(distance_to_coast_km, main = \"Distance to the coast (km)\")\n\nTry to modify the approach used in the above exercise by weighting the distance raster with the elevation raster:\n\nEvery 100 altitudinal meters should increase the distance to the coast by 10 km\nNext, compute and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation\n\n\ndistance_to_coast_km2 &lt;- distance_to_coast_km + ((peru_dem /100) * 10)\nplot(distance_to_coast_km2)"
-  },
-  {
-    "objectID": "course-materials/discussions/week4-discussion.html#exercise-3",
-    "href": "course-materials/discussions/week4-discussion.html#exercise-3",
-    "title": "Discssuion Week 4: Raster Operation Basics",
-    "section": "Exercise 3",
-    "text": "Exercise 3\nLet’s try some geometry operations with rasters!\nThe srtm raster has a resolution of 0.00083 by 0.00083 degrees.\nYour task: change its resolution to 0.01 by 0.01 degrees using all of the method available in the terra package. And plot the results!\n\nplot(srtm)\n\nrast_template &lt;- terra::rast(terra::ext(srtm), res = 0.01)\n\nsrtm_resampl1 &lt;- terra::resample(srtm, y = rast_template, method = \"bilinear\")\nsrtm_resampl2 &lt;- terra::resample(srtm, y = rast_template, method = \"near\")\nsrtm_resampl3 &lt;- terra::resample(srtm, y = rast_template, method = \"cubic\")\nsrtm_resampl4 &lt;- terra::resample(srtm, y = rast_template, method = \"cubicspline\")\nsrtm_resampl5 &lt;- terra::resample(srtm, y = rast_template, method = \"lanczos\")\n\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nplot(srtm_resampl_all)"
+    "objectID": "course-materials/discussions/week4-discussion.html#reclassify-elevation-and-find-the-mean",
+    "href": "course-materials/discussions/week4-discussion.html#reclassify-elevation-and-find-the-mean",
+    "title": "Week 4: Discussion Section",
+    "section": "Reclassify elevation and find the mean",
+    "text": "Reclassify elevation and find the mean\n\nplot(dem)\n\nrcl &lt;- matrix(c(-Inf, 300, 0, 300, 500, 1, 500, Inf, 2), ncol = 3, byrow = TRUE)\n\ndem_rcl &lt;- terra::classify(dem, rcl = rcl)\n\nlevels(dem_rcl) &lt;- tibble::tibble(id = 0:2, cats = c(\"low\", \"medium\", \"high\"))\n\nelevation_mean &lt;- terra::zonal(dem, dem_rcl, fun = \"mean\")\nelevation_mean\n\n\nCalculate the NDWI and correlation with NDVI\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir) / (green + nir)\n}\n\nndwi_rast &lt;- terra::lapp(landsat[[c(2, 4)]], fun = ndwi_fun)\nplot(ndwi_rast)\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red) / (nir + red)\n}\n\nndvi_rast &lt;- terra::lapp(landsat[[c(4, 3)]], fun = ndvi_fun)\n\ncombine &lt;- c(ndvi_rast, ndwi_rast)\n\nplot(combine)\n\nterra::layerCor(combine, fun = cor)\n\n\n\nFind distances across all peru_dem cells\n\nperu_dem &lt;- terra::aggregate(peru_dem, fact = 20)\nplot(peru_dem)\n\nwater_mask &lt;- is.na(peru_dem)\nwater_mask[water_mask == 0] &lt;- NA\nplot(water_mask)\n\ndistance_to_coast &lt;- terra::distance(water_mask)\ndistance_to_coast_km &lt;- distance_to_coast / 1000\n\nplot(distance_to_coast_km, main = \"Distance to the coast (km)\")\n\ndistance_to_coast_km2 &lt;- distance_to_coast_km + ((peru_dem /100) * 10)\nplot(distance_to_coast_km2)\n\n\n\nChange the resolution of the SRTM\n\nplot(srtm)\n\nrast_template &lt;- terra::rast(terra::ext(srtm), res = 0.01)\n\nsrtm_resampl1 &lt;- terra::resample(srtm, y = rast_template, method = \"bilinear\")\nsrtm_resampl2 &lt;- terra::resample(srtm, y = rast_template, method = \"near\")\nsrtm_resampl3 &lt;- terra::resample(srtm, y = rast_template, method = \"cubic\")\nsrtm_resampl4 &lt;- terra::resample(srtm, y = rast_template, method = \"cubicspline\")\nsrtm_resampl5 &lt;- terra::resample(srtm, y = rast_template, method = \"lanczos\")\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nplot(srtm_resampl_all)"
   },
   {
     "objectID": "course-materials/labs/week10.html",
@@ -835,16 +828,37 @@
   {
     "objectID": "course-materials/discussions/week3-discussion.html",
     "href": "course-materials/discussions/week3-discussion.html",
-    "title": "Week 3 Discussion Section",
+    "title": "Week 3: Discussion Section",
     "section": "",
-    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests\n\nResources: Chapters 4 and 5 of Geocomputation with R"
+    "text": "Reference\n\n\n\nRefer to Chapter 4 and Chapter 5 of Geocomputation with R to get you started."
   },
   {
-    "objectID": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
-    "href": "course-materials/discussions/week3-discussion.html#learning-objectives-for-discussion-section",
-    "title": "Week 3 Discussion Section",
-    "section": "",
-    "text": "topological relationships (e.g. st_intersects, st_touches, st_within)\ndistance relationships (st_distance, st_within_distance) and buffers\nspatial and distance-based joins\nbig goal is to be able to understand the output of each of these operations\nto help assist diagnosing output, practice writing error/warning messages and unit tests\n\nResources: Chapters 4 and 5 of Geocomputation with R"
+    "objectID": "course-materials/discussions/week3-discussion.html#learning-objectives",
+    "href": "course-materials/discussions/week3-discussion.html#learning-objectives",
+    "title": "Week 3: Discussion Section",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\n\nExplore topological relationships with st_intersects, st_intersection, st_within, etc.\nExplore distance relationships with st_distance, st_within_distance, and st_buffer\nLearn about spatial and distance-based joins\nPractice writing error/warning messages and unit tests to diagnose outputs"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#data",
+    "href": "course-materials/discussions/week3-discussion.html#data",
+    "title": "Week 3: Discussion Section",
+    "section": "Data",
+    "text": "Data\n\nSanta Barbara County’s City Boundaries (Source)\nCalifornia Protected Areas Database (Source)\niNaturalist Research-grade Observations, 2020-2024 (Access)"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#get-started",
+    "href": "course-materials/discussions/week3-discussion.html#get-started",
+    "title": "Week 3: Discussion Section",
+    "section": "Get Started",
+    "text": "Get Started\nLet’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tmap)\n\nAnd read in the spatial objects:\nTo meet our learning objectives, your task:\n\nFind how many bird observations are within protected areas in Santa Barbara County\n\n\nShow the different outputs from a spatial subset and a spatial join\nBonus Challenge: Try it out with a 5 km buffer around the protected areas too!\n\n\nFind the protected areas within 15 km of a city in Santa Barbara County\n\n\nHint: Use filter() to select a city from sb_city_boundaries\nExplore the different outputs with st_intersects, st_intersection, and st_within\nPractice a distance-based join with st_is_within_distance\n\n\nFind the distance between your city of choice and a protected area of your choice\n\n\nNote: st_distance finds the distance between the geometries’ edges"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#answer-key",
+    "href": "course-materials/discussions/week3-discussion.html#answer-key",
+    "title": "Week 3: Discussion Section",
+    "section": "Answer Key",
+    "text": "Answer Key\n\nBird Observations within Santa Barbara’s PAs\n\n\nPAs within 15 km of Goleta\n\n\nDistance between Goleta and Dangermond Preserve\n\ndangermond &lt;- sb_protected_areas %&gt;%\n  dplyr::filter(UNIT_NAME == \"Jack and Laura Dangermond Preserve\")\n\ndanger_dist &lt;- sf::st_distance(goleta, dangermond)\n\ndangermond_centroid &lt;- sf::st_centroid(dangermond)\ngoleta_centroid &lt;- sf::st_centroid(goleta)\n\ndanger_dist_centroid &lt;- sf::st_distance(goleta_centroid, dangermond_centroid)\ndanger_dist == danger_dist_centroid"
   },
   {
     "objectID": "course-materials/discussions/week9-discussion.html",
