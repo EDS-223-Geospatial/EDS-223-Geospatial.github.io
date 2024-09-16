@@ -32,6 +32,7 @@ Artwork by [Allison Horst](https://allisonhorst.com/){target="_blank"}
 - [Discover coordinate systems](https://epsg.io/){target="_blank"}
 
 ## Mapmaking
+- [Plotting Geospatial Data in R: comparing across packages](course-materials/resources/plotting.qmd){target="_blank"}
 - [Color palette finder with paletteer](https://r-graph-gallery.com/color-palette-finder){target="_blank"}
 - [ColorBrewer 2.0](https://colorbrewer2.org/){target="_blank"}
 - [Intro to Color Visualization](https://earthobservatory.nasa.gov/resources/blogs/intro_to_color_for_visualization.pdf){target="_blank"} (NASA)

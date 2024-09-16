@@ -22,8 +22,6 @@ In R, various geospatial packages exist for visualizing and manipulating spatial
 -   `tmap`
 -   `terra`
 
-We can load the spatial file into R using the `sf` package for vector data, or the `terra` package for raster data.
-
 Visualizing vector data, raster data, or both overlaid can be accomplished in various ways. This resource provides example code and explanations for which packages are recommended to get the most out of your visualizations.
 
 ## Which mapping package should I use?
@@ -61,14 +59,16 @@ lapply(pkg, library, character.only = TRUE)
 
 ## Vector Data: Points
 
-`sf`, `tmap` and `ggplot2` specialize in vector data, which is tabular data such as points, lines, and polygons. 
+`sf`, `tmap` and `ggplot2` are great options for visualizing vector data, which is tabular data such as points, lines, and polygons. 
 
 Examples of vector file formats:
 
--   shapefile (`.shp` and their auxillary files `.shx`, `.dbf`, `.prj`)
+-   shapefile (`.shp` and auxillary files `.shx`, `.dbf`, `.prj`, etc.)
 -   GeoPackage (`.gpkg`)
 -   GeoParquet (`.parquet`)
 -   GeoJSON (`.geojson`)
+
+### Load point data
 
 Use the `gbif` API to download species observations for polar bears from the [Global Biodiversity Information Facility](https://www.gbif.org/).
 
@@ -93,7 +93,7 @@ pb_obs <- na.omit(pb_obs)
 
 ### sf
 
-Spatial data will not always have the critical spatial metadata associated with it, so you may have to manually assign it using spatial package functions before plotting. For example, point data may contain latitude and longitude coordinates into separate columns and may not come with a set coordinate reference system (CRS). `sf` can help create a `geometry` column from separate latitude and longitude columns and set the CRS to WGS84, `EPSG:4326`.
+Spatial data will not always already contain critical spatial metadata, so you may have to manually assign it using spatial operations before plotting. For example, point data may contain latitude and longitude coordinates into separate columns and may not come with a set coordinate reference system (CRS). `sf` can help create a `geometry` column from separate latitude and longitude columns and set the CRS to WGS84, `EPSG:4326`.
 
 ```{r}
 # convert separate longitude and latitude columns into 
@@ -106,7 +106,7 @@ pb_spatial <- pb_obs %>%
 
 ### Base R plot: points
 
-Start with the basics: plot the point data using the native R function `plot()`, which does not include an interactive feature
+Start with the basics: plot the point data using the native R function `plot()`, which does not include an interactive feature and is not highly tailorable.
 
 ```{r}
 plot(st_geometry(pb_spatial),
@@ -118,9 +118,11 @@ plot(st_geometry(pb_spatial),
      ylab = "Latitude")
 ```
 
-That static plot is pretty bland, and it has little context without a palette or a basemap. Make an _interactive_ map with the color of the points representing the year of the observation on a basemap. This can be done with either `mapview` or `leaflet`.
+That static plot is pretty bland, and it has little context without a palette or a basemap.
 
 ### Interactive Maps
+
+Make an _interactive_ map with the color of the points representing the year of the observation on a basemap. This can be done with either `mapview` or `leaflet`.
 
 #### mapview
 
@@ -132,7 +134,7 @@ mapview(pb_spatial,
         layer.name = "Polar Bear Observations")
 ```
 
-Note how the points are clickable, and metadata pops up.
+The points are clickable when this is rendered locally, and a metadata window pops up for each observation.
 
 #### leaflet
 
@@ -163,7 +165,7 @@ leaflet(data = pb_spatial) %>%
 
 ### `ggplot`: points on basemaps - static maps
 
-`sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap. The default x and y gridlines and work well with latitude/longitude point data. 
+`sf` and `ggplot` can be used in conjunction to plot the polar bear observations statically on a basemap. The default x and y gridlines are cohesive with latitude/longitude point data. 
 
 ```{r}
 world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf") 
@@ -186,7 +188,7 @@ ggplot(data = world) +
   theme(legend.position = "right")
 ```
 
-`ggplot` can make more complex maps with colors, too: 
+`ggplot` can make more complex maps, too: 
 
 ```{r}
 ggplot() +
@@ -296,7 +298,7 @@ pb_canada_greenland <- st_join(pb_spatial,
 
 ### `ggplot` points and polygons
 
-```{r}
+```{r warning = FALSE}
 blue_palette <- RColorBrewer::brewer.pal(n = 2, name = "Blues")
 
 ggplot(data = canada_greenland) +
@@ -362,7 +364,7 @@ pb_habitat_poly <- st_geometry(pb_habitat)
 
 ```{r}
 plot(pb_habitat_poly,
-     main = "Polar Bear Observations",
+     main = "Polar Bear Habitat Range",
      col = "lightyellow",
      axes = TRUE,
      xlab = "Latitude",
@@ -437,7 +439,7 @@ Examples of file formats:
 
 ### terra
 
-Import a raster of sea ice that covers the area of Canada, Greenland, and more of the Arctic Circle:
+Import a raster of sea ice for the Northern Hemisphere and plot it as simply as possible with `terra::plot`
 
 ```{r}
 ice_filename = "N_197812_concentration_v3.0.tif"
@@ -452,6 +454,7 @@ terra::plot(arctic_ice,
             main = "Arctic Sea Ice Concentration")
 ```
 
+This data has a default palette; each cell is color-coded in shades of blue to white, where dark blue is 0% ice (open ocean) and white is 100% ice. You can view the default palette ("color table") with [`terra::coltab`](https://rdrr.io/cran/terra/man/colors.html)
 
 The CRS is projected and in units of meters, with each raster cell representing 25 km x 25 km. See CRS metadata [here](https://nsidc.org/data/user-resources/help-center/guide-nsidcs-polar-stereographic-projection).
 
@@ -459,14 +462,14 @@ Make a histogram of the raster values using the base R `hist` to understand the 
 
 ```{r}
 hist(arctic_ice,
-     main = "Arctic Ice Concentration Raster Values",
+     main = "Arctic Sea Ice Concentration Raster Values",
      xlab = "Values",
      ylab = "Frequency",
      col = "deepskyblue",
      border = "black")
 ```
 
-In order to properly plot multiple spatial objects on top of one another, they must have the same CRS. Transform the CRS of the habitat polygon into the CRS of the raster for Arctic sea ice.
+In order to properly plot multiple spatial objects on top of one another, they must have the same CRS. Transform the CRS of the habitat polygon into the CRS of the raster for Arctic sea ice, then plot the habitat polygon onto the raster.
 
 ```{r}
 pb_habitat_arctic <- st_transform(pb_habitat_poly, st_crs(arctic_ice))
@@ -483,8 +486,7 @@ terra::plot(pb_habitat_arctic,
 
 ### ggplot: rasters and polygons
 
-Convert the array into a dataframe, because `ggplot` only accepts tabular data:
-
+Scale the data values between 0-100 and convert the array into a dataframe, because `ggplot` only accepts tabular data. Assign a new palette using `RColorBrewer` that is similar to the color table associated with the `terra` plot above.
 
 ```{r}
 # reverse color palette to better match the default terra::plot palette values
@@ -523,7 +525,7 @@ ggplot() +
        y = element_blank())
 ```
 
-Note that `ggplot` does _not_ automatically derive the units of meters from the projected CRS from the spatial metadata. Instead, it uses 4326 by default. As a result, we should mask the axes ticks, as shown above. Axes ticks can manually be defined with `scale_x_continuous` and `scale_y_continuous`
+Note that `ggplot` does _not_ automatically derive the units of meters from the projected CRS from the spatial metadata. Instead, it uses 4326 by default. As a result, we mask the axes ticks. Axes ticks can manually be defined with `scale_x_continuous` and `scale_y_continuous`
 
 ### tmap: rasters and polygons
 
