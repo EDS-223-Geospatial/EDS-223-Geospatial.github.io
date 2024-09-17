@@ -7,7 +7,7 @@ execute:
 format:
   html:
     toc: true
-    code-fold: true
+    code-fold: false
     code-summary: "Show the code"
 ---
 
@@ -31,52 +31,53 @@ Helpful components include:
 - data citations when appropriate
 - documents that include function definitions should include inclusion of warnings and errors that ensure the function and its application are executing intended operations.
 
-# Elephant tracking in Krugar National Park
+## Elephant tracking in Krugar National Park
 
-Elephants are intelligent and gregarious animals that live in landscapes with scarce water sources.
+Elephants are intelligent and gregarious animals that tend to travel as herd and seek resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009.
 
-Objective: Use GPS locations of individuals to understand how water impacts their movement throughout Krugar National Park in South Africa.
+**Objective:** Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.
 
-```{r include = FALSE}
+```{r message = FALSE}
 library(tidyverse)
 library(here)
 library(sf)
 library(tmap)
 library(rnaturalearth)
 library(osmdata)
+library(tools)
+
+# load custom functions
+source(here("course-materials/resources/good-bad-example/functions.R"))
 ```
 
-```{r include = FALSE}
-fp <- list.files(path = here("course-materials"),
-                 pattern = "elephants.csv",
-                 recursive = TRUE,
-                 full.names = TRUE)
+```{r}
+elephants_df <- load_csv(filename = "elephants.csv",
+                         directory = "course-materials")
 
-elephants <- read_csv(fp) %>% 
-             sf::st_as_sf(coords = c("location-long", "location-lat"),
-               crs = st_crs(4326)) %>%
-              filter(st_is_valid(.))
+elephants <- to_spatial_points(data = elephants_df,
+                               latitude_col = "location-lat",
+                               longitude_col = "location-long")
 
-elephants_ref <- read_csv(list.files(path = here("course-materials"),
-                                     pattern = "elephants_ref_data.csv",
-                                     recursive = TRUE,
-                                     full.names = TRUE))
+metadata_df <- load_csv(filename = "elephants_metadata.csv",
+                         directory = "course-materials")
 ```
+
+## Visualize Data
 
 Plot all elephant observations to visualize the individual movement of elephants:
 
 ```{r}
-kruger <- opq(bbox = c(16, -35, 33, -22)) %>%
+# set bbox to approximate boundaries of Kruger NP
+kruger <- osmdata::opq(bbox = c(16, -35, 33, -22)) %>%
           add_osm_feature(key = "boundary", 
                           value = "protected_area") %>%
           add_osm_feature(key = "name", 
                           value = "Kruger National Park") %>%
           osmdata_sf()
 
+# subset imported list of elements to just the geodataframe
 kruger_bounds <- kruger$osm_multipolygons
-```
 
-```{r}
 tm_shape(kruger_bounds) +
   tm_borders(col = "black", lwd = 0.5) +
   tm_fill(col = "black") +
@@ -96,11 +97,14 @@ tm_shape(kruger_bounds) +
             legend.outside = TRUE,
             legend.position = c(0.08, 0.35),
             legend.title.size = 0.8,
-            legend.text.size = 0.6)
+            legend.text.size = 0.6) +
+  tm_compass(position = c(0.0, 0.01),
+             show.labels = 1)
 ```
 
-Next explore the temperature values or time plots
+### Map Interpretation
 
+Elephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park, or error in the GPS collars' location for these points could explain this perceived movement. 
 
 
 ## Data Citations

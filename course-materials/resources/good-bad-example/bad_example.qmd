@@ -24,31 +24,38 @@ Examples of components:
 
 ```{r include = FALSE}
 library(tidyverse)
-
 library(here)
-library(sf)
 ```
 
 ```{r}
+library(sf)
+
 fp <- list.files(path = here("course-materials"), pattern = "elephants.csv", recursive = TRUE, full.names = TRUE)
 
 elephants <- read_csv(fp) %>% 
-    sf::st_as_sf(coords =            c("location-long", "location-lat"),
-                                  crs = st_crs(4326)) %>%
+    sf::st_as_sf(coords = c("location-long", "location-lat"), crs = st_crs(4326)) %>%
           filter(st_is_valid(.))
 
 elephants
 ```
 
 ```{r}
-elephants_ref <- read_csv(list.files(path = here("course-materials"),
-                                     pattern = "elephants_ref_data.csv",
+metadata_df <- read_csv(list.files(path = here("course-materials"),
+                                     pattern = "elephants_metadata.csv",
                                      recursive = TRUE,
                                      full.names = TRUE))
 ```
 
 ```{r}
-sort(unique(elephants$"individual-local-identifier")) == sort(unique(elephants_ref$"animal-id"))
+sort(unique(elephants$"individual-local-identifier")) == sort(unique(metadata_df$"animal-id"))
+```
+
+```{r}
+min(metadata_df$"deploy-on-date")
+```
+
+```{r}
+max(metadata_df$"deploy-off-date")
 ```
 
 ```{r}
@@ -71,18 +78,12 @@ tm_dots(col = "individual-local-identifier",
          size = 0.1,
          border.col = "black",
          title = "Individual") +
- tm_layout(
-   bg.color = "lightblue",
-   title = "Elephant Observations",
-   frame = TRUE,
-   title.position = c(0.01, 0.5),
-   title.size = 1.2,
-   legend.frame = TRUE,
-   legend.position = c(0.01, 0.2)
- )
+ tm_layout(main.title = "Elephant Observations",
+           title.position = c("center", "top"),
+           title.size = 1.2,
+           legend.show = FALSE)
 ```
 
-All of the elephants were in South Africa.
 
-Data from somewhere on MoveBank: https://datarepository.movebank.org
+Data: https://datarepository.movebank.org
 
