@@ -1,0 +1,88 @@
+---
+title: "Unprofessional Output Example"
+author: Juliet Cohen
+date: last-modified
+execute: 
+  eval: true
+---
+
+# Unprofessional Documents
+
+Unprofessional documents are messy and leave the reader struggling to follow the story of the analysis.
+
+Examples of components:
+
+- loading packages throughout document
+- missing comments, documentation between analysis steps, and data citations
+- unnecessary outputs
+- intermediate sanity checks retained in final version
+- messy code indentation
+  - for lists, parameters, functions within functions, etc.
+- messy plots, lacking explanation 
+
+# Elephant tracking in Krugar National Park
+
+```{r include = FALSE}
+library(tidyverse)
+
+library(here)
+library(sf)
+```
+
+```{r}
+fp <- list.files(path = here("course-materials"), pattern = "elephants.csv", recursive = TRUE, full.names = TRUE)
+
+elephants <- read_csv(fp) %>% 
+    sf::st_as_sf(coords =            c("location-long", "location-lat"),
+                                  crs = st_crs(4326)) %>%
+          filter(st_is_valid(.))
+
+elephants
+```
+
+```{r}
+elephants_ref <- read_csv(list.files(path = here("course-materials"),
+                                     pattern = "elephants_ref_data.csv",
+                                     recursive = TRUE,
+                                     full.names = TRUE))
+```
+
+```{r}
+sort(unique(elephants$"individual-local-identifier")) == sort(unique(elephants_ref$"animal-id"))
+```
+
+```{r}
+library(tmap)
+library(rnaturalearth)
+library(osmdata)
+```
+
+```{r}
+south_africa <- rnaturalearth::ne_countries(scale = "medium",
+                                                returnclass = "sf") %>%
+                                    filter(admin == "South Africa")
+
+tm_shape(south_africa) +
+ tm_borders(col = "black", lwd = 0.5) +
+ tm_fill(col = "white") +
+ tm_shape(elephants) +
+tm_dots(col = "individual-local-identifier",
+         palette = 'viridis',
+         size = 0.1,
+         border.col = "black",
+         title = "Individual") +
+ tm_layout(
+   bg.color = "lightblue",
+   title = "Elephant Observations",
+   frame = TRUE,
+   title.position = c(0.01, 0.5),
+   title.size = 1.2,
+   legend.frame = TRUE,
+   legend.position = c(0.01, 0.2)
+ )
+```
+
+All of the elephants were in South Africa.
+
+Data from somewhere on MoveBank: https://datarepository.movebank.org
+

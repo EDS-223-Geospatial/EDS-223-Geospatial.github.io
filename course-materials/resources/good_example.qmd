@@ -1,0 +1,114 @@
+---
+title: "Professional Output Example"
+author: Juliet Cohen
+date: last-modified
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+    code-fold: true
+    code-summary: "Show the code"
+---
+
+# Professional Documents
+
+Professional documents should be easy to follow and get the point across to the reader in a concise manner.
+
+Helpful components include:
+
+-   document header with title, name, and date
+    -   ideally, the date reflects the day the document is most recently rendered
+-   all packages are loaded together at the top of the document
+-   code comments when appropriate
+-   clean code indentation
+  - for lists, parameters, functions within functions, etc.
+-   plots contain all necessary components such as a legend, axes labels, units, helpful palette
+-   folding code when appropriate to direct reader's attention to the output
+-   hiding chunk outputs for warning messages, loaded packages, and other unnecessary output for a reader
+-   succinct documentation between steps, such as section headers, descriptions for an analysis step, and plot interpretation
+-   sourcing function definitions or other materials from a separate script
+- data citations when appropriate
+- documents that include function definitions should include inclusion of warnings and errors that ensure the function and its application are executing intended operations.
+
+# Elephant tracking in Krugar National Park
+
+Elephants are intelligent and gregarious animals that live in landscapes with scarce water sources.
+
+Objective: Use GPS locations of individuals to understand how water impacts their movement throughout Krugar National Park in South Africa.
+
+```{r include = FALSE}
+library(tidyverse)
+library(here)
+library(sf)
+library(tmap)
+library(rnaturalearth)
+library(osmdata)
+```
+
+```{r include = FALSE}
+fp <- list.files(path = here("course-materials"),
+                 pattern = "elephants.csv",
+                 recursive = TRUE,
+                 full.names = TRUE)
+
+elephants <- read_csv(fp) %>% 
+             sf::st_as_sf(coords = c("location-long", "location-lat"),
+               crs = st_crs(4326)) %>%
+              filter(st_is_valid(.))
+
+elephants_ref <- read_csv(list.files(path = here("course-materials"),
+                                     pattern = "elephants_ref_data.csv",
+                                     recursive = TRUE,
+                                     full.names = TRUE))
+```
+
+Plot all elephant observations to visualize the individual movement of elephants:
+
+```{r}
+kruger <- opq(bbox = c(16, -35, 33, -22)) %>%
+          add_osm_feature(key = "boundary", 
+                          value = "protected_area") %>%
+          add_osm_feature(key = "name", 
+                          value = "Kruger National Park") %>%
+          osmdata_sf()
+
+kruger_bounds <- kruger$osm_multipolygons
+```
+
+```{r}
+tm_shape(kruger_bounds) +
+  tm_borders(col = "black", lwd = 0.5) +
+  tm_fill(col = "black") +
+  tm_shape(elephants) +
+  tm_dots(col = "individual-local-identifier",
+          palette = "Set3",
+          size = 0.001,
+          border.col = "black",
+          title = "Individual") +
+  tm_layout(bg.color = "darkgrey",
+            title = "Elephant Observations\nKruger National Park",
+            frame = TRUE,
+            title.position = c("center", "top"),
+            title.size = 1.2,
+            title.fontface = "bold",
+            legend.frame = TRUE,
+            legend.outside = TRUE,
+            legend.position = c(0.08, 0.35),
+            legend.title.size = 0.8,
+            legend.text.size = 0.6)
+```
+
+Next explore the temperature values or time plots
+
+
+
+## Data Citations
+
+| Data | Citation | Link |
+|------|----------|------|
+| Elephant observations | Slotow R, Thaker M, Vanak AT. 2019. Data from: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water. Movebank Data Repository. https://doi.org/10.5441/001/1.403h24q5 | [MoveBank Repository: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water](https://datarepository.movebank.org/entities/datapackage/b777279a-581d-43ce-b790-8e60304fb8b4) |
+
+
+
+
