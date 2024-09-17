@@ -12,13 +12,13 @@ Unprofessional documents are messy and leave the reader struggling to follow the
 
 Examples of components:
 
+- missing introduction for purpose of document, as well as section headers
 - loading packages throughout document
-- missing comments, documentation between analysis steps, and data citations
-- unnecessary outputs
-- intermediate sanity checks retained in final version
-- messy code indentation
-  - for lists, parameters, functions within functions, etc.
-- messy plots, lacking explanation 
+- missing comments, documentation between analysis steps, and formal and detailed data citation
+- unnecessary outputs and intermediate checks retained in final version
+- messy code indentation for lists, parameters, functions within functions, etc.
+- very plain plot/map that is lacking important components such as legend, appropriate zoom level, name of study area, etc.
+- missing map explanation or general document conclusion
 
 # Elephant tracking in Krugar National Park
 
@@ -41,7 +41,7 @@ elephants
 
 ```{r}
 metadata_df <- read_csv(list.files(path = here("course-materials"),
-                                     pattern = "elephants_metadata.csv",
+                                   pattern = "elephants_metadata.csv",
                                      recursive = TRUE,
                                      full.names = TRUE))
 ```
@@ -66,7 +66,7 @@ library(osmdata)
 
 ```{r}
 south_africa <- rnaturalearth::ne_countries(scale = "medium",
-                                                returnclass = "sf") %>%
+                                    returnclass = "sf") %>%
                                     filter(admin == "South Africa")
 
 tm_shape(south_africa) +
@@ -74,14 +74,13 @@ tm_shape(south_africa) +
  tm_fill(col = "white") +
  tm_shape(elephants) +
 tm_dots(col = "individual-local-identifier",
-         palette = 'viridis',
-         size = 0.1,
-         border.col = "black",
-         title = "Individual") +
+palette = 'viridis',
+size = 0.1,
+border.col = "black",
+title = "Individual") +
  tm_layout(main.title = "Elephant Observations",
-           title.position = c("center", "top"),
-           title.size = 1.2,
-           legend.show = FALSE)
+   title.position = c("center", "top"), title.size = 1.2,
+   legend.show = FALSE)
 ```
 
 

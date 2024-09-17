@@ -20,51 +20,63 @@ Helpful components include:
 -   document header with title, name, and date
     -   ideally, the date reflects the day the document is most recently rendered
 -   all packages are loaded together at the top of the document
--   code comments when appropriate
--   clean code indentation
-  - for lists, parameters, functions within functions, etc.
--   plots contain all necessary components such as a legend, axes labels, units, helpful palette
--   folding code when appropriate to direct reader's attention to the output
--   hiding chunk outputs for warning messages, loaded packages, and other unnecessary output for a reader
--   succinct documentation between steps, such as section headers, descriptions for an analysis step, and plot interpretation
--   sourcing function definitions or other materials from a separate script
-- data citations when appropriate
-- documents that include function definitions should include inclusion of warnings and errors that ensure the function and its application are executing intended operations.
+-   include code comments when appropriate
+-   clean code indentation for lists, parameters, functions within functions, etc.
+-   data visualizations such as maps and plots contain all necessary components such as a legend, axes labels, units, and appropriate palette (divergent, colorblind friendly, etc.)
+-   folding code or sourcing separate scripts when appropriate to direct reader's attention to the important output or to condense code
+-   hiding unnecessary output such as warning messages or loaded packages
+-   succinct documentation between steps, such as section headers, descriptions for an analysis step, and map/plot interpretation
+- complete and detailed data citations
+- function definitions should include warnings and errors that ensure the intended operations are executed
 
 ## Elephant tracking in Krugar National Park
 
-Elephants are intelligent and gregarious animals that tend to travel as herd and seek resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009.
+Elephants are intelligent and gregarious animals that tend to travel as a herd and seek out resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009 ([Slotow et al. 2019](https://datarepository.movebank.org/entities/datapackage/b777279a-581d-43ce-b790-8e60304fb8b4)).
 
 **Objective:** Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.
 
+### Load packages and source functions
+
 ```{r message = FALSE}
+#| code-fold: true
+#| code-summary: "Show the code"
+
 library(tidyverse)
 library(here)
 library(sf)
 library(tmap)
 library(rnaturalearth)
 library(osmdata)
-library(tools)
 
-# load custom functions
-source(here("course-materials/resources/good-bad-example/functions.R"))
+# source external script that defines custom functions
+source(list.files(path = here("course-materials"),
+                  pattern = "functions.R",
+                  recursive = TRUE,
+                  full.names = TRUE))
 ```
 
-```{r}
-elephants_df <- load_csv(filename = "elephants.csv",
-                         directory = "course-materials")
+### Import data
 
+1. Import the elephant movement data and configure its spatial components
+
+```{r}
+metadata_df <- load_csv(filename = "elephants_metadata.csv",
+                        directory = "course-materials",
+                        communicate = FALSE)
+
+elephants_df <- load_csv(filename = "elephants.csv",
+                         directory = "course-materials",
+                         communicate = FALSE)
+
+# convert the elephant observations to sf objects
 elephants <- to_spatial_points(data = elephants_df,
                                latitude_col = "location-lat",
                                longitude_col = "location-long")
-
-metadata_df <- load_csv(filename = "elephants_metadata.csv",
-                         directory = "course-materials")
 ```
 
-## Visualize Data
+### Visualize data
 
-Plot all elephant observations to visualize the individual movement of elephants:
+2. Import the spatial boundaries for Kruger National Park to serve as a basemap for the elephant tracks
 
 ```{r}
 # set bbox to approximate boundaries of Kruger NP
@@ -77,37 +89,58 @@ kruger <- osmdata::opq(bbox = c(16, -35, 33, -22)) %>%
 
 # subset imported list of elements to just the geodataframe
 kruger_bounds <- kruger$osm_multipolygons
+```
 
+3. Produce a map of elephant observations to visualize the individual movement of elephants
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+title = "Elephant Observations\nKruger National Park\n2007-2009"
+
+# basemap: Kruger National Park geometry
 tm_shape(kruger_bounds) +
   tm_borders(col = "black", lwd = 0.5) +
   tm_fill(col = "black") +
+  # overlay all elephant GPS locations 
   tm_shape(elephants) +
   tm_dots(col = "individual-local-identifier",
           palette = "Set3",
+          # small dots to distinguish between individuals
           size = 0.001,
           border.col = "black",
           title = "Individual") +
   tm_layout(bg.color = "darkgrey",
-            title = "Elephant Observations\nKruger National Park",
+            legend.bg.color = "white",
+            title = title,
             frame = TRUE,
             title.position = c("center", "top"),
             title.size = 1.2,
             title.fontface = "bold",
             legend.frame = TRUE,
             legend.outside = TRUE,
-            legend.position = c(0.08, 0.35),
+            legend.position = c(0.08, 0.3),
             legend.title.size = 0.8,
             legend.text.size = 0.6) +
+  # add compass with only North arrow
   tm_compass(position = c(0.0, 0.01),
              show.labels = 1)
 ```
 
-### Map Interpretation
 
-Elephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park, or error in the GPS collars' location for these points could explain this perceived movement. 
+### Map interpretation
 
+Elephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park. Alternatively, error in the GPS location for these points could explain this perceived movement.
 
-## Data Citations
+Futher analysis steps could include:
+
+- zooming in further to the realized niche
+- partitioning the data temporally
+- using metadata to advise how to subset the data to view fewer elephant locations at a time
+- overlaying other vector or raster data layers such as surface water and vegetation to understand if the elephants' movement is driven by these resources 
+
+### Data Citations
 
 | Data | Citation | Link |
 |------|----------|------|

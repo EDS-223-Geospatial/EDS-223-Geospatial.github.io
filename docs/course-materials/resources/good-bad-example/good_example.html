@@ -244,12 +244,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#professional-documents" id="toc-professional-documents" class="nav-link active" data-scroll-target="#professional-documents">Professional Documents</a>
   <ul class="collapse">
-  <li><a href="#elephant-tracking-in-krugar-national-park" id="toc-elephant-tracking-in-krugar-national-park" class="nav-link" data-scroll-target="#elephant-tracking-in-krugar-national-park">Elephant tracking in Krugar National Park</a></li>
-  <li><a href="#visualize-data" id="toc-visualize-data" class="nav-link" data-scroll-target="#visualize-data">Visualize Data</a>
+  <li><a href="#elephant-tracking-in-krugar-national-park" id="toc-elephant-tracking-in-krugar-national-park" class="nav-link" data-scroll-target="#elephant-tracking-in-krugar-national-park">Elephant tracking in Krugar National Park</a>
   <ul class="collapse">
-  <li><a href="#map-interpretation" id="toc-map-interpretation" class="nav-link" data-scroll-target="#map-interpretation">Map Interpretation</a></li>
-  </ul></li>
+  <li><a href="#load-packages-and-source-functions" id="toc-load-packages-and-source-functions" class="nav-link" data-scroll-target="#load-packages-and-source-functions">Load packages and source functions</a></li>
+  <li><a href="#import-data" id="toc-import-data" class="nav-link" data-scroll-target="#import-data">Import data</a></li>
+  <li><a href="#visualize-data" id="toc-visualize-data" class="nav-link" data-scroll-target="#visualize-data">Visualize data</a></li>
+  <li><a href="#map-interpretation" id="toc-map-interpretation" class="nav-link" data-scroll-target="#map-interpretation">Map interpretation</a></li>
   <li><a href="#data-citations" id="toc-data-citations" class="nav-link" data-scroll-target="#data-citations">Data Citations</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -271,100 +273,134 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>ideally, the date reflects the day the document is most recently rendered</li>
 </ul></li>
 <li>all packages are loaded together at the top of the document</li>
-<li>code comments when appropriate</li>
-<li>clean code indentation</li>
-<li>for lists, parameters, functions within functions, etc.</li>
-<li>plots contain all necessary components such as a legend, axes labels, units, helpful palette</li>
-<li>folding code when appropriate to direct reader’s attention to the output</li>
-<li>hiding chunk outputs for warning messages, loaded packages, and other unnecessary output for a reader</li>
-<li>succinct documentation between steps, such as section headers, descriptions for an analysis step, and plot interpretation</li>
-<li>sourcing function definitions or other materials from a separate script</li>
-<li>data citations when appropriate</li>
-<li>documents that include function definitions should include inclusion of warnings and errors that ensure the function and its application are executing intended operations.</li>
+<li>include code comments when appropriate</li>
+<li>clean code indentation for lists, parameters, functions within functions, etc.</li>
+<li>data visualizations such as maps and plots contain all necessary components such as a legend, axes labels, units, and appropriate palette (divergent, colorblind friendly, etc.)</li>
+<li>folding code or sourcing separate scripts when appropriate to direct reader’s attention to the important output or to condense code</li>
+<li>hiding unnecessary output such as warning messages or loaded packages</li>
+<li>succinct documentation between steps, such as section headers, descriptions for an analysis step, and map/plot interpretation</li>
+<li>complete and detailed data citations</li>
+<li>function definitions should include warnings and errors that ensure the intended operations are executed</li>
 </ul>
 <section id="elephant-tracking-in-krugar-national-park" class="level2">
 <h2 class="anchored" data-anchor-id="elephant-tracking-in-krugar-national-park">Elephant tracking in Krugar National Park</h2>
-<p>Elephants are intelligent and gregarious animals that tend to travel as herd and seek resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009.</p>
+<p>Elephants are intelligent and gregarious animals that tend to travel as a herd and seek out resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009 (<a href="https://datarepository.movebank.org/entities/datapackage/b777279a-581d-43ce-b790-8e60304fb8b4">Slotow et al.&nbsp;2019</a>).</p>
 <p><strong>Objective:</strong> Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.</p>
+<section id="load-packages-and-source-functions" class="level3">
+<h3 class="anchored" data-anchor-id="load-packages-and-source-functions">Load packages and source functions</h3>
 <div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rnaturalearth)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tools)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># load custom functions</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"course-materials/resources/good-bad-example/functions.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>elephants_df <span class="ot">&lt;-</span> <span class="fu">load_csv</span>(<span class="at">filename =</span> <span class="st">"elephants.csv"</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directory =</span> <span class="st">"course-materials"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>elephants <span class="ot">&lt;-</span> <span class="fu">to_spatial_points</span>(<span class="at">data =</span> elephants_df,</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">latitude_col =</span> <span class="st">"location-lat"</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                               <span class="at">longitude_col =</span> <span class="st">"location-long"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in to_spatial_points(data = elephants_df, latitude_col = "location-
-lat", : Conversion to point spatial data failed for at least 1 lat &amp; long pair</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>metadata_df <span class="ot">&lt;-</span> <span class="fu">load_csv</span>(<span class="at">filename =</span> <span class="st">"elephants_metadata.csv"</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directory =</span> <span class="st">"course-materials"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># source external script that defines custom functions</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">here</span>(<span class="st">"course-materials"</span>),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pattern =</span> <span class="st">"functions.R"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                  <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                  <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
-<section id="visualize-data" class="level2">
-<h2 class="anchored" data-anchor-id="visualize-data">Visualize Data</h2>
-<p>Plot all elephant observations to visualize the individual movement of elephants:</p>
+<section id="import-data" class="level3">
+<h3 class="anchored" data-anchor-id="import-data">Import data</h3>
+<ol type="1">
+<li>Import the elephant movement data and configure its spatial components</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set bbox to approximate boundaries of Kruger NP</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>kruger <span class="ot">&lt;-</span> osmdata<span class="sc">::</span><span class="fu">opq</span>(<span class="at">bbox =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="sc">-</span><span class="dv">35</span>, <span class="dv">33</span>, <span class="sc">-</span><span class="dv">22</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"boundary"</span>, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">value =</span> <span class="st">"protected_area"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"name"</span>, </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">value =</span> <span class="st">"Kruger National Park"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">osmdata_sf</span>()</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># subset imported list of elements to just the geodataframe</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>kruger_bounds <span class="ot">&lt;-</span> kruger<span class="sc">$</span>osm_multipolygons</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(kruger_bounds) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(elephants) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"individual-local-identifier"</span>,</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">palette =</span> <span class="st">"Set3"</span>,</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.001</span>,</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">border.col =</span> <span class="st">"black"</span>,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">"Individual"</span>) <span class="sc">+</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">bg.color =</span> <span class="st">"darkgrey"</span>,</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"Elephant Observations</span><span class="sc">\n</span><span class="st">Kruger National Park"</span>,</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">frame =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.position =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"top"</span>),</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.fontface =</span> <span class="st">"bold"</span>,</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.frame =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.35</span>),</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title.size =</span> <span class="fl">0.8</span>,</span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.text.size =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.01</span>),</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.labels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>metadata_df <span class="ot">&lt;-</span> <span class="fu">load_csv</span>(<span class="at">filename =</span> <span class="st">"elephants_metadata.csv"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">directory =</span> <span class="st">"course-materials"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">communicate =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>elephants_df <span class="ot">&lt;-</span> <span class="fu">load_csv</span>(<span class="at">filename =</span> <span class="st">"elephants.csv"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">directory =</span> <span class="st">"course-materials"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">communicate =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># convert the elephant observations to sf objects</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>elephants <span class="ot">&lt;-</span> <span class="fu">to_spatial_points</span>(<span class="at">data =</span> elephants_df,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                               <span class="at">latitude_col =</span> <span class="st">"location-lat"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                               <span class="at">longitude_col =</span> <span class="st">"location-long"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualize-data" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-data">Visualize data</h3>
+<ol start="2" type="1">
+<li>Import the spatial boundaries for Kruger National Park to serve as a basemap for the elephant tracks</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># set bbox to approximate boundaries of Kruger NP</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>kruger <span class="ot">&lt;-</span> osmdata<span class="sc">::</span><span class="fu">opq</span>(<span class="at">bbox =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="sc">-</span><span class="dv">35</span>, <span class="dv">33</span>, <span class="sc">-</span><span class="dv">22</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"boundary"</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">value =</span> <span class="st">"protected_area"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">add_osm_feature</span>(<span class="at">key =</span> <span class="st">"name"</span>, </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">value =</span> <span class="st">"Kruger National Park"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">osmdata_sf</span>()</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># subset imported list of elements to just the geodataframe</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>kruger_bounds <span class="ot">&lt;-</span> kruger<span class="sc">$</span>osm_multipolygons</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Produce a map of elephant observations to visualize the individual movement of elephants</li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>title <span class="ot">=</span> <span class="st">"Elephant Observations</span><span class="sc">\n</span><span class="st">Kruger National Park</span><span class="sc">\n</span><span class="st">2007-2009"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># basemap: Kruger National Park geometry</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(kruger_bounds) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">col =</span> <span class="st">"black"</span>, <span class="at">lwd =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># overlay all elephant GPS locations </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(elephants) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"individual-local-identifier"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">palette =</span> <span class="st">"Set3"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>          <span class="co"># small dots to distinguish between individuals</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">0.001</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">border.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">title =</span> <span class="st">"Individual"</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">bg.color =</span> <span class="st">"darkgrey"</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.bg.color =</span> <span class="st">"white"</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> title,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.position =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"top"</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">title.fontface =</span> <span class="st">"bold"</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.frame =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.outside =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.08</span>, <span class="fl">0.3</span>),</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.title.size =</span> <span class="fl">0.8</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">legend.text.size =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add compass with only North arrow</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="fl">0.0</span>, <span class="fl">0.01</span>),</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>             <span class="at">show.labels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="good_example_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="good_example_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+</section>
 <section id="map-interpretation" class="level3">
-<h3 class="anchored" data-anchor-id="map-interpretation">Map Interpretation</h3>
-<p>Elephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park, or error in the GPS collars’ location for these points could explain this perceived movement.</p>
+<h3 class="anchored" data-anchor-id="map-interpretation">Map interpretation</h3>
+<p>Elephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park. Alternatively, error in the GPS location for these points could explain this perceived movement.</p>
+<p>Futher analysis steps could include:</p>
+<ul>
+<li>zooming in further to the realized niche</li>
+<li>partitioning the data temporally</li>
+<li>using metadata to advise how to subset the data to view fewer elephant locations at a time</li>
+<li>overlaying other vector or raster data layers such as surface water and vegetation to understand if the elephants’ movement is driven by these resources</li>
+</ul>
 </section>
-</section>
-<section id="data-citations" class="level2">
-<h2 class="anchored" data-anchor-id="data-citations">Data Citations</h2>
+<section id="data-citations" class="level3">
+<h3 class="anchored" data-anchor-id="data-citations">Data Citations</h3>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -383,6 +419,7 @@ lat", : Conversion to point spatial data failed for at least 1 lat &amp; long pa
 </table>
 
 
+</section>
 </section>
 </section>
 

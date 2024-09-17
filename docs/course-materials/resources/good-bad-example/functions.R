@@ -1,23 +1,38 @@
+# Author: Juliet Cohen
+# Date: September 17th, 2024
+
+# Custom functions to source into `good_example.qmd`
+# to demonstrate how to produce clean, succinct,
+# professional materials. This doc serves as a
+# resource for EDS 223.
+
+
 # define function to load in spefied csv filename
 # from anywhere in specified directory
-load_csv <- function(filename = NULL, directory = here()) {
+load_csv <- function(filename = NULL, 
+                     directory = here(),
+                     communicate = FALSE) {
   
   library(here)
   library(tools)
   
-  # if filename or directory are not strings, convert them
-  if (!all(is.character(c(filename, directory)))) {
-    filename <- as.character(filename)
-    directory <- as.character(directory)
+  # if filename is not provided, prompt for it
+  if (is.null(filename)) {
+    stop("Filename must be provided")
   }
   
-  # error if file is not a csv
-  if (file_ext(filename) != "csv") {
+  if (file_ext(filename) == "") {
+    stop("File extension is not provided")
+  } else if (file_ext(filename) != "csv") {
     stop("File is not a csv")
   }
   
-  # communicate which full filepath is found
-  sprintf("Loading file: '%s'\n", filename)
+  if (communicate) {
+    # communicate which full filepath is found
+    cat(sprintf("Loading file '%s'\nfrom within directory '%s'\n", 
+                filename,
+                here(directory)))
+  }
   
   # read in csv
   read_csv(list.files(path = here(directory),
@@ -36,6 +51,17 @@ to_spatial_points <- function(data = NULL,
   
   library(sf)
   
+  # if any parameter is not provided, prompt for it
+  parameters <- list(data = data, 
+                     latitude_col = latitude_col, 
+                     longitude_col = longitude_col)
+  missing <- names(parameters)[sapply(parameters, is.null)]
+  
+  if (length(missing) > 0) {
+    stop(sprintf("The following parameter(s) are missing: %s", 
+                 paste(missing, collapse = ", ")))
+  }
+  
   # error if file is not a dataframe
   if (is.data.frame(data) == FALSE) {
     stop("Input data is not a dataframe")
@@ -47,12 +73,6 @@ to_spatial_points <- function(data = NULL,
                 "present in the dataframe"))
   }
   
-  # if colnames are not strings, convert them
-  if (!all(is.character(c(latitude_col, longitude_col)))) {
-    filename <- as.character(filename)
-    directory <- as.character(directory)
-  }
-  
   # convert data to spatial points and set CRS
   point_data <- sf::st_as_sf(data, 
                              coords = c(longitude_col, latitude_col),
@@ -61,7 +81,7 @@ to_spatial_points <- function(data = NULL,
 
   # insert warning if conversion to point spatial data failed for
   # at least 1 lat & long pair
-  if (length(point_data) < length(data)){
+  if (nrow(point_data) < nrow(data)){
     warning(paste("Conversion to point spatial data failed", 
                    "for at least 1 lat & long pair"))
   }

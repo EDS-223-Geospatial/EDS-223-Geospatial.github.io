@@ -259,15 +259,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Unprofessional documents are messy and leave the reader struggling to follow the story of the analysis.</p>
 <p>Examples of components:</p>
 <ul>
+<li>missing introduction for purpose of document, as well as section headers</li>
 <li>loading packages throughout document</li>
-<li>missing comments, documentation between analysis steps, and data citations</li>
-<li>unnecessary outputs</li>
-<li>intermediate sanity checks retained in final version</li>
-<li>messy code indentation
-<ul>
-<li>for lists, parameters, functions within functions, etc.</li>
-</ul></li>
-<li>messy plots, lacking explanation</li>
+<li>missing comments, documentation between analysis steps, and formal and detailed data citation</li>
+<li>unnecessary outputs and intermediate checks retained in final version</li>
+<li>messy code indentation for lists, parameters, functions within functions, etc.</li>
+<li>very plain plot/map that is lacking important components such as legend, appropriate zoom level, name of study area, etc.</li>
+<li>missing map explanation or general document conclusion</li>
 </ul>
 </section>
 <section id="elephant-tracking-in-krugar-national-park" class="level1">
@@ -324,7 +322,7 @@ Geodetic CRS:  WGS 84
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>metadata_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">list.files</span>(<span class="at">path =</span> <span class="fu">here</span>(<span class="st">"course-materials"</span>),</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">pattern =</span> <span class="st">"elephants_metadata.csv"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">pattern =</span> <span class="st">"elephants_metadata.csv"</span>,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">recursive =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">full.names =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -368,7 +366,7 @@ dttm  (2): deploy-on-date, deploy-off-date
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>south_africa <span class="ot">&lt;-</span> rnaturalearth<span class="sc">::</span><span class="fu">ne_countries</span>(<span class="at">scale =</span> <span class="st">"medium"</span>,</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                                <span class="at">returnclass =</span> <span class="st">"sf"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">returnclass =</span> <span class="st">"sf"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="fu">filter</span>(admin <span class="sc">==</span> <span class="st">"South Africa"</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(south_africa) <span class="sc">+</span></span>
@@ -376,14 +374,13 @@ dttm  (2): deploy-on-date, deploy-off-date
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_fill</span>(<span class="at">col =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_shape</span>(elephants) <span class="sc">+</span></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_dots</span>(<span class="at">col =</span> <span class="st">"individual-local-identifier"</span>,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">palette =</span> <span class="st">'viridis'</span>,</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">size =</span> <span class="fl">0.1</span>,</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">border.col =</span> <span class="st">"black"</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Individual"</span>) <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="at">palette =</span> <span class="st">'viridis'</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="at">size =</span> <span class="fl">0.1</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="at">border.col =</span> <span class="st">"black"</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="at">title =</span> <span class="st">"Individual"</span>) <span class="sc">+</span></span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a> <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Elephant Observations"</span>,</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">title.position =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"top"</span>),</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>           <span class="at">title.size =</span> <span class="fl">1.2</span>,</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.show =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>   <span class="at">title.position =</span> <span class="fu">c</span>(<span class="st">"center"</span>, <span class="st">"top"</span>), <span class="at">title.size =</span> <span class="fl">1.2</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>   <span class="at">legend.show =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
