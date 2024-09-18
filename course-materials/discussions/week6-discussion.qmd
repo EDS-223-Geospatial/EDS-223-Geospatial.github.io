@@ -1,6 +1,6 @@
 ---
-title: "Discssuion Week 6: Bringing Vector and Raster Together"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Week 6: Discussion Section"
+subtitle: "Bring vector and raster togehter"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
@@ -12,13 +12,19 @@ format:
 
 The following exercises are modified from [Chapter 6 of Geocomputation with R by Rovin Lovelace](https://r.geocompx.org/raster-vector).
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## Learning Objectives
 
-## Prerequisites
+- Use `crop()` and `mask()` to create a subset of a dataset 
+- Use `aggregate()` and `resample()` to create a new dataset
 
-```{r load, include=TRUE, message=FALSE, warning=FALSE}
+## Get Started
+
+Let's load the necessary packages:
+
+```{r}
+#| message: false
+#| warning: false
+
 library(sf)
 library(terra)
 library(spData)
@@ -28,6 +34,7 @@ library(tidyverse)
 
 ```{r}
 zion_points <- read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
+
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 
 ch <- sf::st_combine(zion_points) %>%
@@ -37,15 +44,24 @@ ch <- sf::st_combine(zion_points) %>%
 grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
 ```
 
-```{r}
-plot(srtm)
-plot(st_geometry(zion_points), add = TRUE)
-plot(ch, add = TRUE)
-```
+Now, to meet our learning objectives, your task:
 
-## Exercises
+1. Crop the `srtm` raster using (1) `zion_points` and (2) `ch`
+  - Are there any differences in the output maps? 
+  - Next, mask `srtm` using these two datasets. Can you see any difference now?
+2. Subset points higher than 3100 meters in `nz_height` and create a template raster with a resolution of 3 km x 3 km for the extent of the subset dataset
+  - Count numbers of the highest points in each grid cell
+  - Find the maximum elevation in each grid cell
+3. With the previous raster, complete the following:
+  - Aggregate the raster counting high points in New Zealand
+  - Reduce its geographic resolution by half, such that cells are 6 x 6 km
+  - Plot the result
+  - Resample back to the original resolution of 3 km x 3 km
+4. Polygonize `grain` and filter all squares representing clay
 
-1. Crop the srtm raster using (1) the zion_points dataset and (2) the ch dataset. Are there any differences in the output maps? Next, mask srtm using these two datasets. Can you see any difference now?
+## Answer Key
+
+### Crop and mask the `srtm` raster
 
 ```{r}
 srtm_crop1 <- terra::crop(srtm, zion_points)
@@ -59,54 +75,55 @@ plot(srtm_mask1)
 plot(srtm_mask2)
 ```
 
-2. Subset points higher than 3100 meters in New Zealand (the nz_height object) and create a template raster with a resolution of 3 km for the extent of the new point dataset. Using these two new objects:
+### Subset points higher than 3100 meters in New Zealand
 
 ```{r}
 nz_height3100 <- nz_height %>% 
-  filter(elevation > 3100)
+  dplyr::filter(elevation > 3100)
 
-nz_template <- terra::rast(ext(nz_height3100), resolution = 3000, crs = crs(nz_height3100))
+nz_template <- terra::rast(terra::ext(nz_height3100),
+                           resolution = 3000, crs = terra::crs(nz_height3100))
 ```
 
-2a. Count numbers of the highest points in each grid cell.
+### Count numbers of the highest points in each grid cell
 
 ```{r}
-nz_raster <- rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
+nz_raster <- terra::rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
 plot(nz_raster)
 plot(st_geometry(nz_height3100), add = TRUE)
 ```
 
-2b. Find the maximum elevation in each grid cell.
+### Find maximum elevation in each grid cell
 
 ```{r}
-nz_raster2 = rasterize(nz_height3100, nz_template, 
-                       field = "elevation", fun = max)
+nz_raster2 <- terra::rasterize(nz_height3100, nz_template, field = "elevation", fun = max)
 plot(nz_raster2)
 plot(st_geometry(nz_height3100), add = TRUE)
 ```
 
-3. Aggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result. Resample the lower resolution raster back to the original resolution of 3 km. 
+### Aggregate raster
 
 ```{r}
-nz_raster_low = raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
+nz_raster_low <- raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
 
-nz_resample = resample(nz_raster_low, nz_raster)
+nz_resample <- terra::resample(nz_raster_low, nz_raster)
 plot(nz_raster_low)
 plot(nz_resample) # the results are spread over a greater area and there are border issues
 plot(nz_raster)
 ```
 
-4. Polygonize the grain dataset and filter all squares representing clay.
+### Polygonize and filter grain dataset for clay
 
 ```{r}
-grain_poly = as.polygons(grain) %>% 
-  st_as_sf()
+grain_poly <- as.polygons(grain) %>% 
+  sf::st_as_sf()
 
 plot(grain)
 plot(grain_poly)
 
-clay = grain_poly %>% 
-  filter(grain == "clay")
+clay <- grain_poly %>% 
+  dplyr::filter(grain == "clay")
+
 plot(clay)
 ```
 
