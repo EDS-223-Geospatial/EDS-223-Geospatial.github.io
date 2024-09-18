@@ -74,3 +74,12 @@ knitr::include_graphics("images/grade-tracker.png")
 
 [Redeem tokens](https://forms.gle/u51tdaAhSAQerHxh6) in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a "Not Yet" mark.
 
+## Rubric
+
+Each Homework Assignment (HWs) will include an individual rubric. However, to earn a "Satisfactory" assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance. 
+
+Examples of Professional Output:
+
+- [Good Example](course-materials/resources/good-bad-example/good_example.qmd){target="_blank"} with [sourced functions](course-materials/resources/good-bad-example/functions.R){target="_blank"}
+- [Bad Example](course-materials/resources/good-bad-example/bad_example.qmd){target="_blank"}
+
