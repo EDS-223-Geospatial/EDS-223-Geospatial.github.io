@@ -28,7 +28,7 @@ started.
 
 - **Santa Barbara County's City Boundaries** ([Source](https://geodata.library.ucsb.edu/catalog/3853-s3_2003_s3_cities_polys))
 - **California Protected Areas Database** ([Source](https://data.cnra.ca.gov/dataset/california-protected-areas-database))
-- **iNaturalist Research-grade Observations, 2020-2024** ([Access](https://github.com/ropensci/rinat))
+- **iNaturalist Research-grade Observations, 2020-2024** ([via `rinat`](https://github.com/ropensci/rinat))
 
 ## Get Started
 

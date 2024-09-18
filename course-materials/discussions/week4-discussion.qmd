@@ -40,43 +40,54 @@ srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 peru <- stars::read_stars(here::here("course-materials", "data", "week4", "PER_elv.tif"))
 ```
 
+```{r}
+dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
+landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
+srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+# peru_dem <- geodata::elevation_30s(country = "Peru", path = ".", mask = FALSE)
+peru <- stars::read_stars(here::here("data", "week4", "PER_elv.tif"))
+```
+
 Now, to meet our learning objectives, your task:
 
-1. Plot a histogram and boxplot of the DEM raster of Zion National Park from `spDataLarge`
-2. Reclassify the DEM raster and compute the mean for the three classes:
-  - Low (less than 300)
+1. Plot a histogram and boxplot of `dem`
+2. Reclassify `dem` and compute the mean for the three classes:
+  - Low, where elevation is less than 300
   - Medium
-  - High (greater than 500)
-3. Calculate the Normalized Difference Water Index (NDWI) of a Landsat 8 image of Zion National Park
+  - High, where elevation is greater than 500
+3. Calculate the Normalized Difference Water Index (NDWI) of `landsat`
   - **Note**: $NDWI = (green - NIR)/(green + NIR)$
   a. Find a correlation between NDVI and NDWI
-4. Find distances across all `peru_dem` cells to it's nearest coastline
+4. Find the distance across all cells in `peru_dem` to its nearest coastline
   - **Hint**: Use `terra::distance()`
   - **Note**: `terra::distance()` will calculate distance for all cells that are `NA` to the nearest cell that are not `NA`
   a. Weigh the distance raster with `peru_dem` and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation
     - Every 100 altitudinal meters should increase the distance to the coast by 10 km
-5. Change the resolution of the SRTM of the Zion National Park to 0.01 by 0.01 degrees
+5. Change the resolution of `srtm` to 0.01 by 0.01 degrees
   - Use all of the method available in the `terra` package
   - **Note**: The `srtm` raster has a resolution of 0.00083 by 0.00083 degrees
 
 ## Answer Key
 
-### Plot a histogram and boxplot of the DEM raster
+### Plot a histogram and boxplot of `dem`
 
 ```{r}
 hist(dem)
+boxplot(dem)
 ```
 
 ## Reclassify elevation and find the mean
 
 ```{r}
-plot(dem)
-
-rcl <- matrix(c(-Inf, 300, 0, 300, 500, 1, 500, Inf, 2), ncol = 3, byrow = TRUE)
+rcl <- matrix(c(-Inf, 300, 0, 
+                300, 500, 1, 
+                500, Inf, 2), 
+              ncol = 3, byrow = TRUE)
 
 dem_rcl <- terra::classify(dem, rcl = rcl)
 
-levels(dem_rcl) <- tibble::tibble(id = 0:2, cats = c("low", "medium", "high"))
+levels(dem_rcl) <- tibble::tibble(id = 0:2, 
+                                  cats = c("low", "medium", "high"))
 
 elevation_mean <- terra::zonal(dem, dem_rcl, fun = "mean")
 elevation_mean
@@ -86,17 +97,19 @@ elevation_mean
 
 ```{r}
 ndwi_fun <- function(green, nir){
-    (green - nir) / (green + nir)
+    (green - nir)/(green + nir)
 }
-
-ndwi_rast <- terra::lapp(landsat[[c(2, 4)]], fun = ndwi_fun)
-plot(ndwi_rast)
 
 ndvi_fun <- function(nir, red){
-  (nir - red) / (nir + red)
+  (nir - red)/(nir + red)
 }
 
-ndvi_rast <- terra::lapp(landsat[[c(4, 3)]], fun = ndvi_fun)
+ndwi_rast <- terra::lapp(landsat[[c(2, 4)]], 
+                         fun = ndwi_fun)
+plot(ndwi_rast)
+
+ndvi_rast <- terra::lapp(landsat[[c(4, 3)]], 
+                         fun = ndvi_fun)
 
 combine <- c(ndvi_rast, ndwi_rast)
 
@@ -116,11 +129,11 @@ water_mask[water_mask == 0] <- NA
 plot(water_mask)
 
 distance_to_coast <- terra::distance(water_mask)
-distance_to_coast_km <- distance_to_coast / 1000
+distance_to_coast_km <- distance_to_coast/1000
 
 plot(distance_to_coast_km, main = "Distance to the coast (km)")
 
-distance_to_coast_km2 <- distance_to_coast_km + ((peru_dem /100) * 10)
+distance_to_coast_km2 <- distance_to_coast_km + ((peru_dem/100)*10)
 plot(distance_to_coast_km2)
 ```
 
