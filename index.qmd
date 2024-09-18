@@ -26,8 +26,8 @@ This course introduces the spatial modeling and analytic techniques of geographi
 ## Weekly Schedule
 
 - Lecture: Monday 12:30-3:15 PM at Bren Hall 1424
-- Discussion Section 1: Thursday 1:00-1:50 PM at Bren Hall 3526
-- Discussion Section 2: Thursday 2:00-2:50 PM at Bren Hall 3526
+- Discussion Section 1: Wednesday 2:00-2:50 PM in Bren Hall 3022
+- Discussion Section 2: Wednesday 3:00-3:50 PM in Bren Hall 3022
 
 ## Readings and References
 
