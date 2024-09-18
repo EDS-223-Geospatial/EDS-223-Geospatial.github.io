@@ -877,23 +877,30 @@
   {
     "objectID": "course-materials/discussions/week6-discussion.html",
     "href": "course-materials/discussions/week6-discussion.html",
-    "title": "Discssuion Week 6: Bringing Vector and Raster Together",
+    "title": "Week 6: Discussion Section",
     "section": "",
     "text": "The following exercises are modified from Chapter 6 of Geocomputation with R by Rovin Lovelace."
   },
   {
-    "objectID": "course-materials/discussions/week6-discussion.html#prerequisites",
-    "href": "course-materials/discussions/week6-discussion.html#prerequisites",
-    "title": "Discssuion Week 6: Bringing Vector and Raster Together",
-    "section": "Prerequisites",
-    "text": "Prerequisites\n\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\nch &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  sf::st_as_sf()\n\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))\n\n\nplot(srtm)\nplot(st_geometry(zion_points), add = TRUE)\nplot(ch, add = TRUE)"
+    "objectID": "course-materials/discussions/week6-discussion.html#learning-objectives",
+    "href": "course-materials/discussions/week6-discussion.html#learning-objectives",
+    "title": "Week 6: Discussion Section",
+    "section": "Learning Objectives",
+    "text": "Learning Objectives\n\nUse crop() and mask() to create a subset of a dataset\nUse aggregate() and resample() to create a new dataset"
   },
   {
-    "objectID": "course-materials/discussions/week6-discussion.html#exercises",
-    "href": "course-materials/discussions/week6-discussion.html#exercises",
-    "title": "Discssuion Week 6: Bringing Vector and Raster Together",
-    "section": "Exercises",
-    "text": "Exercises\n\nCrop the srtm raster using (1) the zion_points dataset and (2) the ch dataset. Are there any differences in the output maps? Next, mask srtm using these two datasets. Can you see any difference now?\n\n\nsrtm_crop1 &lt;- terra::crop(srtm, zion_points)\nsrtm_crop2 &lt;- terra::crop(srtm, ch)\nplot(srtm_crop1)\nplot(srtm_crop2)\n\nsrtm_mask1 &lt;- terra::mask(srtm, zion_points)\nsrtm_mask2 &lt;- terra::mask(srtm, ch)\nplot(srtm_mask1)\nplot(srtm_mask2)\n\n\nSubset points higher than 3100 meters in New Zealand (the nz_height object) and create a template raster with a resolution of 3 km for the extent of the new point dataset. Using these two new objects:\n\n\nnz_height3100 &lt;- nz_height %&gt;% \n  filter(elevation &gt; 3100)\n\nnz_template &lt;- terra::rast(ext(nz_height3100), resolution = 3000, crs = crs(nz_height3100))\n\n2a. Count numbers of the highest points in each grid cell.\n\nnz_raster &lt;- rasterize(nz_height3100, nz_template, field = \"elevation\", fun = \"length\")\nplot(nz_raster)\nplot(st_geometry(nz_height3100), add = TRUE)\n\n2b. Find the maximum elevation in each grid cell.\n\nnz_raster2 = rasterize(nz_height3100, nz_template, \n                       field = \"elevation\", fun = max)\nplot(nz_raster2)\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\nAggregate the raster counting high points in New Zealand (created in the previous exercise), reduce its geographic resolution by half (so cells are 6 by 6 km) and plot the result. Resample the lower resolution raster back to the original resolution of 3 km.\n\n\nnz_raster_low = raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\nnz_resample = resample(nz_raster_low, nz_raster)\nplot(nz_raster_low)\nplot(nz_resample) # the results are spread over a greater area and there are border issues\nplot(nz_raster)\n\n\nPolygonize the grain dataset and filter all squares representing clay.\n\n\ngrain_poly = as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain)\nplot(grain_poly)\n\nclay = grain_poly %&gt;% \n  filter(grain == \"clay\")\nplot(clay)"
+    "objectID": "course-materials/discussions/week6-discussion.html#get-started",
+    "href": "course-materials/discussions/week6-discussion.html#get-started",
+    "title": "Week 6: Discussion Section",
+    "section": "Get Started",
+    "text": "Get Started\nLet’s load the necessary packages:\n\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\n\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\nch &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  sf::st_as_sf()\n\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))\n\nNow, to meet our learning objectives, your task:\n\nCrop the srtm raster using (1) zion_points and (2) ch\n\n\nAre there any differences in the output maps?\nNext, mask srtm using these two datasets. Can you see any difference now?\n\n\nSubset points higher than 3100 meters in nz_height and create a template raster with a resolution of 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster counting high points in New Zealand\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter all squares representing clay"
+  },
+  {
+    "objectID": "course-materials/discussions/week6-discussion.html#answer-key",
+    "href": "course-materials/discussions/week6-discussion.html#answer-key",
+    "title": "Week 6: Discussion Section",
+    "section": "Answer Key",
+    "text": "Answer Key\n\nCrop and mask the srtm raster\n\nsrtm_crop1 &lt;- terra::crop(srtm, zion_points)\nsrtm_crop2 &lt;- terra::crop(srtm, ch)\nplot(srtm_crop1)\nplot(srtm_crop2)\n\nsrtm_mask1 &lt;- terra::mask(srtm, zion_points)\nsrtm_mask2 &lt;- terra::mask(srtm, ch)\nplot(srtm_mask1)\nplot(srtm_mask2)\n\n\n\nSubset points higher than 3100 meters in New Zealand\n\nnz_height3100 &lt;- nz_height %&gt;% \n  dplyr::filter(elevation &gt; 3100)\n\nnz_template &lt;- terra::rast(terra::ext(nz_height3100),\n                           resolution = 3000, crs = terra::crs(nz_height3100))\n\n\n\nCount numbers of the highest points in each grid cell\n\nnz_raster &lt;- terra::rasterize(nz_height3100, nz_template, field = \"elevation\", fun = \"length\")\nplot(nz_raster)\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\n\nFind maximum elevation in each grid cell\n\nnz_raster2 &lt;- terra::rasterize(nz_height3100, nz_template, field = \"elevation\", fun = max)\nplot(nz_raster2)\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\n\nAggregate raster\n\nnz_raster_low &lt;- raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\nnz_resample &lt;- terra::resample(nz_raster_low, nz_raster)\nplot(nz_raster_low)\nplot(nz_resample) # the results are spread over a greater area and there are border issues\nplot(nz_raster)\n\n\n\nPolygonize and filter grain dataset for clay\n\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  sf::st_as_sf()\n\nplot(grain)\nplot(grain_poly)\n\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay)"
   },
   {
     "objectID": "course-materials/week8.html",
