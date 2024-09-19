@@ -33,7 +33,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
 | EOC             | [End-of-class survey (week 8)]()              | 11/18/2024    | 11/18/2024 |
-| HW              | [Homework Assignment #4](assignments/HW4.qmd) | 11/11/2024    | 11/11/2024 |
+| HW              | [Homework Assignment #4](assignments/HW4.qmd) | 11/11/2024    | 11/30/2024 |
 | PR              | [Portfolio Repository](assignments/PR.qmd)    | 11/11/2024    | 12/07/2024 |
 
 
