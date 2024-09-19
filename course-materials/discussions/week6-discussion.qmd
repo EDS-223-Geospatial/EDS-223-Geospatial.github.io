@@ -1,6 +1,6 @@
 ---
 title: "Week 6: Discussion Section"
-subtitle: "Bring vector and raster togehter"
+subtitle: "Raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
@@ -10,12 +10,16 @@ format:
     toc: true
 ---
 
-The following exercises are modified from [Chapter 6 of Geocomputation with R by Rovin Lovelace](https://r.geocompx.org/raster-vector).
+::: callout-tip
+## Reference
+Refer to [Chapter 6](https://r.geocompx.org/raster-vector) of *Geocomputation with R* to help get you started.
+:::
 
 ## Learning Objectives
 
-- Use `crop()` and `mask()` to create a subset of a dataset 
-- Use `aggregate()` and `resample()` to create a new dataset
+- Use `crop()` and `mask()` to create a subset of a raster or vector 
+- Use `aggregate()` and `resample()` to create a new raster or vector
+- Use `as.polygons()` to convert a raster to a vector of polygons
 
 ## Get Started
 
@@ -33,11 +37,11 @@ library(tidyverse)
 ```
 
 ```{r}
-zion_points <- read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
+zion_points <- sf::read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
 
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 
-ch <- sf::st_combine(zion_points) %>%
+zion_convex_hull <- sf::st_combine(zion_points) %>%
   sf::st_convex_hull() %>% 
   sf::st_as_sf()
 
@@ -46,14 +50,14 @@ grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
 
 Now, to meet our learning objectives, your task:
 
-1. Crop the `srtm` raster using (1) `zion_points` and (2) `ch`
+1. Crop the `srtm` raster using (1) `zion_points` and (2) `zion_convex_hull`
   - Are there any differences in the output maps? 
   - Next, mask `srtm` using these two datasets. Can you see any difference now?
 2. Subset points higher than 3100 meters in `nz_height` and create a template raster with a resolution of 3 km x 3 km for the extent of the subset dataset
   - Count numbers of the highest points in each grid cell
   - Find the maximum elevation in each grid cell
 3. With the previous raster, complete the following:
-  - Aggregate the raster counting high points in New Zealand
+  - Aggregate the raster counting high points in New Zealand/Aotearoa
   - Reduce its geographic resolution by half, such that cells are 6 x 6 km
   - Plot the result
   - Resample back to the original resolution of 3 km x 3 km
@@ -61,21 +65,21 @@ Now, to meet our learning objectives, your task:
 
 ## Answer Key
 
-### Crop and mask the `srtm` raster
+### Crop and Mask `srtm`
 
 ```{r}
 srtm_crop1 <- terra::crop(srtm, zion_points)
-srtm_crop2 <- terra::crop(srtm, ch)
+srtm_crop2 <- terra::crop(srtm, zion_convex_hull)
 plot(srtm_crop1)
 plot(srtm_crop2)
 
 srtm_mask1 <- terra::mask(srtm, zion_points)
-srtm_mask2 <- terra::mask(srtm, ch)
+srtm_mask2 <- terra::mask(srtm, zion_convex_hull)
 plot(srtm_mask1)
 plot(srtm_mask2)
 ```
 
-### Subset points higher than 3100 meters in New Zealand
+### Subset Points in New Zealand/Aotearoa
 
 ```{r}
 nz_height3100 <- nz_height %>% 
@@ -85,7 +89,7 @@ nz_template <- terra::rast(terra::ext(nz_height3100),
                            resolution = 3000, crs = terra::crs(nz_height3100))
 ```
 
-### Count numbers of the highest points in each grid cell
+### Count Points in Each Cell
 
 ```{r}
 nz_raster <- terra::rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
@@ -93,7 +97,7 @@ plot(nz_raster)
 plot(st_geometry(nz_height3100), add = TRUE)
 ```
 
-### Find maximum elevation in each grid cell
+### Find Maximum Elevation in Each Grid Cell
 
 ```{r}
 nz_raster2 <- terra::rasterize(nz_height3100, nz_template, field = "elevation", fun = max)
@@ -101,7 +105,7 @@ plot(nz_raster2)
 plot(st_geometry(nz_height3100), add = TRUE)
 ```
 
-### Aggregate raster
+### Aggregate Raster
 
 ```{r}
 nz_raster_low <- raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
@@ -112,7 +116,7 @@ plot(nz_resample) # the results are spread over a greater area and there are bor
 plot(nz_raster)
 ```
 
-### Polygonize and filter grain dataset for clay
+### Polygonize Raster
 
 ```{r}
 grain_poly <- as.polygons(grain) %>% 

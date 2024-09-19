@@ -14,8 +14,7 @@ format:
 ::: callout-tip
 ## Reference
 
-Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource and [tmap
-book](https://r-tmap.github.io/tmap-book/) to get you started.
+Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource and [tmap book](https://r-tmap.github.io/tmap-book/) to help get you started.
 :::
 
 ## Learning Objectives
@@ -23,7 +22,7 @@ book](https://r-tmap.github.io/tmap-book/) to get you started.
 -   Read in spatial objects
 -   Create map with single spatial object
 -   Create map with multiple spatial objects
--   Use different types of plotting formats (e.g. `tm_polygons`, `tm_fill`, `tm_dots`, etc.)
+-   Use different types of plotting formats (e.g. `tm_polygons()`, `tm_fill()`, `tm_dots()`, etc.)
 -   Adjust color palettes
 -   Include essential map elements (e.g. scale bar & north arrow or graticules)
 -   Create an interactive map

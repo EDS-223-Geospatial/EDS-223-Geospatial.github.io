@@ -13,14 +13,13 @@ format:
 ::: callout-tip
 ## Reference
 
-Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapter 5](https://r.geocompx.org/geometry-operations) of *Geocomputation with R* to get you
-started.
+Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapter 5](https://r.geocompx.org/geometry-operations) of *Geocomputation with R* to help get you started.
 :::
 
 ## Learning Objectives
 
-- Explore topological relationships with `st_intersects`, `st_intersection`, `st_within`, etc.
-- Explore distance relationships with `st_distance`, `st_within_distance`, and `st_buffer`
+- Explore topological relationships with `st_intersects()`, `st_intersection()`, `st_within()`, etc.
+- Explore distance relationships with `st_distance()`, `st_within_distance()`, and `st_buffer()`
 - Learn about spatial and distance-based joins
 - Practice writing error/warning messages and unit tests to diagnose outputs
 
@@ -74,10 +73,10 @@ To meet our learning objectives, your task:
   - **Bonus Challenge**: Try it out with a 5 km buffer around the protected areas too! 
 2. Find the protected areas within 15 km of a city in Santa Barbara County
   - **Hint**: Use `filter()` to select a city from  `sb_city_boundaries`
-  - Explore the different outputs with `st_intersects`, `st_intersection`, and `st_within`
-  - Practice a distance-based join with `st_is_within_distance`
+  - Explore the different outputs with `st_intersects()`, `st_intersection()`, and `st_within()`
+  - Practice a distance-based join with `st_is_within_distance()`
 3. Find the distance between your city of choice and a protected area of your choice
-  - **Note**: `st_distance` finds the distance between the geometries' edges
+  - **Note**: `st_distance()` finds the distance between the geometries' edges
   
 ## Answer Key
 
