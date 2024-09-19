@@ -32,9 +32,9 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| EOC             | [End-of-class survey (week 5)](https://forms.gle/uey6mQc2CyUUAc6k7)                         | 10/28/2024    | 10/28/2024 |
-| SR              | [Mid-course Self Reflection (SR#2)](assignments/SR2.qmd) | 10/28/2024    | 11/02/2024 |
-| HW              | [Homework Assignment #3](assignments/HW3.qmd)            | 10/21/2024    | 11/09/2024 |
+| EOC             | [End-of-class survey (week 5)](https://forms.gle/uey6mQc2CyUUAc6k7){target="_blank"}                         | 10/28/2024    | 10/28/2024 |
+| SR              | [Mid-course Self Reflection (SR#2)](assignments/SR2.qmd){target="_blank"} | 10/28/2024    | 11/02/2024 |
+| HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/21/2024    | 11/09/2024 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
