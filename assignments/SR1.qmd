@@ -44,6 +44,6 @@ To receive a "Satisfactory" score, you must adhere to the following:
 :::{.callout-tip icon=true}
 ## Tips for a "Satisfactory"
 
-By clicking the boxes above, you can keep track of which questions you've answered! I suggest drafting your response in a word processer before copy/pasting into the submission form.
+By clicking the boxes above, you can keep track of which items you've completed! I suggest drafting your response in a word document before copy/pasting into the submission form.
 
 :::
