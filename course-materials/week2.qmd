@@ -32,7 +32,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| EOC             | [End-of-class survey (week 2)]()              | 10/07/2024    | 10/07/2024 |
+| EOC             | [End-of-class survey (week 2)](https://forms.gle/cojXqsJsFAotQndC8)              | 10/07/2024    | 10/07/2024 |
 | HW              | [Homework Assignment #2](assignments/HW2.qmd) | 10/07/2024    | 10/19/2024 |
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
