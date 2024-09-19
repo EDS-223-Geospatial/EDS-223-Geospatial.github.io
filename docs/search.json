@@ -4,7 +4,7 @@
     "href": "resources.html#r-programming",
     "title": "Resources",
     "section": "R Programming",
-    "text": "R Programming\n\nTidyverse style guide\nTidy design principles\nr-spatial\nSpatial Statistics for Data Science: Theory and Practice with R. Paula Moraga, 2023.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
+    "text": "R Programming\n\nTidyverse style guide\nTidy design principles\nr-spatial\nSpatial Statistics for Data Science: Theory and Practice with R. Paula Moraga, 2023."
   },
   {
     "objectID": "resources.html#coordinate-systems-and-projections",
@@ -84,13 +84,6 @@
     "text": "Additional Resources\n\nHow raster functions map to stars functions\nSpatiotemporal raster data handling with stars\nA comparison of terra and stars packages"
   },
   {
-    "objectID": "course-materials/week2.html",
-    "href": "course-materials/week2.html",
-    "title": "Intro to spatial data models",
-    "section": "",
-    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to spatial/vector data models\n\n\n Lab\nSpatial operations with vector data\n\n\n Discussion\nWorking with multiple vector types"
-  },
-  {
     "objectID": "course-materials/week2.html#class-materials",
     "href": "course-materials/week2.html#class-materials",
     "title": "Intro to spatial data models",
@@ -117,13 +110,6 @@
     "title": "Intro to spatial data models",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
-  },
-  {
-    "objectID": "course-materials/week1.html",
-    "href": "course-materials/week1.html",
-    "title": "Intro to EDS 223 and map making",
-    "section": "",
-    "text": "Session\nMaterials\n\n\n\n\n Lecture\nWelcome to EDS 223, why spatial?, and fundamentals of good maps\n\n\n Lab\nMaking maps in R with tmap\n\n\n Discussion\nMap making practice"
   },
   {
     "objectID": "course-materials/week1.html#class-materials",
@@ -525,6 +511,13 @@
     "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
   },
   {
+    "objectID": "assignments.html#calendar",
+    "href": "assignments.html#calendar",
+    "title": "Assignments",
+    "section": "",
+    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+  },
+  {
     "objectID": "assignments.html#assignments",
     "href": "assignments.html#assignments",
     "title": "Assignments",
@@ -544,6 +537,13 @@
     "title": "Assignments",
     "section": "Grade Tracker",
     "text": "Grade Tracker\nUse the Grade Tracker, below, to determine your course grade:\n\n\n\n\n\n\n\n\n\nRedeem tokens in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a “Not Yet” mark."
+  },
+  {
+    "objectID": "assignments.html#rubric",
+    "href": "assignments.html#rubric",
+    "title": "Assignments",
+    "section": "Rubric",
+    "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
   },
   {
     "objectID": "course-materials/labs/week8.html",
@@ -1018,15 +1018,15 @@
     "objectID": "course-materials/week3.html#class-materials",
     "href": "course-materials/week3.html#class-materials",
     "title": "Spatial and geometry operations with vector data",
-    "section": "",
-    "text": "Session\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice with vector operations"
+    "section": " Class Materials",
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice with vector operations"
   },
   {
     "objectID": "course-materials/week3.html#assignment-reminders",
     "href": "course-materials/week3.html#assignment-reminders",
     "title": "Spatial and geometry operations with vector data",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (week 3)\n10/14/2024\n10/14/2024\n\n\nHW\nHomework Assignment #2\n10/07/2024\n10/19/2024"
   },
   {
     "objectID": "course-materials/week3.html#background-reading",
@@ -1104,19 +1104,5 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
-  },
-  {
-    "objectID": "assignments.html#calendar",
-    "href": "assignments.html#calendar",
-    "title": "Assignments",
-    "section": "",
-    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
-  },
-  {
-    "objectID": "assignments.html#rubric",
-    "href": "assignments.html#rubric",
-    "title": "Assignments",
-    "section": "Rubric",
-    "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
   }
 ]
