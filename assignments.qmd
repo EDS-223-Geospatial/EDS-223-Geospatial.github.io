@@ -4,44 +4,67 @@ subtitle: "assignment links will become available in the tables below on the dat
 title-block-banner: true
 ---
 
+## Calendar
+
+:::{.callout-important icon=true}
+## Important
+All assignments are **due at 11:59 PM** on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always **due on Saturdays** to ensure that you have at least one day a week with no course obligations.
+:::
+
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+#| out-width: "55%" 
+
+knitr::include_graphics("images/assignment-calendar.png")
+```
+
+
 ## Assignments
+:::{.callout-important icon=true}
+Earning "Satisfactory" marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.
+:::
 
-Earning "Satisfactory" marks on Self-reflections (SRs) and Homework Assignments (HWs) will determine your letter grade (e.g. A, B, etc.) for this course.
+Links to assignments will become available as they are assigned.
 
-| Assignment Type | Assignment Title                 | Date Assigned  | Date Due                   |
-|:---------------:|----------------------------------|----------------|----------------------------|
-| SR              | [Pre-course reflection (SR #1)](assignments/SR1.qmd)    | Mon 09/30/2024 | Sat 10/12/2024, 11:59pm PT |
-| HW              | [Homework Assignment #1](assignments/HW1.qmd)                     | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
-| HW              | [Homework Assignment #2](assignments/HW2.qmd)                     | Mon 01/22/2024 | Sat 02/03/2024, 11:59pm PT |
-| SR              | [Mid-course reflection (SR #2)](assignments/SR2.qmd)    | Mon 02/05/2024 | Sat 02/10/2024, 11:59pm PT |
-| HW              | [Homework Assignment #3](assignments/HW3.qmd)                     | Mon 02/12/2024 | Sat 02/24/2024, 11:59pm PT |
-| HW              | [Homework Assignment #4](assignments/HW4.qmd)                     | Mon 02/26/2024 | Sat 03/09/2024, 11:59pm PT |
-| SR              | [End-of-course reflection (SR #3)](assignments/SR3.qmd) | Mon 03/11/2024 | Sat 03/16/2024, 11:59pm PT |
-
+| Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
+|-----------------|----------------------------------------------------------|---------------|------------|
+| SR              | [Pre-course Self Reflection (SR#1)](assignments/SR1.qmd){target="_blank"} | 09/30/2024    | 10/05/2024 |
+| HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 09/30/2024    | 10/05/2024 |
+| HW              | [Homework Assignment #2](assignments/HW2.qmd){target="_blank"}            | 10/07/2024    | 10/19/2024 |
+| HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/21/2024    | 11/09/2024 |
+| SR              | [Mid-course Self Reflection (SR#2)](assignments/SR2.qmd){target="_blank"} | 10/28/2024    | 11/02/2024 |
+| HW              | [Homework Assignment #4](assignments/HW4.qmd){target="_blank"}            | 11/11/2024    | 11/30/2024 |
+| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2024    | 11/30/2024 |
+| SR              | [Final Self Reflection (SR#3)](assignments/SR3.qmd){target="_blank"}      | 12/02/2024    | 12/07/2024 |
 
 ## End-of-class surveys
+:::{.callout-important icon=true}
+End-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:59 PM). Completing EOCs by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.
+:::
 
-End-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:55pm PT). Completing EOCs by the due dates / times will, in-part (along with class attendance), determine whether you earn a +/- on your course grade. 
+Links to surveys will become available as they are assigned.
+ 
 
 | EOC link                     | Date Assigned  | Date Due                   |
 |------------------------------|----------------|----------------------------|
-| [EOC (week 1)]()  | Mon 09/30/2024 | Mon 09/30/2024, 11:55pm PT |
-| [EOC (week 2)]()  | Mon 10/07/2024 | Mon 10/07/2024, 11:55pm PT |
-| [EOC (week 3)]()  | Mon 10/14/2024 | Mon 10/14/2024, 11:55pm PT |
-| [EOC (week 4)]()  | Mon 10/21/2024 | Mon 10/21/2024, 11:55pm PT |
-| [EOC (week 5)]()  | Mon 10/28/2024 | Mon 10/28/2024, 11:55pm PT |
-| [EOC (week 6)]()  | Mon 11/04/2024 | Mon 11/04/2024, 11:55pm PT |
-| *No lecture or EOC (week 7)* | *NA*           | *NA*                       |
-| [EOC (week 8)]()  | Mon 11/18/2024 | Mon 11/18/2024, 11:55pm PT |
-| [EOC (week 9)]()  | Mon 11/25/2024 | Mon 11/25/2024, 11:55pm PT |
-| [EOC (week 10)]() | Mon 12/02/2024 | Mon 12/02/2024, 11:55pm PT |
+| [EOC (week 1)](https://forms.gle/7KsrhTo8eKGVbnV48){target="_blank"}  | Mon 09/30/2024 | Mon 09/30/2024|
+| [EOC (week 2)](https://forms.gle/cojXqsJsFAotQndC8){target="_blank"}  | Mon 10/07/2024 | Mon 10/07/2024|
+| [EOC (week 3)](https://forms.gle/sk7RrZeaCNjLVkru5){target="_blank"}  | Mon 10/14/2024 | Mon 10/14/2024|
+| [EOC (week 4)](https://forms.gle/u43BYi3McB4nPxEp8){target="_blank"}  | Mon 10/21/2024 | Mon 10/21/2024|
+| [EOC (week 5)](https://forms.gle/uey6mQc2CyUUAc6k7){target="_blank"}  | Mon 10/28/2024 | Mon 10/28/2024|
+| [EOC (week 6)](https://forms.gle/nTf1iao32byVN7ZUA){target="_blank"}  | Mon 11/04/2024 | Mon 11/04/2024|
+| *No lecture or EOC (week 7)* | *NA*           | *NA*        |
+| [EOC (week 8)](https://forms.gle/TRj7vNBDEQmLFR9b8){target="_blank"}  | Mon 11/18/2024 | Mon 11/18/2024|
+| [EOC (week 9)](https://forms.gle/m4sDdLSxpe2pjzGz8){target="_blank"}  | Mon 11/25/2024 | Mon 11/25/2024|
+| [EOC (week 10)](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"} | Mon 12/02/2024 | Mon 12/02/2024|
 
 ## Grade Tracker 
 
 Use the Grade Tracker, below, to determine your course grade:
 
 ```{r}
-#| eval: false 
 #| echo: false
 #| fig-align: "center"
 #| out-width: "55%" 
@@ -49,5 +72,14 @@ Use the Grade Tracker, below, to determine your course grade:
 knitr::include_graphics("images/grade-tracker.png")
 ```
 
-[Redeem tokens]() in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a "Not Yet" mark.
+[Redeem tokens](https://forms.gle/u51tdaAhSAQerHxh6) in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a "Not Yet" mark.
+
+## Rubric
+
+Each Homework Assignment (HWs) will include an individual rubric. However, to earn a "Satisfactory" assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance. 
+
+Examples of Professional Output:
+
+- [Good Example](course-materials/resources/good-bad-example/good_example.qmd){target="_blank"} with [sourced functions](course-materials/resources/good-bad-example/functions.R){target="_blank"}
+- [Bad Example](course-materials/resources/good-bad-example/bad_example.qmd){target="_blank"}
 
