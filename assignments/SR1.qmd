@@ -1,0 +1,49 @@
+---
+title: "Pre-Course Self Reflection (SR #1)"
+description: "Adapted from [An Bui's](https://an-bui.com/) reflection exercises in ENVS 193DS and Sam Csik's in [EDS 240](https://samanthacsik.github.io/EDS-240-data-viz/)"
+author: "Ruth Oliver"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Description
+
+In this assignment you'll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You'll revisit these goals and plans throughout the quarter, so it's good to be reflective from the start!
+
+### Learning context
+Everyone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:
+
+- [ ] Where were you before joining the MEDS program? (e.g. "I recently graduated from undergrad", "I was working in X industry for Y years")
+- [ ] Do you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?
+- [ ] How confident do you feel in your coding skills in R? In other languages? Why?
+- [ ] How confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?
+- [ ] What types of learning techniques (types of assignments or instruction) do you usually find most effective/enjoyable? Why?
+- [ ] Is there anything you wish your instructors knew about you, but don't (e.g. responsibilities outside of school)?
+
+### Learning goals and plan
+
+- [ ] What skills or knowledge do you hope to gain from this course? Why?
+- [ ] What learning objectives from the course are you most excited about? Why?
+- [ ] **Most importantly**, how do you plan to accomplish your learning goals for this course? **Be specific!** Instead of stating "I will complete assignments on time", reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc.
+
+
+## Rubric (specifications)
+To receive a "Satisfactory" score, you must adhere to the following:
+
+- [ ] Submit your response [here](https://forms.gle/YFj7y4d8BqrJ3Rt1A) by 11:59 PM on the due date. Extensions are not allowed on this first assignment.
+- [ ] Your response must include answers to each question listed in the Description section.
+- [ ] You should aim to answer each question in 2-4 sentences.
+- [ ] Your responses must demonstrate genuine reflection. Obviously low effort responses will receive a "Not Yet". 
+
+:::{.callout-tip icon=true}
+## Tips for a "Satisfactory"
+
+By clicking the boxes above, you can keep track of which items you've completed! I suggest drafting your response in a word document before copy/pasting into the submission form.
+
+:::

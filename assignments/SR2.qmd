@@ -1,0 +1,51 @@
+---
+title: "Mid-Course Self Reflection (SR #2)"
+description: "Adapted from [An Bui's](https://an-bui.com/) reflection exercises in ENVS 193DS and Sam Csik's in [EDS 240](https://samanthacsik.github.io/EDS-240-data-viz/)"
+author: "Ruth Oliver"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Description
+
+In this assignment you'll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:
+
+### Learning goals
+- [ ] How have you progressed towards your learning goals for this course?
+- [ ] Looking back, have your learning goals changed? If so, how?
+- [ ] Looking forward, do you have new goals?
+- [ ] What skills are you proud of developing?
+
+### Learning plan
+- [ ] Looking back at your plan for achieving your learning goals, have your strategies been effective?
+- [ ] Have you discussed your plans with your classmates?
+- [ ] Looking forward, will you adopt new strategies? If so, what will they be?
+- [ ] If you've needed help, how have you sought it out? If you haven't sought out help, why not?
+
+### Course topics and structure
+- [ ] What topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?
+- [ ] Is there anything about this course that you are really enjoying? Anything that isn't working for you?
+- [ ] What else would you like me to know about your experience so far?
+
+
+## Rubric (specifications)
+To receive a "Satisfactory" score, you must adhere to the following:
+
+- [ ] Submit your response [here](https://forms.gle/covQ8bqAXtAMF7Mk9) by 11:59 PM on the due date. Extensions can be requested by [redeeming tokens](https://forms.gle/kSx5Fh9ve98U1tQA9).
+- [ ] Your response must include answers to each question listed in the Description section.
+- [ ] You should aim to answer each question in 2-4 sentences.
+- [ ] Your responses must demonstrate genuine reflection. Obviously low effort responses will receive a "Not Yet". 
+
+:::{.callout-tip icon=true}
+## Tips for a "Satisfactory"
+
+By clicking the boxes above, you can keep track of which items you've completed! I suggest drafting your response in a word document before copy/pasting into the submission form.
+
+:::
+
