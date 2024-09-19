@@ -33,8 +33,8 @@ All assignments are **due at 11:59 PM** on the date listed.
 | Assignment Type | Assignment Title                                | Date Assigned | Date Due   |
 |-----------------|-------------------------------------------------|---------------|------------|
 | EOC             | [End-of-class survey (week 10)](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"}               | 11/25/2024    | 11/25/2024 |
-| SR              | [End-of-course reflection (SR#3)](assignments/SR3.qmd){target="_blank"} | 12/02/2024    | 12/07/2023 |
-| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}      | 11/11/2024    | 12/07/2024 |
+| SR              | [End-of-course reflection (SR#3)](../assignments/SR3.qmd){target="_blank"} | 12/02/2024    | 12/07/2023 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/11/2024    | 12/07/2024 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
