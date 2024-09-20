@@ -18,6 +18,29 @@ editor_options:
 - practice manipulating vector and raster data to build multi-layer maps
 - practice making maps in R, specifically using `tmap`
 
+## Instructions
+
+1. Clone repository from GitHub Classrooms
+2. Download data from [here]()
+3. Unzip data and place in repository
+4. Edit Quarto document with responses
+5. Push final edits before deadline
+
+Your repository should have the following structure:
+
+```{md}
+EDS223-HW1
+│   README.md
+│   HW1.qmd
+│   Rmd/Proj files    
+│
+└───data
+     └───easter-island
+     └───ejscreen
+```
+
+
+
 ## Part 1: Easter Island from land to sea
 
 In this week's [discussion section](../course-materials/discussions/week1-discussion.qmd), you practiced making a map of Easter Island. We wi
@@ -134,8 +157,18 @@ california_counties <- aggregate(california, by = list(california$CNTY_NAME), FU
 ```
 
 
+## Rubric (specifications)
 
+You must complete the following to receive a "Satisfactory" on the assignment:
 
+- [ ] All maps must include the following elements:
+  - an informative title
+  - legends with legible titles, including units
+  - indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
+  - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
+- [ ] EJScreen maps and text must communicate about an issue
+  - it is not sufficient to make two unrelated maps
+- [ ] The rendered Quarto doc must show all required elements in a professional style
+  - see examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
 
-### Rubric (specifications)
 
