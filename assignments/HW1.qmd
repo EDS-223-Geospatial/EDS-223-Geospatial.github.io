@@ -32,6 +32,42 @@ Create a map of Easter Island, including the following:
 - [ ] bathymetry surrounding the island (indicated in meters below sea level)
 - [ ] surrounding seamounts (indicating their height in meters)
 
+### Data details
+
+You will use the following new datasets:
+
+- [Seamounts from the Pacific Data Hub](https://pacificdata.org/data/dataset/global-distribution-of-seamounts-and-knolls368d9116-7b6f-43b2-8933-0ab97d1a9e80)
+- Bathymetry (or seadepth) from [NOAA's `marmap` API](https://cran.r-project.org/web/packages/marmap/index.html)
+
+The following code is provided to read in each dataset:
+```{r}
+library(sf)
+library(here)
+library(terra)
+
+# read in major points on the island
+ei_points <- sf::read_sf(here::here("data", "easter_island", "ei_points.gpkg"))
+# subset points to volcanoes
+volcanoes <- subset(ei_points, type == "volcano")
+
+# read in island elevation
+ei_elev <- terra::rast(here::here("data", "easter_island", "ei_elev.tif"))
+
+# read in island border
+ei_borders <- sf::read_sf(here::here("data", "easter_island", "ei_border.gpkg"))
+
+# read in island road network
+ei_roads <- sf::read_sf(here::here("data", "easter_island", "ei_roads.gpkg"))
+
+# read in bathymetry
+ei_bathymetry <- terra::rast(here::here("data", "easter_island", "ei_bathy.tif"))
+
+# read in seamounts
+ei_seamounts <- sf::read_sf(here::here("data", "easter_island", "ei_seamounts.gpkg"))
+
+```
+
+
 
 ## Part 2: Exploring environmental (in)justice
 
@@ -79,17 +115,18 @@ The following code provides examples for reading and manipulating the EJScreen d
 
 library(tidyverse)
 library(sf)
+library(here)
 
 # read in geodatabase of EJScreen data at the Census Block Group level
-ejscreen <- st_read("~/data/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb/") 
+ejscreen <- sf::st_read(here::here("data", "ejscreen","EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb")) 
 
 # filter to a state you are interested in
 california <- ejscreen %>%
-  filter(ST_ABBREV == "CA") 
+  dplyr::filter(ST_ABBREV == "CA") 
 
 # filter to a county you are interested in
 santa_barbara <- ejscreen %>%
-  filter(CNTY_NAME %in% c("Santa Barbara County"))
+  dplyr::filter(CNTY_NAME %in% c("Santa Barbara County"))
 
 # find the average values for all variables within counties
 california_counties <- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)
