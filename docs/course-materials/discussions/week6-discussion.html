@@ -210,7 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
       <h1 class="title">Week 6: Discussion Section</h1>
-            <p class="subtitle lead">Bring vector and raster togehter</p>
+            <p class="subtitle lead">Raster manipulations</p>
                       </div>
   </div>
     
@@ -247,12 +247,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
   <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
   <ul class="collapse">
-  <li><a href="#crop-and-mask-the-srtm-raster" id="toc-crop-and-mask-the-srtm-raster" class="nav-link" data-scroll-target="#crop-and-mask-the-srtm-raster">Crop and mask the <code>srtm</code> raster</a></li>
-  <li><a href="#subset-points-higher-than-3100-meters-in-new-zealand" id="toc-subset-points-higher-than-3100-meters-in-new-zealand" class="nav-link" data-scroll-target="#subset-points-higher-than-3100-meters-in-new-zealand">Subset points higher than 3100 meters in New Zealand</a></li>
-  <li><a href="#count-numbers-of-the-highest-points-in-each-grid-cell" id="toc-count-numbers-of-the-highest-points-in-each-grid-cell" class="nav-link" data-scroll-target="#count-numbers-of-the-highest-points-in-each-grid-cell">Count numbers of the highest points in each grid cell</a></li>
-  <li><a href="#find-maximum-elevation-in-each-grid-cell" id="toc-find-maximum-elevation-in-each-grid-cell" class="nav-link" data-scroll-target="#find-maximum-elevation-in-each-grid-cell">Find maximum elevation in each grid cell</a></li>
-  <li><a href="#aggregate-raster" id="toc-aggregate-raster" class="nav-link" data-scroll-target="#aggregate-raster">Aggregate raster</a></li>
-  <li><a href="#polygonize-and-filter-grain-dataset-for-clay" id="toc-polygonize-and-filter-grain-dataset-for-clay" class="nav-link" data-scroll-target="#polygonize-and-filter-grain-dataset-for-clay">Polygonize and filter grain dataset for clay</a></li>
+  <li><a href="#crop-and-mask-srtm" id="toc-crop-and-mask-srtm" class="nav-link" data-scroll-target="#crop-and-mask-srtm">Crop and Mask <code>srtm</code></a></li>
+  <li><a href="#subset-points-in-new-zealandaotearoa" id="toc-subset-points-in-new-zealandaotearoa" class="nav-link" data-scroll-target="#subset-points-in-new-zealandaotearoa">Subset Points in New Zealand/Aotearoa</a></li>
+  <li><a href="#count-points-in-each-cell" id="toc-count-points-in-each-cell" class="nav-link" data-scroll-target="#count-points-in-each-cell">Count Points in Each Cell</a></li>
+  <li><a href="#find-maximum-elevation-in-each-grid-cell" id="toc-find-maximum-elevation-in-each-grid-cell" class="nav-link" data-scroll-target="#find-maximum-elevation-in-each-grid-cell">Find Maximum Elevation in Each Grid Cell</a></li>
+  <li><a href="#aggregate-raster" id="toc-aggregate-raster" class="nav-link" data-scroll-target="#aggregate-raster">Aggregate Raster</a></li>
+  <li><a href="#polygonize-raster" id="toc-polygonize-raster" class="nav-link" data-scroll-target="#polygonize-raster">Polygonize Raster</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -264,12 +264,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>The following exercises are modified from <a href="https://r.geocompx.org/raster-vector">Chapter 6 of Geocomputation with R by Rovin Lovelace</a>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Refer to <a href="https://r.geocompx.org/raster-vector">Chapter 6</a> of <em>Geocomputation with R</em> to help get you started.</p>
+</div>
+</div>
 <section id="learning-objectives" class="level2">
 <h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
 <ul>
-<li>Use <code>crop()</code> and <code>mask()</code> to create a subset of a dataset</li>
-<li>Use <code>aggregate()</code> and <code>resample()</code> to create a new dataset</li>
+<li>Use <code>crop()</code> and <code>mask()</code> to create a subset of a raster or vector</li>
+<li>Use <code>aggregate()</code> and <code>resample()</code> to create a new raster or vector</li>
+<li>Use <code>as.polygons()</code> to convert a raster to a vector of polygons</li>
 </ul>
 </section>
 <section id="get-started" class="level2">
@@ -283,11 +296,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>zion_points <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">system.file</span>(<span class="st">"vector/zion_points.gpkg"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>zion_points <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">read_sf</span>(<span class="fu">system.file</span>(<span class="st">"vector/zion_points.gpkg"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>ch <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_combine</span>(zion_points) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>zion_convex_hull <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_combine</span>(zion_points) <span class="sc">%&gt;%</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_convex_hull</span>() <span class="sc">%&gt;%</span> </span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>()</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -295,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Now, to meet our learning objectives, your task:</p>
 <ol type="1">
-<li>Crop the <code>srtm</code> raster using (1) <code>zion_points</code> and (2) <code>ch</code></li>
+<li>Crop the <code>srtm</code> raster using (1) <code>zion_points</code> and (2) <code>zion_convex_hull</code></li>
 </ol>
 <ul>
 <li>Are there any differences in the output maps?</li>
@@ -312,7 +325,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>With the previous raster, complete the following:</li>
 </ol>
 <ul>
-<li>Aggregate the raster counting high points in New Zealand</li>
+<li>Aggregate the raster counting high points in New Zealand/Aotearoa</li>
 <li>Reduce its geographic resolution by half, such that cells are 6 x 6 km</li>
 <li>Plot the result</li>
 <li>Resample back to the original resolution of 3 km x 3 km</li>
@@ -323,22 +336,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="answer-key" class="level2">
 <h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
-<section id="crop-and-mask-the-srtm-raster" class="level3">
-<h3 class="anchored" data-anchor-id="crop-and-mask-the-srtm-raster">Crop and mask the <code>srtm</code> raster</h3>
+<section id="crop-and-mask-srtm" class="level3">
+<h3 class="anchored" data-anchor-id="crop-and-mask-srtm">Crop and Mask <code>srtm</code></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>srtm_crop1 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">crop</span>(srtm, zion_points)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>srtm_crop2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">crop</span>(srtm, ch)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>srtm_crop2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">crop</span>(srtm, zion_convex_hull)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_crop1)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_crop2)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>srtm_mask1 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">mask</span>(srtm, zion_points)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>srtm_mask2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">mask</span>(srtm, ch)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>srtm_mask2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">mask</span>(srtm, zion_convex_hull)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_mask1)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_mask2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="subset-points-higher-than-3100-meters-in-new-zealand" class="level3">
-<h3 class="anchored" data-anchor-id="subset-points-higher-than-3100-meters-in-new-zealand">Subset points higher than 3100 meters in New Zealand</h3>
+<section id="subset-points-in-new-zealandaotearoa" class="level3">
+<h3 class="anchored" data-anchor-id="subset-points-in-new-zealandaotearoa">Subset Points in New Zealand/Aotearoa</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nz_height3100 <span class="ot">&lt;-</span> nz_height <span class="sc">%&gt;%</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(elevation <span class="sc">&gt;</span> <span class="dv">3100</span>)</span>
@@ -347,8 +360,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">resolution =</span> <span class="dv">3000</span>, <span class="at">crs =</span> terra<span class="sc">::</span><span class="fu">crs</span>(nz_height3100))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="count-numbers-of-the-highest-points-in-each-grid-cell" class="level3">
-<h3 class="anchored" data-anchor-id="count-numbers-of-the-highest-points-in-each-grid-cell">Count numbers of the highest points in each grid cell</h3>
+<section id="count-points-in-each-cell" class="level3">
+<h3 class="anchored" data-anchor-id="count-points-in-each-cell">Count Points in Each Cell</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nz_raster <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(nz_height3100, nz_template, <span class="at">field =</span> <span class="st">"elevation"</span>, <span class="at">fun =</span> <span class="st">"length"</span>)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster)</span>
@@ -356,7 +369,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="find-maximum-elevation-in-each-grid-cell" class="level3">
-<h3 class="anchored" data-anchor-id="find-maximum-elevation-in-each-grid-cell">Find maximum elevation in each grid cell</h3>
+<h3 class="anchored" data-anchor-id="find-maximum-elevation-in-each-grid-cell">Find Maximum Elevation in Each Grid Cell</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nz_raster2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rasterize</span>(nz_height3100, nz_template, <span class="at">field =</span> <span class="st">"elevation"</span>, <span class="at">fun =</span> max)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster2)</span>
@@ -364,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </section>
 <section id="aggregate-raster" class="level3">
-<h3 class="anchored" data-anchor-id="aggregate-raster">Aggregate raster</h3>
+<h3 class="anchored" data-anchor-id="aggregate-raster">Aggregate Raster</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nz_raster_low <span class="ot">&lt;-</span> raster<span class="sc">::</span><span class="fu">aggregate</span>(nz_raster, <span class="at">fact =</span> <span class="dv">2</span>, <span class="at">fun =</span> sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -374,8 +387,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="polygonize-and-filter-grain-dataset-for-clay" class="level3">
-<h3 class="anchored" data-anchor-id="polygonize-and-filter-grain-dataset-for-clay">Polygonize and filter grain dataset for clay</h3>
+<section id="polygonize-raster" class="level3">
+<h3 class="anchored" data-anchor-id="polygonize-raster">Polygonize Raster</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grain_poly <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(grain) <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_as_sf</span>()</span>
