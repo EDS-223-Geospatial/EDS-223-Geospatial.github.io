@@ -275,13 +275,13 @@ window.Quarto = {
   <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">Get Started</a></li>
   <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
   <ul class="collapse">
-  <li><a href="#plot-a-histogram-and-boxplot-of-dem" id="toc-plot-a-histogram-and-boxplot-of-dem" class="nav-link" data-scroll-target="#plot-a-histogram-and-boxplot-of-dem">Plot a histogram and boxplot of <code>dem</code></a></li>
+  <li><a href="#plot-a-histogram-and-boxplot-of-dem" id="toc-plot-a-histogram-and-boxplot-of-dem" class="nav-link" data-scroll-target="#plot-a-histogram-and-boxplot-of-dem">Plot a Histogram and Boxplot of <code>dem</code></a></li>
   </ul></li>
-  <li><a href="#reclassify-elevation-and-find-the-mean" id="toc-reclassify-elevation-and-find-the-mean" class="nav-link" data-scroll-target="#reclassify-elevation-and-find-the-mean">Reclassify elevation and find the mean</a>
+  <li><a href="#reclassify-elevation-and-find-mean" id="toc-reclassify-elevation-and-find-mean" class="nav-link" data-scroll-target="#reclassify-elevation-and-find-mean">Reclassify Elevation and Find Mean</a>
   <ul class="collapse">
-  <li><a href="#calculate-the-ndwi-and-correlation-with-ndvi" id="toc-calculate-the-ndwi-and-correlation-with-ndvi" class="nav-link" data-scroll-target="#calculate-the-ndwi-and-correlation-with-ndvi">Calculate the NDWI and correlation with NDVI</a></li>
-  <li><a href="#find-distances-across-all-peru_dem-cells" id="toc-find-distances-across-all-peru_dem-cells" class="nav-link" data-scroll-target="#find-distances-across-all-peru_dem-cells">Find distances across all <code>peru_dem</code> cells</a></li>
-  <li><a href="#change-the-resolution-of-the-srtm" id="toc-change-the-resolution-of-the-srtm" class="nav-link" data-scroll-target="#change-the-resolution-of-the-srtm">Change the resolution of the SRTM</a></li>
+  <li><a href="#find-correlation-between-ndwi-and-ndvi" id="toc-find-correlation-between-ndwi-and-ndvi" class="nav-link" data-scroll-target="#find-correlation-between-ndwi-and-ndvi">Find Correlation Between NDWI and NDVI</a></li>
+  <li><a href="#find-distances-across-all-peru_dem-cells" id="toc-find-distances-across-all-peru_dem-cells" class="nav-link" data-scroll-target="#find-distances-across-all-peru_dem-cells">Find Distances Across All <code>peru_dem</code> Cells</a></li>
+  <li><a href="#change-resolution-of-srtm" id="toc-change-resolution-of-srtm" class="nav-link" data-scroll-target="#change-resolution-of-srtm">Change Resolution of <code>srtm</code></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -303,7 +303,7 @@ Reference
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Refer to <a href="https://geocompr.robinlovelace.net/attr.html">Chapter 3</a>, <a href="https://geocompr.robinlovelace.net/spatial-operations.html">Chapter 4</a>, <a href="https://geocompr.robinlovelace.net/geometry-operations.html">Chapter 5</a> of <em>Geocomputation with R</em> to get you started.</p>
+<p>Refer to <a href="https://geocompr.robinlovelace.net/attr.html">Chapter 3</a>, <a href="https://geocompr.robinlovelace.net/spatial-operations.html">Chapter 4</a>, <a href="https://geocompr.robinlovelace.net/geometry-operations.html">Chapter 5</a> of <em>Geocomputation with R</em> to help get you started.</p>
 </div>
 </div>
 <section id="get-started" class="level2">
@@ -322,15 +322,13 @@ Reference
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/dem.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/landsat.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># peru_dem &lt;- geodata::elevation_30s(country = "Peru", path = ".", mask = FALSE)</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"course-materials"</span>, <span class="st">"data"</span>, <span class="st">"week4"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"course-materials"</span>, <span class="st">"data"</span>, <span class="st">"week4"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/dem.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/landsat.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># peru_dem &lt;- geodata::elevation_30s(country = "Peru", path = ".", mask = FALSE)</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week4"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week4"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, to meet our learning objectives, your task:</p>
 <ol type="1">
@@ -355,32 +353,33 @@ Reference
 <li>Find the distance across all cells in <code>peru_dem</code> to its nearest coastline</li>
 </ol>
 <ul>
-<li><strong>Hint</strong>: Use <code>terra::distance()</code></li>
+<li><strong>Hint</strong>: Use <code>terra::distance()</code> to find geographic distance for all cells</li>
 <li><strong>Note</strong>: <code>terra::distance()</code> will calculate distance for all cells that are <code>NA</code> to the nearest cell that are not <code>NA</code></li>
+<li>Weigh the distance raster with <code>peru_dem</code> and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation
+<ul>
+<li>Every 100 altitudinal meters should increase the distance to the coast by 10 km</li>
+</ul></li>
 </ul>
-<ol type="a">
-<li>Weigh the distance raster with <code>peru_dem</code> and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation - Every 100 altitudinal meters should increase the distance to the coast by 10 km</li>
-</ol>
 <ol start="5" type="1">
 <li>Change the resolution of <code>srtm</code> to 0.01 by 0.01 degrees</li>
 </ol>
 <ul>
 <li>Use all of the method available in the <code>terra</code> package</li>
-<li><strong>Note</strong>: The <code>srtm</code> raster has a resolution of 0.00083 by 0.00083 degrees</li>
+<li><strong>Note</strong>: The <code>srtm</code> raster has a resolution of 0.00083 x 0.00083 degrees</li>
 </ul>
 </section>
 <section id="answer-key" class="level2">
 <h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
 <section id="plot-a-histogram-and-boxplot-of-dem" class="level3">
-<h3 class="anchored" data-anchor-id="plot-a-histogram-and-boxplot-of-dem">Plot a histogram and boxplot of <code>dem</code></h3>
+<h3 class="anchored" data-anchor-id="plot-a-histogram-and-boxplot-of-dem">Plot a Histogram and Boxplot of <code>dem</code></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dem)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
-<section id="reclassify-elevation-and-find-the-mean" class="level2">
-<h2 class="anchored" data-anchor-id="reclassify-elevation-and-find-the-mean">Reclassify elevation and find the mean</h2>
+<section id="reclassify-elevation-and-find-mean" class="level2">
+<h2 class="anchored" data-anchor-id="reclassify-elevation-and-find-mean">Reclassify Elevation and Find Mean</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rcl <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">300</span>, <span class="dv">0</span>, </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                <span class="dv">300</span>, <span class="dv">500</span>, <span class="dv">1</span>, </span>
@@ -395,8 +394,8 @@ Reference
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>elevation_mean <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">zonal</span>(dem, dem_rcl, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>elevation_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="calculate-the-ndwi-and-correlation-with-ndvi" class="level3">
-<h3 class="anchored" data-anchor-id="calculate-the-ndwi-and-correlation-with-ndvi">Calculate the NDWI and correlation with NDVI</h3>
+<section id="find-correlation-between-ndwi-and-ndvi" class="level3">
+<h3 class="anchored" data-anchor-id="find-correlation-between-ndwi-and-ndvi">Find Correlation Between NDWI and NDVI</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ndwi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(green, nir){</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    (green <span class="sc">-</span> nir)<span class="sc">/</span>(green <span class="sc">+</span> nir)</span>
@@ -421,7 +420,7 @@ Reference
 </div>
 </section>
 <section id="find-distances-across-all-peru_dem-cells" class="level3">
-<h3 class="anchored" data-anchor-id="find-distances-across-all-peru_dem-cells">Find distances across all <code>peru_dem</code> cells</h3>
+<h3 class="anchored" data-anchor-id="find-distances-across-all-peru_dem-cells">Find Distances Across All <code>peru_dem</code> Cells</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>peru_dem <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">aggregate</span>(peru_dem, <span class="at">fact =</span> <span class="dv">20</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(peru_dem)</span>
@@ -439,8 +438,8 @@ Reference
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_to_coast_km2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="change-the-resolution-of-the-srtm" class="level3">
-<h3 class="anchored" data-anchor-id="change-the-resolution-of-the-srtm">Change the resolution of the SRTM</h3>
+<section id="change-resolution-of-srtm" class="level3">
+<h3 class="anchored" data-anchor-id="change-resolution-of-srtm">Change Resolution of <code>srtm</code></h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
