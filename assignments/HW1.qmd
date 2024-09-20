@@ -12,6 +12,16 @@ editor_options:
   chunk_output_type: console
 ---
 
+:::{.callout-important icon=true}
+
+You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.
+
+The assignment **must be submitted through GitHub Classrooms**. Each student receives one "free pass" for not submitting assignments via specified channels, after which you will receive a "Not Yet" mark.
+
+**Read each part of the assignment carefully**, and use the check boxes to ensure you've addressed all elements of the assignment!
+
+:::
+
 ## Learning outcomes
 
 - build effective, responsible, accessible and aesthetically-pleasing maps
@@ -43,7 +53,7 @@ EDS223-HW1
 
 ## Part 1: Easter Island from land to sea
 
-In this week's [discussion section](../course-materials/discussions/week1-discussion.qmd), you practiced making a map of Easter Island. We wi
+In this week's [discussion section](../course-materials/discussions/week1-discussion.qmd), you practiced making a map of Easter Island. We will continue by extending our map into the sea by including [bathymetry](https://oceanservice.noaa.gov/facts/bathymetry.html) and [seamounts](https://oceanexplorer.noaa.gov/facts/seamounts.html#:~:text=A%20seamount%20is%20an%20underwater,meters%20taller%20than%20previously%20thought.).
 
 ### Description
 
