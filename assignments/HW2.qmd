@@ -39,14 +39,15 @@ The assignment **must be submitted through GitHub Classrooms**. Each student rec
 Your repository should have the following structure:
 
 ```{md}
-EDS223-HW1
+EDS223-HW2
 │   README.md
-│   HW1.qmd
+│   HW2.qmd
 │   Rmd/Proj files    
 │
 └───data
-     └───easter-island
      └───ejscreen
+     └───gbif-birds-LA
+     └───mapping-inequality
 ```
 
 ## Background
@@ -62,6 +63,9 @@ Check out coverage by [EOS](https://eos.org/articles/bird-biodiversity-reports-r
 
 ## Data details
 ### EJScreen
+
+**Data file:** `ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb`
+
 We will be working with data from the United States Environmental Protection Agency's EJScreen: Environmental Justice Screening and Mapping Tool.
 
 According to the [US EPA website](https://www.epa.gov/ejscreen/purposes-and-uses-ejscreen):
@@ -81,14 +85,26 @@ EJScreen provides on environmental and demographic information for the US at the
 You should also explore the [limitations and caveats](https://www.epa.gov/ejscreen/limitations-and-caveats-using-ejscreen) of the data.
 
 ### HOLC Redlining
+
+**Data file:** `mapping-inequality/mapping-inequality-los-angeles.json`
+
 A team of researchers, led by the [Digital Scholarship Lab](https://dsl.richmond.edu/) at the University of Richmond have digitized maps and information from the HOLC as part of the [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58) project. 
 
 We will be working with maps of HOLC grade designations for Los Angeles. Information on the data can be found [here](https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58&text=downloads).^[Robert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al., “Mapping Inequality,” American Panorama, ed. Robert K. Nelson and Edward L. Ayers, accessed October 17, 2023, https://dsl.richmond.edu/panorama/redlining/] 
 
 ### Biodiversity observations
+
+**Data file:** `gbif-birds-LA.shp`
+
 The [Global Biodiversity Information Facility](gbif.org) is the largest aggregator of biodiversity observations in the world. Observations typically include a location and date that a species was observed.
 
 We will be working observations of birds from 2021 onward.
+
+:::{.callout-tip icon=true}
+
+Make sure to check that these datasets have the same coordinate reference systems! If not, transform them to match.
+
+:::
 
 
 ## Part 1: Legacy of redlining in current environmental (in)justice

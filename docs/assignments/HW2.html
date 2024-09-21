@@ -270,14 +270,15 @@ Important
 <li>Push final edits before deadline</li>
 </ol>
 <p>Your repository should have the following structure:</p>
-<pre class="{md}"><code>EDS223-HW1
+<pre class="{md}"><code>EDS223-HW2
 │   README.md
-│   HW1.qmd
+│   HW2.qmd
 │   Rmd/Proj files    
 │
 └───data
-     └───easter-island
-     └───ejscreen</code></pre>
+     └───ejscreen
+     └───gbif-birds-LA
+     └───mapping-inequality</code></pre>
 </section>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
@@ -290,6 +291,7 @@ Important
 <h2 class="anchored" data-anchor-id="data-details">Data details</h2>
 <section id="ejscreen" class="level3">
 <h3 class="anchored" data-anchor-id="ejscreen">EJScreen</h3>
+<p><strong>Data file:</strong> <code>ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb</code></p>
 <p>We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.</p>
 <p>According to the <a href="https://www.epa.gov/ejscreen/purposes-and-uses-ejscreen">US EPA website</a>:</p>
 <blockquote class="blockquote">
@@ -308,13 +310,28 @@ Important
 </section>
 <section id="holc-redlining" class="level3">
 <h3 class="anchored" data-anchor-id="holc-redlining">HOLC Redlining</h3>
+<p><strong>Data file:</strong> <code>mapping-inequality/mapping-inequality-los-angeles.json</code></p>
 <p>A team of researchers, led by the <a href="https://dsl.richmond.edu/">Digital Scholarship Lab</a> at the University of Richmond have digitized maps and information from the HOLC as part of the <a href="https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58">Mapping Inequality</a> project.</p>
 <p>We will be working with maps of HOLC grade designations for Los Angeles. Information on the data can be found <a href="https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58&amp;text=downloads">here</a>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
 </section>
 <section id="biodiversity-observations" class="level3">
 <h3 class="anchored" data-anchor-id="biodiversity-observations">Biodiversity observations</h3>
+<p><strong>Data file:</strong> <code>gbif-birds-LA.shp</code></p>
 <p>The <a href="gbif.org">Global Biodiversity Information Facility</a> is the largest aggregator of biodiversity observations in the world. Observations typically include a location and date that a species was observed.</p>
 <p>We will be working observations of birds from 2021 onward.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Make sure to check that these datasets have the same coordinate reference systems! If not, transform them to match.</p>
+</div>
+</div>
 </section>
 </section>
 <section id="part-1-legacy-of-redlining-in-current-environmental-injustice" class="level2">
