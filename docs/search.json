@@ -1188,5 +1188,89 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+  },
+  {
+    "objectID": "assignments/HW2.html",
+    "href": "assignments/HW2.html",
+    "title": "Homework Assignment 2",
+    "section": "",
+    "text": "Important\n\n\n\nYou must earn a “Satisfactory” on all parts of the assignment to earn a “Satisfactory” on the assignment.\nThe assignment must be submitted through GitHub Classrooms. Each student receives one “free pass” for not submitting assignments via specified channels, after which you will receive a “Not Yet” mark.\nRead each part of the assignment carefully, and use the check boxes to ensure you’ve addressed all elements of the assignment!"
+  },
+  {
+    "objectID": "assignments/HW2.html#learning-outcomes",
+    "href": "assignments/HW2.html#learning-outcomes",
+    "title": "Homework Assignment 2",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\n\nbuild effective, responsible, accessible and aesthetically-pleasing maps\npractice manipulating vector and raster data to build multi-layer maps\npractice making maps in R, specifically using tmap"
+  },
+  {
+    "objectID": "assignments/HW2.html#instructions",
+    "href": "assignments/HW2.html#instructions",
+    "title": "Homework Assignment 2",
+    "section": "Instructions",
+    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\nEDS223-HW1\n│   README.md\n│   HW1.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───easter-island\n     └───ejscreen"
+  },
+  {
+    "objectID": "assignments/HW2.html#overview",
+    "href": "assignments/HW2.html#overview",
+    "title": "Homework Assignment 2",
+    "section": "Overview",
+    "text": "Overview\nPresent-day environmental justice may reflect legacies of injustice in the past. The United States has a long history of racial segregation which is still visible. During the 1930’s the Home Owners’ Loan Corporation (HOLC), as part of the New Deal, rated neighborhoods based on their perceived safety for real estate investment. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership. Colloquially known as “redlining”, this practice has had widely-documented consequences not only for community wealth, but also health.1 Redlined neighborhoods have less greenery2 and are hotter than other neighborhoods.3\nCheck out coverage by the New York Times.\nA recent study found that redlining has not only affected the environments communities are exposed to, it has also shaped our observations of biodiversity.4 Community or citizen science, whereby individuals share observations of species, is generating an enormous volume of data. Ellis-Soto and co-authors found that redlined neighborhoods remain the most undersampled areas across 195 US cities. This gap is highly concerning, because conservation decisions are made based on these data.\nCheck out coverage by EOS."
+  },
+  {
+    "objectID": "assignments/HW2.html#part-2-exploring-environmental-injustice",
+    "href": "assignments/HW2.html#part-2-exploring-environmental-injustice",
+    "title": "Homework Assignment 2",
+    "section": "Part 2: Exploring environmental (in)justice",
+    "text": "Part 2: Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
+  },
+  {
+    "objectID": "assignments/HW2.html#rubric-specifications",
+    "href": "assignments/HW2.html#rubric-specifications",
+    "title": "Homework Assignment 2",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nAll tables must:\n\nmust use professional-style formatting from kable\n\nThe rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis\n\nsee examples of professional and unprofessional output on the Assignments page"
+  },
+  {
+    "objectID": "assignments/HW2.html#footnotes",
+    "href": "assignments/HW2.html#footnotes",
+    "title": "Homework Assignment 2",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nGee, G. C. (2008). A multilevel analysis of the relationship between institutional and individual racial discrimination and health status. American journal of public health, 98(Supplement_1), S48-S56.↩︎\nNardone, A., Rudolph, K. E., Morello-Frosch, R., & Casey, J. A. (2021). Redlines and greenspace: the relationship between historical redlining and 2010 greenspace across the United States. Environmental health perspectives, 129(1), 017006.↩︎\nHoffman, J. S., Shandas, V., & Pendleton, N. (2020). The effects of historical housing policies on resident exposure to intra-urban heat: a study of 108 US urban areas. Climate, 8(1), 12.↩︎\nEllis-Soto, D., Chapman, M., & Locke, D. H. (2023). Historical redlining is associated with increasing geographical disparities in bird biodiversity sampling in the United States. Nature Human Behaviour, 1-9.↩︎\nRobert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al., “Mapping Inequality,” American Panorama, ed. Robert K. Nelson and Edward L. Ayers, accessed October 17, 2023, https://dsl.richmond.edu/panorama/redlining/↩︎"
+  },
+  {
+    "objectID": "assignments/HW2.html#part-1-investigate-the-legacy-of-redlining-in-current-environmental-injustice",
+    "href": "assignments/HW2.html#part-1-investigate-the-legacy-of-redlining-in-current-environmental-injustice",
+    "title": "Homework Assignment 2",
+    "section": "Part 1: Investigate the legacy of redlining in current environmental (in)justice",
+    "text": "Part 1: Investigate the legacy of redlining in current environmental (in)justice\nIn this week’s discussion section, you practiced making a map of Easter Island. We will continue by extending our map into the sea by including bathymetry and seamounts.\n\nDescription\nCreate a map of Easter Island, including the following:\n\nthe island’s border and road network\nelevation of the island (indicated in meters above sea level)\nlocation of the island’s volcanoes (indicating their height in meters)\nbathymetry surrounding the island (indicated in meters below sea level)\nsurrounding seamounts (indicating their height in meters)\n\n\n\nData details\nYou will use the following new datasets:\n\nSeamounts from the Pacific Data Hub\nBathymetry (or seadepth) from NOAA’s marmap API\n\nThe following code is provided to read in each dataset:\n\nlibrary(sf)\nlibrary(here)\nlibrary(terra)\n\n# read in major points on the island\nei_points &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\n# subset points to volcanoes\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\n\n# read in island elevation\nei_elev &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\n\n# read in island border\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\n\n# read in island road network\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))\n\n# read in bathymetry\nei_bathymetry &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_bathy.tif\"))\n\n# read in seamounts\nei_seamounts &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_seamounts.gpkg\"))"
+  },
+  {
+    "objectID": "assignments/HW2.html#part-1-legacy-of-redlining-in-current-environmental-injustice",
+    "href": "assignments/HW2.html#part-1-legacy-of-redlining-in-current-environmental-injustice",
+    "title": "Homework Assignment 2",
+    "section": "Part 1: Legacy of redlining in current environmental (in)justice",
+    "text": "Part 1: Legacy of redlining in current environmental (in)justice\nYour first task is to explore historical redlining in Los Angeles and its legacy on present-day environmental justice.\n\nDescription\nFor this assignment, you must produce the following:\n\na map of historical redlining neighborhoods, including:\n\nneighborhoods colored by HOLC grade\nan appropriate base map\n\na table summarizing the percent of current census block groups within each HOLC grade (or none)\na set of figures summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables:\n\n% low income\npercentile for Particulate Matter 2.5\npercentile for low life expectancy\n\na brief paragraph reflecting on these results"
+  },
+  {
+    "objectID": "assignments/HW2.html#data-details",
+    "href": "assignments/HW2.html#data-details",
+    "title": "Homework Assignment 2",
+    "section": "Data details",
+    "text": "Data details\n\nEJScreen\nWe will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n- to be more transparent about how we consider environmental justice in our work,\n- to assist our stakeholders in making informed decisions about pursuing environmental justice and,\n- to create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\n\n\nHOLC Redlining\nA team of researchers, led by the Digital Scholarship Lab at the University of Richmond have digitized maps and information from the HOLC as part of the Mapping Inequality project.\nWe will be working with maps of HOLC grade designations for Los Angeles. Information on the data can be found here.5\n\n\nBiodiversity observations\nThe Global Biodiversity Information Facility is the largest aggregator of biodiversity observations in the world. Observations typically include a location and date that a species was observed.\nWe will be working observations of birds from 2021 onward."
+  },
+  {
+    "objectID": "assignments/HW2.html#background",
+    "href": "assignments/HW2.html#background",
+    "title": "Homework Assignment 2",
+    "section": "Background",
+    "text": "Background\nPresent-day environmental justice may reflect legacies of injustice in the past. The United States has a long history of racial segregation which is still visible. During the 1930’s the Home Owners’ Loan Corporation (HOLC), as part of the New Deal, rated neighborhoods based on their perceived safety for real estate investment. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership. Colloquially known as “redlining”, this practice has had widely-documented consequences not only for community wealth, but also health.1 Redlined neighborhoods have less greenery2 and are hotter than other neighborhoods.3\nCheck out coverage by the New York Times.\nA recent study found that redlining has not only affected the environments communities are exposed to, it has also shaped our observations of biodiversity.4 Community or citizen science, whereby individuals share observations of species, is generating an enormous volume of data. Ellis-Soto and co-authors found that redlined neighborhoods remain the most undersampled areas across 195 US cities. This gap is highly concerning, because conservation decisions are made based on these data.\nCheck out coverage by EOS."
+  },
+  {
+    "objectID": "assignments/HW2.html#part-2-legacy-of-redlining-in-biodiversity-observations",
+    "href": "assignments/HW2.html#part-2-legacy-of-redlining-in-biodiversity-observations",
+    "title": "Homework Assignment 2",
+    "section": "Part 2: Legacy of redlining in biodiversity observations",
+    "text": "Part 2: Legacy of redlining in biodiversity observations\nYour second task is to explore the legacy of historical redlining in Los Angeles on the collection of bird observations.\n\nDescription\nFor this assignment, you must produce the following based on observations from 2022:\n\na figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade\na brief paragraph explaining whether these results match the findings from Ellis-Soto et al. 2023"
   }
 ]
