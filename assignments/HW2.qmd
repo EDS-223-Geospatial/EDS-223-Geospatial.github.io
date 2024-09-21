@@ -12,6 +12,18 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/holc-la.png")
+```
+
+::: {.gray-text .center-text}
+[Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/data/CA-LosAngeles){target="_blank"}
+:::
+
 :::{.callout-important icon=true}
 
 You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.

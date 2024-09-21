@@ -1208,7 +1208,7 @@
     "href": "assignments/HW2.html#instructions",
     "title": "Homework Assignment 2",
     "section": "Instructions",
-    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\nEDS223-HW2\n│   README.md\n│   HW2.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───ejscreen\n     └───gbif-birds-LA\n     └───mapping-inequality"
+    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW2\n│   README.md\n│   HW2.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───ejscreen\n     └───gbif-birds-LA\n     └───mapping-inequality"
   },
   {
     "objectID": "assignments/HW2.html#overview",
