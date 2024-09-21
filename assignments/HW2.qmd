@@ -43,7 +43,7 @@ The assignment **must be submitted through GitHub Classrooms**. Each student rec
 ## Instructions
 
 1. Clone repository from GitHub Classrooms
-2. Download data from [here](https://drive.google.com/file/d/1nG6Nj1bXfzQFOVMO8Km3eNy4SWu1YcIQ/view?usp=sharing)
+2. Download data from [here](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
 3. Unzip data and place in repository
 4. Edit Quarto document with responses
 5. Push final edits before deadline
