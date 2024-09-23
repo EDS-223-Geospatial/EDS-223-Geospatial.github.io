@@ -511,46 +511,67 @@
     "text": "Acknowledgements\nThis website was designed by Sam Csik."
   },
   {
-    "objectID": "assignments/SR3.html",
-    "href": "assignments/SR3.html",
-    "title": "Final Self Reflection (SR #3)",
+    "objectID": "assignments/HW1.html",
+    "href": "assignments/HW1.html",
+    "title": "Homework Assignment 1",
     "section": "",
-    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
+    "text": "Important\n\n\n\nYou must earn a “Satisfactory” on all parts of the assignment to earn a “Satisfactory” on the assignment.\nThe assignment must be submitted through GitHub Classrooms. Each student receives one “free pass” for not submitting assignments via specified channels, after which you will receive a “Not Yet” mark.\nRead each part of the assignment carefully, and use the check boxes to ensure you’ve addressed all elements of the assignment!"
   },
   {
-    "objectID": "assignments/SR3.html#description",
-    "href": "assignments/SR3.html#description",
-    "title": "Final Self Reflection (SR #3)",
-    "section": "",
-    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
+    "objectID": "assignments/HW1.html#learning-outcomes",
+    "href": "assignments/HW1.html#learning-outcomes",
+    "title": "Homework Assignment 1",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\n\nbuild effective, responsible, accessible and aesthetically-pleasing maps\npractice manipulating vector and raster data to build multi-layer maps\npractice making maps in R, specifically using tmap"
   },
   {
-    "objectID": "assignments/SR3.html#rubric-specifications",
-    "href": "assignments/SR3.html#rubric-specifications",
-    "title": "Final Self Reflection (SR #3)",
+    "objectID": "assignments/HW1.html#instructions",
+    "href": "assignments/HW1.html#instructions",
+    "title": "Homework Assignment 1",
+    "section": "Instructions",
+    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   HW1.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───easter-island\n     └───ejscreen"
+  },
+  {
+    "objectID": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
+    "href": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
+    "title": "Homework Assignment 1",
+    "section": "Part 1: Easter Island from land to sea",
+    "text": "Part 1: Easter Island from land to sea\nIn this week’s discussion section, you practiced making a map of Easter Island. We will continue by extending our map into the sea by including bathymetry and seamounts.\n\nDescription\nCreate a map of Easter Island, including the following:\n\nthe island’s border and road network\nelevation of the island (indicated in meters above sea level)\nlocation of the island’s volcanoes (indicating their height in meters)\nbathymetry surrounding the island (indicated in meters below sea level)\nsurrounding seamounts (indicating their height in meters)\n\n\n\nData details\nYou will use the following new datasets:\n\nSeamounts from the Pacific Data Hub\nBathymetry (or seadepth) from NOAA’s marmap API\n\nThe following code is provided to read in each dataset:\n\nlibrary(sf)\nlibrary(here)\nlibrary(terra)\n\n# read in major points on the island\nei_points &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\n# subset points to volcanoes\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\n\n# read in island elevation\nei_elev &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\n\n# read in island border\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\n\n# read in island road network\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))\n\n# read in bathymetry\nei_bathymetry &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_bathy.tif\"))\n\n# read in seamounts\nei_seamounts &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_seamounts.gpkg\"))\n\n\n\n\n\n\n\nSetting a bounding box for the map\n\n\n\nTo make sure that all the bathymetry and seamount data are included in the map, create a bounding box that includes both.\n\n# define larger plot bbox that is buffered around both of \n# the two largest layers to display all 4 seamounts in view \n\nbbox_seamount &lt;- st_bbox(ei_seamounts) # seamount bounding box\nbbox_bathymetry &lt;- st_bbox(ei_bathymetry) # bathymetry bounding box\nbbox_largest &lt;- st_bbox(c(xmin = min(bbox_bathymetry[1], bbox_seamount[1]),\n                         ymin = min(bbox_bathymetry[2], bbox_seamount[2]),\n                         xmax = max(bbox_bathymetry[3], bbox_seamount[3]),\n                         ymax = max(bbox_bathymetry[4], bbox_seamount[4])))\n\nNow that you’ve defined the bounding box, make sure to use it!"
+  },
+  {
+    "objectID": "assignments/HW1.html#part-2-exploring-environmental-injustice",
+    "href": "assignments/HW1.html#part-2-exploring-environmental-injustice",
+    "title": "Homework Assignment 1",
+    "section": "Part 2: Exploring environmental (in)justice",
+    "text": "Part 2: Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
+  },
+  {
+    "objectID": "assignments/HW1.html#rubric-specifications",
+    "href": "assignments/HW1.html#rubric-specifications",
+    "title": "Homework Assignment 1",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nEJScreen maps and text must communicate about an issue\n\nit is not sufficient to make two unrelated maps\n\nThe rendered Quarto doc must show all required elements in a professional style\n\nsee examples of professional and unprofessional output on the Assignments page"
+  },
+  {
+    "objectID": "assignments/SR2.html",
+    "href": "assignments/SR2.html",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+  },
+  {
+    "objectID": "assignments/SR2.html#description",
+    "href": "assignments/SR2.html#description",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+  },
+  {
+    "objectID": "assignments/SR2.html#rubric-specifications",
+    "href": "assignments/SR2.html#rubric-specifications",
+    "title": "Mid-Course Self Reflection (SR #2)",
     "section": "Rubric (specifications)",
     "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions can be requested by redeeming tokens.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
-  },
-  {
-    "objectID": "assignments/SR1.html",
-    "href": "assignments/SR1.html",
-    "title": "Pre-Course Self Reflection (SR #1)",
-    "section": "",
-    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nWhere were you before joining the MEDS program? (e.g. “I recently graduated from undergrad”, “I was working in X industry for Y years”)\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nWhat types of learning techniques (types of assignments or instruction) do you usually find most effective/enjoyable? Why?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
-  },
-  {
-    "objectID": "assignments/SR1.html#description",
-    "href": "assignments/SR1.html#description",
-    "title": "Pre-Course Self Reflection (SR #1)",
-    "section": "",
-    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nWhere were you before joining the MEDS program? (e.g. “I recently graduated from undergrad”, “I was working in X industry for Y years”)\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nWhat types of learning techniques (types of assignments or instruction) do you usually find most effective/enjoyable? Why?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
-  },
-  {
-    "objectID": "assignments/SR1.html#rubric-specifications",
-    "href": "assignments/SR1.html#rubric-specifications",
-    "title": "Pre-Course Self Reflection (SR #1)",
-    "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions are not allowed on this first assignment.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
   },
   {
     "objectID": "assignments.html",
@@ -595,67 +616,102 @@
     "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
   },
   {
-    "objectID": "assignments/SR2.html",
-    "href": "assignments/SR2.html",
-    "title": "Mid-Course Self Reflection (SR #2)",
+    "objectID": "assignments/SR1.html",
+    "href": "assignments/SR1.html",
+    "title": "Pre-Course Self Reflection (SR #1)",
     "section": "",
-    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
   },
   {
-    "objectID": "assignments/SR2.html#description",
-    "href": "assignments/SR2.html#description",
-    "title": "Mid-Course Self Reflection (SR #2)",
+    "objectID": "assignments/SR1.html#description",
+    "href": "assignments/SR1.html#description",
+    "title": "Pre-Course Self Reflection (SR #1)",
     "section": "",
-    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
   },
   {
-    "objectID": "assignments/SR2.html#rubric-specifications",
-    "href": "assignments/SR2.html#rubric-specifications",
-    "title": "Mid-Course Self Reflection (SR #2)",
+    "objectID": "assignments/SR1.html#rubric-specifications",
+    "href": "assignments/SR1.html#rubric-specifications",
+    "title": "Pre-Course Self Reflection (SR #1)",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions are not allowed on this first assignment.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
+  },
+  {
+    "objectID": "assignments/SR3.html",
+    "href": "assignments/SR3.html",
+    "title": "Final Self Reflection (SR #3)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
+  },
+  {
+    "objectID": "assignments/SR3.html#description",
+    "href": "assignments/SR3.html#description",
+    "title": "Final Self Reflection (SR #3)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
+  },
+  {
+    "objectID": "assignments/SR3.html#rubric-specifications",
+    "href": "assignments/SR3.html#rubric-specifications",
+    "title": "Final Self Reflection (SR #3)",
     "section": "Rubric (specifications)",
     "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions can be requested by redeeming tokens.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
   },
   {
-    "objectID": "assignments/HW1.html",
-    "href": "assignments/HW1.html",
-    "title": "Homework Assignment 1",
-    "section": "",
-    "text": "Important\n\n\n\nYou must earn a “Satisfactory” on all parts of the assignment to earn a “Satisfactory” on the assignment.\nThe assignment must be submitted through GitHub Classrooms. Each student receives one “free pass” for not submitting assignments via specified channels, after which you will receive a “Not Yet” mark.\nRead each part of the assignment carefully, and use the check boxes to ensure you’ve addressed all elements of the assignment!"
-  },
-  {
-    "objectID": "assignments/HW1.html#learning-outcomes",
-    "href": "assignments/HW1.html#learning-outcomes",
-    "title": "Homework Assignment 1",
+    "objectID": "assignments/HW2.html#learning-outcomes",
+    "href": "assignments/HW2.html#learning-outcomes",
+    "title": "Homework Assignment 2",
     "section": "Learning outcomes",
     "text": "Learning outcomes\n\nbuild effective, responsible, accessible and aesthetically-pleasing maps\npractice manipulating vector and raster data to build multi-layer maps\npractice making maps in R, specifically using tmap"
   },
   {
-    "objectID": "assignments/HW1.html#instructions",
-    "href": "assignments/HW1.html#instructions",
-    "title": "Homework Assignment 1",
+    "objectID": "assignments/HW2.html#instructions",
+    "href": "assignments/HW2.html#instructions",
+    "title": "Homework Assignment 2",
     "section": "Instructions",
-    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   HW1.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───easter-island\n     └───ejscreen"
+    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW2\n│   README.md\n│   HW2.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───ejscreen\n     └───gbif-birds-LA\n     └───mapping-inequality"
   },
   {
-    "objectID": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
-    "href": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
-    "title": "Homework Assignment 1",
-    "section": "Part 1: Easter Island from land to sea",
-    "text": "Part 1: Easter Island from land to sea\nIn this week’s discussion section, you practiced making a map of Easter Island. We will continue by extending our map into the sea by including bathymetry and seamounts.\n\nDescription\nCreate a map of Easter Island, including the following:\n\nthe island’s border and road network\nelevation of the island (indicated in meters above sea level)\nlocation of the island’s volcanoes (indicating their height in meters)\nbathymetry surrounding the island (indicated in meters below sea level)\nsurrounding seamounts (indicating their height in meters)\n\n\n\nData details\nYou will use the following new datasets:\n\nSeamounts from the Pacific Data Hub\nBathymetry (or seadepth) from NOAA’s marmap API\n\nThe following code is provided to read in each dataset:\n\nlibrary(sf)\nlibrary(here)\nlibrary(terra)\n\n# read in major points on the island\nei_points &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\n# subset points to volcanoes\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\n\n# read in island elevation\nei_elev &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\n\n# read in island border\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\n\n# read in island road network\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))\n\n# read in bathymetry\nei_bathymetry &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_bathy.tif\"))\n\n# read in seamounts\nei_seamounts &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_seamounts.gpkg\"))"
+    "objectID": "assignments/HW2.html#background",
+    "href": "assignments/HW2.html#background",
+    "title": "Homework Assignment 2",
+    "section": "Background",
+    "text": "Background\nPresent-day environmental justice may reflect legacies of injustice in the past. The United States has a long history of racial segregation which is still visible. During the 1930’s the Home Owners’ Loan Corporation (HOLC), as part of the New Deal, rated neighborhoods based on their perceived safety for real estate investment. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership. Colloquially known as “redlining”, this practice has had widely-documented consequences not only for community wealth, but also health.1 Redlined neighborhoods have less greenery2 and are hotter than other neighborhoods.3\nCheck out coverage by the New York Times.\nA recent study found that redlining has not only affected the environments communities are exposed to, it has also shaped our observations of biodiversity.4 Community or citizen science, whereby individuals share observations of species, is generating an enormous volume of data. Ellis-Soto and co-authors found that redlined neighborhoods remain the most undersampled areas across 195 US cities. This gap is highly concerning, because conservation decisions are made based on these data.\nCheck out coverage by EOS."
   },
   {
-    "objectID": "assignments/HW1.html#part-2-exploring-environmental-injustice",
-    "href": "assignments/HW1.html#part-2-exploring-environmental-injustice",
-    "title": "Homework Assignment 1",
-    "section": "Part 2: Exploring environmental (in)justice",
-    "text": "Part 2: Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
+    "objectID": "assignments/HW2.html#data-details",
+    "href": "assignments/HW2.html#data-details",
+    "title": "Homework Assignment 2",
+    "section": "Data details",
+    "text": "Data details\n\nEJScreen\nData file: ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\nWe will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n- to be more transparent about how we consider environmental justice in our work,\n- to assist our stakeholders in making informed decisions about pursuing environmental justice and,\n- to create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\n\n\nHOLC Redlining\nData file: mapping-inequality/mapping-inequality-los-angeles.json\nA team of researchers, led by the Digital Scholarship Lab at the University of Richmond have digitized maps and information from the HOLC as part of the Mapping Inequality project.\nWe will be working with maps of HOLC grade designations for Los Angeles. Information on the data can be found here.5\n\n\nBiodiversity observations\nData file: gbif-birds-LA.shp\nThe Global Biodiversity Information Facility is the largest aggregator of biodiversity observations in the world. Observations typically include a location and date that a species was observed.\nWe will be working observations of birds from 2021 onward.\n\n\n\n\n\n\nTip\n\n\n\nMake sure to check that these datasets have the same coordinate reference systems! If not, transform them to match."
   },
   {
-    "objectID": "assignments/HW1.html#rubric-specifications",
-    "href": "assignments/HW1.html#rubric-specifications",
-    "title": "Homework Assignment 1",
+    "objectID": "assignments/HW2.html#part-1-legacy-of-redlining-in-current-environmental-injustice",
+    "href": "assignments/HW2.html#part-1-legacy-of-redlining-in-current-environmental-injustice",
+    "title": "Homework Assignment 2",
+    "section": "Part 1: Legacy of redlining in current environmental (in)justice",
+    "text": "Part 1: Legacy of redlining in current environmental (in)justice\nYour first task is to explore historical redlining in Los Angeles and its legacy on present-day environmental justice.\n\nDescription\nFor this assignment, you must produce the following:\n\na map of historical redlining neighborhoods, including:\n\nneighborhoods colored by HOLC grade\nan appropriate base map\n\na table summarizing the percent of current census block groups within each HOLC grade (or none)\na set of figures summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables:\n\n% low income\npercentile for Particulate Matter 2.5\npercentile for low life expectancy\n\na brief paragraph reflecting on these results"
+  },
+  {
+    "objectID": "assignments/HW2.html#part-2-legacy-of-redlining-in-biodiversity-observations",
+    "href": "assignments/HW2.html#part-2-legacy-of-redlining-in-biodiversity-observations",
+    "title": "Homework Assignment 2",
+    "section": "Part 2: Legacy of redlining in biodiversity observations",
+    "text": "Part 2: Legacy of redlining in biodiversity observations\nYour second task is to explore the legacy of historical redlining in Los Angeles on the collection of bird observations.\n\nDescription\nFor this assignment, you must produce the following based on observations from 2022:\n\na figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade\na brief paragraph explaining whether these results match the findings from Ellis-Soto et al. 2023"
+  },
+  {
+    "objectID": "assignments/HW2.html#rubric-specifications",
+    "href": "assignments/HW2.html#rubric-specifications",
+    "title": "Homework Assignment 2",
     "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nEJScreen maps and text must communicate about an issue\n\nit is not sufficient to make two unrelated maps\n\nThe rendered Quarto doc must show all required elements in a professional style\n\nsee examples of professional and unprofessional output on the Assignments page"
+    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nAll tables must:\n\nmust use professional-style formatting from kable\n\nThe rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis\n\nsee examples of professional and unprofessional output on the Assignments page"
+  },
+  {
+    "objectID": "assignments/HW2.html#footnotes",
+    "href": "assignments/HW2.html#footnotes",
+    "title": "Homework Assignment 2",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nGee, G. C. (2008). A multilevel analysis of the relationship between institutional and individual racial discrimination and health status. American journal of public health, 98(Supplement_1), S48-S56.↩︎\nNardone, A., Rudolph, K. E., Morello-Frosch, R., & Casey, J. A. (2021). Redlines and greenspace: the relationship between historical redlining and 2010 greenspace across the United States. Environmental health perspectives, 129(1), 017006.↩︎\nHoffman, J. S., Shandas, V., & Pendleton, N. (2020). The effects of historical housing policies on resident exposure to intra-urban heat: a study of 108 US urban areas. Climate, 8(1), 12.↩︎\nEllis-Soto, D., Chapman, M., & Locke, D. H. (2023). Historical redlining is associated with increasing geographical disparities in bird biodiversity sampling in the United States. Nature Human Behaviour, 1-9.↩︎\nRobert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al., “Mapping Inequality,” American Panorama, ed. Robert K. Nelson and Edward L. Ayers, accessed October 17, 2023, https://dsl.richmond.edu/panorama/redlining/↩︎"
   },
   {
     "objectID": "course-materials/labs/week8.html",

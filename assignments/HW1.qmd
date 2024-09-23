@@ -100,7 +100,27 @@ ei_seamounts <- sf::read_sf(here::here("data", "easter_island", "ei_seamounts.gp
 
 ```
 
+:::{.callout-tip icon=true}
+## Setting a bounding box for the map
 
+To make sure that all the bathymetry and seamount data are included in the map, create a bounding box that includes both.
+
+```{r}
+# define larger plot bbox that is buffered around both of 
+# the two largest layers to display all 4 seamounts in view 
+
+bbox_seamount <- st_bbox(ei_seamounts) # seamount bounding box
+bbox_bathymetry <- st_bbox(ei_bathymetry) # bathymetry bounding box
+bbox_largest <- st_bbox(c(xmin = min(bbox_bathymetry[1], bbox_seamount[1]),
+                         ymin = min(bbox_bathymetry[2], bbox_seamount[2]),
+                         xmax = max(bbox_bathymetry[3], bbox_seamount[3]),
+                         ymax = max(bbox_bathymetry[4], bbox_seamount[4])))
+
+```
+
+Now that you've defined the bounding box, make sure to use it!
+
+:::
 
 ## Part 2: Exploring environmental (in)justice
 
