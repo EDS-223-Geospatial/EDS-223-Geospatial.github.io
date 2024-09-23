@@ -317,7 +317,7 @@ tm_shape(world_vector) +
 ::: {.callout-warning icon=true}
 # Syntax differences
 
-Note that to change the border color in `tm_polygons()` we used the `border.col` argument, but in `tm_borders()` we used the `col` argument. This is necessary in `tm_polygons()` to differentiate between the settings for the polyons fill and borders.
+Note that to change the border color in `tm_polygons()` we used the `border.col` argument, but in `tm_borders()` we used the `col` argument. This is necessary in `tm_polygons()` to differentiate between the settings for the polygons fill and borders.
 
 :::
 
@@ -449,7 +449,7 @@ tm_shape(world_cities) +
 
 ## 6. Layout
 
-Just like in standard data visualiztions, maps have elements that need to be provided in order to interpret them correctly. Maps **need** to contain either a scale bar and north arrow OR grid lines or graticules. `tmap` provides these elements (and others) as the following additional attribute layers.
+Just like in standard data visualizations, maps have elements that need to be provided in order to interpret them correctly. Maps **need** to contain either a scale bar and north arrow OR grid lines or graticules. `tmap` provides these elements (and others) as the following additional attribute layers.
 
 
 ```{r}
@@ -480,6 +480,7 @@ knitr::kable(attr_layers_df,
 ### Grid lines
 
 The `tmap` package offers two ways to draw coordinate lines - `tm_grid()` and `tm_graticules()`. `tm_grid()` represents the input data's coordinates.
+
 
 ```{r}
 tm_shape(world_vector) +
@@ -552,7 +553,7 @@ tmap_mode("plot")
 
 ## 8. Saving maps
 
-Maps can be stored as objects for for adding additional layers and saving programmtically. Maps can be saved directly in `tmap` using the `tm_shape()` function. 
+Maps can be stored as objects for for adding additional layers and saving programmatically. Maps can be saved directly in `tmap` using the `tm_save()` function. 
 
 ```{r}
 #| eval: false
