@@ -19,7 +19,7 @@ knitr::include_graphics("images/week1-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Welcome to EDS 223, why spatial?, and fundamentals of good maps](link){target="_blank"}                  |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Welcome to EDS 223, why spatial?, and fundamentals of good maps](https://docs.google.com/presentation/d/1WWYmnEuwRApjeYMHpaAVZf1qMDOxt5jYblzeo5yYQ8Q/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Making maps in R with `tmap`](labs/week1.qmd){target="_blank"}        |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Map making practice](discussions/week1-discussion.qmd){target="_blank"} |
 
