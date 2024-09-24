@@ -89,21 +89,41 @@ Now, to meet our learning objectives, your task:
 #| warning: false
 #| eval: false
 
+# tmap version 3.9:
+# tm_shape(ei_elev) +
+#   tm_graticules() +
+#   tm_raster(col.scale = tm_scale_continuous(),
+#             col.legend = tm_legend("Elevation (m asl)")) +
+#   tm_scale_continuous("rd_yl_gn") +
+#   tm_shape(ei_borders) + 
+#   tm_borders() +
+#   tm_shape(ei_roads) +
+#   tm_lines() +
+#   tm_shape(volcanoes) +
+#   tm_symbols(shape = 24, size = "elevation", 
+#              size.legend = tm_legend("Volcanoes (m asl)")) +
+#   tm_compass(position = c("right", "top")) +
+#   tm_scalebar() +
+#   tm_title("Easter Island")
+
+# tmap version 3.3.4:
 tm_shape(ei_elev) +
-  tm_graticules() +
-  tm_raster(col.scale = tm_scale_continuous(),
-            col.legend = tm_legend("Elevation (m asl)")) +
-  tm_scale_continuous("rd_yl_gn") +
+  tm_raster(style = "cont",
+            palette = "-RdYlGn",
+            title = "Elevation (m asl)") +
   tm_shape(ei_borders) + 
   tm_borders() +
-  tm_shape(ei_roads) +
-  tm_lines() +
+  tm_shape(ei_roads) + 
+  tm_lines(lwd = "strokelwd", 
+           legend.lwd.show = FALSE) +
   tm_shape(volcanoes) +
-  tm_symbols(shape = 24, size = "elevation", 
-             size.legend = tm_legend("Volcanoes (m asl)")) +
-  tm_compass(position = c("right", "top")) +
-  tm_scalebar() +
-  tm_title("Easter Island")
+  tm_symbols(shape = 24, 
+             size = "elevation",
+             title.size = "Volcanoes (m asl)") +
+  tm_layout(main.title = "Easter Island",
+            bg.color = "lightblue") +
+  tm_scale_bar(position = c("left", "bottom")) +
+  tm_compass(show.labels = 1)
 ```
 
 ### Create an Interactive Map of Easter Island with `tmap`
@@ -112,21 +132,41 @@ tm_shape(ei_elev) +
 #| warning: false
 #| eval: false
 
-my_map <- tm_shape(ei_elev) +
-  tm_raster(col.scale = tm_scale_continuous(),
-            col.legend = tm_legend("Elevation (m asl)")) +
-  tm_scale_continuous("rd_yl_gn") +
-  tm_shape(ei_borders) + 
-  tm_borders() +
-  tm_shape(ei_roads) +
-  tm_lines() +
-  tm_shape(volcanoes) +
-  tm_symbols(shape = 24, size = "elevation", 
-             size.legend = tm_legend("Volcanoes (m asl)")) +
-  tm_title("Easter Island")
+# tmap version 3.9:
+# my_map <- tm_shape(ei_elev) +
+#   tm_raster(col.scale = tm_scale_continuous(),
+#             col.legend = tm_legend("Elevation (m asl)")) +
+#   tm_scale_continuous("rd_yl_gn") +
+#   tm_shape(ei_borders) + 
+#   tm_borders() +
+#   tm_shape(ei_roads) +
+#   tm_lines() +
+#   tm_shape(volcanoes) +
+#   tm_symbols(shape = 24, size = "elevation", 
+#              size.legend = tm_legend("Volcanoes (m asl)")) +
+#   tm_title("Easter Island")
+
+# tmap version 3.3.4:
+ei_map <- tm_shape(ei_elev) +
+          tm_raster(style = "cont",
+                    palette = "-RdYlGn",
+                    title = "Elevation (m asl)") +
+          tm_shape(ei_borders) + 
+          tm_borders() +
+          tm_shape(ei_roads) + 
+          tm_lines(lwd = "strokelwd", 
+                   legend.lwd.show = FALSE) +
+          tm_shape(volcanoes) +
+          tm_symbols(shape = 24, 
+                     size = "elevation",
+                     title.size = "Volcanoes (m asl)") +
+          tm_layout(main.title = "Easter Island",
+                    bg.color = "lightblue") +
+          tm_scale_bar(position = c("left", "bottom")) +
+          tm_compass(show.labels = 1)
 
 tmap_mode("view")
-my_map
+ei_map
 ```
 
 ### Create a Map of Easter Island with `ggplot2`
