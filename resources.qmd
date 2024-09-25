@@ -23,6 +23,7 @@ Artwork by [Allison Horst](https://allisonhorst.com/){target="_blank"}
 - [Tidy design principles](https://design.tidyverse.org/){target="_blank"}
 - [r-spatial](https://r-spatial.org/){target="_blank"}
 - [*Spatial Statistics for Data Science: Theory and Practice with R*](https://www.paulamoraga.com/book-spatial/){target="_blank"}. Paula Moraga, 2023.
+- [*A Guide to Reproducible Code in Ecology and Evolution*](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf){target="_blank"}. British Ecological Society, 2017
 
 
 ## Coordinate Systems and Projections
