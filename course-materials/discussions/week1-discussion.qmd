@@ -10,7 +10,7 @@ format:
     toc: true
 ---
 
-::: {.callout-tip}
+:::{.callout-tip icon=true}
 ## Reference
 
 Refer to the [Plotting Geospatial Data](./resources/plotting.qmd) resource and [tmap book](https://r-tmap.github.io/tmap-book/) to help get you started.

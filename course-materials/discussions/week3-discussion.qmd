@@ -10,7 +10,7 @@ format:
     toc: true
 ---
 
-::: {.callout-tip}
+:::{.callout-tip icon=true}
 ## Reference
 
 Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapter 5](https://r.geocompx.org/geometry-operations) of *Geocomputation with R* to help get you started.

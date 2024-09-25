@@ -11,7 +11,7 @@ format:
     code_folding: hide
 ---
 
-::: {.callout-tip}
+:::{.callout-tip icon=true}
 ## Reference
 
 Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource to help get you started.
