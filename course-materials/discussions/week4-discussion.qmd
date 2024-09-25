@@ -10,7 +10,7 @@ format:
     toc: true
 ---
 
-::: callout-tip
+::: {.callout-tip}
 ## Reference
 
 Refer to [Chapter 3](https://geocompr.robinlovelace.net/attr.html), [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html), [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* to help get you started.
@@ -29,8 +29,12 @@ library(stars)
 library(terra)
 ```
 
-If you don't have `spDataLarge` installed, please run the following in your Console:
+
+::: {.callout-warning}
+If you don't have `spDataLarge` installed, make sure to run:
 `install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
+:::
+
 
 And read in the spatial objects:
 
@@ -113,7 +117,7 @@ ndvi_rast <- terra::lapp(landsat[[c(4, 3)]],
 
 combine <- c(ndvi_rast, ndwi_rast)
 
-plot(combine)
+plot(combine, main = c("NDVI", "NDWI"))
 
 terra::layerCor(combine, fun = cor)
 ```
@@ -152,6 +156,7 @@ srtm_resampl4 <- terra::resample(srtm, y = rast_template, method = "cubicspline"
 srtm_resampl5 <- terra::resample(srtm, y = rast_template, method = "lanczos")
 
 srtm_resampl_all <- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)
-plot(srtm_resampl_all)
+labs <- c("Bilinear", "Near", "Cubic", "Cubic Spline", "Lanczos")
+plot(srtm_resampl_all, main = labs)
 ```
 
