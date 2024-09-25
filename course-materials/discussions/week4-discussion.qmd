@@ -1,6 +1,6 @@
 ---
 title: "Week 4: Discussion Section"
-subtitle: "Practice with raster manipulations"
+subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 

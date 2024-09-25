@@ -21,7 +21,7 @@ knitr::include_graphics("images/week4-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to raster data](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Basics of raster operations with `terra`](labs/week4.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with raster manipulations](discussions/week4.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster manipulations](discussions/week4-discussion.qmd){target="_blank"} |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

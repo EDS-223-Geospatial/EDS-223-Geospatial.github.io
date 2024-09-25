@@ -21,7 +21,7 @@ knitr::include_graphics("images/week5-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Raster geometry operations: local, focal, and zonal](labs/week5.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice with raster geomerty operations](discussions/week5.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster operations](discussions/week5-discussion.qmd){target="_blank"} |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
