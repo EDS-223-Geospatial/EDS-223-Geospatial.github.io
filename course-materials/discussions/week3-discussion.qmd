@@ -18,8 +18,8 @@ Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapte
 
 ## Learning Objectives
 
-- Explore topological relationships with `st_intersects()`, `st_intersection()`, `st_within()`, etc.
-- Explore distance relationships with `st_distance()`, `st_within_distance()`, and `st_buffer()`
+- Explore topological relationships with `sf::st_intersects()`, `sf::st_intersection()`, `sf::st_within()`, etc.
+- Explore distance relationships with `sf::st_distance()`, `sf::st_within_distance()`, and `sf::st_buffer()`
 - Learn about spatial and distance-based joins
 - Practice writing error/warning messages and unit tests to diagnose outputs
 
@@ -34,6 +34,8 @@ Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapte
 Let's load the necessary packages:
 
 ```{r}
+library(here)
+library(tidyverse)
 library(sf)
 library(tmap)
 ```
@@ -43,27 +45,27 @@ And read in the spatial objects:
 ```{r}
 #| echo: false
 
-sb_protected_areas <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
-  sf::st_transform("ESRI:102009")
-sb_city_boundaries <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
-  sf::st_transform("ESRI:102009")
-sb_county_boundary <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
-  sf::st_transform("ESRI:102009")
-aves <- sf::read_sf(here::here("course-materials", "data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
-  sf::st_transform("ESRI:102009")
+sb_protected_areas <- read_sf(here::here("course-materials", "data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+  st_transform("ESRI:102009")
+sb_city_boundaries <- read_sf(here::here("course-materials", "data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+  st_transform("ESRI:102009")
+sb_county_boundary <- read_sf(here::here("course-materials", "data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
+  st_transform("ESRI:102009")
+aves <- read_sf(here::here("course-materials", "data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+  st_transform("ESRI:102009")
 ```
 
 ```{r}
 #| echo: false
 
-sb_protected_areas <- sf::read_sf(here::here("data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
-  sf::st_transform("ESRI:102009")
-sb_city_boundaries <- sf::read_sf(here::here("data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
-  sf::st_transform("ESRI:102009")
-sb_county_boundary <- sf::read_sf(here::here("data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
-  sf::st_transform("ESRI:102009")
-aves <- sf::read_sf(here::here("data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
-  sf::st_transform("ESRI:102009")
+sb_protected_areas <- read_sf(here::here("data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+  st_transform("ESRI:102009")
+sb_city_boundaries <- read_sf(here::here("data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+  st_transform("ESRI:102009")
+sb_county_boundary <- read_sf(here::here("data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
+  st_transform("ESRI:102009")
+aves <- read_sf(here::here("data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+  st_transform("ESRI:102009")
 ```
 
 To meet our learning objectives, your task:
@@ -72,11 +74,11 @@ To meet our learning objectives, your task:
   - Show the different outputs from a spatial subset and a spatial join
   - **Bonus Challenge**: Try it out with a 5 km buffer around the protected areas too! 
 2. Find the protected areas within 15 km of a city in Santa Barbara County
-  - **Hint**: Use `filter()` to select a city from  `sb_city_boundaries`
-  - Explore the different outputs with `st_intersects()`, `st_intersection()`, and `st_within()`
-  - Practice a distance-based join with `st_is_within_distance()`
+  - **Hint**: Use `dplyr::filter()` to select a city from  `sb_city_boundaries`
+  - Explore the different outputs with `sf::st_intersects()`, `sf::st_intersection()`, and `sf::st_within()`
+  - Practice a distance-based join with `sf::st_is_within_distance()`
 3. Find the distance between your city of choice and a protected area of your choice
-  - **Note**: `st_distance()` finds the distance between the geometries' edges
+  - **Note**: `sf::st_distance()` finds the distance between the geometries' edges
   
 ## Answer Key
 
@@ -102,7 +104,7 @@ nrow(aves_PA_subset)
 #| warning: false
 #| message: false
 
-aves_PA_join <- sf::st_join(aves, sb_protected_areas)
+aves_PA_join <- st_join(aves, sb_protected_areas)
 
 tm_shape(sb_county_boundary) +
   tm_fill() +
@@ -117,8 +119,8 @@ nrow(aves_PA_join)
 ```{r}
 #| echo: false
 
-sf::st_crs(sb_protected_areas)$units
-PA_buffer_5km <- sf::st_buffer(sb_protected_areas, dist = 5000)
+st_crs(sb_protected_areas)$units
+PA_buffer_5km <- st_buffer(sb_protected_areas, dist = 5000)
 
 aves_buffer_subset <- PA_buffer_5km[aves, ]
 
@@ -140,18 +142,18 @@ nrow(aves_buffer_subset)
 goleta <- sb_city_boundaries %>%
   dplyr::filter(NAME == "Goleta")
 
-sf::st_crs(goleta)$units
-goleta_buffer_15km <- sf::st_buffer(goleta, dist = 15000)
+st_crs(goleta)$units
+goleta_buffer_15km <- st_buffer(goleta, dist = 15000)
 
-goleta_PAs_within <- sf::st_within(sb_protected_areas, goleta_buffer_15km)
-goleta_PAs_intersect <- sf::st_intersects(sb_protected_areas, goleta_buffer_15km)
-goleta_PAs_intersection <- sf::st_intersection(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_within <- st_within(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_intersect <- st_intersects(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_intersection <- st_intersection(sb_protected_areas, goleta_buffer_15km)
 
 # Check class
 class(goleta_PAs_intersect) == class(goleta_PAs_intersection)
 
 # Distance-based join
-goleta_PAs_join <- sf::st_join(sb_protected_areas, goleta, st_is_within_distance, dist = 15000)
+goleta_PAs_join <- st_join(sb_protected_areas, goleta, st_is_within_distance, dist = 15000)
 
 nrow(goleta_PAs_intersection)
 nrow(goleta_PAs_join)
@@ -163,12 +165,12 @@ nrow(goleta_PAs_join)
 dangermond <- sb_protected_areas %>%
   dplyr::filter(UNIT_NAME == "Jack and Laura Dangermond Preserve")
 
-danger_dist <- sf::st_distance(goleta, dangermond)
+danger_dist <- st_distance(goleta, dangermond)
 
-dangermond_centroid <- sf::st_centroid(dangermond)
-goleta_centroid <- sf::st_centroid(goleta)
+dangermond_centroid <- st_centroid(dangermond)
+goleta_centroid <- st_centroid(goleta)
 
-danger_dist_centroid <- sf::st_distance(goleta_centroid, dangermond_centroid)
+danger_dist_centroid <- st_distance(goleta_centroid, dangermond_centroid)
 danger_dist == danger_dist_centroid
 ```
 

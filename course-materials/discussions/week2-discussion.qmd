@@ -19,10 +19,10 @@ Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd)
 
 ## Learning Objectives
 
-- Use `st_read()` to read multiple vector data types
-- Retreive the CRS of a vector object with `st_crs()`
-- Transform CRS and match across all vector data types with `st_transform()`
-- Perform attribute manipulations (e.g. `filter()`, `mutate()`, `select()`)
+- Use `sf::st_read()` to read multiple vector data types
+- Retreive the CRS of a vector object with `sf::st_crs()`
+- Transform CRS and match across all vector data types with `sf::st_transform()`
+- Perform `dplyr` attribute manipulations (e.g. `filter()`, `mutate()`, `select()`)
 
 ## Data
 
@@ -42,6 +42,7 @@ Let's load the necessary packages:
 #| message: false
 #| warning: false
 
+library(here)
 library(tidyverse)
 library(sf)
 library(tmap)
@@ -51,21 +52,21 @@ Now, to meet our learning objectives, your task:
 
 1. Read in the data for Colombia's ecoregions, roads, and bird observations
   - Use `st_read()` to read vector data (e.g., .shp, .gdb)
-  - Use `rename()` or `mutate()` to rename the columns `decimal_longitude` and `decimal_latitude` to `long` and `lat` in `aves` and `st_as_sf()` to convert it into an sf object
+  - Use `dplyr::rename()` or `dplyr::mutate()` to rename the columns `decimal_longitude` and `decimal_latitude` to `long` and `lat` in `aves` and `sf::st_as_sf()` to convert it into an sf object
     - **Hint**: To convert a table into a vector object, you can use `st_as_sf()` but remember to check the `class()` of an object first!
-2. Check `class()` of all vector objects (including the converted `aves`) and use `st_geometry_type()` to check the geometry type
-3. Use `filter()` to select a macro region of interest from `N1_MacroBi` in Colombia's ecoregions dataset
+2. Check `class()` of all vector objects (including the converted `aves`) and use `sf::st_geometry_type()` to check the geometry type
+3. Use `filter()` to select a macro region of interest from `N1_MacroBi` in Colombia's ecoregions dataset and save as a new vector data
   - Check `class()` of the new vector data
   - Plot the new vector data using `tmap`
-4. Use `st_crs()` to retrieve CRS of all vector objects and assign a new CRS
+4. Use `sf::st_crs()` to retrieve CRS of all vector objects and assign a new CRS
   - **Bonus**: Check units of your object with `st_crs()$units`
   - Check CRS of all vector objects with `st_crs()`
   - `st_crs() <- NA` is a brute force way to remove a CRS, instead:
-    - For the bird observations dataset, extract the longitude and latitude from the `geometry` column and use `st_drop_geometry()`
+    - For the bird observations dataset, extract the longitude and latitude from the `geometry` column and use `sf::st_drop_geometry()`
     - Convert `long` and `lat` into a geometry again with `st_as_sf()` to obtain a proper `sf` data frame
 5. Let's bring all vector data types together
   - Check that the CRS of the ecoregions and roads datasets match
-  - Transform CRS of the bird observations data using `st_transform()` to match with the other datasets
+  - Transform CRS of the bird observations data using `sf::st_transform()` to match with the other datasets
   - Use `tmap` to plot the ecoregions, roads, and bird observations together
 
 ## Answer Key
@@ -73,13 +74,23 @@ Now, to meet our learning objectives, your task:
 ### Read in Vector Data
 
 ```{r}
-col <- sf::st_read(here::here("week2-discussion", "Colombia", "Colombia.shp"))
-roads <- sf::st_read(here::here("week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("week2-discussion", "dataves.csv")) %>%
+col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
   dplyr::mutate(lat = decimal_latitude) %>%
-  sf::st_as_sf(coords = c("long", "lat"), crs = 4326)
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+```
+
+```{r}
+col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
+  dplyr::as_tibble() %>%
+  dplyr::rename(long = decimal_longitude) %>%
+  dplyr::mutate(lat = decimal_latitude) %>%
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
 ```
 
 ### Check Class and Geometry Type
@@ -91,9 +102,9 @@ class(aves)
 ```
 
 ```{r}
-unique(sf::st_geometry_type(col))
-unique(sf::st_geometry_type(roads))
-unique(sf::st_geometry_type(aves))
+unique(st_geometry_type(col))
+unique(st_geometry_type(roads))
+unique(st_geometry_type(aves))
 ```
 
 ### `filter()` for Macro Region of Interest
@@ -105,48 +116,48 @@ col_andean <- col %>%
 
 class(col_andean)
 
-tmap::tm_shape(col_andean) +
-  tmap::tm_polygons()
+tm_shape(col_andean) +
+  tm_polygons()
 ```
 
 ### Coordinate Reference System 
 
 ```{r}
-sf::st_crs(col)
-sf::st_crs(roads)
-sf::st_crs(aves)
+st_crs(col)
+st_crs(roads)
+st_crs(aves)
 
-sf::st_crs(col)$units
-sf::st_crs(roads)$units
-sf::st_crs(aves)$units
+st_crs(col)$units
+st_crs(roads)$units
+st_crs(aves)$units
 
 aves_df_purrr <- aves %>%
-  dplyr::mutate(lon = unlist(purrr::map(aves$geometry, 1)),
-                lat = unlist(purrr::map(aves$geometry, 2))) %>% 
-  sf::st_drop_geometry()
+  mutate(lon = unlist(purrr::map(aves$geometry, 1)),
+         lat = unlist(purrr::map(aves$geometry, 2))) %>% 
+  st_drop_geometry()
 
 aves_df_st_coords <- aves %>%
-    dplyr::mutate(lon = sf::st_coordinates(.)[,1],
-                  lat = sf::st_coordinates(.)[,2]) %>%
-  sf::st_drop_geometry()
+  dplyr::mutate(lon = sf::st_coordinates(.)[,1],
+                lat = sf::st_coordinates(.)[,2]) %>%
+  st_drop_geometry()
 
 aves_df_purrr <- aves %>%
-  sf::st_as_sf(coords = c("lon", "lat"), crs = 4326)
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
 ```
 
 ### Bring All Vector Data Types Together
 
 ```{r}
-sf::st_crs(col) == sf::st_crs(roads)
+st_crs(col) == st_crs(roads)
 
-aves <- sf::st_transform(aves, crs = sf::st_crs(col))
+aves <- st_transform(aves, crs = st_crs(col))
 
-tmap::tm_shape(col) +
-  tmap::tm_polygons() +
-  tmap::tm_shape(roads) +
-  tmap::tm_lines() +
-  tmap::tm_shape(aves) +
-  tmap::tm_dots()
+tm_shape(col) +
+  tm_polygons() +
+  tm_shape(roads) +
+  tm_lines() +
+  tm_shape(aves) +
+  tm_dots()
 ```
 
 

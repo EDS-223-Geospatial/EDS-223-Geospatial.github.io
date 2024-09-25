@@ -1,6 +1,6 @@
 ---
-title: "Week 6: Discussion Section"
-subtitle: "Raster manipulations"
+title: "Week 5: Discussion Section"
+subtitle: "Practice with raster operations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
@@ -17,9 +17,9 @@ Refer to [Chapter 6](https://r.geocompx.org/raster-vector) of *Geocomputation wi
 
 ## Learning Objectives
 
-- Use `crop()` and `mask()` to create a subset of a raster or vector 
-- Use `aggregate()` and `resample()` to create a new raster or vector
-- Use `as.polygons()` to convert a raster to a vector of polygons
+- Use `terra::crop()` and `terra::mask()` to create a subset of a raster or vector 
+- Use `terra::aggregate()` and `terra::resample()` to create a new raster or vector
+- Use `terra::as.polygons()` to convert a raster to a vector of polygons
 
 ## Get Started
 
@@ -29,6 +29,7 @@ Let's load the necessary packages:
 #| message: false
 #| warning: false
 
+library(tidyverse)
 library(sf)
 library(terra)
 library(spData)
@@ -37,13 +38,13 @@ library(tidyverse)
 ```
 
 ```{r}
-zion_points <- sf::read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
+zion_points <- read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
 
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 
 zion_convex_hull <- sf::st_combine(zion_points) %>%
   sf::st_convex_hull() %>% 
-  sf::st_as_sf()
+  st_as_sf()
 
 grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
 ```
@@ -68,13 +69,13 @@ Now, to meet our learning objectives, your task:
 ### Crop and Mask `srtm`
 
 ```{r}
-srtm_crop1 <- terra::crop(srtm, zion_points)
-srtm_crop2 <- terra::crop(srtm, zion_convex_hull)
+srtm_crop1 <- crop(srtm, zion_points)
+srtm_crop2 <- crop(srtm, zion_convex_hull)
 plot(srtm_crop1)
 plot(srtm_crop2)
 
-srtm_mask1 <- terra::mask(srtm, zion_points)
-srtm_mask2 <- terra::mask(srtm, zion_convex_hull)
+srtm_mask1 <- mask(srtm, zion_points)
+srtm_mask2 <- mask(srtm, zion_convex_hull)
 plot(srtm_mask1)
 plot(srtm_mask2)
 ```
@@ -85,14 +86,14 @@ plot(srtm_mask2)
 nz_height3100 <- nz_height %>% 
   dplyr::filter(elevation > 3100)
 
-nz_template <- terra::rast(terra::ext(nz_height3100),
-                           resolution = 3000, crs = terra::crs(nz_height3100))
+nz_template <- rast(terra::ext(nz_height3100),
+                    resolution = 3000, crs = terra::crs(nz_height3100))
 ```
 
 ### Count Points in Each Cell
 
 ```{r}
-nz_raster <- terra::rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
+nz_raster <- rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
 plot(nz_raster)
 plot(st_geometry(nz_height3100), add = TRUE)
 ```
@@ -100,7 +101,7 @@ plot(st_geometry(nz_height3100), add = TRUE)
 ### Find Maximum Elevation in Each Grid Cell
 
 ```{r}
-nz_raster2 <- terra::rasterize(nz_height3100, nz_template, field = "elevation", fun = max)
+nz_raster2 <- rasterize(nz_height3100, nz_template, field = "elevation", fun = max)
 plot(nz_raster2)
 plot(st_geometry(nz_height3100), add = TRUE)
 ```
@@ -108,19 +109,19 @@ plot(st_geometry(nz_height3100), add = TRUE)
 ### Aggregate Raster
 
 ```{r}
-nz_raster_low <- raster::aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
+nz_raster_low <- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
 
-nz_resample <- terra::resample(nz_raster_low, nz_raster)
+nz_resample <- resample(nz_raster_low, nz_raster)
 plot(nz_raster_low)
 plot(nz_resample) # the results are spread over a greater area and there are border issues
 plot(nz_raster)
 ```
 
-### Polygonize Raster
+### Vectorize Raster
 
 ```{r}
 grain_poly <- as.polygons(grain) %>% 
-  sf::st_as_sf()
+  st_as_sf()
 
 plot(grain)
 plot(grain_poly)
