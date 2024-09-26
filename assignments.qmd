@@ -36,7 +36,7 @@ Links to assignments will become available as they are assigned.
 | HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/21/2024    | 11/09/2024 |
 | SR              | [Mid-course Self Reflection (SR#2)](assignments/SR2.qmd){target="_blank"} | 10/28/2024    | 11/02/2024 |
 | HW              | [Homework Assignment #4](assignments/HW4.qmd){target="_blank"}            | 11/11/2024    | 11/30/2024 |
-| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2024    | 11/30/2024 |
+| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2024    | 12/07/2024 |
 | SR              | [Final Self Reflection (SR#3)](assignments/SR3.qmd){target="_blank"}      | 12/02/2024    | 12/07/2024 |
 
 ## End-of-class surveys

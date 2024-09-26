@@ -1,7 +1,7 @@
 ---
 title: "Week 8: Discussion Section"
-subtitle: "Lorem ipsum"
-author: "Allie Caughmam"
+subtitle: "Practice function making with raster time series data"
+author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
   eval: false
