@@ -1,143 +1,24 @@
 ---
-title: "Discssuion Week 10: Workflows and Maps"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
-author: "Allie Caughmam"
+title: "Week 10: Discussion Section"
+subtitle: "Practice gridding and spatial interpolation"
+author: "Alessandra Vidal Meza"
+date: last-modified
 execute: 
   eval: false
-date: last-modified
 format:
   html:
     toc: true
 ---
 
-```{r setup, include=FALSE, message=FALSE, warning=FALSE}
-knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
-```
+## Get Started
 
-
-## Prerequsites 
+Let's load the necessary packages:
 
 ```{r}
-library(tidyverse)
-library(patchwork)
+#| message: false
+#| warning: false
+
 library(sf)
+library(tidyverse)
 library(terra)
-library(stars)
-library(ggspatial)
-```
-
-Load in the CPAD_2023a_SuperUnits.shp and the ghm.tif files. ghm.tif Transform both to EPSG:4326.
-
-```{r}
-cpad_super <- st_read(here::here("course-materials", "data", "week9-discussion", "CPAD_2023a_SuperUnits.shp"), quiet = TRUE) %>%
-  sf::st_transform("EPSG:4326") %>%
-  janitor::clean_names() %>%
-  mutate(ID = row_number())
-
-ghm <- rast(here::here("course-materials", "data", "week9-discussion", "gHM_masked.tif")) %>%
-  project("EPSG:4326")
-```
-
-## Exercises
-
-1. Let’s make nice plots of the California Protected areas by access level
-
-```{r}
-p1 <- ggplot2::ggplot(data = cpad_super) +
-  geom_sf(aes(color = access_typ, fill = access_typ)) +
-  theme_bw() +
-  labs(
-    color = "Access Type",
-    fill = "Access Type"
-  ) +
-  annotation_scale(plot_unit = "km") +
-  annotation_north_arrow(
-    location = "tr",
-    pad_x = unit(0.2, "in"),
-    pad_y = unit(0.2, "in"),
-    style = ggspatial::north_arrow_nautical(
-      fill =
-        c("grey40", "white"),
-      line_col = "grey20"
-    )
-  ) +
-  coord_sf() +
-  scale_color_viridis_d() +
-  scale_fill_viridis_d()
-```
-
-```{r}
-p1 +
-  facet_wrap(~access_typ) +
-  theme(strip.background = element_rect(fill = "transparent"))
-```
-
-2. Let's try plotting the ghm layers nicely too!
-
-```{r}
-ggplot() +
-    geom_stars(data = st_as_stars(ghm)) +
-  coord_equal() +
-  theme_bw() +
-  labs(
-    x = "",
-    y = "",
-    fill = "Global Human Modification"
-  ) +
-  scale_fill_viridis_c() +
-  annotation_scale(plot_unit = "km") +
-  annotation_north_arrow(
-    location = "tr",
-    pad_x = unit(0.2, "in"),
-    pad_y = unit(0.2, "in"),
-    style = ggspatial::north_arrow_nautical(
-      fill =
-        c("grey40", "white"),
-      line_col = "grey20"
-    )
-  )
-```
-
-3. Create a function to take 2 data sets (1 polygon and 1 raster) and create a boxplot of the values based on a specific layer
-
-```{r}
-summary_boxplot <- function(polygon, raster, my_layer, my_label) {
-  
-  # rasterize polygon by layer
-  id_rast <- rasterize(polygon, raster, field = "suid_nma")
-  
-  #do mean zonal statistics
-  zonal_layer <- zonal(raster, id_rast, fun = "mean", na.rm = TRUE)
-  
-  #join with polygon database
-  poly_join <- full_join(polygon, zonal_layer) %>% 
-    select(suid_nma, gHM, my_layer)
-  
-  #create boxplot based on your layer
-  p1 <- ggplot(poly_join) +
-    geom_boxplot(aes(gHM, .data[[my_layer]])) +
-    theme_bw() +
-    labs(x = "Human Modification Index", 
-         y = my_label)
-  
-  return(p1)
-}
-```
-
-4. Let's select some layers and use our new function!
-
-```{r}
-names(cpad_super)
-```
-
-```{r message=FALSE}
-access <- summary_boxplot(cpad_super, ghm, "access_typ", "Access Type")
-
-access
-```
-
-```{r}
-layer <- summary_boxplot(cpad_super, ghm, "layer", "Management Agency Type")
-
-layer
 ```

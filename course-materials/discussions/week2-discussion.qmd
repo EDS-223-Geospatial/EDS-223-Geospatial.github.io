@@ -1,17 +1,66 @@
 ---
-title: "Week 2 Discussion Section"
-subtitle: "Manipulating vector data and coordinate reference systems"
+title: "Week 2: Discussion Section"
+subtitle: "Working with multiple vector types"
 author: "Alessandra Vidal Meza"
 date: last-modified
+execute: 
+  eval: false
 format:
   html:
     toc: true
+    code_folding: hide
 ---
 
-## Learning objectives for discussion section:
+:::{.callout-tip icon=true}
+## Reference
 
-- read in multiple vector datasets of different types
-- check CRS
-- transform CRS to match across all datasets
-- perform attribute manipulations (e.g. filter, mutate, select)
-- plot data
+Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource to help get you started.
+:::
+
+## Learning Objectives
+
+- Use `sf::st_read()` to read multiple vector data types
+- Retreive the CRS of a vector object with `sf::st_crs()`
+- Transform CRS and match across all vector data types with `sf::st_transform()`
+- Perform `dplyr` attribute manipulations (e.g. `filter()`, `mutate()`, `select()`)
+
+## Data
+
+- **Colombia's Terrestrial Ecosystems** ([The Nature Conservancy/NatureServe](https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/))
+- **Colombia's Roads** ([Esri](https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/))
+- **Bird Observations** ([DATAVES](https://doi.org/10.15472/iqnpse))
+
+## Get Started
+
+Let's load the necessary packages:
+
+```{r}
+#| message: false
+#| warning: false
+
+library(here)
+library(tidyverse)
+library(sf)
+library(tmap)
+```
+
+Now, to meet our learning objectives, your task:
+
+1. Read in the data for Colombia's ecoregions, roads, and bird observations
+  - Use `st_read()` to read vector data (e.g., .shp, .gdb)
+  - Use `rename()` or `mutate()` to rename the columns `decimal_longitude` and `decimal_latitude` to `long` and `lat` in `aves` and `sf::st_as_sf()` to convert it into an sf object
+    - **Hint**: To convert a table into a vector object, you can use `st_as_sf()` but remember to check the `class()` of an object first!
+2. Check `class()` of all vector objects (including the converted `aves`) and use `sf::st_geometry_type()` to check the geometry type
+3. Use `filter()` to select a macro region of interest from `N1_MacroBi` in Colombia's ecoregions dataset and save as a new vector data
+  - Check `class()` of the new vector data
+  - Plot the new vector data using `tmap`
+4. Use `st_crs()` to retrieve CRS of all vector objects and assign a new CRS
+  - **Bonus**: Check units of your object with `st_crs()$units`
+  - Check CRS of all vector objects with `st_crs()`
+  - `st_crs() <- NA` is a brute force way to remove a CRS, instead:
+    - For the bird observations dataset, extract the longitude and latitude from the `geometry` column and use `sf::st_drop_geometry()`
+    - Convert `long` and `lat` into a geometry again with `st_as_sf()` to obtain a proper `sf` data frame
+5. Let's bring all vector data types together
+  - Check that the CRS of the ecoregions and roads datasets match
+  - Transform CRS of the bird observations data using `sf::st_transform()` to match with the other datasets
+  - Use `tmap` to plot the ecoregions, roads, and bird observations together

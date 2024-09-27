@@ -71,13 +71,13 @@ Let's load three spatial data objects to plot:
 #| echo: false
 
 # raster of global elevations
-world_elevation <- read_stars(here("course-materials","data","worldelevation.tif"))
+world_elevation <- read_stars(here("course-materials","data", "week1","worldelevation.tif"))
 
 # country boundaries
-world_vector <- read_sf(here("course-materials","data","worldvector.gpkg"))
+world_vector <- read_sf(here("course-materials","data","week1","worldvector.gpkg"))
 
 # major cities
-world_cities <- read_sf(here("course-materials","data","worldcities.gpkg"))
+world_cities <- read_sf(here("course-materials","data","week1","worldcities.gpkg"))
 
 ```
 
@@ -227,7 +227,6 @@ tm_shape(world_elevation, bbox = "Europe") + # query the region of Europe
 Again following the syntax of `ggplot2` which uses layers to plot data (e.g. `geom_point()`), `tmap` also uses layers! We've already used layers in our previous examples (e.g. `tm_borders()`), but now we'll dig into them in more detail. All possible layer types can be found in the table below:
 
 ```{r}
-#| echo: false
 
 layers_basic_df = tibble::tribble(
   ~Function, ~Element, ~Geometry,
@@ -318,7 +317,7 @@ tm_shape(world_vector) +
 ::: {.callout-warning icon=true}
 # Syntax differences
 
-Note that to change the border color in `tm_polygons()` we used the `border.col` argument, but in `tm_borders()` we used the `col` argument. This is necessary in `tm_polygons()` to differentiate between the settings for the polyons fill and borders.
+Note that to change the border color in `tm_polygons()` we used the `border.col` argument, but in `tm_borders()` we used the `col` argument. This is necessary in `tm_polygons()` to differentiate between the settings for the polygons fill and borders.
 
 :::
 
@@ -335,7 +334,7 @@ tm_shape(world_cities) +
 
 ```
 
-`tm_symbols()` has a large number of arguments to flexible adjust how elements are displayed. While this allows adjusting its results to almost any need, it also makes this function complicated. Therefore, four additional layers are implemented in `tmap`: `tm_squares()`, `tm_bubbles()`, `tm_dots()`, `tm_markers()`. All of them use `tm_symbols()`, but with different default values.
+`tm_symbols()` has a large number of arguments to flexibly adjust how elements are displayed. While this allows adjusting its results to almost any need, it also makes this function complicated. Therefore, four additional layers are implemented in `tmap`: `tm_squares()`, `tm_bubbles()`, `tm_dots()`, `tm_markers()`. All of them use `tm_symbols()`, but with different default values.
 
 - `tm_squares()`: uses square symbols (`shape = 22`)
 - `tm_bubbles()`: uses large circle symbols
@@ -358,7 +357,7 @@ tm_shape(world_cities) +
 
 ## 5. Visual variables
 
-Following `ggplot2` yet again, `tmap` uses the basic visual variables of color, size, and shape to represent data. Which variables can be applied depends on the typ of the map layer.
+Following `ggplot2` yet again, `tmap` uses the basic visual variables of color, size, and shape to represent data. Which variables can be applied depends on the type of the map layer.
 
 - Symbols: color, size, and shape
 - Lines: color and size
@@ -442,18 +441,19 @@ Sizes can be used for points, lines (line widths), or text to represent quantita
 tm_shape(world_vector) +
   tm_polygons(col = "lightblue") +
 tm_shape(world_cities) +
-  tm_symbols(size = "pop2020")
+  tm_symbols(size = "pop2020",
+             legend.size.is.portrait = TRUE)
 
 ```
 
 
 ## 6. Layout
 
-Just like in standard data visualiztions, maps have elements that need to be provided in order to interpret them correctly. Maps **need** to contain either a scale bar and north arrow OR grid lines or graticules. `tmap` provides these elements (and others) as the following additional attribute layers.
+Just like in standard data visualizations, maps have elements that need to be provided in order to interpret them correctly. Maps **need** to contain either a scale bar and north arrow OR grid lines or graticules. `tmap` provides these elements (and others) as the following additional attribute layers.
 
 
 ```{r}
-#| echo: false
+
 attr_layers_df = tibble::tribble(
   ~Function, ~Description,
   "tm_grid()", "draws coordinate grid lines of the coordinate system of the main shape object",
@@ -480,6 +480,7 @@ knitr::kable(attr_layers_df,
 ### Grid lines
 
 The `tmap` package offers two ways to draw coordinate lines - `tm_grid()` and `tm_graticules()`. `tm_grid()` represents the input data's coordinates.
+
 
 ```{r}
 tm_shape(world_vector) +
@@ -552,7 +553,7 @@ tmap_mode("plot")
 
 ## 8. Saving maps
 
-Maps can be stored as objects for for adding additional layers and saving programmtically. Maps can be saved directly in `tmap` using the `tm_shape()` function. 
+Maps can be stored as objects for for adding additional layers and saving programmatically. Maps can be saved directly in `tmap` using the `tm_save()` function. 
 
 ```{r}
 #| eval: false

@@ -298,7 +298,7 @@ world %>%
   st_drop_geometry()
 ```
 
-Building on this, let's find the population density of each continent, find the continent's with highest density and arrange by the number of countries. We'll drop the geometry column to speed things up.
+Building on this, let's find the population density of each continent, find the continents with highest density and arrange by the number of countries. We'll drop the geometry column to speed things up.
 ```{r}
 world %>%
   st_drop_geometry() %>%

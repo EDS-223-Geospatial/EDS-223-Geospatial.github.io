@@ -1,0 +1,103 @@
+---
+title: "Week 3: Discussion Section - Answer Key"
+subtitle: "Practice vector operations"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+---
+
+## Bird Observations within Santa Barbara's PAs
+
+```{r}
+#| echo: false
+
+aves_PA_subset <- sb_protected_areas[aves, ]
+
+tm_shape(sb_county_boundary) +
+  tm_fill() +
+  tm_shape(sb_protected_areas) +
+  tm_borders(lwd = 1, col = "#fb8500") +
+  tm_shape(aves_PA_subset) +
+  tm_dots(col = "#023047")
+
+nrow(aves_PA_subset)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+aves_PA_join <- st_join(aves, sb_protected_areas)
+
+tm_shape(sb_county_boundary) +
+  tm_fill() +
+  tm_shape(sb_protected_areas) +
+  tm_borders(lwd = 1) +
+  tm_shape(aves_PA_join) +
+  tm_dots(fill = "UNIT_NAME")
+
+nrow(aves_PA_join)
+```
+
+```{r}
+#| echo: false
+
+st_crs(sb_protected_areas)$units
+PA_buffer_5km <- st_buffer(sb_protected_areas, dist = 5000)
+
+aves_buffer_subset <- PA_buffer_5km[aves, ]
+
+tm_shape(sb_county_boundary) +
+  tm_fill() +
+  tm_shape(sb_protected_areas) +
+  tm_borders(lwd = 1, col = "#fb8500") +
+  tm_shape(aves_buffer_subset) +
+  tm_dots(col = "#023047")
+
+nrow(aves_buffer_subset)
+```
+
+## PAs within 15 km of Goleta 
+
+```{r}
+#| echo: false
+
+goleta <- sb_city_boundaries %>%
+  dplyr::filter(NAME == "Goleta")
+
+st_crs(goleta)$units
+goleta_buffer_15km <- st_buffer(goleta, dist = 15000)
+
+goleta_PAs_within <- st_within(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_intersect <- st_intersects(sb_protected_areas, goleta_buffer_15km)
+goleta_PAs_intersection <- st_intersection(sb_protected_areas, goleta_buffer_15km)
+
+# Check class
+class(goleta_PAs_intersect) == class(goleta_PAs_intersection)
+
+# Distance-based join
+goleta_PAs_join <- st_join(sb_protected_areas, goleta, st_is_within_distance, dist = 15000)
+
+nrow(goleta_PAs_intersection)
+nrow(goleta_PAs_join)
+```
+
+## Distance between Goleta and Dangermond Preserve
+
+```{r}
+dangermond <- sb_protected_areas %>%
+  dplyr::filter(UNIT_NAME == "Jack and Laura Dangermond Preserve")
+
+danger_dist <- st_distance(goleta, dangermond)
+
+dangermond_centroid <- st_centroid(dangermond)
+goleta_centroid <- st_centroid(goleta)
+
+danger_dist_centroid <- st_distance(goleta_centroid, dangermond_centroid)
+danger_dist == danger_dist_centroid
+```

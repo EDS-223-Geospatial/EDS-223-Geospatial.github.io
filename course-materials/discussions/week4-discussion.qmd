@@ -1,6 +1,6 @@
 ---
 title: "Week 4: Discussion Section"
-subtitle: "Practice with raster manipulations"
+subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
@@ -10,11 +10,10 @@ format:
     toc: true
 ---
 
-::: callout-tip
+::: {.callout-tip}
 ## Reference
 
-Refer to [Chapter 3](https://geocompr.robinlovelace.net/attr.html), [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html), [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* to get you
-started.
+Refer to [Chapter 3](https://geocompr.robinlovelace.net/attr.html), [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html), [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* to help get you started.
 :::
 
 ## Get Started
@@ -30,22 +29,30 @@ library(stars)
 library(terra)
 ```
 
+
+::: {.callout-warning}
+If you don't have `spDataLarge` installed, make sure to run:
+
+<br>
+
+`install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
+:::
+
+
 And read in the spatial objects:
 
 ```{r}
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-# peru_dem <- geodata::elevation_30s(country = "Peru", path = ".", mask = FALSE)
-peru <- stars::read_stars(here::here("course-materials", "data", "week4", "PER_elv.tif"))
+peru <- stars::read_stars(here::here("course-materials", "data", "week4-discussion", "PER_elv.tif"))
 ```
 
 ```{r}
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-# peru_dem <- geodata::elevation_30s(country = "Peru", path = ".", mask = FALSE)
-peru <- stars::read_stars(here::here("data", "week4", "PER_elv.tif"))
+peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
 ```
 
 Now, to meet our learning objectives, your task:
@@ -55,103 +62,14 @@ Now, to meet our learning objectives, your task:
   - Low, where elevation is less than 300
   - Medium
   - High, where elevation is greater than 500
-3. Calculate the Normalized Difference Water Index (NDWI) of `landsat`
+3. Calculate the Normalized Difference Vegetation Index (NDVI) and Normalized Difference Water Index (NDWI) of `landsat` and find a correlation between NDVI and NDWI
+  - **Note**: $NDVI = (NIR - red)/(NIR + red)$
   - **Note**: $NDWI = (green - NIR)/(green + NIR)$
-  a. Find a correlation between NDVI and NDWI
-4. Find the distance across all cells in `peru_dem` to its nearest coastline
-  - **Hint**: Use `terra::distance()`
+4. Find the distance across all cells in `peru` to its nearest coastline
+  - **Hint**: Use `terra::distance()` to find geographic distance for all cells
   - **Note**: `terra::distance()` will calculate distance for all cells that are `NA` to the nearest cell that are not `NA`
-  a. Weigh the distance raster with `peru_dem` and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation
+  - Weigh the distance raster with `peru` and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation
     - Every 100 altitudinal meters should increase the distance to the coast by 10 km
 5. Change the resolution of `srtm` to 0.01 by 0.01 degrees
   - Use all of the method available in the `terra` package
-  - **Note**: The `srtm` raster has a resolution of 0.00083 by 0.00083 degrees
-
-## Answer Key
-
-### Plot a histogram and boxplot of `dem`
-
-```{r}
-hist(dem)
-boxplot(dem)
-```
-
-## Reclassify elevation and find the mean
-
-```{r}
-rcl <- matrix(c(-Inf, 300, 0, 
-                300, 500, 1, 
-                500, Inf, 2), 
-              ncol = 3, byrow = TRUE)
-
-dem_rcl <- terra::classify(dem, rcl = rcl)
-
-levels(dem_rcl) <- tibble::tibble(id = 0:2, 
-                                  cats = c("low", "medium", "high"))
-
-elevation_mean <- terra::zonal(dem, dem_rcl, fun = "mean")
-elevation_mean
-```
-
-### Calculate the NDWI and correlation with NDVI
-
-```{r}
-ndwi_fun <- function(green, nir){
-    (green - nir)/(green + nir)
-}
-
-ndvi_fun <- function(nir, red){
-  (nir - red)/(nir + red)
-}
-
-ndwi_rast <- terra::lapp(landsat[[c(2, 4)]], 
-                         fun = ndwi_fun)
-plot(ndwi_rast)
-
-ndvi_rast <- terra::lapp(landsat[[c(4, 3)]], 
-                         fun = ndvi_fun)
-
-combine <- c(ndvi_rast, ndwi_rast)
-
-plot(combine)
-
-terra::layerCor(combine, fun = cor)
-```
-
-### Find distances across all `peru_dem` cells
-
-```{r}
-peru_dem <- terra::aggregate(peru_dem, fact = 20)
-plot(peru_dem)
-
-water_mask <- is.na(peru_dem)
-water_mask[water_mask == 0] <- NA
-plot(water_mask)
-
-distance_to_coast <- terra::distance(water_mask)
-distance_to_coast_km <- distance_to_coast/1000
-
-plot(distance_to_coast_km, main = "Distance to the coast (km)")
-
-distance_to_coast_km2 <- distance_to_coast_km + ((peru_dem/100)*10)
-plot(distance_to_coast_km2)
-```
-
-
-### Change the resolution of the SRTM
-
-```{r}
-plot(srtm)
-
-rast_template <- terra::rast(terra::ext(srtm), res = 0.01)
-
-srtm_resampl1 <- terra::resample(srtm, y = rast_template, method = "bilinear")
-srtm_resampl2 <- terra::resample(srtm, y = rast_template, method = "near")
-srtm_resampl3 <- terra::resample(srtm, y = rast_template, method = "cubic")
-srtm_resampl4 <- terra::resample(srtm, y = rast_template, method = "cubicspline")
-srtm_resampl5 <- terra::resample(srtm, y = rast_template, method = "lanczos")
-
-srtm_resampl_all <- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)
-plot(srtm_resampl_all)
-```
-
+  - **Note**: The `srtm` raster has a resolution of 0.00083 x 0.00083 degrees

@@ -1,0 +1,66 @@
+---
+title: "Week 5: Discussion Section"
+subtitle: "Practice raster operations with vectors"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+---
+
+:::{.callout-tip icon=true}
+## Reference
+
+Refer to [Chapter 6](https://r.geocompx.org/raster-vector) of *Geocomputation with R* to help get you started.
+:::
+
+## Learning Objectives
+
+- Use `terra::crop()` and `terra::mask()` to create a subset of a raster or vector 
+- Use `terra::aggregate()` and `terra::resample()` to create a new raster or vector
+- Use `terra::as.polygons()` to convert a raster to a vector of polygons
+
+## Get Started
+
+Let's load the necessary packages:
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(sf)
+library(terra)
+library(spData)
+library(spDataLarge)
+library(tidyverse)
+```
+
+```{r}
+zion_points <- read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
+
+srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+
+zion_convex_hull <- sf::st_combine(zion_points) %>%
+  sf::st_convex_hull() %>% 
+  st_as_sf()
+
+grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
+```
+
+Now, to meet our learning objectives, your task:
+
+1. Crop and mask the `srtm` raster using (1) `zion_points` and (2) `zion_convex_hull`
+  - Are there any differences in the output maps with `crop()`? What about with `mask()`? 
+  - What happens when you set `inverse = TRUE` in `mask()`?
+2. Subset points higher than 3100 meters in `nz_height` and create a template raster with `terra::rast()`, where the resolution is 3 km x 3 km for the extent of the subset dataset
+  - Count numbers of the highest points in each grid cell
+  - Find the maximum elevation in each grid cell
+3. With the previous raster, complete the following:
+  - Aggregate the raster that counts the highest points in New Zealand/Aotearoa
+  - Reduce its geographic resolution by half, such that cells are 6 x 6 km
+  - Plot the result
+  - Resample back to the original resolution of 3 km x 3 km
+4. Polygonize `grain` and filter to only keep squares that represent clay

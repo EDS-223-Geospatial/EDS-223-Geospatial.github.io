@@ -1,0 +1,98 @@
+---
+title: "Week 4: Discussion Section - Answer Key"
+subtitle: "Practice raster manipulations"
+author: "Allie Caughmam"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+---
+
+## Plot a Histogram and Boxplot of `dem`
+
+```{r}
+hist(dem)
+boxplot(dem)
+```
+
+## Reclassify Elevation and Find Mean
+
+```{r}
+rcl <- matrix(c(-Inf, 300, 0, 
+                300, 500, 1, 
+                500, Inf, 2), 
+              ncol = 3, byrow = TRUE)
+
+dem_rcl <- terra::classify(dem, rcl = rcl)
+
+levels(dem_rcl) <- tibble::tibble(id = 0:2, 
+                                  cats = c("low", "medium", "high"))
+
+elevation_mean <- terra::zonal(dem, dem_rcl, fun = "mean")
+elevation_mean
+```
+
+## Find Correlation Between NDWI and NDVI
+
+```{r}
+ndwi_fun <- function(green, nir){
+    (green - nir)/(green + nir)
+}
+
+ndvi_fun <- function(nir, red){
+  (nir - red)/(nir + red)
+}
+
+ndwi_rast <- terra::lapp(landsat[[c(2, 4)]], 
+                         fun = ndwi_fun)
+plot(ndwi_rast)
+
+ndvi_rast <- terra::lapp(landsat[[c(4, 3)]], 
+                         fun = ndvi_fun)
+
+combine <- c(ndvi_rast, ndwi_rast)
+
+plot(combine, main = c("NDVI", "NDWI"))
+
+terra::layerCor(combine, fun = cor)
+```
+
+## Find Distances Across All `peru` Cells
+
+```{r}
+peru_agg <- terra::aggregate(peru, fact = 20)
+plot(peru_agg)
+
+water_mask <- is.na(peru_agg)
+water_mask[water_mask == 0] <- NA
+plot(water_mask)
+
+distance_to_coast <- terra::distance(water_mask)
+distance_to_coast_km <- distance_to_coast/1000
+
+plot(distance_to_coast_km, main = "Distance to the coast (km)")
+
+distance_to_coast_km2 <- distance_to_coast_km + ((peru_agg/100)*10)
+plot(distance_to_coast_km2)
+```
+
+
+## Change Resolution of `srtm`
+
+```{r}
+plot(srtm)
+
+rast_template <- terra::rast(terra::ext(srtm), res = 0.01)
+
+srtm_resampl1 <- terra::resample(srtm, y = rast_template, method = "bilinear")
+srtm_resampl2 <- terra::resample(srtm, y = rast_template, method = "near")
+srtm_resampl3 <- terra::resample(srtm, y = rast_template, method = "cubic")
+srtm_resampl4 <- terra::resample(srtm, y = rast_template, method = "cubicspline")
+srtm_resampl5 <- terra::resample(srtm, y = rast_template, method = "lanczos")
+
+srtm_resampl_all <- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)
+labs <- c("Bilinear", "Near", "Cubic", "Cubic Spline", "Lanczos")
+plot(srtm_resampl_all, main = labs)
+```

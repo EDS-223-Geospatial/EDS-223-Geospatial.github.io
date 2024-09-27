@@ -23,9 +23,8 @@ Artwork by [Allison Horst](https://allisonhorst.com/){target="_blank"}
 - [Tidy design principles](https://design.tidyverse.org/){target="_blank"}
 - [r-spatial](https://r-spatial.org/){target="_blank"}
 - [*Spatial Statistics for Data Science: Theory and Practice with R*](https://www.paulamoraga.com/book-spatial/){target="_blank"}. Paula Moraga, 2023.
-- Examples of Professional Output:
-  - [Good Example](course-materials/resources/good-bad-example/good_example.qmd){target="_blank"} with [sourced functions](course-materials/resources/good-bad-example/functions.R){target="_blank"}
-  - [Bad Example](course-materials/resources/good-bad-example/bad_example.qmd){target="_blank"}
+- [*A Guide to Reproducible Code in Ecology and Evolution*](https://www.britishecologicalsociety.org/wp-content/uploads/2017/12/guide-to-reproducible-code.pdf){target="_blank"}. British Ecological Society, 2017
+
 
 ## Coordinate Systems and Projections
 - [Geographic vs projected coordinate systems](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/){target="_blank"} (Esri)

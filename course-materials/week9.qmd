@@ -3,19 +3,38 @@ title: "Week 9: Land Cover Classification"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 ---
 
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/week9-image.png")
+```
+
+::: {.gray-text .center-text}
+[Your Name in Landsat](https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/index.html){target="_blank"}
+:::
+
 ## {{< fa person-chalkboard title="a person pointing at a chalkboard" >}} Class Materials
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification with random forests](labs/week9.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [description](discussions/week9.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} No Discussion Section |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
-| Assignment Type | Assignment Title                                                       |  Date Assigned | Date Due                   |
-|:---------------:|------------------------------------------------------------------------|----------------|----------------------------|
-| EOC             | [End-of-class survey (week 1)](https://forms.gle/aPGfCircFN1AZfSe9){target="_blank"}    | Mon 01/08/2024 | Mon 01/08/2024, 11:55pm PT |
-| SR              | [Self reflection (SR #1)](../assignments/SR1-precourse.qmd){target="_blank"}      | Mon 01/08/2024 | Sat 01/13/2024, 11:59pm PT |
-| HW              | [Homework Assignment #1](../assignments/HW1.qmd){target="_blank"}                       | Mon 01/08/2024 | Sat 01/20/2024, 11:59pm PT |
+
+:::{.callout-important icon=true}
+## Important
+All assignments are **due at 11:59 PM** on the date listed.
+:::
+
+| Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
+|-----------------|-----------------------------------------------|---------------|------------|
+| EOC             | [End-of-class survey (week 9)](https://forms.gle/m4sDdLSxpe2pjzGz8){target="_blank"}              | 11/25/2024    | 11/25/2024 |
+| HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/11/2024    | 11/30/2024 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/11/2024    | 12/07/2024 |
 
 
