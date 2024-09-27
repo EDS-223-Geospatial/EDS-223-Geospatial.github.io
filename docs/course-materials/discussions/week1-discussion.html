@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-09-26">
+<meta name="dcterms.date" content="2024-09-27">
 
 <title>Week 1: Discussion Section</title>
 <style>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 26, 2024</p>
+        <p class="date">September 27, 2024</p>
       </div>
     </div>
     
@@ -245,12 +245,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
-  <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
-  <ul class="collapse">
-  <li><a href="#create-a-map-of-easter-island-with-tmap" id="toc-create-a-map-of-easter-island-with-tmap" class="nav-link" data-scroll-target="#create-a-map-of-easter-island-with-tmap">Create a Map of Easter Island with <code>tmap</code></a></li>
-  <li><a href="#create-an-interactive-map-of-easter-island-with-tmap" id="toc-create-an-interactive-map-of-easter-island-with-tmap" class="nav-link" data-scroll-target="#create-an-interactive-map-of-easter-island-with-tmap">Create an Interactive Map of Easter Island with <code>tmap</code></a></li>
-  <li><a href="#create-a-map-of-easter-island-with-ggplot2" id="toc-create-a-map-of-easter-island-with-ggplot2" class="nav-link" data-scroll-target="#create-a-map-of-easter-island-with-ggplot2">Create a Map of Easter Island with <code>ggplot2</code></a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -324,81 +318,8 @@ Reference
 <ol start="3" type="1">
 <li>Create an interactive map of Easter Island</li>
 </ol>
-</section>
-<section id="answer-key" class="level2">
-<h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
-<section id="create-a-map-of-easter-island-with-tmap" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-map-of-easter-island-with-tmap">Create a Map of Easter Island with <code>tmap</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ei_elev) <span class="sc">+</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">style =</span> <span class="st">"cont"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">palette =</span> <span class="st">"-RdYlGn"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"Elevation (m asl)"</span>) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(ei_borders) <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(ei_roads) <span class="sc">+</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="st">"strokelwd"</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend.lwd.show =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(volcanoes) <span class="sc">+</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_symbols</span>(<span class="at">shape =</span> <span class="dv">24</span>, </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span> <span class="st">"elevation"</span>,</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">title.size =</span> <span class="st">"Volcanoes (m asl)"</span>) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Easter Island"</span>,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">bg.color =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_compass</span>(<span class="at">show.labels =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="create-an-interactive-map-of-easter-island-with-tmap" class="level3">
-<h3 class="anchored" data-anchor-id="create-an-interactive-map-of-easter-island-with-tmap">Create an Interactive Map of Easter Island with <code>tmap</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ei_map <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(ei_elev) <span class="sc">+</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_raster</span>(<span class="at">style =</span> <span class="st">"cont"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">palette =</span> <span class="st">"-RdYlGn"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">title =</span> <span class="st">"Elevation (m asl)"</span>) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_shape</span>(ei_borders) <span class="sc">+</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_borders</span>() <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_shape</span>(ei_roads) <span class="sc">+</span> </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_lines</span>(<span class="at">lwd =</span> <span class="st">"strokelwd"</span>, </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                   <span class="at">legend.lwd.show =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_shape</span>(volcanoes) <span class="sc">+</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_symbols</span>(<span class="at">shape =</span> <span class="dv">24</span>, </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">size =</span> <span class="st">"elevation"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                     <span class="at">title.size =</span> <span class="st">"Volcanoes (m asl)"</span>) <span class="sc">+</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_layout</span>(<span class="at">main.title =</span> <span class="st">"Easter Island"</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>                    <span class="at">bg.color =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_scale_bar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>)) <span class="sc">+</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>          <span class="fu">tm_compass</span>(<span class="at">show.labels =</span> <span class="dv">1</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_mode</span>(<span class="st">"view"</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>ei_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="create-a-map-of-easter-island-with-ggplot2" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-map-of-easter-island-with-ggplot2">Create a Map of Easter Island with <code>ggplot2</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>volcanoes_point <span class="ot">&lt;-</span> volcanoes <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">unlist</span>(<span class="fu">map</span>(volcanoes<span class="sc">$</span>geom,<span class="dv">1</span>)),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">lat =</span> <span class="fu">unlist</span>(<span class="fu">map</span>(volcanoes<span class="sc">$</span>geom,<span class="dv">2</span>)))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> ei_borders, <span class="at">color =</span> <span class="st">"#212529"</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_stars</span>(<span class="at">data =</span> ei_elev) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">name =</span> <span class="st">"Elevation (m asl)"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">palette =</span> <span class="st">"RdYlGn"</span>, <span class="at">na.value =</span> <span class="st">"transparent"</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data =</span> ei_roads, <span class="at">color =</span> <span class="st">"#343a40"</span>) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(<span class="at">data =</span> volcanoes_point, </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> lon, <span class="at">y =</span> lat, <span class="at">size =</span> elevation), </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">shape =</span> <span class="dv">17</span>, <span class="at">color =</span> <span class="st">"#22577a"</span>) <span class="sc">+</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_continuous</span>(<span class="at">name =</span> <span class="st">"Volcanoes (m asl)"</span>) <span class="sc">+</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  ggspatial<span class="sc">::</span><span class="fu">annotation_north_arrow</span>(<span class="at">location =</span> <span class="st">"tr"</span>, <span class="at">which_north =</span> <span class="st">"true"</span>) <span class="sc">+</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  ggspatial<span class="sc">::</span><span class="fu">annotation_scale</span>(<span class="at">location =</span> <span class="st">"br"</span>, <span class="at">width_hint =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Easter Island"</span>) <span class="sc">+</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

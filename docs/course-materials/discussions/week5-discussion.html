@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-09-26">
+<meta name="dcterms.date" content="2024-09-27">
 
 <title>Week 5: Discussion Section</title>
 <style>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 26, 2024</p>
+        <p class="date">September 27, 2024</p>
       </div>
     </div>
     
@@ -245,15 +245,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
-  <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
-  <ul class="collapse">
-  <li><a href="#crop-and-mask-srtm" id="toc-crop-and-mask-srtm" class="nav-link" data-scroll-target="#crop-and-mask-srtm">Crop and Mask <code>srtm</code></a></li>
-  <li><a href="#subset-points-in-new-zealandaotearoa" id="toc-subset-points-in-new-zealandaotearoa" class="nav-link" data-scroll-target="#subset-points-in-new-zealandaotearoa">Subset Points in New Zealand/Aotearoa</a></li>
-  <li><a href="#count-points-in-each-grid-cell" id="toc-count-points-in-each-grid-cell" class="nav-link" data-scroll-target="#count-points-in-each-grid-cell">Count Points in Each Grid Cell</a></li>
-  <li><a href="#find-maximum-elevation-in-each-grid-cell" id="toc-find-maximum-elevation-in-each-grid-cell" class="nav-link" data-scroll-target="#find-maximum-elevation-in-each-grid-cell">Find Maximum Elevation in Each Grid Cell</a></li>
-  <li><a href="#aggregate-and-resample-raster" id="toc-aggregate-and-resample-raster" class="nav-link" data-scroll-target="#aggregate-and-resample-raster">Aggregate and Resample Raster</a></li>
-  <li><a href="#vectorize-raster" id="toc-vectorize-raster" class="nav-link" data-scroll-target="#vectorize-raster">Vectorize Raster</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -312,8 +303,8 @@ Reference
 <li>Crop and mask the <code>srtm</code> raster using (1) <code>zion_points</code> and (2) <code>zion_convex_hull</code></li>
 </ol>
 <ul>
-<li>Are there any differences in the output maps with <code>terra::crop()</code>? What about with <code>terra::mask()</code>?</li>
-<li>What happens when you set <code>inverse = TRUE</code> in <code>terra::mask()</code>?</li>
+<li>Are there any differences in the output maps with <code>crop()</code>? What about with <code>mask()</code>?</li>
+<li>What happens when you set <code>inverse = TRUE</code> in <code>mask()</code>?</li>
 </ul>
 <ol start="2" type="1">
 <li>Subset points higher than 3100 meters in <code>nz_height</code> and create a template raster with <code>terra::rast()</code>, where the resolution is 3 km x 3 km for the extent of the subset dataset</li>
@@ -334,83 +325,8 @@ Reference
 <ol start="4" type="1">
 <li>Polygonize <code>grain</code> and filter to only keep squares that represent clay</li>
 </ol>
-</section>
-<section id="answer-key" class="level2">
-<h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
-<section id="crop-and-mask-srtm" class="level3">
-<h3 class="anchored" data-anchor-id="crop-and-mask-srtm">Crop and Mask <code>srtm</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>srtm_crop1 <span class="ot">&lt;-</span> <span class="fu">crop</span>(srtm, zion_points)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>srtm_crop2 <span class="ot">&lt;-</span> <span class="fu">crop</span>(srtm, zion_convex_hull)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_crop1, <span class="at">main =</span> <span class="st">"Crop of srtm and zion_points"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_crop2, <span class="at">main =</span> <span class="st">"Crop of srtm and zion_convex_hull"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>srtm_mask1 <span class="ot">&lt;-</span> <span class="fu">mask</span>(srtm, zion_points)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>srtm_mask2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(srtm, zion_convex_hull)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_mask1, <span class="at">main =</span> <span class="st">"Mask of srtm and zion_points"</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_mask2, <span class="at">main =</span> <span class="st">"Mask of srtm and zion_convex_hull"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>srtm_inv_mask1 <span class="ot">&lt;-</span> <span class="fu">mask</span>(srtm, zion_points, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>srtm_inv_mask2 <span class="ot">&lt;-</span> <span class="fu">mask</span>(srtm, zion_convex_hull, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_inv_mask1, <span class="at">main =</span> <span class="st">"Inverse mask of srtm and zion_points"</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_inv_mask2, <span class="at">main =</span> <span class="st">"Inverse mask of srtm and zion_convex_hull"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="subset-points-in-new-zealandaotearoa" class="level3">
-<h3 class="anchored" data-anchor-id="subset-points-in-new-zealandaotearoa">Subset Points in New Zealand/Aotearoa</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nz_height3100 <span class="ot">&lt;-</span> nz_height <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(elevation <span class="sc">&gt;</span> <span class="dv">3100</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>nz_template <span class="ot">&lt;-</span> <span class="fu">rast</span>(terra<span class="sc">::</span><span class="fu">ext</span>(nz_height3100), <span class="at">resolution =</span> <span class="dv">3000</span>, <span class="at">crs =</span> terra<span class="sc">::</span><span class="fu">crs</span>(nz_height3100))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="count-points-in-each-grid-cell" class="level3">
-<h3 class="anchored" data-anchor-id="count-points-in-each-grid-cell">Count Points in Each Grid Cell</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nz_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(nz_height3100, nz_template, <span class="at">field =</span> <span class="st">"elevation"</span>, <span class="at">fun =</span> <span class="st">"length"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster, <span class="at">main =</span> <span class="st">"Number of Elevation Points &gt; 3100 in Each Grid Cell"</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(nz_height3100), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="find-maximum-elevation-in-each-grid-cell" class="level3">
-<h3 class="anchored" data-anchor-id="find-maximum-elevation-in-each-grid-cell">Find Maximum Elevation in Each Grid Cell</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>nz_raster2 <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(nz_height3100, nz_template, <span class="at">field =</span> <span class="st">"elevation"</span>, <span class="at">fun =</span> max)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster2, <span class="at">main =</span> <span class="st">"Maximum Elevation in Each Grid Cell "</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(nz_height3100), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="aggregate-and-resample-raster" class="level3">
-<h3 class="anchored" data-anchor-id="aggregate-and-resample-raster">Aggregate and Resample Raster</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nz_raster_low <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(nz_raster, <span class="at">fact =</span> <span class="dv">2</span>, <span class="at">fun =</span> sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>nz_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(nz_raster_low, nz_raster)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">c</span>(nz_raster, nz_resample)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Original 6 x 6 km"</span>, <span class="st">"Resample 6 x 6 km"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plots, <span class="at">main =</span> labs)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster_low, <span class="at">main =</span> <span class="st">"Resample 3 x 3 km"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="vectorize-raster" class="level3">
-<h3 class="anchored" data-anchor-id="vectorize-raster">Vectorize Raster</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>grain_poly <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(grain) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(grain, <span class="at">main =</span> <span class="st">"Grain (Raster)"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(grain_poly, <span class="at">main =</span> <span class="st">"Grain (Vector)"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>clay <span class="ot">&lt;-</span> grain_poly <span class="sc">%&gt;%</span> </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(grain <span class="sc">==</span> <span class="st">"clay"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clay, <span class="at">main =</span> <span class="st">"Clay"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
