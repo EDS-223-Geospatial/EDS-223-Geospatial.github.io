@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-09-26">
+<meta name="dcterms.date" content="2024-09-27">
 
 <title>Week 3: Discussion Section</title>
 <style>
@@ -147,38 +147,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week2.html">
  <span class="dropdown-text">week 2</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week3.html">
- <span class="dropdown-text">week 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week4.html">
- <span class="dropdown-text">week 4</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week5.html">
- <span class="dropdown-text">week 5</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week6.html">
- <span class="dropdown-text">week 6</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week7.qmd">
- <span class="dropdown-text">week 7</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week8.html">
- <span class="dropdown-text">week 8</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week9.html">
- <span class="dropdown-text">week 9</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week10.html">
- <span class="dropdown-text">week 10</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -227,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 26, 2024</p>
+        <p class="date">September 27, 2024</p>
       </div>
     </div>
     
@@ -246,12 +214,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
-  <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
-  <ul class="collapse">
-  <li><a href="#bird-observations-within-santa-barbaras-pas" id="toc-bird-observations-within-santa-barbaras-pas" class="nav-link" data-scroll-target="#bird-observations-within-santa-barbaras-pas">Bird Observations within Santa Barbara’s PAs</a></li>
-  <li><a href="#pas-within-15-km-of-goleta" id="toc-pas-within-15-km-of-goleta" class="nav-link" data-scroll-target="#pas-within-15-km-of-goleta">PAs within 15 km of Goleta</a></li>
-  <li><a href="#distance-between-goleta-and-dangermond-preserve" id="toc-distance-between-goleta-and-dangermond-preserve" class="nav-link" data-scroll-target="#distance-between-goleta-and-dangermond-preserve">Distance between Goleta and Dangermond Preserve</a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -324,32 +286,8 @@ Reference
 <ul>
 <li><strong>Note</strong>: <code>sf::st_distance()</code> finds the distance between the geometries’ edges</li>
 </ul>
-</section>
-<section id="answer-key" class="level2">
-<h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
-<section id="bird-observations-within-santa-barbaras-pas" class="level3">
-<h3 class="anchored" data-anchor-id="bird-observations-within-santa-barbaras-pas">Bird Observations within Santa Barbara’s PAs</h3>
-</section>
-<section id="pas-within-15-km-of-goleta" class="level3">
-<h3 class="anchored" data-anchor-id="pas-within-15-km-of-goleta">PAs within 15 km of Goleta</h3>
-</section>
-<section id="distance-between-goleta-and-dangermond-preserve" class="level3">
-<h3 class="anchored" data-anchor-id="distance-between-goleta-and-dangermond-preserve">Distance between Goleta and Dangermond Preserve</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dangermond <span class="ot">&lt;-</span> sb_protected_areas <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(UNIT_NAME <span class="sc">==</span> <span class="st">"Jack and Laura Dangermond Preserve"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>danger_dist <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(goleta, dangermond)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>dangermond_centroid <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(dangermond)</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>goleta_centroid <span class="ot">&lt;-</span> <span class="fu">st_centroid</span>(goleta)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>danger_dist_centroid <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(goleta_centroid, dangermond_centroid)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>danger_dist <span class="sc">==</span> danger_dist_centroid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

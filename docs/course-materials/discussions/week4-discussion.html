@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Allie Caughmam">
-<meta name="dcterms.date" content="2024-09-26">
+<meta name="dcterms.date" content="2024-09-27">
 
 <title>Week 4: Discussion Section</title>
 <style>
@@ -176,38 +176,6 @@ window.Quarto = {
     <a class="dropdown-item" href="../../course-materials/week2.html">
  <span class="dropdown-text">week 2</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week3.html">
- <span class="dropdown-text">week 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week4.html">
- <span class="dropdown-text">week 4</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week5.html">
- <span class="dropdown-text">week 5</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week6.html">
- <span class="dropdown-text">week 6</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week7.qmd">
- <span class="dropdown-text">week 7</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week8.html">
- <span class="dropdown-text">week 8</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week9.html">
- <span class="dropdown-text">week 9</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week10.html">
- <span class="dropdown-text">week 10</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -256,7 +224,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 26, 2024</p>
+        <p class="date">September 27, 2024</p>
       </div>
     </div>
     
@@ -273,16 +241,6 @@ window.Quarto = {
    
   <ul>
   <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">Get Started</a></li>
-  <li><a href="#answer-key" id="toc-answer-key" class="nav-link" data-scroll-target="#answer-key">Answer Key</a>
-  <ul class="collapse">
-  <li><a href="#plot-a-histogram-and-boxplot-of-dem" id="toc-plot-a-histogram-and-boxplot-of-dem" class="nav-link" data-scroll-target="#plot-a-histogram-and-boxplot-of-dem">Plot a Histogram and Boxplot of <code>dem</code></a></li>
-  </ul></li>
-  <li><a href="#reclassify-elevation-and-find-mean" id="toc-reclassify-elevation-and-find-mean" class="nav-link" data-scroll-target="#reclassify-elevation-and-find-mean">Reclassify Elevation and Find Mean</a>
-  <ul class="collapse">
-  <li><a href="#find-correlation-between-ndwi-and-ndvi" id="toc-find-correlation-between-ndwi-and-ndvi" class="nav-link" data-scroll-target="#find-correlation-between-ndwi-and-ndvi">Find Correlation Between NDWI and NDVI</a></li>
-  <li><a href="#find-distances-across-all-peru-cells" id="toc-find-distances-across-all-peru-cells" class="nav-link" data-scroll-target="#find-distances-across-all-peru-cells">Find Distances Across All <code>peru</code> Cells</a></li>
-  <li><a href="#change-resolution-of-srtm" id="toc-change-resolution-of-srtm" class="nav-link" data-scroll-target="#change-resolution-of-srtm">Change Resolution of <code>srtm</code></a></li>
-  </ul></li>
   </ul>
 </nav>
     </div>
@@ -327,7 +285,9 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you don’t have <code>spDataLarge</code> installed, make sure to run: <code>install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')</code></p>
+<p>If you don’t have <code>spDataLarge</code> installed, make sure to run:</p>
+<p><br></p>
+<p><code>install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')</code></p>
 </div>
 </div>
 <p>And read in the spatial objects:</p>
@@ -378,97 +338,8 @@ Warning
 <li>Use all of the method available in the <code>terra</code> package</li>
 <li><strong>Note</strong>: The <code>srtm</code> raster has a resolution of 0.00083 x 0.00083 degrees</li>
 </ul>
-</section>
-<section id="answer-key" class="level2">
-<h2 class="anchored" data-anchor-id="answer-key">Answer Key</h2>
-<section id="plot-a-histogram-and-boxplot-of-dem" class="level3">
-<h3 class="anchored" data-anchor-id="plot-a-histogram-and-boxplot-of-dem">Plot a Histogram and Boxplot of <code>dem</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(dem)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(dem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-</section>
-<section id="reclassify-elevation-and-find-mean" class="level2">
-<h2 class="anchored" data-anchor-id="reclassify-elevation-and-find-mean">Reclassify Elevation and Find Mean</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>rcl <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">300</span>, <span class="dv">0</span>, </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                <span class="dv">300</span>, <span class="dv">500</span>, <span class="dv">1</span>, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                <span class="dv">500</span>, <span class="cn">Inf</span>, <span class="dv">2</span>), </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>dem_rcl <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">classify</span>(dem, <span class="at">rcl =</span> rcl)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(dem_rcl) <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(<span class="at">id =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>, </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">cats =</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>))</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>elevation_mean <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">zonal</span>(dem, dem_rcl, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>elevation_mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<section id="find-correlation-between-ndwi-and-ndvi" class="level3">
-<h3 class="anchored" data-anchor-id="find-correlation-between-ndwi-and-ndvi">Find Correlation Between NDWI and NDVI</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ndwi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(green, nir){</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    (green <span class="sc">-</span> nir)<span class="sc">/</span>(green <span class="sc">+</span> nir)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red)<span class="sc">/</span>(nir <span class="sc">+</span> red)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>ndwi_rast <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">lapp</span>(landsat[[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]], </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fun =</span> ndwi_fun)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ndwi_rast)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>ndvi_rast <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">lapp</span>(landsat[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], </span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                         <span class="at">fun =</span> ndvi_fun)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>combine <span class="ot">&lt;-</span> <span class="fu">c</span>(ndvi_rast, ndwi_rast)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combine, <span class="at">main =</span> <span class="fu">c</span>(<span class="st">"NDVI"</span>, <span class="st">"NDWI"</span>))</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">layerCor</span>(combine, <span class="at">fun =</span> cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="find-distances-across-all-peru-cells" class="level3">
-<h3 class="anchored" data-anchor-id="find-distances-across-all-peru-cells">Find Distances Across All <code>peru</code> Cells</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>peru_agg <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">aggregate</span>(peru, <span class="at">fact =</span> <span class="dv">20</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(peru_agg)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>water_mask <span class="ot">&lt;-</span> <span class="fu">is.na</span>(peru_agg)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>water_mask[water_mask <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(water_mask)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>distance_to_coast <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">distance</span>(water_mask)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>distance_to_coast_km <span class="ot">&lt;-</span> distance_to_coast<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_to_coast_km, <span class="at">main =</span> <span class="st">"Distance to the coast (km)"</span>)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>distance_to_coast_km2 <span class="ot">&lt;-</span> distance_to_coast_km <span class="sc">+</span> ((peru_agg<span class="sc">/</span><span class="dv">100</span>)<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_to_coast_km2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="change-resolution-of-srtm" class="level3">
-<h3 class="anchored" data-anchor-id="change-resolution-of-srtm">Change Resolution of <code>srtm</code></h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>rast_template <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(terra<span class="sc">::</span><span class="fu">ext</span>(srtm), <span class="at">res =</span> <span class="fl">0.01</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>srtm_resampl1 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>srtm_resampl2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"near"</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>srtm_resampl3 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"cubic"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>srtm_resampl4 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"cubicspline"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>srtm_resampl5 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"lanczos"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>srtm_resampl_all <span class="ot">&lt;-</span> <span class="fu">c</span>(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bilinear"</span>, <span class="st">"Near"</span>, <span class="st">"Cubic"</span>, <span class="st">"Cubic Spline"</span>, <span class="st">"Lanczos"</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_resampl_all, <span class="at">main =</span> labs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
