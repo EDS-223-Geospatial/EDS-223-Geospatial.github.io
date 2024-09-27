@@ -1,0 +1,83 @@
+---
+title: "Week 5: Discussion Section - Answer Key"
+subtitle: "Practice raster operations with vectors"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+---
+
+## Crop and Mask `srtm`
+
+```{r}
+srtm_crop1 <- crop(srtm, zion_points)
+srtm_crop2 <- crop(srtm, zion_convex_hull)
+plot(srtm_crop1, main = "Crop of srtm and zion_points")
+plot(srtm_crop2, main = "Crop of srtm and zion_convex_hull")
+
+srtm_mask1 <- mask(srtm, zion_points)
+srtm_mask2 <- mask(srtm, zion_convex_hull)
+plot(srtm_mask1, main = "Mask of srtm and zion_points")
+plot(srtm_mask2, main = "Mask of srtm and zion_convex_hull")
+
+srtm_inv_mask1 <- mask(srtm, zion_points, inverse = TRUE)
+srtm_inv_mask2 <- mask(srtm, zion_convex_hull, inverse = TRUE)
+plot(srtm_inv_mask1, main = "Inverse mask of srtm and zion_points")
+plot(srtm_inv_mask2, main = "Inverse mask of srtm and zion_convex_hull")
+```
+
+## Subset Points in New Zealand/Aotearoa
+
+```{r}
+nz_height3100 <- nz_height %>% 
+  dplyr::filter(elevation > 3100)
+
+nz_template <- rast(terra::ext(nz_height3100), resolution = 3000, crs = terra::crs(nz_height3100))
+```
+
+## Count Points in Each Grid Cell
+
+```{r}
+nz_raster <- rasterize(nz_height3100, nz_template, field = "elevation", fun = "length")
+plot(nz_raster, main = "Number of Elevation Points > 3100 in Each Grid Cell")
+plot(st_geometry(nz_height3100), add = TRUE)
+```
+
+## Find Maximum Elevation in Each Grid Cell
+
+```{r}
+nz_raster2 <- rasterize(nz_height3100, nz_template, field = "elevation", fun = max)
+plot(nz_raster2, main = "Maximum Elevation in Each Grid Cell ")
+plot(st_geometry(nz_height3100), add = TRUE)
+```
+
+## Aggregate and Resample Raster
+
+```{r}
+nz_raster_low <- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)
+
+nz_resample <- resample(nz_raster_low, nz_raster)
+
+plots <- c(nz_raster, nz_resample)
+labs <- c("Original 6 x 6 km", "Resample 6 x 6 km")
+plot(plots, main = labs)
+plot(nz_raster_low, main = "Resample 3 x 3 km")
+```
+
+## Vectorize Raster
+
+```{r}
+grain_poly <- as.polygons(grain) %>% 
+  st_as_sf()
+
+plot(grain, main = "Grain (Raster)")
+plot(grain_poly, main = "Grain (Vector)")
+
+clay <- grain_poly %>% 
+  dplyr::filter(grain == "clay")
+
+plot(clay, main = "Clay")
+```

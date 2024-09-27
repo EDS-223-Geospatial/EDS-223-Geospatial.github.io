@@ -21,7 +21,7 @@ knitr::include_graphics("images/week3-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to basic spatial data and geometry operations with vector data](https://docs.google.com/presentation/d/1H0kwdJ3rzF6pJkgLYC5KzmMBmYzBV-NJRb1I-3zePYg/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Spatial joins, topological relationships, and distance relationships](labs/week3.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice vector operations](discussions/week3-discussion.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice vector operations](discussions/week3-discussion.qmd){target="_blank"}, ([*Answer Key*](discussions/answer-keys/week3-discussion-answerKey.qmd){target="_blank"}) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

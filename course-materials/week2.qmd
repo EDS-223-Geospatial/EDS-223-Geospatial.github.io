@@ -21,7 +21,7 @@ knitr::include_graphics("images/week2-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to spatial/vector data models](https://docs.google.com/presentation/d/1ywgmLUhRjI1uO5Ln2LgZ9lvG1KvZtvt1Zh_YQRz2kCs/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Spatial operations with vector data](labs/week2.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Working with multiple vector types](discussions/week2-discussion.qmd){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Working with multiple vector types](discussions/week2-discussion.qmd){target="_blank"}, ([*Answer Key*](discussions/answer-keys/week2-discussion-answerKey.qmd){target="_blank"}) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

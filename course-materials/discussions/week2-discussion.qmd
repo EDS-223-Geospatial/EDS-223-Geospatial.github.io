@@ -30,10 +30,6 @@ Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd)
 - **Colombia's Roads** ([Esri](https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/))
 - **Bird Observations** ([DATAVES](https://doi.org/10.15472/iqnpse))
 
-### Citations
-
-Red Nacional de Observadores de Aves, Naranjo Maury G (2022). DATAVES. Version 7.5. Red Nacional de Observadores de Aves - RNOA. Occurrence dataset [https://doi.org/10.15472/iqnpse](https://doi.org/10.15472/iqnpse) accessed via [GBIF.org](https://www.gbif.org/) on 2024-09-14.
-
 ## Get Started
 
 Let's load the necessary packages:
@@ -52,13 +48,13 @@ Now, to meet our learning objectives, your task:
 
 1. Read in the data for Colombia's ecoregions, roads, and bird observations
   - Use `st_read()` to read vector data (e.g., .shp, .gdb)
-  - Use `dplyr::rename()` or `dplyr::mutate()` to rename the columns `decimal_longitude` and `decimal_latitude` to `long` and `lat` in `aves` and `sf::st_as_sf()` to convert it into an sf object
+  - Use `rename()` or `mutate()` to rename the columns `decimal_longitude` and `decimal_latitude` to `long` and `lat` in `aves` and `sf::st_as_sf()` to convert it into an sf object
     - **Hint**: To convert a table into a vector object, you can use `st_as_sf()` but remember to check the `class()` of an object first!
 2. Check `class()` of all vector objects (including the converted `aves`) and use `sf::st_geometry_type()` to check the geometry type
 3. Use `filter()` to select a macro region of interest from `N1_MacroBi` in Colombia's ecoregions dataset and save as a new vector data
   - Check `class()` of the new vector data
   - Plot the new vector data using `tmap`
-4. Use `sf::st_crs()` to retrieve CRS of all vector objects and assign a new CRS
+4. Use `st_crs()` to retrieve CRS of all vector objects and assign a new CRS
   - **Bonus**: Check units of your object with `st_crs()$units`
   - Check CRS of all vector objects with `st_crs()`
   - `st_crs() <- NA` is a brute force way to remove a CRS, instead:
@@ -68,97 +64,3 @@ Now, to meet our learning objectives, your task:
   - Check that the CRS of the ecoregions and roads datasets match
   - Transform CRS of the bird observations data using `sf::st_transform()` to match with the other datasets
   - Use `tmap` to plot the ecoregions, roads, and bird observations together
-
-## Answer Key
-
-### Read in Vector Data
-
-```{r}
-col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
-roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
-  dplyr::as_tibble() %>%
-  dplyr::rename(long = decimal_longitude) %>%
-  dplyr::mutate(lat = decimal_latitude) %>%
-  st_as_sf(coords = c("long", "lat"), crs = 4326)
-```
-
-```{r}
-col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
-roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
-  dplyr::as_tibble() %>%
-  dplyr::rename(long = decimal_longitude) %>%
-  dplyr::mutate(lat = decimal_latitude) %>%
-  st_as_sf(coords = c("long", "lat"), crs = 4326)
-```
-
-### Check Class and Geometry Type
-
-```{r}
-class(col)
-class(roads)
-class(aves)
-```
-
-```{r}
-unique(st_geometry_type(col))
-unique(st_geometry_type(roads))
-unique(st_geometry_type(aves))
-```
-
-### `filter()` for Macro Region of Interest
-
-```{r}
-col_andean <- col %>%
-  dplyr::mutate(N1_MacroBi = as.factor(N1_MacroBi)) %>%
-  dplyr::filter(N1_MacroBi == "Andean")
-
-class(col_andean)
-
-tm_shape(col_andean) +
-  tm_polygons()
-```
-
-### Coordinate Reference System 
-
-```{r}
-st_crs(col)
-st_crs(roads)
-st_crs(aves)
-
-st_crs(col)$units
-st_crs(roads)$units
-st_crs(aves)$units
-
-aves_df_purrr <- aves %>%
-  mutate(lon = unlist(purrr::map(aves$geometry, 1)),
-         lat = unlist(purrr::map(aves$geometry, 2))) %>% 
-  st_drop_geometry()
-
-aves_df_st_coords <- aves %>%
-  dplyr::mutate(lon = sf::st_coordinates(.)[,1],
-                lat = sf::st_coordinates(.)[,2]) %>%
-  st_drop_geometry()
-
-aves_df_purrr <- aves %>%
-  st_as_sf(coords = c("lon", "lat"), crs = 4326)
-```
-
-### Bring All Vector Data Types Together
-
-```{r}
-st_crs(col) == st_crs(roads)
-
-aves <- st_transform(aves, crs = st_crs(col))
-
-tm_shape(col) +
-  tm_polygons() +
-  tm_shape(roads) +
-  tm_lines() +
-  tm_shape(aves) +
-  tm_dots()
-```
-
-
-

@@ -1,6 +1,6 @@
 ---
 title: "Week 10: Discussion Section"
-subtitle: "Practice Gridding and Spatial Interpolation"
+subtitle: "Practice gridding and spatial interpolation"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 

@@ -1,0 +1,100 @@
+---
+title: "Week 2: Discussion Section - Answer Key"
+subtitle: "Working with multiple vector types"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+---
+
+## Read in Vector Data
+
+```{r}
+col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
+  dplyr::as_tibble() %>%
+  dplyr::rename(long = decimal_longitude) %>%
+  dplyr::mutate(lat = decimal_latitude) %>%
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+```
+
+```{r}
+col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
+  dplyr::as_tibble() %>%
+  dplyr::rename(long = decimal_longitude) %>%
+  dplyr::mutate(lat = decimal_latitude) %>%
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+```
+
+## Check Class and Geometry Type
+
+```{r}
+class(col)
+class(roads)
+class(aves)
+```
+
+```{r}
+unique(st_geometry_type(col))
+unique(st_geometry_type(roads))
+unique(st_geometry_type(aves))
+```
+
+## `filter()` for Macro Region of Interest
+
+```{r}
+col_andean <- col %>%
+  dplyr::mutate(N1_MacroBi = as.factor(N1_MacroBi)) %>%
+  dplyr::filter(N1_MacroBi == "Andean")
+
+class(col_andean)
+
+tm_shape(col_andean) +
+  tm_polygons()
+```
+
+## Coordinate Reference System 
+
+```{r}
+st_crs(col)
+st_crs(roads)
+st_crs(aves)
+
+st_crs(col)$units
+st_crs(roads)$units
+st_crs(aves)$units
+
+aves_df_purrr <- aves %>%
+  mutate(lon = unlist(purrr::map(aves$geometry, 1)),
+         lat = unlist(purrr::map(aves$geometry, 2))) %>% 
+  st_drop_geometry()
+
+aves_df_st_coords <- aves %>%
+  dplyr::mutate(lon = sf::st_coordinates(.)[,1],
+                lat = sf::st_coordinates(.)[,2]) %>%
+  st_drop_geometry()
+
+aves_df_purrr <- aves %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+## Bring All Vector Data Types Together
+
+```{r}
+st_crs(col) == st_crs(roads)
+
+aves <- st_transform(aves, crs = st_crs(col))
+
+tm_shape(col) +
+  tm_polygons() +
+  tm_shape(roads) +
+  tm_lines() +
+  tm_shape(aves) +
+  tm_dots()
+```
