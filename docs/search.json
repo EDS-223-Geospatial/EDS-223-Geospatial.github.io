@@ -637,13 +637,6 @@
     "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
   },
   {
-    "objectID": "assignments.html#getting-unstuck",
-    "href": "assignments.html#getting-unstuck",
-    "title": "Assignments",
-    "section": "Getting unstuck",
-    "text": "Getting unstuck\n\nWhere to find help\nBeing a great data scientist isn’t about writing perfect code; it’s about learning how to teach yourself and when to ask for help. The only way to get better at this process is to practice by taking the time to troubleshoot on our own, so you should always plan to start there! The graphic below shows the order in which you should approach different resources for help:\n\n\n\n\n\n\n\n\n\n\n\nRoadblock checklist\nIf you hit a roadblock, run through this checklist to make sure you’ve done your due diligence before bringing your question(s) to a peer, TA, or instructor.\n\nrevisit the course materials - your question may already be answered in the slides, textbook, or discussion section materials\nread the documentation - you can do so directly from RStudio by typing ?function_name in the console\nread the package’s vignette, if available - these are often linked on CRAN under the Documents sections (e.g. see {dplyr} on CRAN) or found by Googling package_name vignette\ntry Googling! - don’t forget to look back at our suggested troubleshooting and Googling tips (Teach Me How to Google)\n\n\n\nHow to ask questions\nWhen you decide to ask a question to a peer, TA, or instructor be sure to:\n\nProvide context. For example, “I’m trying to do this…” or “I’m working on the task where we do this…”\nShare the specific challenge. “I’m specifically trying to [insert function / package] to do this thing.”\nShare what happens and what you’ve learned. “I repeatedly get an error message that says [this]. I’ve tried [this] and [this]”\nShow your code ideally with a reprex that they can run / test.\nValue and expect the Socratic method, especially in classes and workshops – our goal is to provide critical thinking that is transferable, not just to provide a quick fix for a single error."
-  },
-  {
     "objectID": "assignments/SR1.html",
     "href": "assignments/SR1.html",
     "title": "Pre-Course Self Reflection (SR #1)",
