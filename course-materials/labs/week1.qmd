@@ -4,7 +4,7 @@ subtitle: "Making maps with `tmap`"
 author: "Ruth Oliver"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
