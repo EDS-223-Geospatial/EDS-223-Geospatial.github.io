@@ -51,8 +51,8 @@ ei_roads <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_
 
 # first plot the elevation raster
 tm_shape(ei_elev) +
-  tm_raster(style = "cont", # continuous values for this layer
-            palette = "-RdYlGn", # reversed red-yellow-green continuous palette
+  tm_raster(style = "cont",                # continuous values for this layer
+            palette = "-RdYlGn",           # reversed red-yellow-green continuous palette
             title = "Elevation (m asl)") + # legend title with units
   # add vector: Easter Island vector in default gray
   tm_shape(ei_borders) +
@@ -63,14 +63,14 @@ tm_shape(ei_elev) +
            legend.lwd.show = FALSE) +
   # add vector: volcano points in default gray
   tm_shape(volcanoes) +
-    tm_symbols(shape = 24, # triangle
-             size = "elevation", # symbol size depends on attribute value 
+    tm_symbols(shape = 24,                       # triangle
+             size = "elevation",                 # symbol size depends on attribute value 
              title.size = "Volcanoes (m asl)") + # legend title with units
   # general map layout options
   tm_layout(main.title = "Easter Island",
-            bg.color = "lightblue") + # background color for map (ocean)
+            bg.color = "lightblue") +            # background color for map (ocean)
   tm_scale_bar(position = c("left", "bottom")) +
-  tm_compass(show.labels = 1) # only show North label on compass
+  tm_compass(show.labels = 1)                    # only show North label on compass
 ```
 
 ```{r}
@@ -165,21 +165,21 @@ ggplot() +
   # add elevation raster
   geom_stars(data = ei_elev) +
   scale_fill_distiller(name = "Elevation (m asl)", # legend title with units
-                       palette = "RdYlGn", # red-yellow-green palette (no need to reverse)
-                       na.value = "lightblue") + # set NA color (background ocean)
+                       palette = "RdYlGn",         # red-yellow-green palette (no need to reverse)
+                       na.value = "lightblue") +  # set NA color (background ocean)
   # add road vector
   geom_sf(data = ei_roads, color = "#343a40") +
   # add volcano vector
   geom_point(data = volcanoes_point, 
              aes(x = lon, y = lat, 
                  size = elevation), # point size depends on attribute value
-             shape = 17, # triangle
+             shape = 17,            # triangle
              color = "#22577a") +
-  scale_size_continuous(name = "Volcanoes (m asl)") + # legend title with units
-  ggspatial::annotation_north_arrow(location = "br", # bottom right
+  scale_size_continuous(name = "Volcanoes (m asl)") +       # legend title with units
+  ggspatial::annotation_north_arrow(location = "br",        # bottom right
                                     which_north = "true") + # point to north pole
-  ggspatial::annotation_scale(location = "bl", # bottom left
-                              width_hint = 0.5) + # proportion of map area the scalebar should occupy
+  ggspatial::annotation_scale(location = "bl",              # bottom left
+                              width_hint = 0.5) +           # proportion of map area the scalebar should occupy
   labs(title = "Easter Island") +
   theme_minimal()
 ```

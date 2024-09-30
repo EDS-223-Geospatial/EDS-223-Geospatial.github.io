@@ -4,34 +4,83 @@ subtitle: "Practice vector operations"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
 ---
 
-## Bird Observations within Santa Barbara's PAs
+## 1. Bird Observations within Santa Barbara's PAs
+
+```{r}
+#| message: false
+#| warning: false
+
+library(here)
+library(tidyverse)
+library(sf)
+library(tmap)
+```
 
 ```{r}
 #| echo: false
 
+sb_protected_areas <- read_sf(here::here("course-materials", "data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+  st_transform("ESRI:102009")
+sb_city_boundaries <- read_sf(here::here("course-materials", "data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+  st_transform("ESRI:102009")
+sb_county_boundary <- read_sf(here::here("course-materials", "data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
+  st_transform("ESRI:102009")
+aves <- read_sf(here::here("course-materials", "data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+  st_transform("ESRI:102009")
+```
+
+```{r}
+#| eval: false
+
+# read in Santa Barbara protected areas vector
+sb_protected_areas <- read_sf(here::here("data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+  st_transform("ESRI:102009")
+# read in Santa Barbara city boundaries vector
+sb_city_boundaries <- read_sf(here::here("data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+  st_transform("ESRI:102009")
+# read in Santa Barbara County boundaries vector
+sb_county_boundary <- read_sf(here::here("data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
+  st_transform("ESRI:102009")
+# read in iNaturalist bird observations from 2020-2024
+aves <- read_sf(here::here("data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+  st_transform("ESRI:102009")
+```
+
+Approach with spatial subset: 
+
+```{r}
+#| echo: false
+
+# spatially subset the protected area geoms to only those with bird observations
 aves_PA_subset <- sb_protected_areas[aves, ]
 
 tm_shape(sb_county_boundary) +
   tm_fill() +
   tm_shape(sb_protected_areas) +
-  tm_borders(lwd = 1, col = "#fb8500") +
+    tm_borders(lwd = 1, col = "#fb8500") +
+    tm_fill(col = "#fb8500",
+            alpha = 0.2) +
   tm_shape(aves_PA_subset) +
-  tm_dots(col = "#023047")
+    tm_dots(col = "#023047") +
+  tm_layout(main.title = "Birds in Santa Barbara\nCounty Protected Areas",
+            main.title.size = 1)
 
 nrow(aves_PA_subset)
 ```
 
+Approach with a spatial join:
+
 ```{r}
-#| echo: false
 #| warning: false
 #| message: false
 
+# append the protected area geoms to the bird observation geoms
 aves_PA_join <- st_join(aves, sb_protected_areas)
 
 tm_shape(sb_county_boundary) +
@@ -39,40 +88,44 @@ tm_shape(sb_county_boundary) +
   tm_shape(sb_protected_areas) +
   tm_borders(lwd = 1) +
   tm_shape(aves_PA_join) +
-  tm_dots(fill = "UNIT_NAME")
+  tm_dots()
 
 nrow(aves_PA_join)
 ```
 
+Add a 5 km buffer around the protected areas:
+
 ```{r}
-#| echo: false
-
+# check if units are in meters
 st_crs(sb_protected_areas)$units
+# create 5000 m buffer around protected areas
 PA_buffer_5km <- st_buffer(sb_protected_areas, dist = 5000)
-
+# subset the buffered protected area geoms to only those with bird observations
 aves_buffer_subset <- PA_buffer_5km[aves, ]
 
 tm_shape(sb_county_boundary) +
   tm_fill() +
   tm_shape(sb_protected_areas) +
-  tm_borders(lwd = 1, col = "#fb8500") +
+  tm_borders(lwd = 1,
+             col = "#fb8500") +
   tm_shape(aves_buffer_subset) +
   tm_dots(col = "#023047")
 
 nrow(aves_buffer_subset)
 ```
 
-## PAs within 15 km of Goleta 
+## 2. PAs within 15 km of Goleta 
 
 ```{r}
-#| echo: false
-
+# subset county to just Goleta
 goleta <- sb_city_boundaries %>%
   dplyr::filter(NAME == "Goleta")
 
+# buffer goleta by 15km
 st_crs(goleta)$units
 goleta_buffer_15km <- st_buffer(goleta, dist = 15000)
 
+# explore the different outputs with different spatial operations
 goleta_PAs_within <- st_within(sb_protected_areas, goleta_buffer_15km)
 goleta_PAs_intersect <- st_intersects(sb_protected_areas, goleta_buffer_15km)
 goleta_PAs_intersection <- st_intersection(sb_protected_areas, goleta_buffer_15km)
@@ -83,21 +136,27 @@ class(goleta_PAs_intersect) == class(goleta_PAs_intersection)
 # Distance-based join
 goleta_PAs_join <- st_join(sb_protected_areas, goleta, st_is_within_distance, dist = 15000)
 
+# print the number of observations included in outputs
 nrow(goleta_PAs_intersection)
 nrow(goleta_PAs_join)
 ```
 
-## Distance between Goleta and Dangermond Preserve
+## 3. Distance between Goleta and Dangermond Preserve
 
 ```{r}
+# subset protected area to just Dangermond preserve
 dangermond <- sb_protected_areas %>%
   dplyr::filter(UNIT_NAME == "Jack and Laura Dangermond Preserve")
 
+# compute the distance between geometries edges, output as a matrix
 danger_dist <- st_distance(goleta, dangermond)
 
+# calculate the geometric center of the Dangermond & Goleta geometries
 dangermond_centroid <- st_centroid(dangermond)
 goleta_centroid <- st_centroid(goleta)
 
 danger_dist_centroid <- st_distance(goleta_centroid, dangermond_centroid)
+
+# check if the distance matrices are equal
 danger_dist == danger_dist_centroid
 ```

@@ -4,7 +4,7 @@ subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
@@ -13,18 +13,55 @@ format:
 ## Plot a Histogram and Boxplot of `dem`
 
 ```{r}
-hist(dem)
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(spData)
+library(spDataLarge)
+library(sf)
+library(stars)
+library(terra)
+```
+
+```{r}
+#| echo: false
+
+dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
+landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
+srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+peru <- stars::read_stars(here::here("course-materials", "data", "week4-discussion", "PER_elv.tif"))
+```
+
+```{r}
+#| eval: false
+
+dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
+landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
+srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
+```
+
+## Plot a histogram and boxplot of `dem`
+
+```{r}
+hist(dem,
+     main = "Digital Elevation Model Value Distribution",
+     xlab = "Value")
+
 boxplot(dem)
 ```
 
 ## Reclassify Elevation and Find Mean
 
 ```{r}
-rcl <- matrix(c(-Inf, 300, 0, 
-                300, 500, 1, 
-                500, Inf, 2), 
+# define a reclassification matrix
+rcl <- matrix(c(-Inf, 300, 0, # values -Inf to 300 become 0
+                300, 500, 1,  # values 300 to 500 become 1
+                500, Inf, 2), # values 500 to Inf become 2
               ncol = 3, byrow = TRUE)
 
+# apply the matrix to reclassify the raster
 dem_rcl <- terra::classify(dem, rcl = rcl)
 
 levels(dem_rcl) <- tibble::tibble(id = 0:2, 

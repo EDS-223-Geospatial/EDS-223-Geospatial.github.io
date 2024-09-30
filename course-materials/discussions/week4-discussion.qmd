@@ -4,7 +4,7 @@ subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
@@ -42,6 +42,8 @@ If you don't have `spDataLarge` installed, make sure to run:
 And read in the spatial objects:
 
 ```{r}
+#| echo: false
+
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
@@ -49,7 +51,11 @@ peru <- stars::read_stars(here::here("course-materials", "data", "week4-discussi
 ```
 
 ```{r}
+#| eval: false
+
+# read in digital elevation model raster of Mongón study area
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
+# read in Landsat 8 image for Zion National Park
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
