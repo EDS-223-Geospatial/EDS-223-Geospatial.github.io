@@ -8,15 +8,16 @@ execute:
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
-:::{.callout-tip icon=true}
-## Reference
-
-Refer to the [Plotting Geospatial Data](./resources/plotting.qmd) resource and [tmap book](https://r-tmap.github.io/tmap-book/) to help get you started.
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
 :::
 
-## Learning Objectives
+## 1. Learning Objectives
 
 -   Read in spatial objects
 -   Create map with single spatial object
@@ -27,9 +28,30 @@ Refer to the [Plotting Geospatial Data](./resources/plotting.qmd) resource and [
 -   Create an interactive map
 -   **Bonus Challenge**: Reproduce map using `ggplot2` instead of `tmap`
 
-## Get Started
+::: {.callout-tip icon=true}
+# More map making in R
 
-Let's load the necessary packages:
+There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](course-materials/resources/plotting.qmd) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
+:::
+
+## 2. Set Up
+
+- Open your forked version of [this repository](https://github.com/EDS-223-Geospatial/eds223-week1) and navigate to your version controlled project for Week 1
+- Create a Quarto document
+- Install and load all necessary packages
+- Read in the spatial objects for Easter Island (Rapa Nui/Isla de Pascua):
+  -   `ei_points`: file contains several points on the island
+  -   `ei_elev`: raster with elevation data
+  -   `ei_borders`: polygon with the island outline
+  -   `ei_roads`: lines contains a road network for the island
+
+```{r}
+install.packages("here")
+install.packages("tidyverse")
+install.packages("stars")
+install.packages("sf")
+install.packages("tmap")
+```
 
 ```{r}
 #| message: false
@@ -42,35 +64,17 @@ library(sf)
 library(tmap)
 ```
 
-And read in the spatial objects for Easter Island (Rapa Nui/Isla de Pascua):
-
--   `ei_points`: file contains several points on the island
--   `ei_elev`: raster with elevation data
--   `ei_borders`: polygon with the island outline
--   `ei_roads`: lines contains a road network for the island
-
 ```{r}
-#| eval: false
-#| echo: false
-
-ei_points <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_points.gpkg"))
+ei_points <- sf::read_sf(here::here("data", "easter_island", "ei_points.gpkg"))
 volcanoes <- subset(ei_points, type == "volcano")
-ei_elev <- stars::read_stars(here::here("course-materials", "data", "week1", "easter_island", "ei_elev.tif"))
-ei_borders <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_border.gpkg"))
-ei_roads <- sf::read_sf(here::here("course-materials", "data", "week1", "easter_island", "ei_roads.gpkg"))
+ei_elev <- stars::read_stars(here::here("data", "easter_island", "ei_elev.tif"))
+ei_borders <- sf::read_sf(here::here("data", "easter_island", "ei_border.gpkg"))
+ei_roads <- sf::read_sf(here::here("data", "easter_island", "ei_roads.gpkg"))
 ```
 
-```{r}
-#| eval: false
+## 3. Your Task
 
-ei_points <- sf::read_sf(here::here("data", "week1", "easter_island", "ei_points.gpkg"))
-volcanoes <- subset(ei_points, type == "volcano")
-ei_elev <- stars::read_stars(here::here("data", "week1", "easter_island", "ei_elev.tif"))
-ei_borders <- sf::read_sf(here::here("data", "week1", "easter_island", "ei_border.gpkg"))
-ei_roads <- sf::read_sf(here::here("data", "week1", "easter_island", "ei_roads.gpkg"))
-```
-
-Now, to meet our learning objectives, your task:
+Now, to meet this week's learning objectives, your task:
 
 1.  Create a map of Easter Island
 2.  Create a map of Easter Island and...
