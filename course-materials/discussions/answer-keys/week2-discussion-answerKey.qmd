@@ -10,12 +10,26 @@ format:
     toc: true
 ---
 
+
+```{r}
+#| message: false
+#| warning: false
+
+library(here)
+library(tidyverse)
+library(stars)
+library(sf)
+library(tmap)
+```
+
 ## Read in Vector Data
 
 ```{r}
-col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
-roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
+#| eval: false
+
+col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
   dplyr::mutate(lat = decimal_latitude) %>%
@@ -23,9 +37,12 @@ aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion
 ```
 
 ```{r}
-col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
-roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
+#| echo: false
+
+# data import paths for course repo render
+col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
   dplyr::mutate(lat = decimal_latitude) %>%
@@ -50,26 +67,38 @@ unique(st_geometry_type(aves))
 
 ```{r}
 col_andean <- col %>%
+  # set categorical "levels" in attribute N1_MacroBi (subregions of Colombia)
   dplyr::mutate(N1_MacroBi = as.factor(N1_MacroBi)) %>%
+  # subset to Andean region of Colombia
   dplyr::filter(N1_MacroBi == "Andean")
 
-class(col_andean)
-
 tm_shape(col_andean) +
-  tm_polygons()
+  tm_grid(alpha = 0.5) + # partial transparency for grid lines
+  tm_polygons() +
+  tm_layout(main.title = "Andean Region of Colombia",
+            main.title.size = 1)
 ```
 
 ## Coordinate Reference System 
 
 ```{r}
+# print the CRS of each spatial object
 st_crs(col)
 st_crs(roads)
 st_crs(aves)
+```
 
+
+
+```{r}
+# print units of each CRS 
 st_crs(col)$units
 st_crs(roads)$units
 st_crs(aves)$units
+```
 
+```{r}
+# 
 aves_df_purrr <- aves %>%
   mutate(lon = unlist(purrr::map(aves$geometry, 1)),
          lat = unlist(purrr::map(aves$geometry, 2))) %>% 
