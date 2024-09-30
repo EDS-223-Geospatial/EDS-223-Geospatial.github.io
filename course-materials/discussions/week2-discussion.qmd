@@ -8,31 +8,28 @@ execute:
 format:
   html:
     toc: true
-    code_folding: hide
+editor_options: 
+  chunk_output_type: console
 ---
 
-:::{.callout-tip icon=true}
-## Reference
-
-Refer to the [Plotting Geospatial Data](course-materials/resources/plotting.qmd) resource to help get you started.
-:::
-
-## Learning Objectives
+## 1. Learning Objectives
 
 - Use `sf::st_read()` to read multiple vector data types
 - Retreive the CRS of a vector object with `sf::st_crs()`
 - Transform CRS and match across all vector data types with `sf::st_transform()`
 - Perform `dplyr` attribute manipulations (e.g. `filter()`, `mutate()`, `select()`)
 
-## Data
+::: {.callout-tip icon=true}
+# More map making in R
 
-- **Colombia's Terrestrial Ecosystems** ([The Nature Conservancy/NatureServe](https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/))
-- **Colombia's Roads** ([Esri](https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/))
-- **Bird Observations** ([DATAVES](https://doi.org/10.15472/iqnpse))
+There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](course-materials/resources/plotting.qmd) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
+:::
 
-## Get Started
+## 2. Get Started
 
-Let's load the necessary packages:
+- Open your forked version of [this repository](https://github.com/EDS-223-Geospatial/eds223-week2) and navigate to your version controlled project for Week 1
+- Create a Quarto document
+- Load all necessary packages
 
 ```{r}
 #| message: false
@@ -44,7 +41,16 @@ library(sf)
 library(tmap)
 ```
 
-Now, to meet our learning objectives, your task:
+## 3. Your Task
+
+[This repository](https://github.com/EDS-223-Geospatial/eds223-week2) contains the following datasets:
+
+- **Colombia's Terrestrial Ecosystems** ([The Nature Conservancy/NatureServe](https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/))
+- **Colombia's Roads** ([Esri](https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/))
+- **Bird Observations** ([DATAVES](https://doi.org/10.15472/iqnpse))
+
+
+Now, to meet this week's learning objectives, your task:
 
 1. Read in the data for Colombia's ecoregions, roads, and bird observations
   - Use `st_read()` to read vector data (e.g., .shp, .gdb)
