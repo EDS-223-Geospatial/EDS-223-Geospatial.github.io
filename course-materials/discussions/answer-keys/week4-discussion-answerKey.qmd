@@ -22,6 +22,7 @@ library(spDataLarge)
 library(sf)
 library(stars)
 library(terra)
+library(kableExtra)
 ```
 
 ```{r}
@@ -46,32 +47,38 @@ peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
 
 ```{r}
 hist(dem,
-     main = "Digital Elevation Model Value Distribution",
+     main = "Digital Elevation Model Raster Value Distribution",
      xlab = "Value")
 
-boxplot(dem)
+boxplot(dem,
+        main = "Digital Elevation Model Raster Value Distribution",
+        ylab = "Value")
 ```
 
 ## Reclassify Elevation and Find Mean
 
 ```{r}
 # define a reclassification matrix
-rcl <- matrix(c(-Inf, 300, 0, # values -Inf to 300 become 0
-                300, 500, 1,  # values 300 to 500 become 1
-                500, Inf, 2), # values 500 to Inf become 2
+rcl <- matrix(c(-Inf, 300, 0, # values -Inf to 300 = 0
+                300, 500, 1,  # values 300 to 500 = 1
+                500, Inf, 2), # values 500 to Inf = 2
               ncol = 3, byrow = TRUE)
 
-# apply the matrix to reclassify the raster
+# apply the matrix to reclassify the raster, making all cells 0 or 1 or 2
 dem_rcl <- terra::classify(dem, rcl = rcl)
 
+# assign labels to the numerical categories
 levels(dem_rcl) <- tibble::tibble(id = 0:2, 
                                   cats = c("low", "medium", "high"))
 
+# calculate mean elevation for each category using original DEM values
 elevation_mean <- terra::zonal(dem, dem_rcl, fun = "mean")
 elevation_mean
 ```
 
 ## Find Correlation Between NDWI and NDVI
+
+Define functions for calculating NDWI and NDVI
 
 ```{r}
 ndwi_fun <- function(green, nir){
@@ -82,24 +89,41 @@ ndvi_fun <- function(nir, red){
   (nir - red)/(nir + red)
 }
 
-ndwi_rast <- terra::lapp(landsat[[c(2, 4)]], 
-                         fun = ndwi_fun)
-plot(ndwi_rast)
+```
 
-ndvi_rast <- terra::lapp(landsat[[c(4, 3)]], 
+Apply the functions to the appropriate [Landsat 8 bands](https://www.usgs.gov/landsat-missions/landsat-8). Landsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:
+
+| Band | | Color | Resolution |
+| ---- | ----- | ---------- |
+| 1 | blue | 30 meter |
+| 2 | green | 30 meter |
+| 3 | red | 30 meter |
+| 4 | near-infrared | 30 meter |
+
+
+```{r}
+ndwi_rast <- terra::lapp(landsat[[c(2, 4)]],
+                         fun = ndwi_fun)
+plot(ndwi_rast,
+     main = "Zion National Park NDWI")
+
+ndvi_rast <- terra::lapp(landsat[[c(4, 3)]],
                          fun = ndvi_fun)
 
+# stack rasters
 combine <- c(ndvi_rast, ndwi_rast)
 
 plot(combine, main = c("NDVI", "NDWI"))
 
+# calculate the correlation between raster layers 
 terra::layerCor(combine, fun = cor)
 ```
+
 
 ## Find Distances Across All `peru` Cells
 
 ```{r}
-peru_agg <- terra::aggregate(peru, fact = 20)
+peru_agg <- terra::aggregate(peru, fact = 20, by = )
 plot(peru_agg)
 
 water_mask <- is.na(peru_agg)
