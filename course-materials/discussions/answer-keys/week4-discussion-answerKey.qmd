@@ -4,7 +4,7 @@ subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
-  eval: true
+  eval: false
 format:
   html:
     toc: true

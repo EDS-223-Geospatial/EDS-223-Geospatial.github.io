@@ -18,6 +18,7 @@ format:
 
 library(here)
 library(tidyverse)
+library(stars)
 library(sf)
 library(tmap)
 ```
