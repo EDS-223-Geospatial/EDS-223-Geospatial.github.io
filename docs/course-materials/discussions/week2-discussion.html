@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-09-27">
+<meta name="dcterms.date" content="2024-09-30">
 
 <title>Week 2: Discussion Section</title>
 <style>
@@ -195,7 +195,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 27, 2024</p>
+        <p class="date">September 30, 2024</p>
       </div>
     </div>
     
@@ -211,9 +211,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">1. Learning Objectives</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">2. Get Started</a></li>
+  <li><a href="#your-task" id="toc-your-task" class="nav-link" data-scroll-target="#your-task">3. Your Task</a></li>
   </ul>
 </nav>
     </div>
@@ -224,46 +224,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Reference
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Refer to the <a href="course-materials/resources/plotting.qmd">Plotting Geospatial Data</a> resource to help get you started.</p>
-</div>
-</div>
 <section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<h2 class="anchored" data-anchor-id="learning-objectives">1. Learning Objectives</h2>
 <ul>
 <li>Use <code>sf::st_read()</code> to read multiple vector data types</li>
 <li>Retreive the CRS of a vector object with <code>sf::st_crs()</code></li>
 <li>Transform CRS and match across all vector data types with <code>sf::st_transform()</code></li>
 <li>Perform <code>dplyr</code> attribute manipulations (e.g.&nbsp;<code>filter()</code>, <code>mutate()</code>, <code>select()</code>)</li>
 </ul>
-</section>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<ul>
-<li><strong>Colombia’s Terrestrial Ecosystems</strong> (<a href="https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/">The Nature Conservancy/NatureServe</a>)</li>
-<li><strong>Colombia’s Roads</strong> (<a href="https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/">Esri</a>)</li>
-<li><strong>Bird Observations</strong> (<a href="https://doi.org/10.15472/iqnpse">DATAVES</a>)</li>
-</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+More map making in R
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are MANY different ways to make maps in R, all with different pros/cons. Check out this <a href="course-materials/resources/plotting.qmd">resource</a> for examples of what map making looks like in <code>ggplot2</code>, <code>leaflet</code>, and more!</p>
+</div>
+</div>
 </section>
 <section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get Started</h2>
-<p>Let’s load the necessary packages:</p>
+<h2 class="anchored" data-anchor-id="get-started">2. Get Started</h2>
+<ul>
+<li>Create an <code>.Rproj</code> as your version controlled project for Week 2</li>
+<li>Create a Quarto document inside your <code>.Rproj</code></li>
+<li>Download <a href="https://drive.google.com/drive/folders/1KahW7CG--XicV9TFBNmmo40ReV9q8c19?usp=sharing">this folder from Google Drive</a> and move it inside your <code>.Rproj</code></li>
+<li>Load all necessary packages</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, to meet our learning objectives, your task:</p>
+</section>
+<section id="your-task" class="level2">
+<h2 class="anchored" data-anchor-id="your-task">3. Your Task</h2>
+<p><a href="https://github.com/EDS-223-Geospatial/eds223-week2">This repository</a> contains the following datasets:</p>
+<ul>
+<li><strong>Colombia’s Terrestrial Ecosystems</strong> (<a href="https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/">The Nature Conservancy/NatureServe</a>)</li>
+<li><strong>Colombia’s Roads</strong> (<a href="https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/">Esri</a>)</li>
+<li><strong>Bird Observations</strong> (<a href="https://doi.org/10.15472/iqnpse">DATAVES</a>)</li>
+</ul>
+<p>Now, to meet this week’s learning objectives, your task:</p>
 <ol type="1">
 <li>Read in the data for Colombia’s ecoregions, roads, and bird observations</li>
 </ol>
