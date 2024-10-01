@@ -4,7 +4,7 @@ subtitle: "Practice raster operations with vectors"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
@@ -39,14 +39,18 @@ library(tidyverse)
 ```
 
 ```{r}
+# load 30 random points from Zion National Park
 zion_points <- read_sf(system.file("vector/zion_points.gpkg", package = "spDataLarge"))
 
-srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-
+# create a convex hull from the points 
 zion_convex_hull <- sf::st_combine(zion_points) %>%
   sf::st_convex_hull() %>% 
   st_as_sf()
 
+# load elevation raster data for Zion National Park, from the Shuttle Radar Topography Mission
+srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+
+# load raster data representing grain sizes with the three classes clay, silt and sand
 grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
 ```
 

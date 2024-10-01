@@ -4,18 +4,32 @@ subtitle: "Working with multiple vector types"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
 ---
 
+
+```{r}
+#| message: false
+#| warning: false
+
+library(here)
+library(tidyverse)
+library(stars)
+library(sf)
+library(tmap)
+```
+
 ## Read in Vector Data
 
 ```{r}
-col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
-roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
+#| eval: false
+
+col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
   dplyr::mutate(lat = decimal_latitude) %>%
@@ -23,9 +37,12 @@ aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion
 ```
 
 ```{r}
-col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
-roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
-aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
+#| echo: false
+
+# data import paths for course repo render
+col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
+roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
   dplyr::mutate(lat = decimal_latitude) %>%
@@ -50,51 +67,65 @@ unique(st_geometry_type(aves))
 
 ```{r}
 col_andean <- col %>%
+  # set categorical "levels" in attribute N1_MacroBi (subregions of Colombia)
   dplyr::mutate(N1_MacroBi = as.factor(N1_MacroBi)) %>%
+  # subset to Andean region of Colombia
   dplyr::filter(N1_MacroBi == "Andean")
 
-class(col_andean)
-
 tm_shape(col_andean) +
-  tm_polygons()
+  tm_polygons() +
+  tm_layout(main.title = "Andean Region of Colombia",
+            main.title.size = 1)
 ```
 
 ## Coordinate Reference System 
 
 ```{r}
+# print the CRS of each spatial object
 st_crs(col)
 st_crs(roads)
 st_crs(aves)
 
+# print units of each CRS 
 st_crs(col)$units
 st_crs(roads)$units
 st_crs(aves)$units
 
+# first approach: purrr
 aves_df_purrr <- aves %>%
-  mutate(lon = unlist(purrr::map(aves$geometry, 1)),
-         lat = unlist(purrr::map(aves$geometry, 2))) %>% 
-  st_drop_geometry()
+  # extract lat & long from geometry column
+  mutate(lon = unlist(purrr::map(aves$geometry, 1)),     # longitude = first component (x)
+         lat = unlist(purrr::map(aves$geometry, 2))) %>% # latitude = second component (y)
+  st_drop_geometry()                                     # remove geometry column now that it's redundant
 
+# second approach: st_coordinates
 aves_df_st_coords <- aves %>%
-  dplyr::mutate(lon = sf::st_coordinates(.)[,1],
-                lat = sf::st_coordinates(.)[,2]) %>%
+  dplyr::mutate(lon = sf::st_coordinates(.)[,1],     # assign first matrix item to "lon"
+                lat = sf::st_coordinates(.)[,2]) %>% # assign second matrix item to "long"
   st_drop_geometry()
 
+# third approach: st_as_sf
 aves_df_purrr <- aves %>%
-  st_as_sf(coords = c("lon", "lat"), crs = 4326)
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) 
 ```
+
 
 ## Bring All Vector Data Types Together
 
 ```{r}
+# boolen check if CRS match between 2 datasets
 st_crs(col) == st_crs(roads)
 
+# transform bird data into same CRS as other Colombia data
 aves <- st_transform(aves, crs = st_crs(col))
 
+# simple plot with all 3 data layers
 tm_shape(col) +
   tm_polygons() +
   tm_shape(roads) +
   tm_lines() +
   tm_shape(aves) +
-  tm_dots()
+  tm_dots() +
+  tm_layout(main.title = "Colombia ecoregions, roads,\nand bird observations",
+            main.title.size = 1)
 ```
