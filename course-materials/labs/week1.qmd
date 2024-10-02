@@ -29,7 +29,7 @@ In this lab, we'll explore the basics of map-making in R using the `tmap` packag
 ::: {.callout-tip icon=true}
 # More map making in R
 
-There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](course-materials/resources/plotting.qmd) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
+There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](https://eds-223-geospatial.github.io/course-materials/resources/plotting.html) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
 
 :::
 

@@ -96,7 +96,7 @@ tm_shape(ei_elev) +
 #   tm_title("Easter Island")
 ```
 
-### Create an Interactive Map of Easter Island with `tmap`
+## Create an Interactive Map of Easter Island with `tmap`
 
 ```{r}
 #| message: false
@@ -147,7 +147,7 @@ ei_map
 #   tm_title("Easter Island")
 ```
 
-### Create a Map of Easter Island with `ggplot2`
+## Create a Map of Easter Island with `ggplot2`
 
 ```{r}
 

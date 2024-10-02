@@ -31,7 +31,7 @@ The following materials are modified from the [tmap book](https://r-tmap.github.
 ::: {.callout-tip icon=true}
 # More map making in R
 
-There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](course-materials/resources/plotting.qmd) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
+There are MANY different ways to make maps in R, all with different pros/cons. Check out this [resource](https://eds-223-geospatial.github.io/course-materials/resources/plotting.html) for examples of what map making looks like in `ggplot2`, `leaflet`, and more!
 :::
 
 ## 2. Get Started
