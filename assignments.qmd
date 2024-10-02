@@ -100,7 +100,7 @@ If you hit a roadblock, run through this checklist to make sure you've done your
 
 - [ ] **revisit the course materials** - your question may already be answered in the slides, textbook, or discussion section materials
 - [ ] **read the documentation** - you can do so directly from RStudio by typing `?function_name` in the console
-- [ ] **read the package's vignette, if available** - these are often linked on CRAN under the *Documents* sections (e.g. see [`{dplyr}` on CRAN](https://cran.r-project.org/web/packages/dplyr/index.html)) or found by Googling `package_name vignette`
+- [ ] **read the package's vignette, if available** - these are often linked on CRAN under the *Documents* sections (e.g. see [`{dplyr}` on CRAN](https://cran.r-project.org/web/packages/dplyr/index.html) or `help("dplyr")`) or can be found through the command `vignette(package = "package-name")` and `vignette("vignette-name")`
 - [ ] **try Googling!** - don't forget to look back at our suggested troubleshooting and Googling tips ([Teach Me How to Google](https://ucsb-meds.github.io/teach-me-how-to-google/#1))
 
 ### How to ask questions
