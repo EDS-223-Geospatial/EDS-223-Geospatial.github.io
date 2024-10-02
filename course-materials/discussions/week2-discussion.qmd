@@ -62,7 +62,7 @@ Now, to meet this week's learning objectives, your task:
   - Check `class()` of the new vector data
   - Plot the new vector data using `tmap`
 4. Use `st_crs()` to retrieve CRS of all vector objects and assign a new CRS
-  - **Bonus**: Check units of your object with `st_crs()$units`
+  - **Bonus Challenge**: Check units of your object with `st_crs()$units`
   - Check CRS of all vector objects with `st_crs()`
   - `st_crs() <- NA` is a brute force way to remove a CRS, instead:
     - For the bird observations dataset, extract the longitude and latitude from the `geometry` column and use `sf::st_drop_geometry()`
