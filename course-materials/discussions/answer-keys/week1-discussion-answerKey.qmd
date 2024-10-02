@@ -150,7 +150,6 @@ ei_map
 ## Create a Map of Easter Island with `ggplot2`
 
 ```{r}
-
 #| message: false
 #| warning: false
 #| eval: false

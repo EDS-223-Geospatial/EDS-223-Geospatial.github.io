@@ -20,5 +20,14 @@ Let's load the necessary packages:
 
 library(sf)
 library(tidyverse)
-library(terra)
+library(rspatial)
 ```
+
+```{r}
+df <- sp_data('precipitation')
+```
+
+```{r}
+
+```
+
