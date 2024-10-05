@@ -165,14 +165,14 @@
     "href": "course-materials/discussions/week10-discussion.html",
     "title": "Week 10: Discussion Section",
     "section": "",
-    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(terra)"
+    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(rspatial)\n\n\ndf &lt;- sp_data('precipitation')"
   },
   {
     "objectID": "course-materials/discussions/week10-discussion.html#get-started",
     "href": "course-materials/discussions/week10-discussion.html#get-started",
     "title": "Week 10: Discussion Section",
     "section": "",
-    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(terra)"
+    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(rspatial)\n\n\ndf &lt;- sp_data('precipitation')"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week3-discussion-answerKey.html",
@@ -215,6 +215,20 @@
     "title": "Week 1: Discussion Section - Answer Key",
     "section": "",
     "text": "library(here)\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)\n\n\n# import all data files for Easter Island (3 vectors, 1 raster)\nei_points &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\nei_elev &lt;- stars::read_stars(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))\n\n\n# first plot the elevation raster\ntm_shape(ei_elev) +\n  tm_raster(style = \"cont\",                # continuous values for this layer\n            palette = \"-RdYlGn\",           # reversed red-yellow-green continuous palette\n            title = \"Elevation (m asl)\") + # legend title with units\n  # add vector: Easter Island vector in default gray\n  tm_shape(ei_borders) +\n    tm_borders() +\n  # add vector: road lines in default black\n  tm_shape(ei_roads) +\n    tm_lines(lwd = \"strokelwd\", # line width depends on attribute value \n           legend.lwd.show = FALSE) +\n  # add vector: volcano points in default gray\n  tm_shape(volcanoes) +\n    tm_symbols(shape = 24,                       # triangle\n             size = \"elevation\",                 # symbol size depends on attribute value \n             title.size = \"Volcanoes (m asl)\") + # legend title with units\n  # general map layout options\n  tm_layout(main.title = \"Easter Island\",\n            bg.color = \"lightblue\") +            # background color for map (ocean)\n  tm_scale_bar(position = c(\"left\", \"bottom\")) +\n  tm_compass(show.labels = 1)                    # only show North label on compass"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-an-interactive-map-of-easter-island-with-tmap",
+    "href": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-an-interactive-map-of-easter-island-with-tmap",
+    "title": "Week 1: Discussion Section - Answer Key",
+    "section": "Create an Interactive Map of Easter Island with tmap",
+    "text": "Create an Interactive Map of Easter Island with tmap\n\n# same code as static map above\nei_map &lt;- tm_shape(ei_elev) +\n  tm_raster(style = \"cont\",\n            palette = \"-RdYlGn\",\n            title = \"Elevation (m asl)\") +\n  tm_shape(ei_borders) + \n  tm_borders() +\n  tm_shape(ei_roads) + \n  tm_lines(lwd = \"strokelwd\", \n           legend.lwd.show = FALSE) +\n  tm_shape(volcanoes) +\n  tm_symbols(shape = 24, \n             size = \"elevation\",\n             title.size = \"Volcanoes (m asl)\") +\n  tm_layout(main.title = \"Easter Island\",\n            bg.color = \"lightblue\") +\n  tm_scale_bar(position = c(\"left\", \"bottom\")) +\n  tm_compass(show.labels = 1)\n\n# convert default static map to interactive map \ntmap_mode(\"view\")\n\nei_map"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-a-map-of-easter-island-with-ggplot2",
+    "href": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-a-map-of-easter-island-with-ggplot2",
+    "title": "Week 1: Discussion Section - Answer Key",
+    "section": "Create a Map of Easter Island with ggplot2",
+    "text": "Create a Map of Easter Island with ggplot2\n\n# extract lat & long from geom column \nvolcanoes_point &lt;- volcanoes %&gt;%\n  mutate(lon = unlist(map(volcanoes$geom,1)), # longitude = first component (x)\n         lat = unlist(map(volcanoes$geom,2))) # latitude = second component (y)\n\nggplot() +\n  # first add Easter Isand borders\n  geom_sf(data = ei_borders, color = \"#212529\") +\n  # add elevation raster\n  geom_stars(data = ei_elev) +\n  scale_fill_distiller(name = \"Elevation (m asl)\", # legend title with units\n                       palette = \"RdYlGn\",         # red-yellow-green palette (no need to reverse)\n                       na.value = \"lightblue\") +  # set NA color (background ocean)\n  # add road vector\n  geom_sf(data = ei_roads, color = \"#343a40\") +\n  # add volcano vector\n  geom_point(data = volcanoes_point, \n             aes(x = lon, y = lat, \n                 size = elevation), # point size depends on attribute value\n             shape = 17,            # triangle\n             color = \"#22577a\") +\n  scale_size_continuous(name = \"Volcanoes (m asl)\") +       # legend title with units\n  ggspatial::annotation_north_arrow(location = \"br\",        # bottom right\n                                    which_north = \"true\") + # point to north pole\n  ggspatial::annotation_scale(location = \"bl\",              # bottom left\n                              width_hint = 0.5) +           # proportion of map area the scalebar should occupy\n  labs(title = \"Easter Island\") +\n  theme_minimal()"
   },
   {
     "objectID": "course-materials/discussions/week8-discussion.html",
@@ -1201,7 +1215,7 @@
     "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#read-in-vector-data",
     "title": "Week 2: Discussion Section - Answer Key",
     "section": "Read in Vector Data",
-    "text": "Read in Vector Data\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\naves &lt;- readr::read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) %&gt;%\n  dplyr::as_tibble() %&gt;%\n  dplyr::rename(long = decimal_longitude) %&gt;%\n  dplyr::mutate(lat = decimal_latitude) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n\nReading layer `Colombia' from data source \n  `/Users/juliet/Documents/OliverLab/Courses/EDS-223-Geospatial.github.io/course-materials/data/week2-discussion/Colombia/Colombia.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 136 features and 17 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -8795287 ymin: -469977.2 xmax: -7443980 ymax: 1398445\nProjected CRS: WGS 84 / Pseudo-Mercator\n\n\nReading layer `RDLINE_colombia' from data source \n  `/Users/juliet/Documents/OliverLab/Courses/EDS-223-Geospatial.github.io/course-materials/data/week2-discussion/RDLINE_colombia/RDLINE_colombia.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 3088 features and 10 fields\nGeometry type: LINESTRING\nDimension:     XY\nBounding box:  xmin: -8772144 ymin: -351396.2 xmax: -7512194 ymax: 1397046\nProjected CRS: WGS 84 / Pseudo-Mercator\n\n\nRows: 360977 Columns: 36\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (23): dataset_key, occurrence_id, kingdom, phylum, class, order, family...\ndbl  (11): gbif_id, decimal_latitude, decimal_longitude, elevation, elevatio...\nlgl   (1): coordinate_uncertainty_in_meters\ndttm  (1): last_interpreted\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+    "text": "Read in Vector Data\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\naves &lt;- readr::read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) %&gt;%\n  dplyr::as_tibble() %&gt;%\n  dplyr::rename(long = decimal_longitude) %&gt;%\n  dplyr::mutate(lat = decimal_latitude) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n\nReading layer `Colombia' from data source \n  `/Users/rutholiver/Documents/ucsb/repos/EDS223/EDS-223-Geospatial.github.io/course-materials/data/week2-discussion/Colombia/Colombia.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 136 features and 17 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -8795287 ymin: -469977.2 xmax: -7443980 ymax: 1398445\nProjected CRS: WGS 84 / Pseudo-Mercator\n\n\nReading layer `RDLINE_colombia' from data source \n  `/Users/rutholiver/Documents/ucsb/repos/EDS223/EDS-223-Geospatial.github.io/course-materials/data/week2-discussion/RDLINE_colombia/RDLINE_colombia.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 3088 features and 10 fields\nGeometry type: LINESTRING\nDimension:     XY\nBounding box:  xmin: -8772144 ymin: -351396.2 xmax: -7512194 ymax: 1397046\nProjected CRS: WGS 84 / Pseudo-Mercator\n\n\nRows: 360977 Columns: 36\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (23): dataset_key, occurrence_id, kingdom, phylum, class, order, family...\ndbl  (11): gbif_id, decimal_latitude, decimal_longitude, elevation, elevatio...\nlgl   (1): coordinate_uncertainty_in_meters\ndttm  (1): last_interpreted\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#check-class-and-geometry-type",
@@ -1390,7 +1404,7 @@
     "href": "course-materials/week10.html#class-materials",
     "title": "Intro to active remote sensing",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\ndescription"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\nPractice gridding and spatial interpolation"
   },
   {
     "objectID": "course-materials/week10.html#assignment-reminders",
@@ -1412,19 +1426,5 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
-  },
-  {
-    "objectID": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-an-interactive-map-of-easter-island-with-tmap",
-    "href": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-an-interactive-map-of-easter-island-with-tmap",
-    "title": "Week 1: Discussion Section - Answer Key",
-    "section": "Create an Interactive Map of Easter Island with tmap",
-    "text": "Create an Interactive Map of Easter Island with tmap\n\n# same code as static map above\nei_map &lt;- tm_shape(ei_elev) +\n  tm_raster(style = \"cont\",\n            palette = \"-RdYlGn\",\n            title = \"Elevation (m asl)\") +\n  tm_shape(ei_borders) + \n  tm_borders() +\n  tm_shape(ei_roads) + \n  tm_lines(lwd = \"strokelwd\", \n           legend.lwd.show = FALSE) +\n  tm_shape(volcanoes) +\n  tm_symbols(shape = 24, \n             size = \"elevation\",\n             title.size = \"Volcanoes (m asl)\") +\n  tm_layout(main.title = \"Easter Island\",\n            bg.color = \"lightblue\") +\n  tm_scale_bar(position = c(\"left\", \"bottom\")) +\n  tm_compass(show.labels = 1)\n\n# convert default static map to interactive map \ntmap_mode(\"view\")\n\nei_map"
-  },
-  {
-    "objectID": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-a-map-of-easter-island-with-ggplot2",
-    "href": "course-materials/discussions/answer-keys/week1-discussion-answerKey.html#create-a-map-of-easter-island-with-ggplot2",
-    "title": "Week 1: Discussion Section - Answer Key",
-    "section": "Create a Map of Easter Island with ggplot2",
-    "text": "Create a Map of Easter Island with ggplot2\n\n# extract lat & long from geom column \nvolcanoes_point &lt;- volcanoes %&gt;%\n  mutate(lon = unlist(map(volcanoes$geom,1)), # longitude = first component (x)\n         lat = unlist(map(volcanoes$geom,2))) # latitude = second component (y)\n\nggplot() +\n  # first add Easter Isand borders\n  geom_sf(data = ei_borders, color = \"#212529\") +\n  # add elevation raster\n  geom_stars(data = ei_elev) +\n  scale_fill_distiller(name = \"Elevation (m asl)\", # legend title with units\n                       palette = \"RdYlGn\",         # red-yellow-green palette (no need to reverse)\n                       na.value = \"lightblue\") +  # set NA color (background ocean)\n  # add road vector\n  geom_sf(data = ei_roads, color = \"#343a40\") +\n  # add volcano vector\n  geom_point(data = volcanoes_point, \n             aes(x = lon, y = lat, \n                 size = elevation), # point size depends on attribute value\n             shape = 17,            # triangle\n             color = \"#22577a\") +\n  scale_size_continuous(name = \"Volcanoes (m asl)\") +       # legend title with units\n  ggspatial::annotation_north_arrow(location = \"br\",        # bottom right\n                                    which_north = \"true\") + # point to north pole\n  ggspatial::annotation_scale(location = \"bl\",              # bottom left\n                              width_hint = 0.5) +           # proportion of map area the scalebar should occupy\n  labs(title = \"Easter Island\") +\n  theme_minimal()"
   }
 ]
