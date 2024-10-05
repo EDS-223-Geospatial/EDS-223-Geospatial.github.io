@@ -1,6 +1,6 @@
 ---
 title: "Homework Assignment 3"
-subtitle: "Exploring patterns of environmental justice"
+subtitle: "Identifying the impacts of extreme weather"
 author: "Ruth Oliver"
 date: last-modified
 execute: 
@@ -17,11 +17,11 @@ editor_options:
 #| echo: false
 #| out-width: "80%"
 #| fig-align: "center"
-knitr::include_graphics("images/holc-la.png")
+knitr::include_graphics("images/texas.jpg")
 ```
 
 ::: {.gray-text .center-text}
-[Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/data/CA-LosAngeles){target="_blank"}
+[soa.org](https://www.soa.org/news-and-publications/newsletters/general-insurance/2021/june/gii-2021-06/texas-winter-storm-2021-accounting-for-subsequent-events/){target="_blank"}
 :::
 
 :::{.callout-important icon=true}
@@ -36,7 +36,7 @@ The assignment **must be submitted through GitHub Classrooms**. Each student rec
 
 ## Learning outcomes
 
-Practice with the following:
+This assignment will reinforce key concepts in geospatial analysis by practicing the following:
 
 -   load vector/raster data  
 -   simple raster operations  
@@ -71,7 +71,9 @@ EDS223-HW3
 
 ## Background
 
-“In February 2021, the state of Texas suffered a major power crisis, which came about as a result of three severe winter storms sweeping across the United States on February 10–11, 13–17, and 15–20.”[^wiki] For more background, check out these [engineering](https://www.youtube.com/watch?v=08mwXICY4JM&ab_channel=PracticalEngineering) and [political](https://www.youtube.com/watch?v=Zcrsgdl_hP0&ab_channel=Vox) perspectives. 
+Climate change is increasing the frequency and intensity of extreme weather events, with devastating impacts. “In February 2021, the state of Texas suffered a major power crisis, which came about as a result of three severe winter storms sweeping across the United States on February 10–11, 13–17, and 15–20.”[^wiki] For more background, check out these [engineering](https://www.youtube.com/watch?v=08mwXICY4JM&ab_channel=PracticalEngineering) and [political](https://www.youtube.com/watch?v=Zcrsgdl_hP0&ab_channel=Vox) perspectives. 
+
+In this assignment, you will identify the impacts of these series of extreme winter storms by estimating the number of homes in the Houston metropolitan area that lost power and investigate whether not these impacts were disproportionately felt. 
 
 Your analysis will be based on remotely-sensed night lights data, acquired from the [Visible Infrared Imaging Radiometer Suite (VIIRS)](https://en.wikipedia.org/wiki/Visible_Infrared_Imaging_Radiometer_Suite) onboard the Suomi satellite. In particular, you will use the VNP46A1 to detect differences in night lights before and after the storm to identify areas that lost electric power.
 
@@ -81,10 +83,14 @@ To investigate potential socioeconomic factors that influenced recovery, you wil
 
 ## Description
 
-For this assignment, you are tasked with:
+For this assignment, you must produce the following:
 
-- [ ]  estimating the number of homes in Houston that lost power as a result of the first two storms  
-- [ ]  investigating if socioeconomic factors are predictors of communities recovery from a power outage
+- [ ] a set of maps comparing night light intensities before and after the first to storms
+- [ ] a map of the homes in in Houston that lost power
+- [ ]  an estimate of the number of homes in Houston that lost power 
+- [ ] a map of the census tracts in Houston that lost power
+- [ ] a figure comparing the distributions of median household income for census tracts that did and did not experience blackouts
+- [ ]  a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study
 
 ## Data details
 
@@ -95,31 +101,32 @@ VIIRS data is distributed through NASA's [Level-1 and Atmospheric Archive & Dist
 
 As you're learning in EDS 220, accessing, downloading, and preparing remote sensing data is a skill in it's own right! To prevent this assignment from being a large data wrangling challenge, we have downloaded and prepped the following files for you to work with, stored in the `VNP46A1` folder.\
 
+**Data files:**
+
 -   `VNP46A1.A2021038.h08v05.001.2021039064328.h5.tif`: tile h08v05, collected on 2021-02-07  
 -   `VNP46A1.A2021038.h08v06.001.2021039064329.h5.tif`: tile h08v06, collected on 2021-02-07  
 -   `VNP46A1.A2021047.h08v05.001.2021048091106.h5.tif`: tile h08v05, collected on 2021-02-16  
 -   `VNP46A1.A2021047.h08v06.001.2021048091105.h5.tif`: tile h08v06, collected on 2021-02-16  
 
 ### Roads
+**Data file:** `gis_osm_roads_free_1.gpkg`
 Typically highways account for a large portion of the night lights observable from space (see Google's [Earth at Night](https://earth.google.com/web/@27.44405464,-84.7693044,206.63660162a,8916361.52264659d,35y,0h,0t,0r/data=CiQSIhIgMGY3ZTJkYzdlOGExMTFlNjk5MGQ2ZjgxOGQ2OWE2ZTc)). To minimize falsely identifying areas with reduced traffic as areas without power, we will ignore areas near highways.
 
 [OpenStreetMap (OSM)](https://planet.openstreetmap.org/) is a collaborative project which creates publicly available geographic data of the world. Ingesting this data into a database where it can be subsetted and processed is a large undertaking. Fortunately, third party companies redistribute OSM data. We used [Geofabrik's download sites](https://download.geofabrik.de/) to retrieve a shapefile of all highways in Texas and prepared a Geopackage (`.gpkg` file) containing just the subset of roads that intersect the Houston metropolitan area.\  
 
-- `gis_osm_roads_free_1.gpkg`
-
 [^wiki]:Wikipedia. 2021. “2021 Texas power crisis.” Last modified October 2, 2021. https://en.wikipedia.org/wiki/2021_Texas_power_crisis.
 
 ### Houses
-We can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.\
+**Data file:** `gis_osm_buildings_a_free_1.gpkg`
 
-- `gis_osm_buildings_a_free_1.gpkg`
+We can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.\
 
 ### Socioeconomic
 We cannot readily get socioeconomic information for every home, so instead we obtained data from the [U.S. Census Bureau's American Community Survey](https://www.census.gov/programs-surveys/acs) for census tracts in 2019. The *folder* `ACS_2019_5YR_TRACT_48.gdb` is an ArcGIS ["file geodatabase"](https://desktop.arcgis.com/en/arcmap/latest/manage-data/administer-file-gdbs/file-geodatabases.htm), a multi-file proprietary format that's roughly analogous to a GeoPackage file.\
 
 You can use `st_layers()` to explore the contents of the geodatabase. Each layer contains a subset of the fields documents in the [ACS metadata](https://www2.census.gov/geo/docs/maps-data/data/tiger/prejoined/ACSMetadata2011.txt).\
 
-The geodatabase contains a layer holding the geometry information, separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that `sf` can use. 
+The geodatabase contains a layer holding the geometry information (`ACS_2019_5YR_TRACT_48_TEXAS`), separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that `sf` can use. 
 
 
 :::{.callout-tip icon=true}
@@ -128,7 +135,16 @@ Make sure to check that these datasets have the same coordinate reference system
 
 :::
 
-## Workflow suggestions
+## Workflow outline
+
+To complete complete the tasks of this assignment, you will need to break your analysis into the following key steps:
+
+- find locations that experienced a blackout by creating a mask
+- exclude highways from analysis
+- identify homes that experienced blackouts by combining the locations of homes and blackouts
+- identify 
+
+Below is guidance and suggestions for each of these steps.
 
 :::{.callout-tip icon=true}
 
@@ -136,35 +152,73 @@ For improved computational efficiency and easier interoperability with `sf`, I r
 
 :::
 
-### Step 1: Find homes that experienced blackouts
+### Create blackout mask
+To identify places that experienced a blackout, you should create a "mask" that indicates for each cell whether or not it experienced a blackout.
 
-To find the locations within Houston that experienced blackouts, you will:
-
-- find locations that experienced a blackout
-- filter analysis to the Houston area
-- exclude highways from analysis
-- identify homes that experienced blackouts by combining the locations of homes and blackouts
-
-#### find locations that experienced a blackout
-
-- [ ] combine VIIRS night light tiles into two `stars` objects, one for each day (2021-02-07 and 2021-02-16) (hint: use `st_mosaic`)
 - [ ] find the change in night lights intensity (presumably) caused by the storm
+  - hint: this will require creating a raster object for each day (2021-02-07 and 2021-02-16)
 - [ ] reclassify the difference raster, assuming that any location that experienced a drop of more than 200 nW cm^-2^sr^-1^ experienced a blackout
-- [ ] assign `NA` to all locations that experienced a drop of *less* than 200 nW cm^-2^sr^-1^
+- [ ] assign `NA` to all locations that experienced a drop of *less* than 200 nW cm^-2^sr^-1^ change
+- [ ] vectorize the blackout mask
+  - hint: use `st_as_sf()` to convert from a raster to a vector and fix any invalid geometries with `st_make_valid()`
+- [ ] crop (spatially subset) the blackout mask to the Houston area as defined by the following coordinates:
+    -   (-96.5, 29), (-96.5, 30.5), (-94.5, 30.5), (-94.5, 29)
+- [ ] re-project the cropped blackout dataset to `EPSG:3083` (NAD83 / Texas Centric Albers Equal Area)
 
 
+### Exclude highways from the cropped blackout mask
+Highways may have experienced changes in their night light intensities that are unrelated to the storm. Therefore, you should excluded any locations within 200 meters of all highways in the Houston area.
+
+- [ ] identify areas within 200m of all highways
+  - hint: you may need to use `st_union`
+- [ ] find areas that experienced blackouts that are further than 200m from a highway
+
+:::{.callout-tip icon=true}
+The roads geopackage includes data on roads other than highways. However, we can avoid reading in data we don't need by taking advantage of `st_read`'s ability to subset using a SQL query.
+
+Below is a SQL query that can be used as an argument in `st_read`:
+```{r}
+"SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'"
+```
+:::
+
+### Identify homes likely impacted by blackouts
+
+- [ ] identify homes that overlap with areas that experienced blackouts
+
+:::{.callout-tip icon=true}
+The buildings geopackage includes data on many types of buildings. As with the roads data, we can avoid reading in data we don't need.
+
+Below is a SQL query that can be used as an argument in `st_read`:
+```{r}
+"SELECT *
+FROM gis_osm_buildings_a_free_1`
+WHERE (type IS NULL AND name IS NULL)`
+OR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')"
+
+```
+
+:::
+
+### Identify the census tracts likely impacted by blackout
+
+- [ ] join the median household income from the previous 12 months to the census tract geometries
+  -   hint: make sure to join by geometry ID
+- [ ] identify census tracts that that contained homes that experienced blackouts
 
 ## Rubric (specifications)
 
-You must complete the following to receive a "Satisfactory" on the assignment:
+Assignments will be deemed "Satisfactory" based on the following criteria:
 
-- [ ] All maps must include the following elements:
+- [ ] "Correct" answers are not sufficient. Analysis must demonstrate critical interrogation of each step by showing justification and verification of intermediate steps using the following:
+  - custom warning and error message (e.g. `warning()` and `stop()`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages))
+  - unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
+- [ ] All maps and figures must include the following elements:
   - an informative title
   - legends with legible titles, including units
-  - indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
   - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
-- [ ] All tables must:
-  - must use professional-style formatting from `kable`
+  - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
+  - for figures: axes with legible titles, including units
 - [ ] The rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis
   - see examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
 
