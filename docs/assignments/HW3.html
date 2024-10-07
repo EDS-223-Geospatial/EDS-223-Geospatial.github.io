@@ -9,7 +9,7 @@
 <meta name="author" content="Ruth Oliver">
 <meta name="dcterms.date" content="2024-10-04">
 
-<title>Homework Assignment 2</title>
+<title>Homework Assignment 3</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -177,8 +177,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Homework Assignment 2</h1>
-            <p class="subtitle lead">Exploring patterns of environmental justice</p>
+      <h1 class="title">Homework Assignment 3</h1>
+            <p class="subtitle lead">Identifying the impacts of extreme weather</p>
                       </div>
   </div>
     
@@ -214,19 +214,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link active" data-scroll-target="#learning-outcomes">Learning outcomes</a></li>
   <li><a href="#instructions" id="toc-instructions" class="nav-link" data-scroll-target="#instructions">Instructions</a></li>
   <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
   <li><a href="#data-details" id="toc-data-details" class="nav-link" data-scroll-target="#data-details">Data details</a>
   <ul class="collapse">
-  <li><a href="#ejscreen" id="toc-ejscreen" class="nav-link" data-scroll-target="#ejscreen">EJScreen</a></li>
-  <li><a href="#holc-redlining" id="toc-holc-redlining" class="nav-link" data-scroll-target="#holc-redlining">HOLC Redlining</a></li>
-  <li><a href="#biodiversity-observations" id="toc-biodiversity-observations" class="nav-link" data-scroll-target="#biodiversity-observations">Biodiversity observations</a></li>
+  <li><a href="#night-lights" id="toc-night-lights" class="nav-link" data-scroll-target="#night-lights">Night lights</a></li>
+  <li><a href="#roads" id="toc-roads" class="nav-link" data-scroll-target="#roads">Roads</a></li>
+  <li><a href="#houses" id="toc-houses" class="nav-link" data-scroll-target="#houses">Houses</a></li>
+  <li><a href="#socioeconomic" id="toc-socioeconomic" class="nav-link" data-scroll-target="#socioeconomic">Socioeconomic</a></li>
   </ul></li>
-  <li><a href="#part-1-legacy-of-redlining-in-current-environmental-injustice" id="toc-part-1-legacy-of-redlining-in-current-environmental-injustice" class="nav-link" data-scroll-target="#part-1-legacy-of-redlining-in-current-environmental-injustice">Part 1: Legacy of redlining in current environmental (in)justice</a>
+  <li><a href="#workflow-outline" id="toc-workflow-outline" class="nav-link" data-scroll-target="#workflow-outline">Workflow outline</a>
   <ul class="collapse">
-  <li><a href="#description" id="toc-description" class="nav-link" data-scroll-target="#description">Description</a></li>
-  </ul></li>
-  <li><a href="#part-2-legacy-of-redlining-in-biodiversity-observations" id="toc-part-2-legacy-of-redlining-in-biodiversity-observations" class="nav-link" data-scroll-target="#part-2-legacy-of-redlining-in-biodiversity-observations">Part 2: Legacy of redlining in biodiversity observations</a>
-  <ul class="collapse">
-  <li><a href="#description-1" id="toc-description-1" class="nav-link" data-scroll-target="#description-1">Description</a></li>
+  <li><a href="#create-blackout-mask" id="toc-create-blackout-mask" class="nav-link" data-scroll-target="#create-blackout-mask">Create blackout mask</a></li>
+  <li><a href="#exclude-highways-from-the-cropped-blackout-mask" id="toc-exclude-highways-from-the-cropped-blackout-mask" class="nav-link" data-scroll-target="#exclude-highways-from-the-cropped-blackout-mask">Exclude highways from the cropped blackout mask</a></li>
+  <li><a href="#identify-homes-likely-impacted-by-blackouts" id="toc-identify-homes-likely-impacted-by-blackouts" class="nav-link" data-scroll-target="#identify-homes-likely-impacted-by-blackouts">Identify homes likely impacted by blackouts</a></li>
+  <li><a href="#identify-the-census-tracts-likely-impacted-by-blackout" id="toc-identify-the-census-tracts-likely-impacted-by-blackout" class="nav-link" data-scroll-target="#identify-the-census-tracts-likely-impacted-by-blackout">Identify the census tracts likely impacted by blackout</a></li>
   </ul></li>
   <li><a href="#rubric-specifications" id="toc-rubric-specifications" class="nav-link" data-scroll-target="#rubric-specifications">Rubric (specifications)</a></li>
   </ul>
@@ -243,13 +244,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/holc-la.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="images/texas.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="gray-text center-text">
-<p><a href="https://dsl.richmond.edu/panorama/redlining/data/CA-LosAngeles" target="_blank">Mapping Inequality</a></p>
+<p><a href="https://www.soa.org/news-and-publications/newsletters/general-insurance/2021/june/gii-2021-06/texas-winter-storm-2021-accounting-for-subsequent-events/" target="_blank">soa.org</a></p>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -268,73 +269,100 @@ Important
 </div>
 <section id="learning-outcomes" class="level2">
 <h2 class="anchored" data-anchor-id="learning-outcomes">Learning outcomes</h2>
+<p>This assignment will reinforce key concepts in geospatial analysis by practicing the following:</p>
 <ul>
-<li>build effective, responsible, accessible and aesthetically-pleasing maps</li>
-<li>practice manipulating vector and raster data to build multi-layer maps</li>
-<li>practice making maps in R, specifically using <code>tmap</code></li>
+<li>load vector/raster data<br>
+</li>
+<li>simple raster operations<br>
+</li>
+<li>simple vector operations<br>
+</li>
+<li>spatial joins</li>
 </ul>
 </section>
 <section id="instructions" class="level2">
 <h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
 <ol type="1">
 <li>Clone repository from GitHub Classrooms</li>
-<li>Download data from <a href="https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing">here</a></li>
+<li>Download data from <a href="https://drive.google.com/file/d/1bTk62xwOzBqWmmT791SbYbHxnCdjmBtw/view?usp=drive_link">here</a></li>
 <li>Unzip data and place in repository</li>
 <li>Edit Quarto document with responses</li>
 <li>Push final edits before deadline</li>
 </ol>
 <p>Your repository should have the following structure:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>EDS223-HW2</span>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>EDS223-HW3</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>│   README.md</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>│   HW2.qmd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>│   Rmd/Proj files    </span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>│</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>└───data</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     └───ejscreen</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     └───gbif-birds-LA</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>     └───mapping-inequality</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>│   Rmd/Proj files    </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>│</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>└───data</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    │   gis_osm_buildings_a_free_1.gpkg</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    │   gis_osm_roads_free_1.gpkg</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    │</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    └───ACS_2019_5YR_TRACT_48_TEXAS.gdb</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    |   │   census tract gdb files</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    |</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    └───VNP46A1</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    |   │   VIIRS data files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">Background</h2>
-<p>Present-day environmental justice may reflect legacies of injustice in the past. The United States has a long history of racial segregation which is still visible. During the 1930’s the Home Owners’ Loan Corporation (HOLC), as part of the New Deal, rated neighborhoods based on their perceived safety for real estate investment. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership. Colloquially known as “redlining”, this practice has had widely-documented consequences not only for community wealth, but also health.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Redlined neighborhoods have less greenery<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and are hotter than other neighborhoods.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>Check out coverage by the <a href="https://www.nytimes.com/interactive/2020/08/24/climate/racism-redlining-cities-global-warming.html">New York Times</a>.</p>
-<p>A recent study found that redlining has not only affected the environments communities are exposed to, it has also shaped our observations of biodiversity.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Community or citizen science, whereby individuals share observations of species, is generating an enormous volume of data. Ellis-Soto and co-authors found that redlined neighborhoods remain the most undersampled areas across 195 US cities. This gap is highly concerning, because conservation decisions are made based on these data.</p>
-<p>Check out coverage by <a href="https://eos.org/articles/bird-biodiversity-reports-reflect-cities-redlined-past?utm_source=EosBuzz&amp;mkt_tok=OTg3LUlHVC01NzIAAAGOx3ckQPpeDY3QyFKdUnBSYqILj3qLrgb_Q2lasphwcF90xEzMgjZFUo3NHsw3caXDcZe6I8D8qdVsSRr3wzhb6LKAQRgNo8ffhjieEbDwMw">EOS</a>.</p>
+<p>Climate change is increasing the frequency and intensity of extreme weather events, with devastating impacts. “In February 2021, the state of Texas suffered a major power crisis, which came about as a result of three severe winter storms sweeping across the United States on February 10–11, 13–17, and 15–20.”<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> For more background, check out these <a href="https://www.youtube.com/watch?v=08mwXICY4JM&amp;ab_channel=PracticalEngineering">engineering</a> and <a href="https://www.youtube.com/watch?v=Zcrsgdl_hP0&amp;ab_channel=Vox">political</a> perspectives.</p>
+<p>In this assignment, you will identify the impacts of these series of extreme winter storms by estimating the number of homes in the Houston metropolitan area that lost power and investigate whether not these impacts were disproportionately felt.</p>
+<p>Your analysis will be based on remotely-sensed night lights data, acquired from the <a href="https://en.wikipedia.org/wiki/Visible_Infrared_Imaging_Radiometer_Suite">Visible Infrared Imaging Radiometer Suite (VIIRS)</a> onboard the Suomi satellite. In particular, you will use the VNP46A1 to detect differences in night lights before and after the storm to identify areas that lost electric power.</p>
+<p>To determine the number of homes that lost power, you link (spatially join) these areas with <a href="https://www.openstreetmap.org/#map=4/38.01/-95.84">OpenStreetMap</a> data on buildings and roads.</p>
+<p>To investigate potential socioeconomic factors that influenced recovery, you will link your analysis with data from the US Census Bureau.</p>
+</section>
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<p>For this assignment, you must produce the following:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">a set of maps comparing night light intensities before and after the first to storms</label></li>
+<li><label><input type="checkbox">a map of the homes in in Houston that lost power</label></li>
+<li><label><input type="checkbox">an estimate of the number of homes in Houston that lost power</label></li>
+<li><label><input type="checkbox">a map of the census tracts in Houston that lost power</label></li>
+<li><label><input type="checkbox">a figure comparing the distributions of median household income for census tracts that did and did not experience blackouts</label></li>
+<li><label><input type="checkbox">a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study</label></li>
+</ul>
 </section>
 <section id="data-details" class="level2">
 <h2 class="anchored" data-anchor-id="data-details">Data details</h2>
-<section id="ejscreen" class="level3">
-<h3 class="anchored" data-anchor-id="ejscreen">EJScreen</h3>
-<p><strong>Data file:</strong> <code>ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb</code></p>
-<p>We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.</p>
-<p>According to the <a href="https://www.epa.gov/ejscreen/purposes-and-uses-ejscreen">US EPA website</a>:</p>
-<blockquote class="blockquote">
-<p>This screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.</p>
-<p>EPA is sharing EJScreen with the public:<br>
-- to be more transparent about how we consider environmental justice in our work,<br>
-- to assist our stakeholders in making informed decisions about pursuing environmental justice and,<br>
-- to create a common starting point between the agency and the public when looking at issues related to environmental justice.</p>
-</blockquote>
-<p>EJScreen provides on environmental and demographic information for the US at the Census <a href="https://en.wikipedia.org/wiki/Census_tract">tract</a> and <a href="https://en.wikipedia.org/wiki/Census_block_group">block group</a> levels. You will be working with data at the block group level that has been downloaded from the <a href="https://www.epa.gov/ejscreen/download-ejscreen-data">EPA site</a>. To understand the associated data columns, you will need to explore the following in the <code>data</code> folder:</p>
+<section id="night-lights" class="level3">
+<h3 class="anchored" data-anchor-id="night-lights">Night lights</h3>
+<p>Use NASA’s Worldview to explore the data around the day of the storm. There are several days with too much cloud cover to be useful, but 2021-02-07 and 2021-02-16 provide two clear, contrasting images to visualize the extent of the power outage in Texas.</p>
+<p>VIIRS data is distributed through NASA’s <a href="https://ladsweb.modaps.eosdis.nasa.gov/">Level-1 and Atmospheric Archive &amp; Distribution System Distributed Active Archive Center (LAADS DAAC)</a>. Many NASA Earth data products are distributed in 10x10 degree tiles in sinusoidal equal-area projection. Tiles are identified by their horizontal and vertical position in the grid. Houston lies on the border of tiles h08v05 and h08v06. We therefore need to download two tiles per date.</p>
+<p>As you’re learning in EDS 220, accessing, downloading, and preparing remote sensing data is a skill in it’s own right! To prevent this assignment from being a large data wrangling challenge, we have downloaded and prepped the following files for you to work with, stored in the <code>VNP46A1</code> folder.<br>
+</p>
+<p><strong>Data files:</strong></p>
 <ul>
-<li>Technical documentation: <code>ejscreen-tech-doc-version-2-2.pdf</code></li>
-<li>Column descriptions: <code>EJSCREEN_2023_BG_Columns.xlsx</code></li>
+<li><code>VNP46A1.A2021038.h08v05.001.2021039064328.h5.tif</code>: tile h08v05, collected on 2021-02-07<br>
+</li>
+<li><code>VNP46A1.A2021038.h08v06.001.2021039064329.h5.tif</code>: tile h08v06, collected on 2021-02-07<br>
+</li>
+<li><code>VNP46A1.A2021047.h08v05.001.2021048091106.h5.tif</code>: tile h08v05, collected on 2021-02-16<br>
+</li>
+<li><code>VNP46A1.A2021047.h08v06.001.2021048091105.h5.tif</code>: tile h08v06, collected on 2021-02-16</li>
 </ul>
-<p>You should also explore the <a href="https://www.epa.gov/ejscreen/limitations-and-caveats-using-ejscreen">limitations and caveats</a> of the data.</p>
 </section>
-<section id="holc-redlining" class="level3">
-<h3 class="anchored" data-anchor-id="holc-redlining">HOLC Redlining</h3>
-<p><strong>Data file:</strong> <code>mapping-inequality/mapping-inequality-los-angeles.json</code></p>
-<p>A team of researchers, led by the <a href="https://dsl.richmond.edu/">Digital Scholarship Lab</a> at the University of Richmond have digitized maps and information from the HOLC as part of the <a href="https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58">Mapping Inequality</a> project.</p>
-<p>We will be working with maps of HOLC grade designations for Los Angeles. Information on the data can be found <a href="https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58&amp;text=downloads">here</a>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<section id="roads" class="level3">
+<h3 class="anchored" data-anchor-id="roads">Roads</h3>
+<p><strong>Data file:</strong> <code>gis_osm_roads_free_1.gpkg</code> Typically highways account for a large portion of the night lights observable from space (see Google’s <a href="https://earth.google.com/web/@27.44405464,-84.7693044,206.63660162a,8916361.52264659d,35y,0h,0t,0r/data=CiQSIhIgMGY3ZTJkYzdlOGExMTFlNjk5MGQ2ZjgxOGQ2OWE2ZTc">Earth at Night</a>). To minimize falsely identifying areas with reduced traffic as areas without power, we will ignore areas near highways.</p>
+<p><a href="https://planet.openstreetmap.org/">OpenStreetMap (OSM)</a> is a collaborative project which creates publicly available geographic data of the world. Ingesting this data into a database where it can be subsetted and processed is a large undertaking. Fortunately, third party companies redistribute OSM data. We used <a href="https://download.geofabrik.de/">Geofabrik’s download sites</a> to retrieve a shapefile of all highways in Texas and prepared a Geopackage (<code>.gpkg</code> file) containing just the subset of roads that intersect the Houston metropolitan area.&nbsp;</p>
 </section>
-<section id="biodiversity-observations" class="level3">
-<h3 class="anchored" data-anchor-id="biodiversity-observations">Biodiversity observations</h3>
-<p><strong>Data file:</strong> <code>gbif-birds-LA.shp</code></p>
-<p>The <a href="gbif.org">Global Biodiversity Information Facility</a> is the largest aggregator of biodiversity observations in the world. Observations typically include a location and date that a species was observed.</p>
-<p>We will be working observations of birds from 2021 onward.</p>
+<section id="houses" class="level3">
+<h3 class="anchored" data-anchor-id="houses">Houses</h3>
+<p><strong>Data file:</strong> <code>gis_osm_buildings_a_free_1.gpkg</code></p>
+<p>We can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.<br>
+</p>
+</section>
+<section id="socioeconomic" class="level3">
+<h3 class="anchored" data-anchor-id="socioeconomic">Socioeconomic</h3>
+<p>We cannot readily get socioeconomic information for every home, so instead we obtained data from the <a href="https://www.census.gov/programs-surveys/acs">U.S. Census Bureau’s American Community Survey</a> for census tracts in 2019. The <em>folder</em> <code>ACS_2019_5YR_TRACT_48.gdb</code> is an ArcGIS <a href="https://desktop.arcgis.com/en/arcmap/latest/manage-data/administer-file-gdbs/file-geodatabases.htm">“file geodatabase”</a>, a multi-file proprietary format that’s roughly analogous to a GeoPackage file.<br>
+</p>
+<p>You can use <code>st_layers()</code> to explore the contents of the geodatabase. Each layer contains a subset of the fields documents in the <a href="https://www2.census.gov/geo/docs/maps-data/data/tiger/prejoined/ACSMetadata2011.txt">ACS metadata</a>.<br>
+</p>
+<p>The geodatabase contains a layer holding the geometry information (<code>ACS_2019_5YR_TRACT_48_TEXAS</code>), separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that <code>sf</code> can use.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -350,38 +378,112 @@ Tip
 </div>
 </section>
 </section>
-<section id="part-1-legacy-of-redlining-in-current-environmental-injustice" class="level2">
-<h2 class="anchored" data-anchor-id="part-1-legacy-of-redlining-in-current-environmental-injustice">Part 1: Legacy of redlining in current environmental (in)justice</h2>
-<p>Your first task is to explore historical redlining in Los Angeles and its legacy on present-day environmental justice.</p>
-<section id="description" class="level3">
-<h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>For this assignment, you must produce the following:</p>
+<section id="workflow-outline" class="level2">
+<h2 class="anchored" data-anchor-id="workflow-outline">Workflow outline</h2>
+<p>To complete complete the tasks of this assignment, you will need to break your analysis into the following key steps:</p>
+<ul>
+<li>find locations that experienced a blackout by creating a mask</li>
+<li>exclude highways from analysis</li>
+<li>identify homes that experienced blackouts by combining the locations of homes and blackouts</li>
+<li>identify</li>
+</ul>
+<p>Below is guidance and suggestions for each of these steps.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For improved computational efficiency and easier interoperability with <code>sf</code>, I recommend using the <code>stars</code> package for raster handling.</p>
+</div>
+</div>
+<section id="create-blackout-mask" class="level3">
+<h3 class="anchored" data-anchor-id="create-blackout-mask">Create blackout mask</h3>
+<p>To identify places that experienced a blackout, you should create a “mask” that indicates for each cell whether or not it experienced a blackout.</p>
 <ul class="task-list">
-<li><label><input type="checkbox">a map of historical redlining neighborhoods, including:</label>
-<ul class="task-list">
-<li><label><input type="checkbox">neighborhoods colored by HOLC grade</label></li>
-<li><label><input type="checkbox">an appropriate base map</label></li>
+<li><label><input type="checkbox">find the change in night lights intensity (presumably) caused by the storm</label>
+<ul>
+<li>hint: this will require creating a raster object for each day (2021-02-07 and 2021-02-16)</li>
 </ul></li>
-<li><label><input type="checkbox">a table summarizing the percent of current census block groups within each HOLC grade (or none)</label></li>
-<li><label><input type="checkbox">a set of figures summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables:</label>
-<ul class="task-list">
-<li><label><input type="checkbox">% low income</label></li>
-<li><label><input type="checkbox">percentile for Particulate Matter 2.5</label></li>
-<li><label><input type="checkbox">percentile for low life expectancy</label></li>
+<li><label><input type="checkbox">reclassify the difference raster, assuming that any location that experienced a drop of more than 200 nW cm<sup>-2</sup>sr<sup>-1</sup> experienced a blackout</label></li>
+<li><label><input type="checkbox">assign <code>NA</code> to all locations that experienced a drop of <em>less</em> than 200 nW cm<sup>-2</sup>sr<sup>-1</sup> change</label></li>
+<li><label><input type="checkbox">vectorize the blackout mask</label>
+<ul>
+<li>hint: use <code>st_as_sf()</code> to convert from a raster to a vector and fix any invalid geometries with <code>st_make_valid()</code></li>
 </ul></li>
-<li><label><input type="checkbox">a brief paragraph reflecting on these results</label></li>
+<li><label><input type="checkbox">crop (spatially subset) the blackout mask to the Houston area as defined by the following coordinates:</label>
+<ul>
+<li>(-96.5, 29), (-96.5, 30.5), (-94.5, 30.5), (-94.5, 29)</li>
+</ul></li>
+<li><label><input type="checkbox">re-project the cropped blackout dataset to <code>EPSG:3083</code> (NAD83 / Texas Centric Albers Equal Area)</label></li>
 </ul>
 </section>
-</section>
-<section id="part-2-legacy-of-redlining-in-biodiversity-observations" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-legacy-of-redlining-in-biodiversity-observations">Part 2: Legacy of redlining in biodiversity observations</h2>
-<p>Your second task is to explore the legacy of historical redlining in Los Angeles on the collection of bird observations.</p>
-<section id="description-1" class="level3">
-<h3 class="anchored" data-anchor-id="description-1">Description</h3>
-<p>For this assignment, you must produce the following based on observations from 2022:</p>
+<section id="exclude-highways-from-the-cropped-blackout-mask" class="level3">
+<h3 class="anchored" data-anchor-id="exclude-highways-from-the-cropped-blackout-mask">Exclude highways from the cropped blackout mask</h3>
+<p>Highways may have experienced changes in their night light intensities that are unrelated to the storm. Therefore, you should excluded any locations within 200 meters of all highways in the Houston area.</p>
 <ul class="task-list">
-<li><label><input type="checkbox">a figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade</label></li>
-<li><label><input type="checkbox">a brief paragraph explaining whether these results match the findings from Ellis-Soto et al.&nbsp;2023</label></li>
+<li><label><input type="checkbox">identify areas within 200m of all highways</label>
+<ul>
+<li>hint: you may need to use <code>st_union</code></li>
+</ul></li>
+<li><label><input type="checkbox">find areas that experienced blackouts that are further than 200m from a highway</label></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The roads geopackage includes data on roads other than highways. However, we can avoid reading in data we don’t need by taking advantage of <code>st_read</code>’s ability to subset using a SQL query.</p>
+<p>Below is a SQL query that can be used as an argument in <code>st_read</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="st">"SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="identify-homes-likely-impacted-by-blackouts" class="level3">
+<h3 class="anchored" data-anchor-id="identify-homes-likely-impacted-by-blackouts">Identify homes likely impacted by blackouts</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">identify homes that overlap with areas that experienced blackouts</label></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The buildings geopackage includes data on many types of buildings. As with the roads data, we can avoid reading in data we don’t need.</p>
+<p>Below is a SQL query that can be used as an argument in <code>st_read</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="st">"SELECT *</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">FROM gis_osm_buildings_a_free_1`</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="st">WHERE (type IS NULL AND name IS NULL)`</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">OR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="identify-the-census-tracts-likely-impacted-by-blackout" class="level3">
+<h3 class="anchored" data-anchor-id="identify-the-census-tracts-likely-impacted-by-blackout">Identify the census tracts likely impacted by blackout</h3>
+<ul class="task-list">
+<li><label><input type="checkbox">join the median household income from the previous 12 months to the census tract geometries</label>
+<ul>
+<li>hint: make sure to join by geometry ID</li>
+</ul></li>
+<li><label><input type="checkbox">identify census tracts that that contained homes that experienced blackouts</label></li>
 </ul>
 </section>
 </section>
@@ -416,11 +518,7 @@ Tip
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>Gee, G. C. (2008). A multilevel analysis of the relationship between institutional and individual racial discrimination and health status. American journal of public health, 98(Supplement_1), S48-S56.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Nardone, A., Rudolph, K. E., Morello-Frosch, R., &amp; Casey, J. A. (2021). Redlines and greenspace: the relationship between historical redlining and 2010 greenspace across the United States. Environmental health perspectives, 129(1), 017006.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Hoffman, J. S., Shandas, V., &amp; Pendleton, N. (2020). The effects of historical housing policies on resident exposure to intra-urban heat: a study of 108 US urban areas. Climate, 8(1), 12.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>Ellis-Soto, D., Chapman, M., &amp; Locke, D. H. (2023). Historical redlining is associated with increasing geographical disparities in bird biodiversity sampling in the United States. Nature Human Behaviour, 1-9.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Robert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al., “Mapping Inequality,” American Panorama, ed.&nbsp;Robert K. Nelson and Edward L. Ayers, accessed October 17, 2023, https://dsl.richmond.edu/panorama/redlining/<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Wikipedia. 2021. “2021 Texas power crisis.” Last modified October 2, 2021. https://en.wikipedia.org/wiki/2021_Texas_power_crisis.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

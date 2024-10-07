@@ -151,21 +151,17 @@ For this assignment, you must produce the following based on observations from 2
 
 ## Rubric (specifications)
 
-Assignments will be deemed "Satisfactory" based on the following criteria:
+You must complete the following to receive a "Satisfactory" on the assignment:
 
-- [ ] "Correct" answers are not sufficient. Analysis must demonstrate critical interrogation of each step by showing justification and verification of intermediate steps using the following:
-  - custom warning and error message (e.g. `warning()` and `stop()`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages))
-  - unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
-  - informative comments ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
-- [ ] All maps and figures must include the following elements:
+- [ ] All maps must include the following elements:
   - an informative title
   - legends with legible titles, including units
+  - indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
   - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
-  - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
-  - for figures: axes with legible titles, including units
+- [ ] All tables must:
+  - must use professional-style formatting from `kable`
 - [ ] The rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis
   - see examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
-
 
 
 
