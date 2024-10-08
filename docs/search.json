@@ -326,7 +326,7 @@
     "href": "course-materials/discussions/week2-discussion.html#your-task",
     "title": "Week 2: Discussion Section",
     "section": "3. Your Task",
-    "text": "3. Your Task\nThis repository contains the following datasets:\n\nColombia’s Terrestrial Ecosystems (The Nature Conservancy/NatureServe)\nColombia’s Roads (Esri)\nBird Observations (DATAVES)\n\nNow, to meet this week’s learning objectives, your task:\n\nRead in the data for Colombia’s ecoregions, roads, and bird observations\n\n\nUse st_read() to read vector data (e.g., .shp, .gdb)\nUse rename() or mutate() to rename the columns decimal_longitude and decimal_latitude to long and lat in aves and sf::st_as_sf() to convert it into an sf object\n\nHint: To convert a table into a vector object, you can use st_as_sf() but remember to check the class() of an object first!\n\n\n\nCheck class() of all vector objects (including the converted aves) and use sf::st_geometry_type() to check the geometry type\nUse filter() to select a macro region of interest from N1_MacroBi in Colombia’s ecoregions dataset and save as a new vector data\n\n\nCheck class() of the new vector data\nPlot the new vector data using tmap\n\n\nUse st_crs() to retrieve CRS of all vector objects and assign a new CRS\n\n\nBonus Challenge: Check units of your object with st_crs()$units\nCheck CRS of all vector objects with st_crs()\nst_crs() &lt;- NA is a brute force way to remove a CRS, instead:\n\nFor the bird observations dataset, extract the longitude and latitude from the geometry column and use sf::st_drop_geometry()\nConvert long and lat into a geometry again with st_as_sf() to obtain a proper sf data frame\n\n\n\nLet’s bring all vector data types together\n\n\nCheck that the CRS of the ecoregions and roads datasets match\nTransform CRS of the bird observations data using sf::st_transform() to match with the other datasets\nUse tmap to plot the ecoregions, roads, and bird observations together"
+    "text": "3. Your Task\nYou will be wokring with the following datasets:\n\nColombia’s Terrestrial Ecosystems (The Nature Conservancy/NatureServe)\nColombia’s Roads (Esri)\nBird Observations (DATAVES)\n\nNow, to meet this week’s learning objectives, your task:\n\nRead in the data for Colombia’s ecoregions, roads, and bird observations\n\n\nUse st_read() to read vector data (e.g., .shp, .gdb)\nUse rename() or mutate() to rename the columns decimal_longitude and decimal_latitude to long and lat in aves and sf::st_as_sf() to convert it into an sf object\n\nHint: To convert a table into a vector object, you can use st_as_sf() but remember to check the class() of an object first!\n\n\n\nCheck class() of all vector objects (including the converted aves) and use sf::st_geometry_type() to check the geometry type\nUse filter() to select a macro region of interest from N1_MacroBi in Colombia’s ecoregions dataset and save as a new vector data\n\n\nCheck class() of the new vector data\nPlot the new vector data using tmap\n\n\nUse st_crs() to retrieve CRS of all vector objects and assign a new CRS\n\n\nBonus Challenge: Check units of your object with st_crs()$units\nCheck CRS of all vector objects with st_crs()\nst_crs() &lt;- NA is a brute force way to remove a CRS, instead:\n\nFor the bird observations dataset, extract the longitude and latitude from the geometry column and use sf::st_drop_geometry()\nConvert long and lat into a geometry again with st_as_sf() to obtain a proper sf data frame\n\n\n\nLet’s bring all vector data types together\n\n\nCheck that the CRS of the ecoregions and roads datasets match\nTransform CRS of the bird observations data using sf::st_transform() to match with the other datasets\nUse tmap to plot the ecoregions, roads, and bird observations together"
   },
   {
     "objectID": "course-materials/labs/week4.html",
@@ -1264,21 +1264,21 @@
     "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html",
     "title": "Week 2: Discussion Section - Answer Key",
     "section": "",
-    "text": "library(here)\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)"
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)\n\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\n\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\n\naves &lt;- readr::read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) %&gt;%\n  dplyr::as_tibble() %&gt;%\n  dplyr::rename(long = decimal_longitude) %&gt;%\n  dplyr::mutate(lat = decimal_latitude) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#read-in-vector-data",
     "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#read-in-vector-data",
     "title": "Week 2: Discussion Section - Answer Key",
-    "section": "Read in Vector Data",
-    "text": "Read in Vector Data\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\naves &lt;- readr::read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) %&gt;%\n  dplyr::as_tibble() %&gt;%\n  dplyr::rename(long = decimal_longitude) %&gt;%\n  dplyr::mutate(lat = decimal_latitude) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n\nReading layer `Colombia' from data source \n  `/Users/rutholiver/Documents/repos/EDS-223/EDS-223-Geospatial.github.io/course-materials/data/week2-discussion/Colombia/Colombia.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 136 features and 17 fields\nGeometry type: MULTIPOLYGON\nDimension:     XY\nBounding box:  xmin: -8795287 ymin: -469977.2 xmax: -7443980 ymax: 1398445\nProjected CRS: WGS 84 / Pseudo-Mercator\n\n\nReading layer `RDLINE_colombia' from data source \n  `/Users/rutholiver/Documents/repos/EDS-223/EDS-223-Geospatial.github.io/course-materials/data/week2-discussion/RDLINE_colombia/RDLINE_colombia.shp' \n  using driver `ESRI Shapefile'\nSimple feature collection with 3088 features and 10 fields\nGeometry type: LINESTRING\nDimension:     XY\nBounding box:  xmin: -8772144 ymin: -351396.2 xmax: -7512194 ymax: 1397046\nProjected CRS: WGS 84 / Pseudo-Mercator\n\n\nRows: 360977 Columns: 36\n── Column specification ────────────────────────────────────────────────────────\nDelimiter: \",\"\nchr  (23): dataset_key, occurrence_id, kingdom, phylum, class, order, family...\ndbl  (11): gbif_id, decimal_latitude, decimal_longitude, elevation, elevatio...\nlgl   (1): coordinate_uncertainty_in_meters\ndttm  (1): last_interpreted\n\nℹ Use `spec()` to retrieve the full column specification for this data.\nℹ Specify the column types or set `show_col_types = FALSE` to quiet this message."
+    "section": "",
+    "text": "library(here)\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)\n\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\n\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\n\naves &lt;- readr::read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) %&gt;%\n  dplyr::as_tibble() %&gt;%\n  dplyr::rename(long = decimal_longitude) %&gt;%\n  dplyr::mutate(lat = decimal_latitude) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#check-class-and-geometry-type",
     "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#check-class-and-geometry-type",
     "title": "Week 2: Discussion Section - Answer Key",
     "section": "Check Class and Geometry Type",
-    "text": "Check Class and Geometry Type\n\nclass(col)\n\n[1] \"sf\"         \"data.frame\"\n\nclass(roads)\n\n[1] \"sf\"         \"data.frame\"\n\nclass(aves)\n\n[1] \"sf\"         \"tbl_df\"     \"tbl\"        \"data.frame\"\n\n\n\nunique(st_geometry_type(col))\n\n[1] MULTIPOLYGON\n18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE\n\nunique(st_geometry_type(roads))\n\n[1] LINESTRING\n18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE\n\nunique(st_geometry_type(aves))\n\n[1] POINT\n18 Levels: GEOMETRY POINT LINESTRING POLYGON MULTIPOINT ... TRIANGLE"
+    "text": "Check Class and Geometry Type\n\nclass(col)\nclass(roads)\nclass(aves)\n\n\nunique(st_geometry_type(col))\nunique(st_geometry_type(roads))\nunique(st_geometry_type(aves))"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#filter-for-macro-region-of-interest",
@@ -1299,7 +1299,7 @@
     "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#bring-all-vector-data-types-together",
     "title": "Week 2: Discussion Section - Answer Key",
     "section": "Bring All Vector Data Types Together",
-    "text": "Bring All Vector Data Types Together\n\n# boolen check if CRS match between 2 datasets\nst_crs(col) == st_crs(roads)\n\n[1] TRUE\n\n# transform bird data into same CRS as other Colombia data\naves &lt;- st_transform(aves, crs = st_crs(col))\n\n# simple plot with all 3 data layers\ntm_shape(col) +\n  tm_polygons() +\n  tm_shape(roads) +\n  tm_lines() +\n  tm_shape(aves) +\n  tm_dots() +\n  tm_layout(main.title = \"Colombia ecoregions, roads,\\nand bird observations\",\n            main.title.size = 1)"
+    "text": "Bring All Vector Data Types Together\n\n# Boolen check if CRS match between 2 datasets\nst_crs(col) == st_crs(roads)\n\n# Transform bird data into same CRS as other Colombia data\naves &lt;- st_transform(aves, crs = st_crs(col))\n\n\n# Simple plot with all 3 data layers\ntm_shape(col) +\n  tm_polygons() +\n  tm_shape(roads) +\n  tm_lines() +\n  tm_shape(aves) +\n  tm_dots() +\n  tm_layout(main.title = \"Colombia ecoregions, roads,\\nand bird observations\",\n            main.title.size = 1)"
   },
   {
     "objectID": "course-materials/week8.html#class-materials",
@@ -1482,5 +1482,19 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#select-macro-region-of-interest",
+    "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#select-macro-region-of-interest",
+    "title": "Week 2: Discussion Section - Answer Key",
+    "section": "Select Macro Region of Interest",
+    "text": "Select Macro Region of Interest\n\ncol_andean &lt;- col %&gt;%\n  # Set categorical \"levels\" in attribute N1_MacroBi (subregions of Colombia)\n  dplyr::mutate(N1_MacroBi = as.factor(N1_MacroBi)) %&gt;%\n  # Subset to Andean region of Colombia\n  dplyr::filter(N1_MacroBi == \"Andean\")\n\n\ntm_shape(col_andean) +\n  tm_polygons() +\n  tm_layout(main.title = \"Andean Region of Colombia\",\n            main.title.size = 1)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#play-with-coordinate-reference-system",
+    "href": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html#play-with-coordinate-reference-system",
+    "title": "Week 2: Discussion Section - Answer Key",
+    "section": "Play with Coordinate Reference System",
+    "text": "Play with Coordinate Reference System\n\n# Print the CRS of each spatial object\nst_crs(col)\nst_crs(roads)\nst_crs(aves)\n\n# Print units of each CRS \nst_crs(col)$units\nst_crs(roads)$units\nst_crs(aves)$units\n\nThere are several ways to extract the longitude and latitude from the geometry column.\n\npurr Approach\n\naves_df_purrr &lt;- aves %&gt;%\n  # Extract lat & long from geometry column\n  mutate(lon = unlist(purrr::map(aves$geometry, 1)), # longitude = first component (x)\n         lat = unlist(purrr::map(aves$geometry, 2))) %&gt;% # latitude = second component (y)\n  st_drop_geometry() # Remove geometry column now that it's redundant\n\n\n\nst_coordinates Approach\n\naves_df_st_coords &lt;- aves %&gt;%\n  dplyr::mutate(lon = sf::st_coordinates(.)[,1],# Assign first matrix item to \"lon\"\n                lat = sf::st_coordinates(.)[,2]) %&gt;% # Assign second matrix item to \"lat\"\n  st_drop_geometry() # Remove geometry column now that it's redundant\n\nNext, convert to sf object again.\n\n\nst_as_sf Approach\n\naves_df_purrr &lt;- aves %&gt;%\n  st_as_sf(coords = c(\"lon\", \"lat\"), crs = 4326)"
   }
 ]

@@ -5,16 +5,18 @@ author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
   eval: true
+  message: false
+  warning: false
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
+## Read in Vector Data
 
 ```{r}
-#| message: false
-#| warning: false
-
 library(here)
 library(tidyverse)
 library(stars)
@@ -22,13 +24,13 @@ library(sf)
 library(tmap)
 ```
 
-## Read in Vector Data
-
 ```{r}
 #| eval: false
 
 col <- st_read(here::here("data", "week2-discussion", "Colombia", "Colombia.shp"))
+
 roads <- st_read(here::here("data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+
 aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
@@ -38,10 +40,12 @@ aves <- readr::read_csv(here::here("data", "week2-discussion", "dataves.csv")) %
 
 ```{r}
 #| echo: false
+#| include: false
 
-# data import paths for course repo render
 col <- st_read(here::here("course-materials", "data", "week2-discussion", "Colombia", "Colombia.shp"))
+
 roads <- st_read(here::here("course-materials", "data", "week2-discussion", "RDLINE_colombia", "RDLINE_colombia.shp"))
+
 aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion", "dataves.csv")) %>%
   dplyr::as_tibble() %>%
   dplyr::rename(long = decimal_longitude) %>%
@@ -52,74 +56,100 @@ aves <- readr::read_csv(here::here("course-materials", "data", "week2-discussion
 ## Check Class and Geometry Type
 
 ```{r}
+#| results: 'hide' 
+
 class(col)
 class(roads)
 class(aves)
 ```
 
 ```{r}
+#| results: 'hide' 
+
 unique(st_geometry_type(col))
 unique(st_geometry_type(roads))
 unique(st_geometry_type(aves))
 ```
 
-## `filter()` for Macro Region of Interest
+## Select Macro Region of Interest
 
 ```{r}
 col_andean <- col %>%
-  # set categorical "levels" in attribute N1_MacroBi (subregions of Colombia)
+  # Set categorical "levels" in attribute N1_MacroBi (subregions of Colombia)
   dplyr::mutate(N1_MacroBi = as.factor(N1_MacroBi)) %>%
-  # subset to Andean region of Colombia
+  # Subset to Andean region of Colombia
   dplyr::filter(N1_MacroBi == "Andean")
+```
 
+```{r}
 tm_shape(col_andean) +
   tm_polygons() +
   tm_layout(main.title = "Andean Region of Colombia",
             main.title.size = 1)
 ```
 
-## Coordinate Reference System 
+## Play with Coordinate Reference System 
 
 ```{r}
-# print the CRS of each spatial object
+#| results: 'hide' 
+
+# Print the CRS of each spatial object
 st_crs(col)
 st_crs(roads)
 st_crs(aves)
 
-# print units of each CRS 
+# Print units of each CRS 
 st_crs(col)$units
 st_crs(roads)$units
 st_crs(aves)$units
+```
 
-# first approach: purrr
+There are several ways to extract the longitude and latitude from the `geometry` column.
+
+### `purr` Approach
+
+```{r}
 aves_df_purrr <- aves %>%
-  # extract lat & long from geometry column
-  mutate(lon = unlist(purrr::map(aves$geometry, 1)),     # longitude = first component (x)
+  # Extract lat & long from geometry column
+  mutate(lon = unlist(purrr::map(aves$geometry, 1)), # longitude = first component (x)
          lat = unlist(purrr::map(aves$geometry, 2))) %>% # latitude = second component (y)
-  st_drop_geometry()                                     # remove geometry column now that it's redundant
+  st_drop_geometry() # Remove geometry column now that it's redundant
+```
 
-# second approach: st_coordinates
+### `st_coordinates` Approach
+
+```{r}
 aves_df_st_coords <- aves %>%
-  dplyr::mutate(lon = sf::st_coordinates(.)[,1],     # assign first matrix item to "lon"
-                lat = sf::st_coordinates(.)[,2]) %>% # assign second matrix item to "long"
-  st_drop_geometry()
+  dplyr::mutate(lon = sf::st_coordinates(.)[,1],# Assign first matrix item to "lon"
+                lat = sf::st_coordinates(.)[,2]) %>% # Assign second matrix item to "lat"
+  st_drop_geometry() # Remove geometry column now that it's redundant
+```
 
-# third approach: st_as_sf
+Next, convert to `sf` object again.
+
+### `st_as_sf` Approach
+
+```{r}
 aves_df_purrr <- aves %>%
-  st_as_sf(coords = c("lon", "lat"), crs = 4326) 
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
 ```
 
 
 ## Bring All Vector Data Types Together
 
 ```{r}
-# boolen check if CRS match between 2 datasets
+#| results: 'hide'
+
+# Boolen check if CRS match between 2 datasets
 st_crs(col) == st_crs(roads)
 
-# transform bird data into same CRS as other Colombia data
+# Transform bird data into same CRS as other Colombia data
 aves <- st_transform(aves, crs = st_crs(col))
+```
 
-# simple plot with all 3 data layers
+
+```{r}
+# Simple plot with all 3 data layers
 tm_shape(col) +
   tm_polygons() +
   tm_shape(roads) +

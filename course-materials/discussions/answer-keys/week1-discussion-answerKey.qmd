@@ -8,6 +8,8 @@ execute:
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Create a Map of Easter Island with `tmap`

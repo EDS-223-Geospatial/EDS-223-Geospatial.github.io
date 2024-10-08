@@ -44,7 +44,7 @@ library(tmap)
 
 ## 3. Your Task
 
-[This repository](https://github.com/EDS-223-Geospatial/eds223-week2) contains the following datasets:
+You will be wokring with the following datasets:
 
 - **Colombia's Terrestrial Ecosystems** ([The Nature Conservancy/NatureServe](https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/))
 - **Colombia's Roads** ([Esri](https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/))
