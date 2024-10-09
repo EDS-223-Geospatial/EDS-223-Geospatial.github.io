@@ -561,7 +561,7 @@ tm_scale_bar(position = c("left", "bottom"))
 
 ## Data Citations
 
-| Data | Citation |
+| Data | Data Citations |
 | ------- | ---------|
 | GBIF, polar bear observation points | GBIF.org (01 September 2024) GBIF Occurrence Download  https://doi.org/10.15468/dl.79778w |
 | IUCN Red List, polar bear range polygon | IUCN. 2024. The IUCN Red List of Threatened Species. Version 2024-1. https://www.iucnredlist.org. Accessed on Septmeber 5, 2024. |
