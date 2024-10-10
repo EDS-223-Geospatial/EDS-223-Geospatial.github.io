@@ -306,6 +306,8 @@ if(any(st_intersects(cycle_hire, cycle_hire_osm, sparse = FALSE)) == TRUE){
 ```
 
 ```{r}
+#| message: false
+
 tmap_mode("view")
 
 tm_shape(cycle_hire) +
@@ -355,3 +357,69 @@ if(nrow(cycle_hire) == nrow(cycle_hire_join)){
 }
 ```
 
+### Spatial aggregation
+
+As with aggregating attribute data, spatial data aggregation *condenses* data: outputs have few rows than inputs. Think about our friend `group_by() %>% summarise()`! Spatial aggregation is the same. 
+
+Let's consider the example where we would like to make a map of the mean elevation of high points within each region of NZ. There are several ways to do this, but the first thing we should be thinking is that we will need to retain the `geometry` column of the NZ regions in order to make a map.
+
+The first approach is by leveraging `st_join()` again. But in this example, we want the `nz` object to be the target to maintain the geometries we need.
+
+```{r}
+tmap_mode("plot")
+nz_elevation <- st_join(x = nz, y = nz_height) %>%
+  group_by(Name) %>%
+  summarise(elevation = mean(elevation, na.rm = TRUE))
+
+tm_shape(nz_elevation) +
+  tm_polygons(col = "elevation",
+              title = "Mean elevation (meters)")
+```
+
+The second approah uses the `aggregate()` function. Although it doesn't follow the `dplyr` piping convention we're used to, `aggregate()` will come in handy later, so it's nice to see how it works.
+
+The syntax looks slightly different, in this case the argument `x` is the data we would like to aggregate (`nz_height`) and the `by` argument specifies the geometry that you would like to group by. The `FUN` argument defines the function that you would like to use to aggregate, in this case `mean`.
+
+```{r}
+nz_elevation <- aggregate(x = nz_height, by = nz, FUN = mean)
+
+tm_shape(nz_elevation) +
+  tm_polygons(col = "elevation",
+              title = "Mean elevation (meters)")
+```
+
+:::{.callout-note icon=true}
+# Joining incongruent layers
+
+An important consideration when aggregating spatial objects is that geometries are *congruent*, meaning aggregating zones align with the units being aggregating. This is often the case with administrative boundaries where units are sub-units of one another (e.g. countries > states > counties). 
+
+However, in some cases the aggregating zones do not share common borders with the target. This is an issue because it's not clear how to aggregate underlying data. Areal interpolation overcomes this issue by transferring values to another using algorithms, including simple area weighted approaches.
+
+
+```{r}
+incongruent <- spData::incongruent
+aggregating_zones <- spData::aggregating_zones
+
+tm_shape(incongruent) +
+  tm_polygons(col = "lightblue",
+              border.col = "blue") +
+  tm_shape(aggregating_zones) +
+  tm_borders(col = "red")
+  
+```
+
+The simplest useful method for this is area weighted spatial interpolation, which transfers values from the `incongruent` object to a new column in `aggregating_zones` in proportion with the area of overlap: the larger the spatial intersection between input and output features, the larger the corresponding value. This is implemented in `st_interpolate_aw()`, as demonstrated in the code chunk below.
+
+```{r}
+# select just the value to be aggregated
+incongruent_2 <- incongruent %>%
+  select(value)
+
+# use area-weighted interpolation to aggregrate the "value" attribute
+aggregating_zones_area_weighted <- st_interpolate_aw(incongruent_2, aggregating_zones, extensive = TRUE)
+
+aggregating_zones_area_weighted$value
+```
+
+
+:::
