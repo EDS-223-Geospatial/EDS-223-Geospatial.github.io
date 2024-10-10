@@ -222,7 +222,7 @@ nz_height_logical <- st_is_within_distance(nz_height, canterbury,
                       dist = units::set_units(1000, "km"), # set distance
                       sparse = FALSE) # return logical vector instead
 
-c_height4 = nz_height[nz_height_logical, ] # filter based on logical
+c_height4 <- nz_height[nz_height_logical, ] # filter based on logical
 
 ```
 
@@ -421,5 +421,121 @@ aggregating_zones_area_weighted <- st_interpolate_aw(incongruent_2, aggregating_
 aggregating_zones_area_weighted$value
 ```
 
-
 :::
+
+# Geometry operations
+
+## 1. Geometry unions (aggregating)
+
+```{r}
+#| message: false
+us_states <- spData::us_states
+
+regions1 <- us_states %>%
+  group_by(REGION) %>%
+  summarise(population = sum(total_pop_15, na.rm = TRUE))
+
+regions2 <- aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
+                      FUN = sum, na.rm = TRUE)
+
+map1 <- tm_shape(us_states) +
+  tm_polygons(col = "total_pop_15",
+              title = "Total population") +
+  tm_layout(title = "US States")
+
+map2 <- tm_shape(regions1) +
+  tm_polygons(col = "population",
+              title = "Total population") +
+  tm_layout(title = "group_by()")
+
+map3 <- tm_shape(regions2) +
+  tm_polygons(col = "total_pop_15",
+              title = "Total population") +
+  tm_layout(title = "aggregate()")
+
+tmap_arrange(map1, map2, map3, nrow = 1)
+```
+
+## 2. Filtering
+
+### Buffers
+
+
+```{r}
+seine_buffer_5km <- st_buffer(seine, dist = 5000)
+seine_buffer_50km = st_buffer(seine, dist = 50000)
+
+map1 <- tm_shape(seine_buffer_5km) +
+  tm_polygons() +
+  tm_shape(seine) +
+  tm_lines() +
+  tm_layout(title = "5km buffer")
+
+map2 <- tm_shape(seine_buffer_50km) +
+  tm_polygons() +
+  tm_shape(seine) +
+  tm_lines() +
+  tm_layout(title = "50km buffer")
+
+tmap_arrange(map1, map2, nrow = 1)
+```
+
+
+
+```{r}
+seine_union <- st_union(seine_buffer_50km)
+
+tm_shape(seine_union) +
+  tm_polygons() +
+  tm_shape(seine) +
+  tm_lines() +
+  tm_layout(title = "50km buffer")
+```
+
+
+```{r}
+nz_height_buffer <- st_buffer(nz_height, dist = 1000000)
+
+c_height5 <- nz_height_buffer %>%
+  st_filter(y = canterbury, .predicate = st_intersects)
+
+if(nrow(c_height4) == nrow(c_height5)){
+  print("results from buffer approach match st_is_within_distance() approach")
+} else{
+  warning("approaches giving different results")
+}
+```
+
+### Clipping
+
+```{r}
+#| message: false
+
+x <- st_sfc(st_point(c(0, 1))) %>%
+  st_buffer(., dist = 1)
+
+y <- st_sfc(st_point(c(1, 1))) %>%
+  st_buffer(., dist = 1)
+
+map1 <- tm_shape(x) +
+  tm_borders(col = "red") +
+tm_shape(y) +
+  tm_borders(col = "blue")
+
+map1
+
+```
+
+```{r}
+intersection <- st_intersection(x, y)
+difference_x_y <- st_difference(x, y)
+difference_y_x <- st_difference(y, x)
+union <- st_union(x, y)
+sym_diference <- st_sym_difference(x, y)
+
+map1 +
+  tm_shape(intersection) +
+  tm_fill(col = "purple")
+
+```
+
