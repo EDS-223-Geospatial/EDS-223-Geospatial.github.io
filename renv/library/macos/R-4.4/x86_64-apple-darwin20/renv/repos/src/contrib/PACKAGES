@@ -1,0 +1,10 @@
+Package: renv
+Version: 1.0.10
+Imports: utils
+Suggests: BiocManager, cli, compiler, covr, cpp11, devtools, gitcreds,
+        jsonlite, jsonvalidate, knitr, miniUI, modules, packrat, pak,
+        R6, remotes, reticulate, rmarkdown, rstudioapi, shiny,
+        testthat, uuid, waldo, yaml, webfakes
+License: MIT + file LICENSE
+MD5sum: 18bf8ad78568197e1ed47d7531bb4bb3
+NeedsCompilation: no
