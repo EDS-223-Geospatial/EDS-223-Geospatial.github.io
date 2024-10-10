@@ -254,6 +254,20 @@ knitr::include_graphics("images/dplyr-joins.png")
 [Software Carpentry](https://data-lessons.github.io/gapminder-R/12-joins.html){target="_blank"}
 :::
 
+#### Toplogical relationships
+With spatial data, we can join based on the `geometry` columns using topological relationships using the `st_join()` function. By default `st_join()` will join based on geometries that intersect, but can accommodate other topological relationships by changing the `join = ` argument. By default `st_join()` performs left joins, but can perform inner joins by setting `left = FALSE`.
+
+```{r}
+#| eval: false
+
+# specify join based on geometries x within y
+st_join(x, y, join = st_within)
+
+# specify inner join
+st_join(x, y, left = FALSE)
+```
+
+
 Let's consider the scenario where we would like to know which region each of the highest points is located in. We can left join the `nz` dataset (polygons of NZ's regions) onto the `nz_height` dataset (points of highest points in the county).
 
 ```{r}
@@ -270,5 +284,74 @@ nz_height_left_join %>%
   group_by(region) %>%
   summarise(n_points = n()) %>%
   st_drop_geometry()
+```
+
+#### Distance-based joins
+Similar to filtering, in some cases we may want to join datasets based on their proximity. Let's see an example!
+
+We'll use the following two datasets from the `spData` package:
+
+- `cycle_hire`: points representing cycle hire points across London with information on number of bikes available
+- `cycle_hire_osm`: dataset downloaded from OpenStreetMaps representing cycle hire points across London with information on the capacity of the hire point
+
+In this example, we would like join the `capacity` attribute from the `cycle_hire_osm` dataset to the `cycle_hire` dataset. Unfortunately it appears that the points from the two datasets do not perfectly align.
+
+```{r}
+# check whether or not points overlap
+if(any(st_intersects(cycle_hire, cycle_hire_osm, sparse = FALSE)) == TRUE){
+  print("points overlap")
+} else{
+  warning("points don't overlap")
+}
+```
+
+```{r}
+tmap_mode("view")
+
+tm_shape(cycle_hire) +
+  tm_symbols(col = "red", alpha = 0.2) +
+tm_shape(cycle_hire_osm) +
+  tm_symbols(col = "blue", alpha = 0.2)
+```
+
+We can join by again using `st_join()`, but this time including a distance threshold using `st_is_within_distance`.
+
+```{r}
+cycle_hire_join <- st_join(cycle_hire, cycle_hire_osm,
+                           st_is_within_distance,
+                           dist = units::set_units(20, "m")) %>%
+                   select(id, capacity)
+
+head(cycle_hire_join)
+```
+
+Let's build some checks to diagnose the output.
+
+```{r}
+if(nrow(cycle_hire) == nrow(cycle_hire_join)){
+  print("join matches original data dimensions")
+} else {
+  warning("join does not match orginal data dimensions")
+  print(paste("cycle_hire has", nrow(cycle_hire), "rows"))
+  print(paste("cycle_hire_join has", nrow(cycle_hire_join), "rows"))
+}
+```
+
+Note that the joined result has more rows than the target data. This is because some of the cycle hire stations in `cycle_hire` have multiple matches in `cycle_hire_osm`. Depending on your project, you would need to think about how to resolve this. In this case, we can aggregate the values for the overlapping points by taking the mean.
+
+```{r}
+# aggregate values for single points in cycle_hire
+cycle_hire_join <- cycle_hire_join %>%
+  group_by(id) %>%
+  summarise(capacity = mean(capacity))
+
+# check results
+if(nrow(cycle_hire) == nrow(cycle_hire_join)){
+  print("join matches original data dimensions")
+} else {
+  warning("join does not match orginal data dimensions")
+  print(paste("cycle_hire has", nrow(cycle_hire), "rows"))
+  print(paste("cycle_hire_join has", nrow(cycle_hire_join), "rows"))
+}
 ```
 
