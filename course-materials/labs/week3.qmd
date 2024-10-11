@@ -479,6 +479,17 @@ map3 <- tm_shape(regions2) +
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
 
+What's going on behind the scenes...
+
+```{r}
+us_west = us_states[us_states$REGION == "West", ]
+us_west_union = st_union(us_west)
+
+texas = us_states[us_states$NAME == "Texas", ]
+texas_union = st_union(us_west_union, texas)
+```
+
+
 ## 2. Filtering
 
 ### Buffers
@@ -541,10 +552,12 @@ if(nrow(c_height4) == nrow(c_height5)){
 
 ```{r}
 x <- st_sfc(st_point(c(0, 1))) %>%
-  st_buffer(., dist = 1)
+  st_buffer(., dist = 1) %>%
+  st_as_sf()
 
 y <- st_sfc(st_point(c(1, 1))) %>%
-  st_buffer(., dist = 1)
+  st_buffer(., dist = 1) %>%
+  st_as_sf()
 
 intersection <- st_intersection(x, y)
 difference_x_y <- st_difference(x, y)
@@ -557,6 +570,14 @@ sym_difference <- st_sym_difference(x, y)
 ```{r}
 #| warning: false
 #| code-fold: true
+
+bbox <- st_union(x, y)
+
+map1 <- tm_shape(x, bbox = bbox) +
+  tm_borders(col = "red") +
+  tm_shape(y) +
+  tm_borders(col = "blue")
+
 map2 <- map1 +
   tm_shape(intersection, bbox = bbox) +
   tm_fill(col = "purple") +
@@ -583,5 +604,109 @@ map6 <- map1 +
   tm_layout(title = "st_sym_diffference()")
 
 tmap_arrange(map1, map2, map3, map4, map5, map6, nrow = 2)
+```
+
+```{r}
+bb <- st_bbox(st_union(x, y))
+box <- st_as_sfc(bb)
+p <- st_sample(x = box, size = 100) %>%
+  st_as_sf()
+
+x_and_y = st_intersection(x, y)
+
+# way #1
+p_xy1 = p[x_and_y, ]
+# way #2
+p_xy2 = st_intersection(p, x_and_y)
+
+p_xy3 <- p %>%
+  st_filter(., x_and_y)
+```
+
+```{r}
+#| warning: false
+#| code-fold: true
+map2 <- map1 +
+  tm_shape(p) +
+  tm_symbols(alpha = 0.5) +
+  tm_layout(title = "original")
+
+map3 <- map2 +
+  tm_shape(p_xy1) +
+  tm_symbols(col = "purple") +
+  tm_layout(title = "method 1")
+
+map4 <- map2 +
+  tm_shape(p_xy2) +
+  tm_symbols(col = "purple") +
+  tm_layout(title = "method 2")
+
+map5 <- map2 +
+  tm_shape(p_xy3) +
+  tm_symbols(col = "purple") +
+  tm_layout(title = "method 3")
+
+tmap_arrange(map2, map3, map4, map5, nrow = 2)
+
+```
+
+```{r}
+
+
+```
+
+
+## 3. Making life easier!
+
+### Centroids
+
+```{r}
+#| warning: false
+
+nz_centroid <- st_centroid(nz)
+seine_centroid <- st_centroid(seine)
+
+nz_pos <- st_point_on_surface(nz)
+seine_pos <- st_point_on_surface(seine)
+```
+
+```{r}
+#| code-fold: true
+
+map1 <- tm_shape(nz) +
+  tm_polygons() +
+  tm_shape(nz_centroid) +
+  tm_symbols(col = "red", alpha = 0.5) +
+  tm_shape(nz_pos) +
+  tm_symbols(col = "blue", alpha = 0.5)
+
+map2 <- tm_shape(seine) +
+  tm_lines() +
+  tm_shape(seine_centroid) +
+  tm_symbols(col = "red", alpha = 0.5) +
+  tm_shape(seine_pos) +
+  tm_symbols(col = "blue", alpha = 0.5)
+
+tmap_arrange(map1, map2, nrow = 1)
+```
+
+### Simplification
+
+```{r}
+seine_simple <- st_simplify(seine, dTolerance = 2000)  # 2000 m
+```
+
+```{r}
+#| code-fold: true
+
+map1 <- tm_shape(seine) +
+  tm_lines() +
+  tm_layout("original")
+
+map2 <- tm_shape(seine_simple) +
+  tm_lines() +
+  tm_layout("st_simplify()")
+
+tmap_arrange(map1, map2, nrow = 1)
 ```
 
