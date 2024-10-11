@@ -761,7 +761,9 @@ tmap_arrange(map1, map2, nrow = 1)
 ```
 
 ### Simplification
+We may also want to simplify a `geometry` to make it easier to plot or take up less storage. There are several different algorithms for simplifying geometries, check out [*Geocomputation with R*](https://r.geocompx.org/geometry-operations#simplification) for more examples. The `sf` packages uses the Douglas-Peucker algorithm within the `st_simplify()` function.
 
+Let's see an example!
 ```{r}
 seine_simple <- st_simplify(seine, dTolerance = 2000)  # 2000 m
 ```
