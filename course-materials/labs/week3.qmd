@@ -442,18 +442,31 @@ aggregating_zones_area_weighted$value
 
 # Geometry operations
 
-## 1. Geometry unions (aggregating)
+In the previous section, we saw how we can use spatial relationship of datasets to perform operations. We did so by leveraging the `geometry` columnn, but none of our operations changed the underlying geometries -- mapping our output produces the same objects.
+
+In this section, we will explore operations that change the geometries directly.
+
+## 1. Aggregating
+
+### Geometry unions
+
+We may come across situations where we would like to summarize data across several spatial units. For example, summarizing the population across states within regions of the US. Based on our experience with tabular data, we can summarize attributes by using `group_by() %>% summarize()`. Alternatively we can use the `aggregate()` function. So far this should look familiar, but if plot the outputs we notice that these functions have also aggregated the underlying geometries.
 
 ```{r}
 #| message: false
+
+# load US states
 us_states <- spData::us_states
 
+# summarize total population within each region
 regions1 <- us_states %>%
   group_by(REGION) %>%
   summarise(population = sum(total_pop_15, na.rm = TRUE))
 
-regions2 <- aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
-                      FUN = sum, na.rm = TRUE)
+# alternative approach
+regions2 <- aggregate(x = us_states[, "total_pop_15"], # data and attribute to be aggregated
+                      by = list(us_states$REGION), # attribute to aggregate by
+                      FUN = sum, na.rm = TRUE) # aggregating function
 ```
 
 ```{r}
@@ -479,21 +492,49 @@ map3 <- tm_shape(regions2) +
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
 
-What's going on behind the scenes...
+What's going on here? Behind the scenes, R is using `st_union()` to combine geometries within each group. We can also use `st_union()` to combine any pair of spatial objects.
 
 ```{r}
-us_west = us_states[us_states$REGION == "West", ]
-us_west_union = st_union(us_west)
+# combine geometries of western states
+us_west <- us_states[us_states$REGION == "West", ]
+us_west_union <- st_union(us_west)
 
-texas = us_states[us_states$NAME == "Texas", ]
-texas_union = st_union(us_west_union, texas)
+# combine geometries of Texas and western states
+texas <- us_states[us_states$NAME == "Texas", ]
+texas_union <- st_union(us_west_union, texas)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
+
+map1 <- tm_shape(us_west) +
+  tm_polygons() +
+  tm_layout(main.title = "western states")
+
+map2 <- tm_shape(us_west_union) +
+  tm_polygons() +
+  tm_layout(main.title = "western states union")
+
+map3 <- tm_shape(texas) +
+  tm_polygons() +
+  tm_layout(main.title = "TX")
+
+map4 <- tm_shape(texas_union) +
+  tm_polygons() +
+  tm_layout(main.title = "TX + western states union")
+
+tmap_arrange(map1, map2, map3, map4, nrow = 2)
 ```
 
 
 ## 2. Filtering
 
 ### Buffers
+In the previous section, we saw that we can filter spatial objects based on their proximity using `st_is_within_distance()`. An alternative approach to finding items that are within a set distance would be to expand the `geometry` and then intersect with objects of interest. We can change the size of geometries by creating a "buffer" using `st_buffer()`
 
+In this example, let's create 5 km and 50 km buffers around the Seine.
 ```{r}
 seine_buffer_5km <- st_buffer(seine, dist = 5000)
 seine_buffer_50km = st_buffer(seine, dist = 50000)
@@ -517,11 +558,11 @@ map2 <- tm_shape(seine_buffer_50km) +
 tmap_arrange(map1, map2, nrow = 1)
 ```
 
+The Seine is actually comprised of multiple geometries. To make things simpler, and more look better on maps, we can combine geometries using our new friend `st_union`!
 
 ```{r}
 seine_union <- st_union(seine_buffer_50km)
 ```
-
 
 ```{r}
 #| code-fold: true
@@ -533,13 +574,17 @@ tm_shape(seine_union) +
   tm_layout(title = "50km buffer")
 ```
 
+Now let's see an example of using a buffer to find objects within a set distance. Here, we'll repeat our previous example of finding points within 100 km of Canterbury. And check to see if the results match our previous approach!
 
 ```{r}
+# create buffer around high points
 nz_height_buffer <- st_buffer(nz_height, dist = 1000000)
 
+# filter buffered points with those that intersect Canterbury
 c_height5 <- nz_height_buffer %>%
   st_filter(y = canterbury, .predicate = st_intersects)
 
+# check to see if results match previous approach
 if(nrow(c_height4) == nrow(c_height5)){
   print("results from buffer approach match st_is_within_distance() approach")
 } else{
@@ -549,7 +594,20 @@ if(nrow(c_height4) == nrow(c_height5)){
 
 ### Clipping
 
+Beyond filtering observations based on their spatial proximity, in some cases we might want to filter (or remove) portions of geometries. Spatial clipping is a form of spatial subsetting that involves changes to the `geometry` columns of at least some of the affected features.
 
+Clipping can only apply to features more complex than points: lines, polygons and their ‘multi’ equivalents.
+
+There are several options for clipping geometries:
+
+- `st_intersection(x, y)` - portion of `x` intersecting `y`
+- `st_difference(x, y)` - portion of `x` **not** intersecting `y`
+- `st_difference(y, x)` - portion of `y` **not** intersecting `x`
+- `st_union(x, y)` - portion either in `x` **or** `y`
+- `st_difference(x, y)` - portion of `x` **not** intersecting `y`
+- `st_sym_difference(x, y)` - portions of `x` and `y` that do not intersect
+
+To illustrate the concept, we will start with a simple example: two overlapping circles with a center point one unit away from each other and a radius of one.
 ```{r}
 x <- st_sfc(st_point(c(0, 1))) %>%
   st_buffer(., dist = 1) %>%
@@ -606,26 +664,35 @@ map6 <- map1 +
 tmap_arrange(map1, map2, map3, map4, map5, map6, nrow = 2)
 ```
 
+Now let's see how we could use these updated geometries for filtering. Extending this simple example, we'll create 100 random points. We want to find the points that intersect both `x` and `y`. We have a few different approaches that all produce the same results.
+
 ```{r}
-bb <- st_bbox(st_union(x, y))
+# create random points
+bb <- st_bbox(st_union(x, y)) # create bounding box of x and y
 box <- st_as_sfc(bb)
-p <- st_sample(x = box, size = 100) %>%
+p <- st_sample(x = box, size = 100) %>% # randomly sample the bounding box
   st_as_sf()
 
-x_and_y = st_intersection(x, y)
+# find intersection of x and y
+x_and_y <- st_intersection(x, y)
 
-# way #1
+# filter points
+# first approach: bracket subsetting
 p_xy1 = p[x_and_y, ]
-# way #2
-p_xy2 = st_intersection(p, x_and_y)
 
-p_xy3 <- p %>%
+# second approach: st_filter()
+p_xy2 <- p %>%
   st_filter(., x_and_y)
+
+# third approach: st_intersection()
+p_xy3 = st_intersection(p, x_and_y)
+
 ```
 
 ```{r}
 #| warning: false
 #| code-fold: true
+
 map2 <- map1 +
   tm_shape(p) +
   tm_dots(alpha = 0.5) +
@@ -634,31 +701,34 @@ map2 <- map1 +
 map3 <- map2 +
   tm_shape(p_xy1) +
   tm_symbols(col = "purple", size = 0.2) +
-  tm_layout(main.title = "method 1")
+  tm_layout(main.title = "bracket subsetting")
 
 map4 <- map2 +
   tm_shape(p_xy2) +
   tm_symbols(col = "purple", size = 0.2) +
-  tm_layout(main.title = "method 2")
+  tm_layout(main.title = "st_filter()")
 
 map5 <- map2 +
   tm_shape(p_xy3) +
   tm_symbols(col = "purple", size = 0.2) +
-  tm_layout(main.title = "method 3")
+  tm_layout(main.title = "st_intersection()")
 
 tmap_arrange(map2, map3, map4, map5, nrow = 2)
-
-```
-
-```{r}
-
-
 ```
 
 
 ## 3. Making life easier!
 
+Working with, and especially plotting, complex spatial objects can become quite cumbersome. This section we'll see a few ways to create and manipulate geometries to make them easier to work with.
+
 ### Centroids
+Centroids are basically the center of spatial objects. They can be a handy way to display summary statistics (or we might actually use them for analysis -- e.g. to find the distance between polygons).
+
+There are many ways to that we might want to define the "center" of an object, but the most common is the *geographic* centroid which is the center of mass of a spatial object. The geographic centroid can be found using `st_centroid()`.
+
+Sometimes the geographic centroid may fall outside of the boundaries of the object (picture the centroid of a doughnut!). While correct, it might be confusing on a map, so we can use `st_point_on_surface()` to ensure that the centroid is placed onto the object.
+
+Let's inspect a few examples!
 
 ```{r}
 #| warning: false
