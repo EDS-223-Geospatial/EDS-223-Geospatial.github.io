@@ -32,6 +32,46 @@ In this lab, we'll explore the basics of spatial and geometry operations on vect
 The following materials are modified from [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html) and [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* by Robin Lovelace.
 :::
 
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+
+attr_layers_df = tibble::tribble(
+  ~Function, ~Description,
+  "st_intersects()", "draws coordinate grid lines of the coordinate system of the main shape object",
+  "st_touches()", "draws latitude and longitude graticules", 
+  "st_overlaps()", "adds a scale bar", 
+  "st_contains()", "adds a compass rose", 
+  "st_contains_properly()", "adds a text annotation", 
+  "st_covers()", "adds a logo",
+  "st_covered_by()", "adds an x axis labels", 
+  "st_within()", "adds an y axis labels",
+  "st_disjoint()", "adds minimap in the view mode only",
+  "st_is_within_distance()", "adds minimap in the view mode only",
+  "st_join()", "adds minimap in the view mode only",
+  "st_interpolate_aw()", "adds minimap in the view mode only",
+  "aggregate()", "adds minimap in the view mode only",
+  "st_union()", "adds minimap in the view mode only",
+  "st_buffer()", "adds minimap in the view mode only",
+  "st_intersection()", "adds minimap in the view mode only",
+  "st_difference()", "adds minimap in the view mode only",
+  "st_sym_difference()", "adds minimap in the view mode only",
+  "st_centroid()", " ",
+  "st_simplify()", "adds minimap in the view mode only"
+)
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(attr_layers_df, 
+             caption = "Attribute layers.",
+             caption.short = "Attribute layers.",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE)
+```
+
 # Spatial data operations
 [Last week](week2.qmd), we covered how the basics of the `sf` package. We saw that the magic of working with spatial data in the `tidyverse` means that we can leverage many of our favorite `dplyr` functions to manipulate the data attributes. So far, we've only worked with the `data.frame` component of `sf` objects. In this section, we'll see how we can perform analogous operations using the `geometry` column.
 
@@ -604,7 +644,6 @@ There are several options for clipping geometries:
 - `st_difference(x, y)` - portion of `x` **not** intersecting `y`
 - `st_difference(y, x)` - portion of `y` **not** intersecting `x`
 - `st_union(x, y)` - portion either in `x` **or** `y`
-- `st_difference(x, y)` - portion of `x` **not** intersecting `y`
 - `st_sym_difference(x, y)` - portions of `x` and `y` that do not intersect
 
 To illustrate the concept, we will start with a simple example: two overlapping circles with a center point one unit away from each other and a radius of one.
