@@ -119,7 +119,10 @@ We'll explore by trying to find all the high points in the region of Canterbury 
 
 canterbury <- nz %>%
   filter(Name == "Canterbury")
+```
 
+```{r}
+#| code-fold: true
 tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
@@ -185,6 +188,8 @@ c_height3 = nz_height[nz_height_logical, ]
 
 Now let's plot results from all three methods to confirm they gave the same results.
 ```{r}
+#| code-fold: true
+
 map1 <- tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
@@ -228,6 +233,7 @@ c_height4 <- nz_height[nz_height_logical, ] # filter based on logical
 
 Now, we should see points appear that do not *intersect* Caterbury, but are within 1000 km.
 ```{r}
+#| code-fold: true
 # additional high points should appear
 tm_shape(nz) +
   tm_polygons() +
@@ -307,6 +313,7 @@ if(any(st_intersects(cycle_hire, cycle_hire_osm, sparse = FALSE)) == TRUE){
 
 ```{r}
 #| message: false
+#| code-fold: true
 
 tmap_mode("view")
 
@@ -370,10 +377,6 @@ tmap_mode("plot")
 nz_elevation <- st_join(x = nz, y = nz_height) %>%
   group_by(Name) %>%
   summarise(elevation = mean(elevation, na.rm = TRUE))
-
-tm_shape(nz_elevation) +
-  tm_polygons(col = "elevation",
-              title = "Mean elevation (meters)")
 ```
 
 The second approah uses the `aggregate()` function. Although it doesn't follow the `dplyr` piping convention we're used to, `aggregate()` will come in handy later, so it's nice to see how it works.
@@ -382,10 +385,24 @@ The syntax looks slightly different, in this case the argument `x` is the data w
 
 ```{r}
 nz_elevation <- aggregate(x = nz_height, by = nz, FUN = mean)
+```
 
-tm_shape(nz_elevation) +
+
+```{r}
+#| code-fold: true
+
+map1 <- tm_shape(nz_elevation) +
   tm_polygons(col = "elevation",
-              title = "Mean elevation (meters)")
+              title = "Mean elevation (meters)") +
+  tm_layout(title = "group_by()")
+
+map2 <- tm_shape(nz_elevation) +
+  tm_polygons(col = "elevation",
+              title = "Mean elevation (meters)") +
+  tm_layout(title = "aggregate()")
+
+tmap_arrange(map1, map2, nrow = 1)
+
 ```
 
 :::{.callout-note icon=true}
@@ -437,6 +454,12 @@ regions1 <- us_states %>%
 
 regions2 <- aggregate(x = us_states[, "total_pop_15"], by = list(us_states$REGION),
                       FUN = sum, na.rm = TRUE)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+#| warning: false
 
 map1 <- tm_shape(us_states) +
   tm_polygons(col = "total_pop_15",
@@ -460,10 +483,13 @@ tmap_arrange(map1, map2, map3, nrow = 1)
 
 ### Buffers
 
-
 ```{r}
 seine_buffer_5km <- st_buffer(seine, dist = 5000)
 seine_buffer_50km = st_buffer(seine, dist = 50000)
+```
+
+```{r}
+#| code-fold: true
 
 map1 <- tm_shape(seine_buffer_5km) +
   tm_polygons() +
@@ -481,9 +507,13 @@ tmap_arrange(map1, map2, nrow = 1)
 ```
 
 
-
 ```{r}
 seine_union <- st_union(seine_buffer_50km)
+```
+
+
+```{r}
+#| code-fold: true
 
 tm_shape(seine_union) +
   tm_polygons() +
@@ -508,36 +538,25 @@ if(nrow(c_height4) == nrow(c_height5)){
 
 ### Clipping
 
-```{r}
-#| message: false
-#| warning: false
 
+```{r}
 x <- st_sfc(st_point(c(0, 1))) %>%
   st_buffer(., dist = 1)
 
 y <- st_sfc(st_point(c(1, 1))) %>%
   st_buffer(., dist = 1)
 
-bbox <- st_union(x, y)
-
-map1 <- tm_shape(x, bbox = bbox) +
-  tm_borders(col = "red") +
-tm_shape(y) +
-  tm_borders(col = "blue")
-
-map1
-
-```
-
-```{r}
-#| warning: false
-
 intersection <- st_intersection(x, y)
 difference_x_y <- st_difference(x, y)
 difference_y_x <- st_difference(y, x)
 union <- st_union(x, y)
 sym_difference <- st_sym_difference(x, y)
+```
 
+
+```{r}
+#| warning: false
+#| code-fold: true
 map2 <- map1 +
   tm_shape(intersection, bbox = bbox) +
   tm_fill(col = "purple") +
