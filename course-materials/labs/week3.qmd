@@ -628,23 +628,23 @@ p_xy3 <- p %>%
 #| code-fold: true
 map2 <- map1 +
   tm_shape(p) +
-  tm_symbols(alpha = 0.5) +
-  tm_layout(title = "original")
+  tm_dots(alpha = 0.5) +
+  tm_layout(main.title = "original")
 
 map3 <- map2 +
   tm_shape(p_xy1) +
-  tm_symbols(col = "purple") +
-  tm_layout(title = "method 1")
+  tm_symbols(col = "purple", size = 0.2) +
+  tm_layout(main.title = "method 1")
 
 map4 <- map2 +
   tm_shape(p_xy2) +
-  tm_symbols(col = "purple") +
-  tm_layout(title = "method 2")
+  tm_symbols(col = "purple", size = 0.2) +
+  tm_layout(main.title = "method 2")
 
 map5 <- map2 +
   tm_shape(p_xy3) +
-  tm_symbols(col = "purple") +
-  tm_layout(title = "method 3")
+  tm_symbols(col = "purple", size = 0.2) +
+  tm_layout(main.title = "method 3")
 
 tmap_arrange(map2, map3, map4, map5, nrow = 2)
 
