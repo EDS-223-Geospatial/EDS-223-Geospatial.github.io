@@ -32,45 +32,6 @@ In this lab, we'll explore the basics of spatial and geometry operations on vect
 The following materials are modified from [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html) and [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* by Robin Lovelace.
 :::
 
-```{r}
-#| echo: false
-#| message: false
-
-library(tidyverse)
-
-attr_layers_df = tibble::tribble(
-  ~Function, ~Description,
-  "st_intersects()", "draws coordinate grid lines of the coordinate system of the main shape object",
-  "st_touches()", "draws latitude and longitude graticules", 
-  "st_overlaps()", "adds a scale bar", 
-  "st_contains()", "adds a compass rose", 
-  "st_contains_properly()", "adds a text annotation", 
-  "st_covers()", "adds a logo",
-  "st_covered_by()", "adds an x axis labels", 
-  "st_within()", "adds an y axis labels",
-  "st_disjoint()", "adds minimap in the view mode only",
-  "st_is_within_distance()", "adds minimap in the view mode only",
-  "st_join()", "adds minimap in the view mode only",
-  "st_interpolate_aw()", "adds minimap in the view mode only",
-  "aggregate()", "adds minimap in the view mode only",
-  "st_union()", "adds minimap in the view mode only",
-  "st_buffer()", "adds minimap in the view mode only",
-  "st_intersection()", "adds minimap in the view mode only",
-  "st_difference()", "adds minimap in the view mode only",
-  "st_sym_difference()", "adds minimap in the view mode only",
-  "st_centroid()", " ",
-  "st_simplify()", "adds minimap in the view mode only"
-)
-options(kableExtra.html.bsTable = TRUE)
-knitr::kable(attr_layers_df, 
-             caption = "Attribute layers.",
-             caption.short = "Attribute layers.",
-             booktabs = TRUE) %>%
-  kableExtra::kable_styling("striped",
-                            latex_options = "striped", 
-                            full_width = FALSE) %>% 
-  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE)
-```
 
 # Spatial data operations
 [Last week](week2.qmd), we covered how the basics of the `sf` package. We saw that the magic of working with spatial data in the `tidyverse` means that we can leverage many of our favorite `dplyr` functions to manipulate the data attributes. So far, we've only worked with the `data.frame` component of `sf` objects. In this section, we'll see how we can perform analogous operations using the `geometry` column.
@@ -819,5 +780,45 @@ map2 <- tm_shape(seine_simple) +
   tm_layout("st_simplify()")
 
 tmap_arrange(map1, map2, nrow = 1)
+```
+
+# Summary of new functions
+```{r}
+#| echo: false
+#| message: false
+
+attr_layers_df = tibble::tribble(
+  ~Function, ~Description,
+  "st_intersects(x,y)", "tests whether objects intersects",
+  "st_touches(x,y)", "tests whether objects touch", 
+  "st_overlaps(x,y)", "tests whether objects overlap", 
+  "st_contains(x,y)", "tests whether object x contains object y (including boundary)", 
+  "st_contains_properly(x,y)", "tests whether object x contains object y (not including boundary)", 
+  "st_covers(x,y)", "identical to st_contains() when y is a polygon",
+  "st_covered_by(x,y)", "tests whether object y contains object x", 
+  "st_within(x,y)", "tests whether object x is within object y",
+  "st_disjoint(x,y)", "tests whether objects have no intersection",
+  "st_is_within_distance(x,y)", "test whether objects intersect within a certain distance",
+  "st_join(x,y)", "performs spatial join",
+  "st_interpolate_aw(x,y)", "performs area-weighted interpolation of polygons",
+  "aggregate(x,y)", "computes summary statistics for data subsets",
+  "st_union(x,y)", "combines geometries",
+  "st_buffer(x)", "creates polygon that represents all points within a distance threshold of original geometry",
+  "st_intersection(x,y)", "creates polygon of the area shared by x and y",
+  "st_difference(x,y)", "creates polygon of the area of x not in y",
+  "st_sym_difference(x,y)", "creates polygon of the area not shared by x and y",
+  "st_centroid(x)", "creates point(s) of the geographic centroid of a polygon(s)",
+  "st_simplify(x)", "creates a simplified representation of a geometry"
+)
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(attr_layers_df, 
+             caption = "Brief description of new functions, check out documentation for more information",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE) %>%
+  kableExtra::pack_rows("Spatial data operations", 1, 12) %>%
+  kableExtra::pack_rows("Geometry operations", 13, 20)
 ```
 
