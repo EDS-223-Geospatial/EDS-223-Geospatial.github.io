@@ -227,7 +227,7 @@ tm_shape(world_elevation, bbox = "Europe") + # query the region of Europe
 Again following the syntax of `ggplot2` which uses layers to plot data (e.g. `geom_point()`), `tmap` also uses layers! We've already used layers in our previous examples (e.g. `tm_borders()`), but now we'll dig into them in more detail. All possible layer types can be found in the table below:
 
 ```{r}
-
+#| echo: false
 layers_basic_df = tibble::tribble(
   ~Function, ~Element, ~Geometry,
   "tm_polygons()", "polygons (borders and fill)", "polygons",
@@ -453,6 +453,7 @@ Just like in standard data visualizations, maps have elements that need to be pr
 
 
 ```{r}
+#| echo: false
 
 attr_layers_df = tibble::tribble(
   ~Function, ~Description,
