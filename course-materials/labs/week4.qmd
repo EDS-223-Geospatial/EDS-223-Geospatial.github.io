@@ -112,7 +112,7 @@ landsat34 <- c(landsat3, landsat4)
 ```
 
 
-### Inspecting raster bbjects
+### Inspecting raster objects
 
 We can get info on raster values just by typing the name or using the summary function.
 
@@ -134,7 +134,7 @@ freq(zion_land)
 
 ### Indexing
 
-We can index rasters using, row-column indexing, cell IDs, coordinates, other spatial objects.
+We can index rasters using row-column indexing or cell IDs. 
 
 ```{r}
 # row 1, column 1
@@ -144,7 +144,7 @@ zion_elevation[1, 1]
 zion_elevation[1]
 ```
 
-If we had a two layered raster, subsetting would return the values in both layers.
+For multi-layer rasters, subsetting returns the values in both layers.
 
 ```{r}
 landsat[1]
@@ -174,29 +174,43 @@ test_raster[test_raster < 20] <- NA
 
 We can move from subsetting based on specific cell IDs to extract info based on spatial objects.
 
-To use coordinates for subsetting, we can "translate" coordinates into a cell ID with the **terra** function `cellFromXY()` or `terra::extract()`.
+To use coordinates for subsetting, we can "translate" coordinates into a cell ID with the functions `terra::cellFromXY()` or `terra::extract()`.
 
 ```{r}
-#| eval: false
-id <- cellFromXY(elev, xy = matrix(c(0.1, 0.1), ncol = 2))
-elev[id]
-# the same as
-terra::extract(elev, matrix(c(0.1, 0.1), ncol = 2))
-```
+# create point within area covered by raster
+point <- matrix(c(-113, 37.5), ncol = 2)
 
+# approach 1
+# find cell ID for point
+id <- cellFromXY(zion_elevation, xy = point)
+# index to cell
+zion_elevation[id]
+
+# approach 2
+# extract raster values at point
+terra::extract(zion_elevation, point)
+```
 
 Raster objects can also subset with another raster object. Here we extract the values of our elevation raster that fall within the extent of a masking raster.
 
 ```{r}
-#| eval: false
-clip <- rast(xmin = 0.9, xmax = 1.8, ymin = -0.45, ymax = 0.45,
-            resolution = 0.3, vals = rep(1, 9))
+# create a raster with a smaller extent
+clip <- rast(xmin = -113.3, xmax = -113, ymin = 37.2, ymax = 37.9,
+            resolution = 0.3,
+            vals = 1)
 
-elev[clip]
+# select values that fall within smaller extent
+zion_elevation_clip <- zion_elevation[clip]
 
-# we can also use extract
-terra::extract(elev, ext(clip))
+# verify that output has fewer values than original
+if(ncell(zion_elevation) == nrow(zion_elevation_clip)) {
+  warning("clipping did not remove cells")
+} else {
+  print("clipping removed cells")
+}
+
 ```
+
 
 In the previous example, we just got the values back. In some cases, we might want the output to be the raster cells themselves. 
 
@@ -205,9 +219,24 @@ We can do this use the "[" operator and setting "drop = FALSE".
 This example returns the first 2 cells of the first row of the "elev" raster.
 
 ```{r}
-#| eval: false
-elev[1:2, drop = FALSE]
+
+zion_elevation_clip <- zion_elevation[clip, drop = FALSE]
+
 ```
+
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(zion_elevation) +
+  tm_raster(title = "Elevation (m)")
+
+map2 <- tm_shape(zion_elevation_clip) +
+  tm_raster(title = "Elevation (m)")
+
+tmap_arrange(map1, map2, nrow = 1)  
+```
+
+:::{.callout-warning icon=true}
 
 Another common use of spatial subsetting is when we use one raster with the same extent and resolution to mask the another. In this case, the masking raster needs to be composed of logicals or NAs.
 
