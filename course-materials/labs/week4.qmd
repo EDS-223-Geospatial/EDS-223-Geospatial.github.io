@@ -241,17 +241,35 @@ tmap_arrange(map1, map2, nrow = 1)
 Another common use of spatial subsetting is when we use one raster with the same extent and resolution to mask the another. In this case, the masking raster needs to be composed of logicals or NAs.
 
 ```{r}
-#| eval: false
 # create raster mask of the same resolution and extent
-rmask <- elev 
-# randomly replace values with NA and TRUE to use as a mask
-values(rmask) <- sample(c(NA, TRUE), 36, replace = TRUE) 
+rmask <- zion_elevation
 
+rmask[rmask < 2000] <- NA
+ 
 # spatial subsetting
-elev[rmask, drop = FALSE]   # with [ operator
-mask(elev, rmask)           # with mask()
+masked1 <- zion_elevation[rmask, drop = FALSE]   # with [ operator
+masked2 <- mask(zion_elevation, rmask)           # with mask()
 
 ```
+
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(zion_elevation) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "original")
+
+map2 <- tm_shape(masked1) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "bracket subsetting")
+
+map3 <- tm_shape(masked2) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "mask()")
+
+tmap_arrange(map1, map2, map3, nrow = 1) 
+```
+
 
 ## 4. Map algebra
 Here we define map algebra as the set of operations that modify or summarize raster cell values with reference to surrounding cells, zones, or statistical functions that apply to every cell.
@@ -269,20 +287,39 @@ zion_elevation > 5
 
 We can also classify intervals of values into groups. For example, we could classify a DEM into low, middle, and high elevation cells:
 
-- First, we need to construct a reclassification matrix: 
+First, we need to construct a reclassification matrix: 
+
   - The first column corresponds to the lower end of the class
   - The second column corresponds to the upper end of the class
   - The third column corresponds to the new value for the specified ranges in columns 1 and 2
 
 ```{r}
-#| eval: false
-rcl <- matrix(c(0, 12, 1, 12, 24, 2, 24, 36, 3), ncol = 3, byrow = TRUE)
-rcl
+rcl <- matrix(c(1000, 1500, 1, 
+                1500, 2000, 2, 
+                2000, 2500, 3,
+                2500, 3000, 4), 
+                ncol = 3, byrow = TRUE)
 
 # We then use this matrix to reclassify our elevation matrix
-recl <- classify(elev, rcl = rcl)
-recl
+reclassified <- classify(zion_elevation, rcl = rcl)
+
+values(reclassified) <- as.factor(values(reclassified))
 ```
+
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(zion_elevation) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "original")
+
+map2 <- tm_shape(reclassified) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "bracket subsetting")
+
+tmap_arrange(map1, map2, nrow = 1) 
+```
+
 
 For more efficient processing, we can use a set of map algebra functions:
 
@@ -345,9 +382,9 @@ For example, we could find the average elevation for different soil grain sizes.
 
 ```{r}
 #| eval: false
-
+# EXTENTS DO NOT MATCH
 ## compute zonal stats for NDVI within landcover types?
-zonal(elev, grain, fun = "mean")
+zonal(ndvi_rast, zion_land, fun = "mean")
 ```
 
 ### Merging Rasters
