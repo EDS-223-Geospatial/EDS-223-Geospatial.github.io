@@ -29,12 +29,7 @@ knitr::include_graphics("images/terra.png")
 The following materials are modified from [Chapters 3](https://geocompr.robinlovelace.net/attr.html), [4](https://geocompr.robinlovelace.net/spatial-operations.html), and [5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* by Robin Lovelace.
 :::
 
-
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
+# Spatial data operations
 ## 1. Set Up
 
 ```{r install, include=TRUE, message=FALSE, warning=FALSE}
@@ -92,10 +87,16 @@ As an example, we'll load a dataset from `spDataLarge` containing the four bands
 landsat <- rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 
 nlyr(landsat) # test number of layers in raster object
+```
+
+```{r}
+#| code-fold: true
+#| message: false
 
 tm_shape(landsat) +
-  tm_raster()
+  tm_raster(title = "Unscaled reflectance")
 ```
+
 
 We can subset layers using either the layer number or name:
 
@@ -104,31 +105,350 @@ landsat3 <- subset(landsat, 3)
 landsat4 <- subset(landsat, "landsat_4")
 ```
 
-We can combine SpatRaster objects into one, using `c()`:
+We can combine `SpatRaster` objects into one, using `c()`:
 
 ```{r}
 landsat34 <- c(landsat3, landsat4)
 ```
 
 
-## Summarizing Raster Objects
+### Inspecting raster bbjects
 
 We can get info on raster values just by typing the name or using the summary function.
 
-```{r include=TRUE}
+```{r}
 summary(zion_elevation)
 ```
 
 We can get global summaries, such as standard deviation.
 
-```{r include=TRUE}
+```{r}
 global(zion_elevation, sd)
 ```
 
 Or we can use `freq()` to get the counts with categories.
 
-```{r include=TRUE}
+```{r}
 freq(zion_land)
+```
 
-hist(zion_land)
+### Indexing
+
+We can index rasters using, row-column indexing, cell IDs, coordinates, other spatial objects.
+
+```{r}
+# row 1, column 1
+zion_elevation[1, 1]
+
+# cell ID 1
+zion_elevation[1]
+```
+
+If we had a two layered raster, subsetting would return the values in both layers.
+
+```{r}
+landsat[1]
+```
+
+We can also modify/overwrite cell values.
+
+```{r}
+zion_elevation[1, 1] <- 0
+zion_elevation[1, 1]
+```
+
+Replacing values in multi-layer rasters requires a matrix with as many columns as layers and rows as replaceable cells.
+```{r}
+landsat[1] <- cbind(c(0), c(0),c(0), c(0))
+landsat[1]
+```
+
+We can also use a similar approach to replace values that we suspect are incorrect.
+
+```{r}
+test_raster <- zion_elevation
+test_raster[test_raster < 20] <- NA
+```
+
+## 3. Spatial subsetting
+
+We can move from subsetting based on specific cell IDs to extract info based on spatial objects.
+
+To use coordinates for subsetting, we can "translate" coordinates into a cell ID with the **terra** function `cellFromXY()` or `terra::extract()`.
+
+```{r}
+#| eval: false
+id <- cellFromXY(elev, xy = matrix(c(0.1, 0.1), ncol = 2))
+elev[id]
+# the same as
+terra::extract(elev, matrix(c(0.1, 0.1), ncol = 2))
+```
+
+
+Raster objects can also subset with another raster object. Here we extract the values of our elevation raster that fall within the extent of a masking raster.
+
+```{r}
+#| eval: false
+clip <- rast(xmin = 0.9, xmax = 1.8, ymin = -0.45, ymax = 0.45,
+            resolution = 0.3, vals = rep(1, 9))
+
+elev[clip]
+
+# we can also use extract
+terra::extract(elev, ext(clip))
+```
+
+In the previous example, we just got the values back. In some cases, we might want the output to be the raster cells themselves. 
+
+We can do this use the "[" operator and setting "drop = FALSE".
+
+This example returns the first 2 cells of the first row of the "elev" raster.
+
+```{r}
+#| eval: false
+elev[1:2, drop = FALSE]
+```
+
+Another common use of spatial subsetting is when we use one raster with the same extent and resolution to mask the another. In this case, the masking raster needs to be composed of logicals or NAs.
+
+```{r}
+#| eval: false
+# create raster mask of the same resolution and extent
+rmask <- elev 
+# randomly replace values with NA and TRUE to use as a mask
+values(rmask) <- sample(c(NA, TRUE), 36, replace = TRUE) 
+
+# spatial subsetting
+elev[rmask, drop = FALSE]   # with [ operator
+mask(elev, rmask)           # with mask()
+
+```
+
+## 4. Map algebra
+Here we define map algebra as the set of operations that modify or summarize raster cell values with reference to surrounding cells, zones, or statistical functions that apply to every cell.
+
+### Local operations
+Local operations are computed on each cell individually. We can use oridinary arithemetic or logical statements.
+
+```{r}
+#| eval: false
+zion_elevation + zion_elevation
+zion_elevation^2
+log(zion_elevation)
+zion_elevation > 5
+```
+
+We can also classify intervals of values into groups. For example, we could classify a DEM into low, middle, and high elevation cells:
+
+- First, we need to construct a reclassification matrix: 
+  - The first column corresponds to the lower end of the class
+  - The second column corresponds to the upper end of the class
+  - The third column corresponds to the new value for the specified ranges in columns 1 and 2
+
+```{r}
+#| eval: false
+rcl <- matrix(c(0, 12, 1, 12, 24, 2, 24, 36, 3), ncol = 3, byrow = TRUE)
+rcl
+
+# We then use this matrix to reclassify our elevation matrix
+recl <- classify(elev, rcl = rcl)
+recl
+```
+
+For more efficient processing, we can use a set of map algebra functions:
+
+- `app()` applies a function to each cell of a raster to summarize the values of multiple layers into one layer
+- `tapp()` is an extension of `app()` that allows us to apply on operation on a subset of layers
+- `lapp()` allows us to apply a function to each cell using layers as arguments
+
+We can use the `lapp()`function to compute the Normalized Difference Vegetation Index (NDVI).
+
+Let's calculate NDVI for Zion National Park using multispectral satellite data.
+
+
+We need to define a function to calculate NDVI.
+
+So now we can use `lapp()` to calculate NDVI in each raster cell. To do so, we just need the NIR and red bands.
+
+```{r}
+ndvi_fun <- function(nir, red){
+  (nir - red) / (nir + red)
+}
+
+ndvi_rast <- lapp(landsat[[c(4, 3)]], fun = ndvi_fun)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+tm_shape(ndvi_rast) +
+  tm_raster(title = "NDVI")
+```
+
+### Focal Operations
+Local operations operate on one cell, though from multiple layers. Focal operations take into account a central (focal) cell and its neighbors. The neighborhood (or kernel, moving window, filter) can take any size or shape. A focal operation applies an aggregation function to all cells in the neighborhood and updates the value of the central cell before moving on to the next central cell
+
+We can use the `focal()` function to perform spatial filtering. We define the size, shape, and weights of the moving window using a matrix. Here we find the minimum.
+
+```{r}
+
+elevation_focal <- focal(zion_elevation, w = matrix(1, nrow = 9, ncol = 9), fun = min)
+
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(zion_elevation) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "original")
+
+map2 <- tm_shape(elevation_focal) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "aggregated")
+
+tmap_arrange(map1, map2, nrow = 1) 
+```
+### Zonal Operations
+Similar to focal operations, zonal operations apply an aggregation function to multiple cells. However, instead of applying operations to neighbors, zonal operations aggregate based on "zones". Zones can are defined using a categorical raster and do not necessarily have to be neighbors
+
+For example, we could find the average elevation for different soil grain sizes.
+
+```{r}
+#| eval: false
+
+## compute zonal stats for NDVI within landcover types?
+zonal(elev, grain, fun = "mean")
+```
+
+### Merging Rasters
+In some cases, data for a region will be stored in multiple, contiguous files. To use them as a single raster, we need to merge them.
+
+In this example, we download elevation data for Austria and Switzerland and merge the two rasters into one.
+
+```{r}
+#| eval: false
+aut <- geodata::elevation_30s(country = "AUT", path = tempdir())
+ch <- geodata::elevation_30s(country = "CHE", path = tempdir())
+aut_ch <- merge(aut, ch)
+```
+
+
+# Geometric Operations
+When merging or performing map algebra, rasters need to match in their resolution, projection, origin, and/or extent
+
+## 1. Changing extent, origin, and resolution
+### Extent
+In the simplest case, two images differ only in their extent. Let's start by increasing the extent of a elevation raster.
+
+```{r include=TRUE}
+elev_2 <- extend(zion_elevation, c(1, 200)) # add one row and two columns
+
+```
+
+Performing algebraic operations on objects with different extents doesn't work.
+
+```{r include=TRUE, eval=FALSE}
+elev + elev_2
+```
+
+We can align the extent of the 2 rasters using the `extend()` function. Here we extend the elev object to the extent of elev_2 by adding NAs.
+
+```{r include=TRUE}
+elev_3 <- extend(zion_elevation, elev_2)
+```
+
+### Origin
+the origin function returns the coordinates of the cell corner closes to the coordinates (0,0). We can also manually change the origin.
+
+```{r include=TRUE}
+#| eval: false
+origin(elev_4)
+origin(elev_4) <- c(0.25, 0.25)
+origin(elev_4)
+```
+
+### Resolution
+Raster datasets can also differ in their resolution to match resolutions we can decrease the resolution by aggregating or increase the resolution by disaggregating.
+
+Digital elevation model (DEM) of the Mongón study area, a Peruvian fog oasis.
+Let's start by coarsening the resolution of a DEM by a factor of 5, by taking the mean.
+
+```{r include=TRUE}
+dem <- rast(system.file("raster/dem.tif", package = "spDataLarge"))
+dem_agg <-  aggregate(dem, fact = 5, fun = mean)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(dem) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(legend.show = FALSE,
+            main.title = "original")
+
+map2 <- tm_shape(dem_agg) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "aggregated")
+
+tmap_arrange(map1, map2, nrow = 1) 
+```
+
+
+We have some choices when increasing the resolution. Here, we try the bilinear method.
+
+```{r include=TRUE}
+dem_disagg <- disagg(dem_agg, fact = 5, method = "bilinear")
+
+if(identical(dem, dem_disagg)){
+  print("disaggregated data matches original")
+} else {
+  warning("disaggregated data does not match original")
+}
+
+
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+
+map2 <- map2 +
+  tm_layout(legend.show = FALSE)
+
+map3 <- tm_shape(dem_disagg) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "disaggregated")
+
+tmap_arrange(map1, map2, map3, nrow = 1) 
+```
+
+
+## Resampling
+
+Aggregation/disaggregation work when both rasters have the same origins. 
+
+But what do we do in the case where we have two or more rasters with different origins and resolutions? Resampling computes values for new pixel locations based on custom resolutions and origins.
+
+In most cases, the target raster would be an object you are already working with, but here we define a target raster.
+
+```{r include=TRUE}
+target_rast <- rast(xmin = 794600, xmax = 798200,
+                   ymin = 8931800, ymax = 8935400,
+                   resolution = 150, crs = "EPSG:32717")
+
+dem_resampl <- resample(dem, y = target_rast, method = "bilinear")
+
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+
+
+map4 <- tm_shape(dem_resampl) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "resampled")
+
+tmap_arrange(map1, map4, nrow = 1) 
 ```
