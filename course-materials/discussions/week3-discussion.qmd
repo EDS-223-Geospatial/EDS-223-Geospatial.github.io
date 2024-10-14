@@ -10,28 +10,19 @@ format:
     toc: true
 ---
 
-:::{.callout-tip icon=true}
-## Reference
+## 1. Learning Objectives
 
-Refer to [Chapter 4](https://r.geocompx.org/spatial-operations.html) and [Chapter 5](https://r.geocompx.org/geometry-operations) of *Geocomputation with R* to help get you started.
-:::
-
-## Learning Objectives
-
-- Explore topological relationships with `sf::st_intersects()`, `sf::st_intersection()`, `sf::st_within()`, etc.
-- Explore distance relationships with `sf::st_distance()`, `sf::st_within_distance()`, and `sf::st_buffer()`
+- Explore topological relationships with `sf` functions: `st_intersects()`, `st_intersection()`, `st_within()`, etc.
+- Explore distance relationships with `sf` functions: `st_distance()`, `st_within_distance()`, and `st_buffer()`
 - Learn about spatial and distance-based joins
 - Practice writing error/warning messages and unit tests to diagnose outputs
 
-## Data
+## 2. Get Started
 
-- **Santa Barbara County's City Boundaries** ([Source](https://geodata.library.ucsb.edu/catalog/3853-s3_2003_s3_cities_polys))
-- **California Protected Areas Database** ([Source](https://data.cnra.ca.gov/dataset/california-protected-areas-database))
-- **iNaturalist Research-grade Observations, 2020-2024** ([via `rinat`](https://github.com/ropensci/rinat))
-
-## Get Started
-
-Let's load the necessary packages:
+- Create an `.Rproj` as your version controlled project for Week 3
+- Create a Quarto document inside your `.Rproj`
+- Download [this data folder from Google Drive](https://drive.google.com/file/d/14t3eu5NxZYjwmDVbJr9jnFCrNlsAJVpJ/view) and move it inside your `.Rproj`
+- Load all necessary packages and read spatial objects
 
 ```{r}
 library(here)
@@ -40,42 +31,36 @@ library(sf)
 library(tmap)
 ```
 
-And read in the spatial objects:
-
 ```{r}
-#| echo: false
+sb_protected_areas <- read_sf(here::here("data", "cpad_super_units_sb.shp")) %>% 
+  st_transform("ESRI:102009")
 
-sb_protected_areas <- read_sf(here::here("course-materials", "data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
+sb_city_boundaries <- read_sf(here::here("data", "sb_city_boundaries_2003.shp")) %>%
   st_transform("ESRI:102009")
-sb_city_boundaries <- read_sf(here::here("course-materials", "data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
+
+sb_county_boundary <- read_sf(here::here("data", "sb_county_boundary_2020.shp")) %>%
   st_transform("ESRI:102009")
-sb_county_boundary <- read_sf(here::here("course-materials", "data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
-  st_transform("ESRI:102009")
-aves <- read_sf(here::here("course-materials", "data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
+
+aves <- read_sf(here::here("data", "aves_observations_2020_2024.shp")) %>%
   st_transform("ESRI:102009")
 ```
 
-```{r}
-#| echo: false
+## 3. Your Task
 
-sb_protected_areas <- read_sf(here::here("data", "week3-discussion", "cpad_super_units_sb.shp")) %>% 
-  st_transform("ESRI:102009")
-sb_city_boundaries <- read_sf(here::here("data", "week3-discussion", "sb_city_boundaries_2003.shp")) %>%
-  st_transform("ESRI:102009")
-sb_county_boundary <- read_sf(here::here("data", "week3-discussion", "sb_county_boundary_2020.shp")) %>%
-  st_transform("ESRI:102009")
-aves <- read_sf(here::here("data", "week3-discussion", "aves_observations_2020_2024.shp")) %>%
-  st_transform("ESRI:102009")
-```
+You will be wokring with the following datasets:
 
-To meet our learning objectives, your task:
+- **Santa Barbara County's City Boundaries** ([Santa Barbara County](https://geodata.library.ucsb.edu/catalog/3853-s3_2003_s3_cities_polys))
+- **California Protected Areas Database** ([CPAD](https://data.cnra.ca.gov/dataset/california-protected-areas-database))
+- **iNaturalist Research-grade Observations, 2020-2024** ([via `rinat`](https://github.com/ropensci/rinat))
+
+Now, to meet this week's learning objectives, your task:
 
 1. Find how many bird observations are within protected areas in Santa Barbara County
   - Show the different outputs from a spatial subset and a spatial join
   - **Bonus Challenge**: Try it out with a 5 km buffer around the protected areas too! 
 2. Find the protected areas within 15 km of a city in Santa Barbara County
   - **Hint**: Use `dplyr::filter()` to select a city from  `sb_city_boundaries`
-  - Explore the different outputs with `sf::st_intersects()`, `sf::st_intersection()`, and `sf::st_within()`
-  - Practice a distance-based join with `sf::st_is_within_distance()`
+  - Explore the different outputs with `st_intersects()`, `st_intersection()`, and `st_within()`
+  - Practice a distance-based join with `st_is_within_distance()`
 3. Find the distance between your city of choice and a protected area of your choice
-  - **Note**: `sf::st_distance()` finds the distance between the geometries' edges
+  - **Note**: `st_distance()` finds the distance between the geometries' edges

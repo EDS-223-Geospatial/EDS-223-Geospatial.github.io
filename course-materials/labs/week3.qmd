@@ -365,7 +365,7 @@ if(nrow(cycle_hire) == nrow(cycle_hire_join)){
 }
 ```
 
-### Spatial aggregation
+### 4. Spatial aggregation
 
 As with aggregating attribute data, spatial data aggregation *condenses* data: outputs have few rows than inputs. Think about our friend `group_by() %>% summarise()`! Spatial aggregation is the same. 
 
