@@ -38,6 +38,7 @@ library(dplyr)
 library(spData)
 library(spDataLarge)
 library(tmap)
+library(kableExtra)
 #library(geodata)
 ```
 
@@ -228,15 +229,35 @@ zion_elevation_clip <- zion_elevation[clip, drop = FALSE]
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)")
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "original")
 
 map2 <- tm_shape(zion_elevation_clip) +
-  tm_raster(title = "Elevation (m)")
+  tm_raster(title = "Elevation (m)") +
+    tm_layout(main.title = "clipped")
+
 
 tmap_arrange(map1, map2, nrow = 1)  
 ```
 
 :::{.callout-warning icon=true}
+# Woops, is the clipped version really smaller?
+
+Plotting side-by-side, the clipped version appears to take up more space -- does this mean the clipping didn't work? How can we tell?
+
+- **Visually:** If we look at the features represented, we can see that the clipped version doesn't represent all the features present in the original version.
+- **Quantitatively:** We can directly check whether the extents match using the `ext()` function!
+
+
+```{r}
+if(ext(zion_elevation) == ext(zion_elevation_clip)){
+  print("extents match")
+} else{
+  print("extents do not match")
+}
+```
+
+:::
 
 Another common use of spatial subsetting is when we use one raster with the same extent and resolution to mask the another. In this case, the masking raster needs to be composed of logicals or NAs.
 
@@ -315,7 +336,7 @@ map1 <- tm_shape(zion_elevation) +
 
 map2 <- tm_shape(reclassified) +
   tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "bracket subsetting")
+  tm_layout(main.title = "reclassified")
 
 tmap_arrange(map1, map2, nrow = 1) 
 ```
@@ -375,16 +396,23 @@ map2 <- tm_shape(elevation_focal) +
 
 tmap_arrange(map1, map2, nrow = 1) 
 ```
+
+:::{.callout-tip icon=true}
+# Critical thinking
+
+What should we expect to observe in the output here?
+:::
+
 ### Zonal Operations
 Similar to focal operations, zonal operations apply an aggregation function to multiple cells. However, instead of applying operations to neighbors, zonal operations aggregate based on "zones". Zones can are defined using a categorical raster and do not necessarily have to be neighbors
 
-For example, we could find the average elevation for different soil grain sizes.
+For example, we could find the average elevation for within the elevations zones we created.
 
 ```{r}
-#| eval: false
-# EXTENTS DO NOT MATCH
-## compute zonal stats for NDVI within landcover types?
-zonal(ndvi_rast, zion_land, fun = "mean")
+
+zonal(zion_elevation, reclassified, fun = "mean") %>%
+  kable(col.names = c("Elevation zone", "Mean elevation (m)")) %>% 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
 
 ### Merging Rasters
