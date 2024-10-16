@@ -56,10 +56,12 @@ aves <- read_sf(here::here("data", "aves_observations_2020_2024.shp")) %>%
 ```
 
 Approach with spatial subset: 
+
 - Spatially subset the PA geometries to only those with bird observations
 
 ```{r}
-#| echo: false
+#| warning: false
+#| message: false
 
 aves_PA_subset <- sb_protected_areas[aves, ]
 
@@ -67,8 +69,7 @@ tm_shape(sb_county_boundary) +
   tm_fill() +
   tm_shape(sb_protected_areas) +
     tm_borders(lwd = 1, col = "#fb8500") +
-    tm_fill(col = "#fb8500",
-            alpha = 0.2) +
+    tm_fill(col = "#fb8500", alpha = 0.2) +
   tm_shape(aves_PA_subset) +
     tm_dots(col = "#023047") +
   tm_layout(main.title = "Birds in Santa Barbara\nCounty Protected Areas",
@@ -78,6 +79,7 @@ nrow(aves_PA_subset)
 ```
 
 Approach with a spatial join:
+
 - Append the Protected Area geometries to the bird observation geometries
 
 ```{r}
@@ -89,9 +91,10 @@ aves_PA_join <- st_join(aves, sb_protected_areas)
 tm_shape(sb_county_boundary) +
   tm_fill() +
   tm_shape(sb_protected_areas) +
-  tm_borders(lwd = 1, col = "#fb8500") +
+    tm_borders(lwd = 1, col = "#fb8500") +
+    tm_fill(col = "#fb8500", alpha = 0.2) +
   tm_shape(aves_PA_join) +
-  tm_dots(col = "#023047") +
+    tm_dots(col = "#023047") +
   tm_layout(main.title = "Birds in Santa Barbara\nCounty Protected Areas",
             main.title.size = 1)
 
@@ -113,10 +116,12 @@ aves_buffer_subset <- PA_buffer_5km[aves, ]
 tm_shape(sb_county_boundary) +
   tm_fill() +
   tm_shape(sb_protected_areas) +
-  tm_borders(lwd = 1,
-             col = "#fb8500") +
+    tm_borders(lwd = 1, col = "#fb8500") +
+    tm_fill(col = "#fb8500", alpha = 0.2) +
   tm_shape(aves_buffer_subset) +
-  tm_dots(col = "#023047")
+  tm_dots(col = "#023047") +
+  tm_layout(main.title = "Birds in Santa Barbara\nCounty Protected Areas",
+            main.title.size = 1)
 
 nrow(aves_buffer_subset)
 ```
