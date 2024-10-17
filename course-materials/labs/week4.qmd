@@ -32,6 +32,18 @@ The following materials are modified from [Chapters 3](https://geocompr.robinlov
 # Spatial data operations
 ## 1. Set Up
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/zion.jpg")
+```
+
+::: {.gray-text .center-text}
+[Photo from Unsplash](https://unsplash.com/photos/brown-mountains-with-forest-RWzPBcWVdpw){target="_blank"}
+:::
+
 ```{r install, include=TRUE, message=FALSE, warning=FALSE}
 library(terra)
 library(dplyr)
@@ -39,9 +51,8 @@ library(spData)
 library(spDataLarge)
 library(tmap)
 library(kableExtra)
-#library(geodata)
+library(geodata)
 ```
-
 
 ## 2. Raster objects
 
@@ -375,6 +386,18 @@ tm_shape(ndvi_rast) +
 ### Focal Operations
 Local operations operate on one cell, though from multiple layers. Focal operations take into account a central (focal) cell and its neighbors. The neighborhood (or kernel, moving window, filter) can take any size or shape. A focal operation applies an aggregation function to all cells in the neighborhood and updates the value of the central cell before moving on to the next central cell
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/raster-focal.png")
+```
+
+::: {.gray-text .center-text}
+[*Geocomputation with R*](https://r.geocompx.org/spatial-operations#focal-operations){target="_blank"}
+:::
+
 We can use the `focal()` function to perform spatial filtering. We define the size, shape, and weights of the moving window using a matrix. Here we find the minimum.
 
 ```{r}
@@ -412,7 +435,7 @@ For example, we could find the average elevation for within the elevations zones
 
 zonal(zion_elevation, reclassified, fun = "mean") %>%
   kable(col.names = c("Elevation zone", "Mean elevation (m)")) %>% 
-  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+  kable_styling(bootstrap_options = "striped")
 ```
 
 ### Merging Rasters
@@ -421,10 +444,31 @@ In some cases, data for a region will be stored in multiple, contiguous files. T
 In this example, we download elevation data for Austria and Switzerland and merge the two rasters into one.
 
 ```{r}
-#| eval: false
-aut <- geodata::elevation_30s(country = "AUT", path = tempdir())
-ch <- geodata::elevation_30s(country = "CHE", path = tempdir())
-aut_ch <- merge(aut, ch)
+
+austria <- geodata::elevation_30s(country = "AUT", path = tempdir())
+switzerland <- geodata::elevation_30s(country = "CHE", path = tempdir())
+
+merged <- merge(austria, switzerland)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+  
+map1 <- tm_shape(austria) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "Austria")
+  
+map2 <- tm_shape(switzerland) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "Switzerland")  
+
+map3 <- tm_shape(merged) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "Merged")   
+  
+tmap_arrange(map1, map2, map3, nrow = 1) 
 ```
 
 
@@ -435,31 +479,30 @@ When merging or performing map algebra, rasters need to match in their resolutio
 ### Extent
 In the simplest case, two images differ only in their extent. Let's start by increasing the extent of a elevation raster.
 
-```{r include=TRUE}
+```{r}
 elev_2 <- extend(zion_elevation, c(1, 200)) # add one row and two columns
 
 ```
 
 Performing algebraic operations on objects with different extents doesn't work.
 
-```{r include=TRUE, eval=FALSE}
+```{r}
+#| eval: false
 elev + elev_2
 ```
 
-We can align the extent of the 2 rasters using the `extend()` function. Here we extend the elev object to the extent of elev_2 by adding NAs.
+We can align the extent of the 2 rasters using the `extend()` function. Here we extend the `zion_elevation` object to the extent of elev_2 by adding NAs.
 
-```{r include=TRUE}
+```{r}
 elev_3 <- extend(zion_elevation, elev_2)
 ```
 
 ### Origin
 the origin function returns the coordinates of the cell corner closes to the coordinates (0,0). We can also manually change the origin.
 
-```{r include=TRUE}
-#| eval: false
-origin(elev_4)
-origin(elev_4) <- c(0.25, 0.25)
-origin(elev_4)
+```{r}
+origin(zion_elevation)
+
 ```
 
 ### Resolution
@@ -468,20 +511,19 @@ Raster datasets can also differ in their resolution to match resolutions we can 
 Digital elevation model (DEM) of the Mongón study area, a Peruvian fog oasis.
 Let's start by coarsening the resolution of a DEM by a factor of 5, by taking the mean.
 
-```{r include=TRUE}
-dem <- rast(system.file("raster/dem.tif", package = "spDataLarge"))
-dem_agg <-  aggregate(dem, fact = 5, fun = mean)
+```{r}
+zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
 ```
 
 ```{r}
 #| code-fold: true
 #| message: false
-map1 <- tm_shape(dem) +
+map1 <- tm_shape(zion_elevation) +
   tm_raster(title = "Elevation (m)") +
   tm_layout(legend.show = FALSE,
             main.title = "original")
 
-map2 <- tm_shape(dem_agg) +
+map2 <- tm_shape(zion_elevation_coarse) +
   tm_raster(title = "Elevation (m)") +
   tm_layout(main.title = "aggregated")
 
@@ -489,12 +531,24 @@ tmap_arrange(map1, map2, nrow = 1)
 ```
 
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/raster-disaggregation.png")
+```
+
+::: {.gray-text .center-text}
+[*Geocomputation with R*](https://r.geocompx.org/geometry-operations#aggregation-and-disaggregation){target="_blank"}
+:::
+
 We have some choices when increasing the resolution. Here, we try the bilinear method.
 
 ```{r include=TRUE}
-dem_disagg <- disagg(dem_agg, fact = 5, method = "bilinear")
+zion_elevation_disagg <- disagg(zion_elevation_coarse, fact = 5, method = "bilinear")
 
-if(identical(dem, dem_disagg)){
+if(identical(zion_elevation, zion_elevation_disagg)){
   print("disaggregated data matches original")
 } else {
   warning("disaggregated data does not match original")
@@ -507,10 +561,7 @@ if(identical(dem, dem_disagg)){
 #| code-fold: true
 #| message: false
 
-map2 <- map2 +
-  tm_layout(legend.show = FALSE)
-
-map3 <- tm_shape(dem_disagg) +
+map3 <- tm_shape(zion_elevation_disagg) +
   tm_raster(title = "Elevation (m)") +
   tm_layout(main.title = "disaggregated")
 
@@ -524,14 +575,28 @@ Aggregation/disaggregation work when both rasters have the same origins.
 
 But what do we do in the case where we have two or more rasters with different origins and resolutions? Resampling computes values for new pixel locations based on custom resolutions and origins.
 
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/raster-resampling.png")
+```
+
+::: {.gray-text .center-text}
+[*Geocomputation with R*](https://r.geocompx.org/geometry-operations#resampling){target="_blank"}
+:::
+
 In most cases, the target raster would be an object you are already working with, but here we define a target raster.
 
 ```{r include=TRUE}
+# CODE NOT WORKING
 target_rast <- rast(xmin = 794600, xmax = 798200,
                    ymin = 8931800, ymax = 8935400,
-                   resolution = 150, crs = "EPSG:32717")
+                   resolution = 150, crs = crs(zion_elevation))
 
-dem_resampl <- resample(dem, y = target_rast, method = "bilinear")
+zion_elevation_resample <- resample(zion_elevation, y = target_rast, method = "bilinear")
 
 ```
 
@@ -539,8 +604,7 @@ dem_resampl <- resample(dem, y = target_rast, method = "bilinear")
 #| code-fold: true
 #| message: false
 
-
-map4 <- tm_shape(dem_resampl) +
+map4 <- tm_shape(zion_elevation_resample) +
   tm_raster(title = "Elevation (m)") +
   tm_layout(main.title = "resampled")
 
