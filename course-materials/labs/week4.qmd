@@ -133,6 +133,39 @@ We can combine `SpatRaster` objects into one, using `c()`:
 landsat34 <- c(landsat3, landsat4)
 ```
 
+### Merging Rasters
+In some cases, data for a region will be stored in multiple, contiguous files. To use them as a single raster, we need to merge them.
+
+In this example, we download elevation data for Austria and Switzerland and merge the two rasters into one.
+
+```{r}
+
+austria <- geodata::elevation_30s(country = "AUT", path = tempdir())
+switzerland <- geodata::elevation_30s(country = "CHE", path = tempdir())
+
+merged <- merge(austria, switzerland)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+  
+map1 <- tm_shape(austria) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "Austria")
+  
+map2 <- tm_shape(switzerland) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "Switzerland")  
+
+map3 <- tm_shape(merged) +
+  tm_raster(title = "Elevation (m)") +
+  tm_layout(main.title = "Merged")   
+  
+tmap_arrange(map1, map2, map3, nrow = 1) 
+```
+
 
 ### Inspecting raster objects
 
@@ -395,7 +428,10 @@ tm_shape(ndvi_rast) +
 ```
 
 ### Focal Operations
-Local operations operate on one cell, though from multiple layers. Focal operations take into account a central (focal) cell and its neighbors. The neighborhood (or kernel, moving window, filter) can take any size or shape. A focal operation applies an aggregation function to all cells in the neighborhood and updates the value of the central cell before moving on to the next central cell
+Local operations operate on one cell, though from multiple layers. Focal operations take into account a central (focal) cell and its neighbors. The neighborhood (or kernel, moving window, filter) can take any size or shape. A focal operation applies an aggregation function to all cells in the neighborhood and updates the value of the central cell before moving on to the next central cell.
+
+The image below provides an example of using a moving window filter. The large orange square highlights the 8 cells that are considered "neighbors" to the central cell (value = 8). Using this approach, the value of the central cell will be updated to the minimum value of its neighboring cells (in this case 0). This process then repeats for each cell.
+
 
 ```{r}
 #| eval: true
@@ -409,11 +445,21 @@ knitr::include_graphics("images/raster-focal.png")
 [*Geocomputation with R*](https://r.geocompx.org/spatial-operations#focal-operations){target="_blank"}
 :::
 
-We can use the `focal()` function to perform spatial filtering. We define the size, shape, and weights of the moving window using a matrix. Here we find the minimum.
+:::{.callout-tip icon=true collapse=true}
+# Critical thinking
+
+Why are the cells on the border in the filtered raster now have values of `NA`?
+
+The cells along the border do not have a complete set of "neighbors", therefore the filtering operation returns a `NA`.
+:::
+
+We can use the `focal()` function to perform spatial filtering. We define the size, shape, and weights of the moving window using a matrix. In the following example we'll find the minimum value in 9x9 cell neighborhoods.
 
 ```{r}
 
-elevation_focal <- focal(zion_elevation, w = matrix(1, nrow = 9, ncol = 9), fun = min)
+elevation_focal <- focal(zion_elevation, 
+                         w = matrix(1, nrow = 9, ncol = 9), # create moving window
+                         fun = min) # function to map new values
 
 ```
 
@@ -431,10 +477,14 @@ map2 <- tm_shape(elevation_focal) +
 tmap_arrange(map1, map2, nrow = 1) 
 ```
 
-:::{.callout-tip icon=true}
+:::{.callout-tip icon=true collapse=true}
 # Critical thinking
 
-What should we expect to observe in the output here?
+What should we expect to observe in the output for this spatial filtering example?
+
+- Overall, we see more lower values because we are finding the minimum value in each neighborhood
+- The output looks "grainier" because many cells have the same values as their neighbors
+
 :::
 
 ### Zonal Operations
@@ -449,38 +499,6 @@ zonal(zion_elevation, reclassified, fun = "mean") %>%
   kable_styling(bootstrap_options = "striped")
 ```
 
-### Merging Rasters
-In some cases, data for a region will be stored in multiple, contiguous files. To use them as a single raster, we need to merge them.
-
-In this example, we download elevation data for Austria and Switzerland and merge the two rasters into one.
-
-```{r}
-
-austria <- geodata::elevation_30s(country = "AUT", path = tempdir())
-switzerland <- geodata::elevation_30s(country = "CHE", path = tempdir())
-
-merged <- merge(austria, switzerland)
-```
-
-
-```{r}
-#| code-fold: true
-#| message: false
-  
-map1 <- tm_shape(austria) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "Austria")
-  
-map2 <- tm_shape(switzerland) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "Switzerland")  
-
-map3 <- tm_shape(merged) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "Merged")   
-  
-tmap_arrange(map1, map2, map3, nrow = 1) 
-```
 
 
 # Geometric Operations
@@ -509,7 +527,7 @@ elev_3 <- extend(zion_elevation, elev_2)
 ```
 
 ### Origin
-the origin function returns the coordinates of the cell corner closes to the coordinates (0,0). We can also manually change the origin.
+The origin function returns the coordinates of the cell corner closes to the coordinates (0,0). 
 
 ```{r}
 origin(zion_elevation)
@@ -517,10 +535,10 @@ origin(zion_elevation)
 ```
 
 ### Resolution
-Raster datasets can also differ in their resolution to match resolutions we can decrease the resolution by aggregating or increase the resolution by disaggregating.
+Raster datasets can also differ in their resolution. To match resolutions we can decrease (or coarsen) the resolution by aggregating or increase (or sharpen) the resolution by disaggregating.
 
-Digital elevation model (DEM) of the Mongón study area, a Peruvian fog oasis.
-Let's start by coarsening the resolution of a DEM by a factor of 5, by taking the mean.
+#### Aggregating
+When decreasing the resolution of rasters, we are effectively combining multiple celss into a single cell. Let's start by coarsening the resolution of the Zion elevation data by a factor of 5, by taking the mean value of cells.
 
 ```{r}
 zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
@@ -541,6 +559,17 @@ map2 <- tm_shape(zion_elevation_coarse) +
 tmap_arrange(map1, map2, nrow = 1) 
 ```
 
+:::{.callout-tip icon=true collapse=true}
+# Critical thinking
+
+What should we observe in the output?
+
+The aggregated raster appears "grainier" because the cells are now larger. This is the same concept as having a more pixelated image.
+:::
+
+#### Disaggregating
+
+To increase the resolution of a raster, we need to break a single cell into multiple cells. There are many ways to do this and the appropriate method will often depend on our specific purpose. However, most approaches define the values of the new (smaller) cells based on not only the value of the original cell they came from, but also neighboring cells. 
 
 ```{r}
 #| eval: true
@@ -554,17 +583,26 @@ knitr::include_graphics("images/raster-disaggregation.png")
 [*Geocomputation with R*](https://r.geocompx.org/geometry-operations#aggregation-and-disaggregation){target="_blank"}
 :::
 
-We have some choices when increasing the resolution. Here, we try the bilinear method.
+In the example below, we use the bilinear method to disaggregate the elevation raster we aggregated in the previous example.
+
+:::{.callout-tip icon=true collapse=true}
+# Critical thinking
+
+Does disaggregating the aggregated version get us back to the original raster?
+
+No! There is no way for us to exactly recover the original data from the aggregated version.
+:::
 
 ```{r include=TRUE}
+# disaggregate the aggregated raster
 zion_elevation_disagg <- disagg(zion_elevation_coarse, fact = 5, method = "bilinear")
 
+# check whether the disaggregated version matches the original
 if(identical(zion_elevation, zion_elevation_disagg)){
   print("disaggregated data matches original")
 } else {
   warning("disaggregated data does not match original")
 }
-
 
 ```
 
@@ -580,12 +618,13 @@ tmap_arrange(map1, map2, map3, nrow = 1)
 ```
 
 
-## Resampling
+## 2. Resampling
 
 Aggregation/disaggregation work when both rasters have the same origins. 
 
 But what do we do in the case where we have two or more rasters with different origins and resolutions? Resampling computes values for new pixel locations based on custom resolutions and origins.
 
+The images below show that we are trying to find the values of the original raster within the cells defined by the new "target" raster.
 
 ```{r}
 #| eval: true
