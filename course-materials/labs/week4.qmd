@@ -691,7 +691,7 @@ attr_layers_df = tibble::tribble(
 
 options(kableExtra.html.bsTable = TRUE)
 knitr::kable(attr_layers_df, 
-             caption = "Brief description of new functions, check out package and function documentation for more information",
+             caption = "Brief description of new functions, check out package and function documentation for more information.",
              booktabs = TRUE) %>%
   kableExtra::kable_styling("striped",
                             latex_options = "striped", 
