@@ -501,7 +501,7 @@ zonal(zion_elevation, reclassified, fun = "mean") %>%
 
 
 
-# Geometric Operations
+# Geometry Operations
 When merging or performing map algebra, rasters need to match in their resolution, projection, origin, and/or extent
 
 ## 1. Changing extent, origin, and resolution
@@ -549,8 +549,7 @@ zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
 #| message: false
 map1 <- tm_shape(zion_elevation) +
   tm_raster(title = "Elevation (m)") +
-  tm_layout(legend.show = FALSE,
-            main.title = "original")
+  tm_layout(main.title = "original")
 
 map2 <- tm_shape(zion_elevation_coarse) +
   tm_raster(title = "Elevation (m)") +
@@ -642,9 +641,10 @@ In most cases, the target raster would be an object you are already working with
 
 ```{r include=TRUE}
 # CODE NOT WORKING
-target_rast <- rast(xmin = 794600, xmax = 798200,
-                   ymin = 8931800, ymax = 8935400,
-                   resolution = 150, crs = crs(zion_elevation))
+target_rast <- rast(xmin = -113.2, xmax = -112.9,
+                   ymin = 37.14, ymax = 37.5,
+                   nrow = 450, ncol = 460, 
+                   crs = crs(zion_elevation))
 
 zion_elevation_resample <- resample(zion_elevation, y = target_rast, method = "bilinear")
 
@@ -660,3 +660,44 @@ map4 <- tm_shape(zion_elevation_resample) +
 
 tmap_arrange(map1, map4, nrow = 1) 
 ```
+
+
+# Summary of new functions
+
+```{r}
+#| echo: false
+#| message: false
+
+attr_layers_df = tibble::tribble(
+  ~Function, ~Description,
+  "rast()", "create a SpatRaster",
+  "subset()", "select a subset of layers from a SpatRaster",
+  "merge()", "merge multiple SpatRasters to create a new SpatRaster",
+  "global()", "compute statistics for SpatRaster",
+  "freq()", "create table of frequency of values of SpatRaster",
+  "rts::cellFromXY()", "get cell number of a SpatRaster based on coordinates",
+  "extract()", "extract values from a SpatRaster",
+  "mask(x, y)", "create a new SpatRaster that has the same values as SpatRaster x except for cells in y that are NA",
+  "classify(x, y)", "reclassify the values in SpatRaster x based on categories in matrix y",
+  "focal()", "calculate values for each cell in a SpatRaster based on moving window",
+  "zonal(x, y)", "summarize values in SpatRaster x based on zones in SpatRaster y",
+  "extend()", "enlarge the extent of a SpatRaster",
+  "origin()", "get or set the point of origin of a SpatRaster",
+  "aggregate()", "aggregate a SpatRaster to create a new SpatRaster with a lower resolution",
+  "disagg()", "create a new SpatRaster with a higher resolution (smaller cells)",
+  "resample()", "transfer values between SpatRaster objects that do not align"
+)
+
+
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(attr_layers_df, 
+             caption = "Brief description of new functions, check out package and function documentation for more information",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE) %>%
+  kableExtra::pack_rows("Spatial data operations", 1, 11) %>%
+  kableExtra::pack_rows("Geometry operations", 12, 16)
+```
+
