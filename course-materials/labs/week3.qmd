@@ -32,6 +32,18 @@ In this lab, we'll explore the basics of spatial and geometry operations on vect
 The following materials are modified from [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html) and [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* by Robin Lovelace.
 :::
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/nz.jpg")
+```
+
+::: {.gray-text .center-text}
+[Photo from Unsplash](https://unsplash.com/photos/green-grass-field-near-lake-and-snow-covered-mountain-during-daytime-_0hhHG0aD9Y){target="_blank"}
+:::
+
 
 # Spatial data operations
 [Last week](week2.qmd), we covered how the basics of the `sf` package. We saw that the magic of working with spatial data in the `tidyverse` means that we can leverage many of our favorite `dplyr` functions to manipulate the data attributes. So far, we've only worked with the `data.frame` component of `sf` objects. In this section, we'll see how we can perform analogous operations using the `geometry` column.
