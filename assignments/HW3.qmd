@@ -89,7 +89,7 @@ For this assignment, you must produce the following:
 - [ ] a map of the homes in in Houston that lost power
 - [ ]  an estimate of the number of homes in Houston that lost power 
 - [ ] a map of the census tracts in Houston that lost power
-- [ ] a figure comparing the distributions of median household income for census tracts that did and did not experience blackouts
+- [ ] a plot comparing the distributions of median household income for census tracts that did and did not experience blackouts
 - [ ]  a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study
 
 ## Data details
