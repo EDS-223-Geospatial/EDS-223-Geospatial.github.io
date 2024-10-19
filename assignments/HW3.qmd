@@ -89,7 +89,7 @@ For this assignment, you must produce the following:
 - [ ] a map of the homes in in Houston that lost power
 - [ ]  an estimate of the number of homes in Houston that lost power 
 - [ ] a map of the census tracts in Houston that lost power
-- [ ] a figure comparing the distributions of median household income for census tracts that did and did not experience blackouts
+- [ ] a plot comparing the distributions of median household income for census tracts that did and did not experience blackouts
 - [ ]  a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study
 
 ## Data details
@@ -208,17 +208,46 @@ OR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')"
 
 ## Rubric (specifications)
 
+Your output should serve as a stand-alone item that someone unfamiliar with the assignment would be able to understand your analysis, including the decisions made in selecting your approach and interpretation of the results.
+
 Assignments will be deemed "Satisfactory" based on the following criteria:
 
-- [ ] "Correct" answers are not sufficient. Analysis must demonstrate critical interrogation of each step by showing justification and verification of intermediate steps using the following:
+#### Data analysis
+- [ ] Code must produce expected output based on correct data manipulation
+- [ ] Multiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. "Correct" answers are not sufficient. Justification and verification of approach should be demonstrated using the following:
   - custom warning and error message (e.g. `warning()` and `stop()`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages))
-  - unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
   - informative comments ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
-- [ ] All maps and figures must include the following elements:
+  - **BONUS:** unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
+
+#### Plots, tables, and maps
+- [ ] All plots, tables, and maps must be clear, accurate, and effectively convey the intended information
+- [ ] All plots and maps must include the following elements:
   - an informative title
   - legends with legible titles, including units
   - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
   - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
-  - for figures: axes with legible titles, including units
-- [ ] The rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis
-  - see examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
+  - for figures: axes with legible labels and titles, including units
+- All tables should be rendered with legible titles and stypling (e.g. `{kableExtra}`)
+
+### Written reflections
+
+- [ ] Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.
+
+
+#### Professional output
+- [ ] Quarto document must be rendered to `html`
+- [ ] The rendered output must include the following elements:
+  - document header with title, name, and date (ideally the date rendered)
+  - all packages are loaded together at the top of the document
+  - all unnecessary/distracting [warnings and messages are suppressed](https://quarto.org/docs/computations/execution-options.html)
+  - include informative code comments when appropriate ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
+  - [folding code](https://quarto.org/docs/output-formats/html-code.html#folding-code) or sourcing separate scripts when appropriate to direct reader's attention
+  - succinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation
+  - complete and detailed data citations
+
+:::{.callout-tip icon=true}
+# Guide to professional output
+
+See examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
+
+:::

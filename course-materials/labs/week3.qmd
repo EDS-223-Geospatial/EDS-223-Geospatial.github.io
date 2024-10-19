@@ -25,11 +25,23 @@ Artwork by [Allison Horst](https://allisonhorst.com/allison-horst){target="_blan
 :::
 
 
-In this lab, we'll explore the basics of spatial and geometry operations on vector data in R using the `sf` package.
-
 ::: {.callout-note icon=true}
 # Source Materials
 The following materials are modified from [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html) and [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* by Robin Lovelace.
+:::
+
+In this lab, we'll explore the basics of spatial and geometry operations on vector data in R using the `sf` package. We'll be working with data representing the heigh points of New Zealand.
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/nz.jpg")
+```
+
+::: {.gray-text .center-text}
+[Photo from Unsplash](https://unsplash.com/photos/green-grass-field-near-lake-and-snow-covered-mountain-during-daytime-_0hhHG0aD9Y){target="_blank"}
 :::
 
 
