@@ -4,7 +4,7 @@ subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
@@ -123,7 +123,7 @@ terra::layerCor(combine, fun = cor)
 ## Find Distances Across All `peru` Cells
 
 ```{r}
-peru_agg <- terra::aggregate(peru, fact = 20, by = )
+peru_agg <- terra::aggregate(rast(peru), fact = 20)
 plot(peru_agg)
 
 water_mask <- is.na(peru_agg)

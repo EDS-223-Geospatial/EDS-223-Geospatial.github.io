@@ -10,15 +10,25 @@ format:
     toc: true
 ---
 
-::: {.callout-tip}
-## Reference
-
-Refer to [Chapter 3](https://geocompr.robinlovelace.net/attr.html), [Chapter 4](https://geocompr.robinlovelace.net/spatial-operations.html), [Chapter 5](https://geocompr.robinlovelace.net/geometry-operations.html) of *Geocomputation with R* to help get you started.
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
 :::
 
-## Get Started
+## 1. Get Started
 
-Let's load the necessary packages:
+::: {.callout-warning}
+If you don't have `spDataLarge` installed, make sure to run:
+
+<br>
+
+`install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
+:::
+
+- Create an `.Rproj` as your version controlled project for Week 3
+- Create a Quarto document inside your `.Rproj`
+- Download [this data folder from Google Drive](https://drive.google.com/file/d/1TXCgDbeZqTfxMCKP8vK2fyNT3stGrJaf/view) and move it inside your `.Rproj`
+- Load all necessary packages and read spatial objects
 
 ```{r}
 library(tidyverse)
@@ -29,39 +39,18 @@ library(stars)
 library(terra)
 ```
 
-
-::: {.callout-warning}
-If you don't have `spDataLarge` installed, make sure to run:
-
-<br>
-
-`install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
-:::
-
-
-And read in the spatial objects:
-
-```{r}
-#| echo: false
-
-dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
-landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
-srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-peru <- stars::read_stars(here::here("course-materials", "data", "week4-discussion", "PER_elv.tif"))
-```
-
 ```{r}
 #| eval: false
 
-# read in digital elevation model raster of Mongón study area
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
-# read in Landsat 8 image for Zion National Park
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
 ```
 
-Now, to meet our learning objectives, your task:
+## 2. Your Task
+
+Now, to meet this week's learning objectives, your task:
 
 1. Plot a histogram and boxplot of `dem`
 2. Reclassify `dem` and compute the mean for the three classes:

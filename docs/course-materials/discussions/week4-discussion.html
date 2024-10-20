@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Allie Caughmam">
-<meta name="dcterms.date" content="2024-10-02">
+<meta name="dcterms.date" content="2024-10-19">
 
 <title>Week 4: Discussion Section</title>
 <style>
@@ -180,6 +180,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../../course-materials/week3.html">
  <span class="dropdown-text">week 3</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week4.html">
+ <span class="dropdown-text">week 4</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -228,7 +232,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 2, 2024</p>
+        <p class="date">October 19, 2024</p>
       </div>
     </div>
     
@@ -244,7 +248,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">Get Started</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">1. Get Started</a></li>
+  <li><a href="#your-task" id="toc-your-task" class="nav-link" data-scroll-target="#your-task">2. Your Task</a></li>
   </ul>
 </nav>
     </div>
@@ -255,22 +260,42 @@ window.Quarto = {
 
 
 
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Materials
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The following materials are modified from the <a href="https://r-tmap.github.io/tmap-book/">tmap book</a>.</p>
+</div>
+</div>
+<section id="get-started" class="level2">
+<h2 class="anchored" data-anchor-id="get-started">1. Get Started</h2>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Reference
+Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Refer to <a href="https://geocompr.robinlovelace.net/attr.html">Chapter 3</a>, <a href="https://geocompr.robinlovelace.net/spatial-operations.html">Chapter 4</a>, <a href="https://geocompr.robinlovelace.net/geometry-operations.html">Chapter 5</a> of <em>Geocomputation with R</em> to help get you started.</p>
+<p>If you don’t have <code>spDataLarge</code> installed, make sure to run:</p>
+<p><br></p>
+<p><code>install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')</code></p>
 </div>
 </div>
-<section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get Started</h2>
-<p>Let’s load the necessary packages:</p>
+<ul>
+<li>Create an <code>.Rproj</code> as your version controlled project for Week 3</li>
+<li>Create a Quarto document inside your <code>.Rproj</code></li>
+<li>Download <a href="https://drive.google.com/file/d/1TXCgDbeZqTfxMCKP8vK2fyNT3stGrJaf/view">this data folder from Google Drive</a> and move it inside your <code>.Rproj</code></li>
+<li>Load all necessary packages and read spatial objects</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -306,31 +331,16 @@ The following object is masked from 'package:tidyr':
     extract</code></pre>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you don’t have <code>spDataLarge</code> installed, make sure to run:</p>
-<p><br></p>
-<p><code>install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')</code></p>
-</div>
-</div>
-<p>And read in the spatial objects:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in digital elevation model raster of Mongón study area</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/dem.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># read in Landsat 8 image for Zion National Park</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/landsat.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week4-discussion"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/dem.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/landsat.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week4-discussion"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, to meet our learning objectives, your task:</p>
+</section>
+<section id="your-task" class="level2">
+<h2 class="anchored" data-anchor-id="your-task">2. Your Task</h2>
+<p>Now, to meet this week’s learning objectives, your task:</p>
 <ol type="1">
 <li>Plot a histogram and boxplot of <code>dem</code></li>
 <li>Reclassify <code>dem</code> and compute the mean for the three classes:</li>
