@@ -4,7 +4,7 @@ subtitle: "Practice raster manipulations"
 author: "Allie Caughmam"
 date: last-modified
 execute: 
-  eval: true
+  eval: false
 format:
   html:
     toc: true
@@ -19,9 +19,7 @@ The following materials are modified from the [tmap book](https://r-tmap.github.
 
 ::: {.callout-warning}
 If you don't have `spDataLarge` installed, make sure to run:
-
 <br>
-
 `install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
 :::
 
@@ -40,8 +38,6 @@ library(terra)
 ```
 
 ```{r}
-#| eval: false
-
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
