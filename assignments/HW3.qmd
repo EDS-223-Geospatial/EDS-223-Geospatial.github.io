@@ -229,7 +229,7 @@ Assignments will be deemed "Satisfactory" based on the following criteria:
   - for figures: axes with legible labels and titles, including units
 - All tables should be rendered with legible titles and stypling (e.g. `{kableExtra}`)
 
-### Written reflections
+#### Written reflections
 
 - [ ] Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.
 
@@ -244,6 +244,7 @@ Assignments will be deemed "Satisfactory" based on the following criteria:
   - [folding code](https://quarto.org/docs/output-formats/html-code.html#folding-code) or sourcing separate scripts when appropriate to direct reader's attention
   - succinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation
   - complete and detailed data citations
+  - all defined variables are used in analysis (no variables are defined that are not used)
 
 :::{.callout-tip icon=true}
 # Guide to professional output
