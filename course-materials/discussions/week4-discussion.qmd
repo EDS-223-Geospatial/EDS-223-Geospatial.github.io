@@ -23,7 +23,7 @@ If you don't have `spDataLarge` installed, make sure to run:
 `install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
 :::
 
-- Create an `.Rproj` as your version controlled project for Week 3
+- Create an `.Rproj` as your version controlled project for Week 4
 - Create a Quarto document inside your `.Rproj`
 - Download [this data folder from Google Drive](https://drive.google.com/file/d/1TXCgDbeZqTfxMCKP8vK2fyNT3stGrJaf/view) and move it inside your `.Rproj`
 - Load all necessary packages and read spatial objects
@@ -41,7 +41,7 @@ library(terra)
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
+peru <- stars::read_stars(here::here("week4-discussion", "PER_elv.tif"))
 peru <- rast(peru)
 ```
 
