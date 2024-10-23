@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Allie Caughmam">
-<meta name="dcterms.date" content="2024-10-21">
+<meta name="dcterms.date" content="2024-10-23">
 
 <title>Week 4: Discussion Section - Answer Key</title>
 <style>
@@ -203,7 +203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 21, 2024</p>
+        <p class="date">October 23, 2024</p>
       </div>
     </div>
     
@@ -387,8 +387,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="find-distances-across-all-peru-cells" class="level2">
 <h2 class="anchored" data-anchor-id="find-distances-across-all-peru-cells">Find Distances Across All <code>peru</code> Cells</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>peru_agg <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">aggregate</span>(<span class="fu">rast</span>(peru), <span class="at">fact =</span> <span class="dv">20</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(peru_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aggregate by a factor of 20 to reduce resolution and create new raster</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>peru_agg <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">aggregate</span>(<span class="fu">rast</span>(peru), <span class="at">fact =</span> <span class="dv">20</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(peru_agg)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -396,9 +397,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>water_mask <span class="ot">&lt;-</span> <span class="fu">is.na</span>(peru_agg)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>water_mask[water_mask <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(water_mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create mask of ocean (NA values)</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>water_mask <span class="ot">&lt;-</span> <span class="fu">is.na</span>(peru_agg) <span class="co"># returns TRUE value for NA</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set all FALSE values to NA</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>water_mask[water_mask <span class="sc">==</span> <span class="dv">0</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(water_mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -406,29 +409,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>distance_to_coast <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">distance</span>(water_mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find distance from each cell to ocean/coastline (default is unit = "m")</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>distance_to_coast <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">distance</span>(water_mask)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 |---------|---------|---------|---------|
 =========================================
                                           </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>distance_to_coast_km <span class="ot">&lt;-</span> distance_to_coast<span class="sc">/</span><span class="dv">1000</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_to_coast_km, <span class="at">main =</span> <span class="st">"Distance to the coast (km)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert from meters to kilometers </span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>distance_to_coast_km <span class="ot">&lt;-</span> distance_to_coast<span class="sc">/</span><span class="dv">1000</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_to_coast_km, <span class="at">main =</span> <span class="st">"Distance to the coast (km)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="week4-discussion-answerKey_files/figure-html/unnamed-chunk-8-3.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>distance_to_coast_km2 <span class="ot">&lt;-</span> distance_to_coast_km <span class="sc">+</span> ((peru_agg<span class="sc">/</span><span class="dv">100</span>)<span class="sc">*</span><span class="dv">10</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(distance_to_coast_km2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="week4-discussion-answerKey_files/figure-html/unnamed-chunk-8-4.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -437,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="change-resolution-of-srtm" class="level2">
 <h2 class="anchored" data-anchor-id="change-resolution-of-srtm">Change Resolution of <code>srtm</code></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -445,17 +441,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>rast_template <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(terra<span class="sc">::</span><span class="fu">ext</span>(srtm), <span class="at">res =</span> <span class="fl">0.01</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>srtm_resampl1 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>srtm_resampl2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"near"</span>)</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>srtm_resampl3 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"cubic"</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>srtm_resampl4 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"cubicspline"</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>srtm_resampl5 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"lanczos"</span>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>srtm_resampl_all <span class="ot">&lt;-</span> <span class="fu">c</span>(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bilinear"</span>, <span class="st">"Near"</span>, <span class="st">"Cubic"</span>, <span class="st">"Cubic Spline"</span>, <span class="st">"Lanczos"</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_resampl_all, <span class="at">main =</span> labs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>rast_template <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(terra<span class="sc">::</span><span class="fu">ext</span>(srtm), <span class="at">res =</span> <span class="fl">0.01</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>srtm_resampl1 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"bilinear"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>srtm_resampl2 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"near"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>srtm_resampl3 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"cubic"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>srtm_resampl4 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"cubicspline"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>srtm_resampl5 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">resample</span>(srtm, <span class="at">y =</span> rast_template, <span class="at">method =</span> <span class="st">"lanczos"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>srtm_resampl_all <span class="ot">&lt;-</span> <span class="fu">c</span>(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bilinear"</span>, <span class="st">"Near"</span>, <span class="st">"Cubic"</span>, <span class="st">"Cubic Spline"</span>, <span class="st">"Lanczos"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(srtm_resampl_all, <span class="at">main =</span> labs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
