@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Allie Caughmam">
-<meta name="dcterms.date" content="2024-10-21">
+<meta name="dcterms.date" content="2024-10-23">
 
 <title>Week 4: Discussion Section</title>
 <style>
@@ -232,7 +232,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 21, 2024</p>
+        <p class="date">October 23, 2024</p>
       </div>
     </div>
     
@@ -306,7 +306,8 @@ Warning
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dem <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/dem.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/landsat.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week4-discussion"</span>, <span class="st">"PER_elv.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> stars<span class="sc">::</span><span class="fu">read_stars</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week4-discussion"</span>, <span class="st">"PER_elv.tif"</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>peru <span class="ot">&lt;-</span> <span class="fu">rast</span>(peru)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-task" class="level2">
@@ -328,6 +329,38 @@ Warning
 <li><strong>Note</strong>: <span class="math inline">\(NDVI = (NIR - red)/(NIR + red)\)</span></li>
 <li><strong>Note</strong>: <span class="math inline">\(NDWI = (green - NIR)/(green + NIR)\)</span></li>
 </ul>
+<p>Apply the functions to the appropriate <a href="https://www.usgs.gov/landsat-missions/landsat-8">Landsat 8 bands</a>. Landsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Band</th>
+<th></th>
+<th>Color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>blue</td>
+<td>30 meter</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>green</td>
+<td>30 meter</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>red</td>
+<td>30 meter</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>near-infrared</td>
+<td>30 meter</td>
+</tr>
+</tbody>
+</table>
 <ol start="4" type="1">
 <li>Find the distance across all cells in <code>peru</code> to its nearest coastline</li>
 </ol>

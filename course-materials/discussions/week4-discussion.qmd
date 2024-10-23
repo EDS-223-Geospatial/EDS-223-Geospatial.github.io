@@ -42,6 +42,7 @@ dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 peru <- stars::read_stars(here::here("data", "week4-discussion", "PER_elv.tif"))
+peru <- rast(peru)
 ```
 
 ## 2. Your Task
@@ -56,6 +57,17 @@ Now, to meet this week's learning objectives, your task:
 3. Calculate the Normalized Difference Vegetation Index (NDVI) and Normalized Difference Water Index (NDWI) of `landsat` and find a correlation between NDVI and NDWI
   - **Note**: $NDVI = (NIR - red)/(NIR + red)$
   - **Note**: $NDWI = (green - NIR)/(green + NIR)$
+  
+Apply the functions to the appropriate [Landsat 8 bands](https://www.usgs.gov/landsat-missions/landsat-8). Landsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:
+
+| Band | | Color | Resolution |
+| ---- | ----- | ---------- |
+| 1 | blue | 30 meter |
+| 2 | green | 30 meter |
+| 3 | red | 30 meter |
+| 4 | near-infrared | 30 meter |
+
+
 4. Find the distance across all cells in `peru` to its nearest coastline
   - **Hint**: Use `terra::distance()` to find geographic distance for all cells
   - **Note**: `terra::distance()` will calculate distance for all cells that are `NA` to the nearest cell that are not `NA`
