@@ -1,0 +1,75 @@
+---
+title: "Week 4: Lab"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Ruth Oliver"
+date: last-modified
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "30%"
+#| fig-align: "center"
+knitr::include_graphics("images/terra.png")
+```
+
+::: {.gray-text .center-text}
+[terra](https://rspatial.github.io/terra/){target="_blank"}
+:::
+
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from [Chapter 6](https://r.geocompx.org/raster-vector#raster-vector) of *Geocomputation with R* by Robin Lovelace.
+:::
+
+## 1. Set up
+
+```{r}
+#| message: false
+library(sf) # vector handling
+library(terra) # raster handling
+library(tidyverse)
+library(tmap) # map making
+library(spData) # spatial data
+library(spDataLarge) # spatial data
+```
+
+## 2. Raster cropping
+```{r}
+srtm = rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+zion = read_sf(system.file("vector/zion.gpkg", package = "spDataLarge"))
+zion = st_transform(zion, st_crs(srtm))
+```
+
+```{r}
+srtm_cropped = crop(srtm, zion)
+srtm_masked = mask(srtm, zion)
+srtm_cropped = crop(srtm, zion)
+srtm_final = mask(srtm_cropped, zion)
+srtm_inv_masked = mask(srtm, zion, inverse = TRUE)
+```
+
+## 3. Raster extraction
+
+```{r}
+data("zion_points", package = "spDataLarge")
+elevation = terra::extract(srtm, zion_points)
+zion_points = cbind(zion_points, elevation)
+```
+
+
+## 4. Vectorization
+
+```{r}
+grain = rast(system.file("raster/grain.tif", package = "spData"))
+grain_poly = as.polygons(grain) |> 
+  st_as_sf()
+```
+
