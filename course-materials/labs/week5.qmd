@@ -1,5 +1,5 @@
 ---
-title: "Week 4: Lab"
+title: "Week 5: Lab"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Ruth Oliver"
 date: last-modified
@@ -15,9 +15,9 @@ editor_options:
 ```{r}
 #| eval: true
 #| echo: false
-#| out-width: "30%"
+#| out-width: "50%"
 #| fig-align: "center"
-knitr::include_graphics("images/terra.png")
+knitr::include_graphics("images/sf-terra.png")
 ```
 
 ::: {.gray-text .center-text}
@@ -33,22 +33,71 @@ The following materials are modified from [Chapter 6](https://r.geocompx.org/ras
 
 ```{r}
 #| message: false
+#| warning: false
 library(sf) # vector handling
 library(terra) # raster handling
 library(tidyverse)
 library(tmap) # map making
 library(spData) # spatial data
 library(spDataLarge) # spatial data
+library(viridisLite)
 ```
+
+
+Today we're heading back to Zion National Park in Utah to explore the interactions between vector and raster data.
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/zion.jpg")
+```
+
+::: {.gray-text .center-text}
+[Photo from Unsplash](https://unsplash.com/photos/brown-mountains-with-forest-RWzPBcWVdpw){target="_blank"}
+:::
+
+```{r}
+zion_elevation <- rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+zion_boundaries <- read_sf(system.file("vector/zion.gpkg", package = "spDataLarge"))
+```
+
+:::{.callout-warning icon=true}
+# Remember to check the CRS!
+
+```{r}
+if(crs(zion_elevation) == crs(zion_boundaries)) {
+  print("Coordinate reference systems match")
+} else{
+  warning("Updating coordinate reference systems to match")
+  zion_boundaries <- st_transform(zion_boundaries, st_crs(zion_elevation))
+}
+```
+
+:::
+
+
+
+```{r}
+#| code-fold: true
+#| message: false
+
+tm_shape(zion_elevation) +
+  tm_raster(title = "Elevation (meters)") +
+tm_shape(zion_boundaries) +
+  tm_borders(lwd = 2) +
+tm_layout(legend.outside = TRUE)
+```
+
+
+
 
 ## 2. Raster cropping
-```{r}
-srtm = rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-zion = read_sf(system.file("vector/zion.gpkg", package = "spDataLarge"))
-zion = st_transform(zion, st_crs(srtm))
-```
+
 
 ```{r}
+#| eval: false
 srtm_cropped = crop(srtm, zion)
 srtm_masked = mask(srtm, zion)
 srtm_cropped = crop(srtm, zion)
@@ -59,6 +108,7 @@ srtm_inv_masked = mask(srtm, zion, inverse = TRUE)
 ## 3. Raster extraction
 
 ```{r}
+#| eval: false
 data("zion_points", package = "spDataLarge")
 elevation = terra::extract(srtm, zion_points)
 zion_points = cbind(zion_points, elevation)
@@ -68,6 +118,7 @@ zion_points = cbind(zion_points, elevation)
 ## 4. Vectorization
 
 ```{r}
+
 grain = rast(system.file("raster/grain.tif", package = "spData"))
 grain_poly = as.polygons(grain) |> 
   st_as_sf()
