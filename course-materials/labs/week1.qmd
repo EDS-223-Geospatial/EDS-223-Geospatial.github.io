@@ -12,6 +12,18 @@ editor_options:
   chunk_output_type: console
 ---
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "30%"
+#| fig-align: "center"
+knitr::include_graphics("images/tmap.png")
+```
+
+::: {.gray-text .center-text}
+[tmap](https://r-tmap.github.io/tmap/){target="_blank"}
+:::
+
 ::: {.callout-note icon=true}
 # Source Materials
 The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
