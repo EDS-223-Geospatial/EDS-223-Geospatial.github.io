@@ -284,21 +284,28 @@
     "href": "course-materials/discussions/week5-discussion.html",
     "title": "Week 5: Discussion Section",
     "section": "",
-    "text": "Reference\n\n\n\nRefer to Chapter 6 of Geocomputation with R to help get you started."
+    "text": "Source Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#learning-objectives",
     "href": "course-materials/discussions/week5-discussion.html#learning-objectives",
     "title": "Week 5: Discussion Section",
-    "section": "Learning Objectives",
-    "text": "Learning Objectives\n\nUse terra::crop() and terra::mask() to create a subset of a raster or vector\nUse terra::aggregate() and terra::resample() to create a new raster or vector\nUse terra::as.polygons() to convert a raster to a vector of polygons"
+    "section": "1. Learning Objectives",
+    "text": "1. Learning Objectives\n\nUse terra functions crop() and mask() to create a subset of a raster or vector\nUse terra functions aggregate() and resample() to create a new raster or vector\nUse terra functions as.polygons() to convert a raster to a vector of polygons"
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#get-started",
     "href": "course-materials/discussions/week5-discussion.html#get-started",
     "title": "Week 5: Discussion Section",
-    "section": "Get Started",
-    "text": "Get Started\nLet’s load the necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\n# load 30 random points from Zion National Park\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\n\n# create a convex hull from the points \nzion_convex_hull &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  st_as_sf()\n\n# load elevation raster data for Zion National Park, from the Shuttle Radar Topography Mission\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\n# load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))\n\nNow, to meet our learning objectives, your task:\n\nCrop and mask the srtm raster using (1) zion_points and (2) zion_convex_hull\n\n\nAre there any differences in the output maps with crop()? What about with mask()?\nWhat happens when you set inverse = TRUE in mask()?\n\n\nSubset points higher than 3100 meters in nz_height and create a template raster with terra::rast(), where the resolution is 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster that counts the highest points in New Zealand/Aotearoa\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter to only keep squares that represent clay"
+    "section": "2. Get Started",
+    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 5\nCreate a Quarto document inside your .Rproj\nLoad all necessary packages and read spatial objects\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\n# load 30 random points from Zion National Park\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\n\n# create a convex hull from the points \nzion_convex_hull &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  st_as_sf()\n\n# load elevation raster data for Zion National Park, from the Shuttle Radar Topography Mission\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\n# load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#your-task",
+    "href": "course-materials/discussions/week5-discussion.html#your-task",
+    "title": "Week 5: Discussion Section",
+    "section": "3. Your Task",
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nCrop and mask the srtm raster using (1) zion_points and (2) zion_convex_hull\n\n\nAre there any differences in the output maps with crop()? What about with mask()?\nWhat happens when you set inverse = TRUE in mask()?\n\n\nSubset points higher than 3100 meters in nz_height and create a template raster with rast(), where the resolution is 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster that counts the highest points in New Zealand/Aotearoa\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter to only keep squares that represent clay"
   },
   {
     "objectID": "course-materials/discussions/week2-discussion.html",
@@ -1089,7 +1096,7 @@
     "href": "course-materials/discussions/week4-discussion.html",
     "title": "Week 4: Discussion Section",
     "section": "",
-    "text": "Source Materials\n\n\n\nThe following materials are modified from the tmap book."
+    "text": "Source Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
   },
   {
     "objectID": "course-materials/discussions/week4-discussion.html#get-started",

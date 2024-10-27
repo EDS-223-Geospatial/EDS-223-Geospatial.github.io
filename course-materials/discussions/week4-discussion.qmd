@@ -12,7 +12,7 @@ format:
 
 ::: {.callout-note icon=true}
 # Source Materials
-The following materials are modified from the [tmap book](https://r-tmap.github.io/tmap-book/).
+The following materials are modified from *Geocomputation with R* by Robin Lovelace.
 :::
 
 ## 1. Get Started

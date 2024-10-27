@@ -10,21 +10,22 @@ format:
     toc: true
 ---
 
-:::{.callout-tip icon=true}
-## Reference
-
-Refer to [Chapter 6](https://r.geocompx.org/raster-vector) of *Geocomputation with R* to help get you started.
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from *Geocomputation with R* by Robin Lovelace.
 :::
 
-## Learning Objectives
+## 1. Learning Objectives
 
-- Use `terra::crop()` and `terra::mask()` to create a subset of a raster or vector 
-- Use `terra::aggregate()` and `terra::resample()` to create a new raster or vector
-- Use `terra::as.polygons()` to convert a raster to a vector of polygons
+- Use `terra` functions `crop()` and `mask()` to create a subset of a raster or vector 
+- Use `terra` functions `aggregate()` and `resample()` to create a new raster or vector
+- Use `terra` functions `as.polygons()` to convert a raster to a vector of polygons
 
-## Get Started
+## 2. Get Started
 
-Let's load the necessary packages:
+- Create an `.Rproj` as your version controlled project for Week 5
+- Create a Quarto document inside your `.Rproj`
+- Load all necessary packages and read spatial objects
 
 ```{r}
 #| message: false
@@ -54,12 +55,14 @@ srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
 ```
 
-Now, to meet our learning objectives, your task:
+## 3. Your Task
+
+Now, to meet this week's learning objectives, your task:
 
 1. Crop and mask the `srtm` raster using (1) `zion_points` and (2) `zion_convex_hull`
   - Are there any differences in the output maps with `crop()`? What about with `mask()`? 
   - What happens when you set `inverse = TRUE` in `mask()`?
-2. Subset points higher than 3100 meters in `nz_height` and create a template raster with `terra::rast()`, where the resolution is 3 km x 3 km for the extent of the subset dataset
+2. Subset points higher than 3100 meters in `nz_height` and create a template raster with `rast()`, where the resolution is 3 km x 3 km for the extent of the subset dataset
   - Count numbers of the highest points in each grid cell
   - Find the maximum elevation in each grid cell
 3. With the previous raster, complete the following:

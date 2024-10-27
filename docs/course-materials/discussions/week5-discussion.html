@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-10-02">
+<meta name="dcterms.date" content="2024-10-27">
 
 <title>Week 5: Discussion Section</title>
 <style>
@@ -207,7 +207,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 2, 2024</p>
+        <p class="date">October 27, 2024</p>
       </div>
     </div>
     
@@ -223,8 +223,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">Learning Objectives</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">Get Started</a></li>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">1. Learning Objectives</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">2. Get Started</a></li>
+  <li><a href="#your-task" id="toc-your-task" class="nav-link" data-scroll-target="#your-task">3. Your Task</a></li>
   </ul>
 </nav>
     </div>
@@ -235,30 +236,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Reference
+Source Materials
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Refer to <a href="https://r.geocompx.org/raster-vector">Chapter 6</a> of <em>Geocomputation with R</em> to help get you started.</p>
+<p>The following materials are modified from <em>Geocomputation with R</em> by Robin Lovelace.</p>
 </div>
 </div>
 <section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">Learning Objectives</h2>
+<h2 class="anchored" data-anchor-id="learning-objectives">1. Learning Objectives</h2>
 <ul>
-<li>Use <code>terra::crop()</code> and <code>terra::mask()</code> to create a subset of a raster or vector</li>
-<li>Use <code>terra::aggregate()</code> and <code>terra::resample()</code> to create a new raster or vector</li>
-<li>Use <code>terra::as.polygons()</code> to convert a raster to a vector of polygons</li>
+<li>Use <code>terra</code> functions <code>crop()</code> and <code>mask()</code> to create a subset of a raster or vector</li>
+<li>Use <code>terra</code> functions <code>aggregate()</code> and <code>resample()</code> to create a new raster or vector</li>
+<li>Use <code>terra</code> functions <code>as.polygons()</code> to convert a raster to a vector of polygons</li>
 </ul>
 </section>
 <section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">Get Started</h2>
-<p>Let’s load the necessary packages:</p>
+<h2 class="anchored" data-anchor-id="get-started">2. Get Started</h2>
+<ul>
+<li>Create an <code>.Rproj</code> as your version controlled project for Week 5</li>
+<li>Create a Quarto document inside your <code>.Rproj</code></li>
+<li>Load all necessary packages and read spatial objects</li>
+</ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
@@ -282,7 +287,10 @@ Reference
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># load raster data representing grain sizes with the three classes clay, silt and sand</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>grain <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/grain.tif"</span>, <span class="at">package =</span> <span class="st">"spData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Now, to meet our learning objectives, your task:</p>
+</section>
+<section id="your-task" class="level2">
+<h2 class="anchored" data-anchor-id="your-task">3. Your Task</h2>
+<p>Now, to meet this week’s learning objectives, your task:</p>
 <ol type="1">
 <li>Crop and mask the <code>srtm</code> raster using (1) <code>zion_points</code> and (2) <code>zion_convex_hull</code></li>
 </ol>
@@ -291,7 +299,7 @@ Reference
 <li>What happens when you set <code>inverse = TRUE</code> in <code>mask()</code>?</li>
 </ul>
 <ol start="2" type="1">
-<li>Subset points higher than 3100 meters in <code>nz_height</code> and create a template raster with <code>terra::rast()</code>, where the resolution is 3 km x 3 km for the extent of the subset dataset</li>
+<li>Subset points higher than 3100 meters in <code>nz_height</code> and create a template raster with <code>rast()</code>, where the resolution is 3 km x 3 km for the extent of the subset dataset</li>
 </ol>
 <ul>
 <li>Count numbers of the highest points in each grid cell</li>
