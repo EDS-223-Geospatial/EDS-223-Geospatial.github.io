@@ -17,7 +17,7 @@ The following materials are modified from *Geocomputation with R* by Robin Lovel
 
 ## 1. Learning Objectives
 
-- Use `terra` functions `aggregate()` and `resample()` to create a new raster or vector
+- Use `terra` functions `aggregate()` and `resample()` to create a new raster
 - Use `terra` functions `as.polygons()` to convert a raster to a vector of polygons
 
 ## 2. Get Started
@@ -35,7 +35,6 @@ library(sf)
 library(terra)
 library(spData)
 library(spDataLarge)
-library(tidyverse)
 ```
 
 ```{r}

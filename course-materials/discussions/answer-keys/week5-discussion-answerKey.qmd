@@ -19,7 +19,6 @@ library(sf)
 library(terra)
 library(spData)
 library(spDataLarge)
-library(tidyverse)
 ```
 
 ```{r}

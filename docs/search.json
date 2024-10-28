@@ -291,14 +291,14 @@
     "href": "course-materials/discussions/week5-discussion.html#learning-objectives",
     "title": "Week 5: Discussion Section",
     "section": "1. Learning Objectives",
-    "text": "1. Learning Objectives\n\nUse terra functions aggregate() and resample() to create a new raster or vector\nUse terra functions as.polygons() to convert a raster to a vector of polygons"
+    "text": "1. Learning Objectives\n\nUse terra functions aggregate() and resample() to create a new raster\nUse terra functions as.polygons() to convert a raster to a vector of polygons"
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#get-started",
     "href": "course-materials/discussions/week5-discussion.html#get-started",
     "title": "Week 5: Discussion Section",
     "section": "2. Get Started",
-    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 5\nCreate a Quarto document inside your .Rproj\nLoad all necessary packages and read spatial objects\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
+    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 5\nCreate a Quarto document inside your .Rproj\nLoad all necessary packages and read spatial objects\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\n\n\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#your-task",
@@ -1194,7 +1194,7 @@
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "",
-    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
+    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#subset-points-in-new-zealandaotearoa",
