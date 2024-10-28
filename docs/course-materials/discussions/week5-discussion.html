@@ -252,7 +252,6 @@ Source Materials
 <section id="learning-objectives" class="level2">
 <h2 class="anchored" data-anchor-id="learning-objectives">1. Learning Objectives</h2>
 <ul>
-<li>Use <code>terra</code> functions <code>crop()</code> and <code>mask()</code> to create a subset of a raster or vector</li>
 <li>Use <code>terra</code> functions <code>aggregate()</code> and <code>resample()</code> to create a new raster or vector</li>
 <li>Use <code>terra</code> functions <code>as.polygons()</code> to convert a raster to a vector of polygons</li>
 </ul>
@@ -273,39 +272,21 @@ Source Materials
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load 30 random points from Zion National Park</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>zion_points <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">system.file</span>(<span class="st">"vector/zion_points.gpkg"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create a convex hull from the points </span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>zion_convex_hull <span class="ot">&lt;-</span> sf<span class="sc">::</span><span class="fu">st_combine</span>(zion_points) <span class="sc">%&gt;%</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  sf<span class="sc">::</span><span class="fu">st_convex_hull</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># load elevation raster data for Zion National Park, from the Shuttle Radar Topography Mission</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>srtm <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/srtm.tif"</span>, <span class="at">package =</span> <span class="st">"spDataLarge"</span>))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co"># load raster data representing grain sizes with the three classes clay, silt and sand</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>grain <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/grain.tif"</span>, <span class="at">package =</span> <span class="st">"spData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load raster data representing grain sizes with the three classes clay, silt and sand</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>grain <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/grain.tif"</span>, <span class="at">package =</span> <span class="st">"spData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="your-task" class="level2">
 <h2 class="anchored" data-anchor-id="your-task">3. Your Task</h2>
 <p>Now, to meet this week’s learning objectives, your task:</p>
 <ol type="1">
-<li>Crop and mask the <code>srtm</code> raster using (1) <code>zion_points</code> and (2) <code>zion_convex_hull</code></li>
-</ol>
-<ul>
-<li>Are there any differences in the output maps with <code>crop()</code>? What about with <code>mask()</code>?</li>
-<li>What happens when you set <code>inverse = TRUE</code> in <code>mask()</code>?</li>
-</ul>
-<ol start="2" type="1">
-<li>Subset points higher than 3100 meters in <code>nz_height</code> and create a template raster with <code>rast()</code>, where the resolution is 3 km x 3 km for the extent of the subset dataset</li>
+<li>Subset points higher than 3100 meters in <code>nz_height</code> (from <code>spData</code>) and create a template raster with <code>rast()</code>, where the resolution is 3 km x 3 km for the extent of the subset dataset</li>
 </ol>
 <ul>
 <li>Count numbers of the highest points in each grid cell</li>
 <li>Find the maximum elevation in each grid cell</li>
 </ul>
-<ol start="3" type="1">
+<ol start="2" type="1">
 <li>With the previous raster, complete the following:</li>
 </ol>
 <ul>
@@ -314,7 +295,7 @@ Source Materials
 <li>Plot the result</li>
 <li>Resample back to the original resolution of 3 km x 3 km</li>
 </ul>
-<ol start="4" type="1">
+<ol start="3" type="1">
 <li>Polygonize <code>grain</code> and filter to only keep squares that represent clay</li>
 </ol>
 

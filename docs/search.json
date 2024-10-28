@@ -291,21 +291,21 @@
     "href": "course-materials/discussions/week5-discussion.html#learning-objectives",
     "title": "Week 5: Discussion Section",
     "section": "1. Learning Objectives",
-    "text": "1. Learning Objectives\n\nUse terra functions crop() and mask() to create a subset of a raster or vector\nUse terra functions aggregate() and resample() to create a new raster or vector\nUse terra functions as.polygons() to convert a raster to a vector of polygons"
+    "text": "1. Learning Objectives\n\nUse terra functions aggregate() and resample() to create a new raster or vector\nUse terra functions as.polygons() to convert a raster to a vector of polygons"
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#get-started",
     "href": "course-materials/discussions/week5-discussion.html#get-started",
     "title": "Week 5: Discussion Section",
     "section": "2. Get Started",
-    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 5\nCreate a Quarto document inside your .Rproj\nLoad all necessary packages and read spatial objects\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\n# load 30 random points from Zion National Park\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\n\n# create a convex hull from the points \nzion_convex_hull &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  st_as_sf()\n\n# load elevation raster data for Zion National Park, from the Shuttle Radar Topography Mission\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\n# load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
+    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 5\nCreate a Quarto document inside your .Rproj\nLoad all necessary packages and read spatial objects\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n\n\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#your-task",
     "href": "course-materials/discussions/week5-discussion.html#your-task",
     "title": "Week 5: Discussion Section",
     "section": "3. Your Task",
-    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nCrop and mask the srtm raster using (1) zion_points and (2) zion_convex_hull\n\n\nAre there any differences in the output maps with crop()? What about with mask()?\nWhat happens when you set inverse = TRUE in mask()?\n\n\nSubset points higher than 3100 meters in nz_height and create a template raster with rast(), where the resolution is 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster that counts the highest points in New Zealand/Aotearoa\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter to only keep squares that represent clay"
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nSubset points higher than 3100 meters in nz_height (from spData) and create a template raster with rast(), where the resolution is 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster that counts the highest points in New Zealand/Aotearoa\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter to only keep squares that represent clay"
   },
   {
     "objectID": "course-materials/discussions/week2-discussion.html",
@@ -1194,28 +1194,21 @@
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "",
-    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n# load 30 random points from Zion National Park\nzion_points &lt;- read_sf(system.file(\"vector/zion_points.gpkg\", package = \"spDataLarge\"))\n\n# create a convex hull from the points \nzion_convex_hull &lt;- sf::st_combine(zion_points) %&gt;%\n  sf::st_convex_hull() %&gt;% \n  st_as_sf()\n\n# load elevation raster data for Zion National Park, from the Shuttle Radar Topography Mission\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))\n\n# load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
-  },
-  {
-    "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#crop-and-mask-srtm",
-    "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#crop-and-mask-srtm",
-    "title": "Week 5: Discussion Section - Answer Key",
-    "section": "Crop and Mask srtm",
-    "text": "Crop and Mask srtm\n\n# crop \nsrtm_crop1 &lt;- crop(srtm, zion_points)\nsrtm_crop2 &lt;- crop(srtm, zion_convex_hull)\nplot(srtm_crop1, main = \"Crop of srtm and zion_points\")\n\n\n\n\n\n\n\nplot(srtm_crop2, main = \"Crop of srtm and zion_convex_hull\")\n\n\n\n\n\n\n\nsrtm_mask1 &lt;- mask(srtm, zion_points)\nsrtm_mask2 &lt;- mask(srtm, zion_convex_hull)\nplot(srtm_mask1, main = \"Mask of srtm and zion_points\")\n\n\n\n\n\n\n\nplot(srtm_mask2, main = \"Mask of srtm and zion_convex_hull\")\n\n\n\n\n\n\n\nsrtm_inv_mask1 &lt;- mask(srtm, zion_points, inverse = TRUE)\nsrtm_inv_mask2 &lt;- mask(srtm, zion_convex_hull, inverse = TRUE)\nplot(srtm_inv_mask1, main = \"Inverse mask of srtm and zion_points\")\n\n\n\n\n\n\n\nplot(srtm_inv_mask2, main = \"Inverse mask of srtm and zion_convex_hull\")"
+    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(tidyverse)\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#subset-points-in-new-zealandaotearoa",
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#subset-points-in-new-zealandaotearoa",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "Subset Points in New Zealand/Aotearoa",
-    "text": "Subset Points in New Zealand/Aotearoa\n\n# subset New Zealand elevation points to &gt; 3100 meters\nnz_height3100 &lt;- nz_height %&gt;% \n  dplyr::filter(elevation &gt; 3100)\n\n# create template: define the extent, resolution, and CRS based on nz_height3100\nnz_template &lt;- rast(terra::ext(nz_height3100), \n                    resolution = 3000, \n                    crs = terra::crs(nz_height3100))"
+    "text": "Subset Points in New Zealand/Aotearoa\n\n# Subset New Zealand elevation points to &gt; 3100 meters\nnz_height3100 &lt;- nz_height %&gt;% \n  dplyr::filter(elevation &gt; 3100)\n\n# Create template: define the extent, resolution, and CRS based on nz_height3100\nnz_template &lt;- rast(terra::ext(nz_height3100), \n                    resolution = 3000, \n                    crs = terra::crs(nz_height3100))"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#count-points-in-each-grid-cell",
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#count-points-in-each-grid-cell",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "Count Points in Each Grid Cell",
-    "text": "Count Points in Each Grid Cell\n\n# convert vector points to raster data\n# function \"length\" returns a count of the elevation points per cell\nnz_raster &lt;- rasterize(nz_height3100, nz_template, field = \"elevation\", fun = \"length\")\n\nplot(nz_raster, main = \"Number of Elevation Points &gt; 3100 in Each Grid Cell\")\nplot(st_geometry(nz_height3100), add = TRUE)"
+    "text": "Count Points in Each Grid Cell\n\n# Convert vector points to raster data\n# Function \"length\" returns a count of the elevation points per cell\nnz_raster &lt;- rasterize(nz_height3100, nz_template, field = \"elevation\", fun = \"length\")\n\nplot(nz_raster, main = \"Number of Elevation Points &gt; 3100 in Each Grid Cell\")\nplot(st_geometry(nz_height3100), add = TRUE)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#find-maximum-elevation-in-each-grid-cell",
@@ -1229,14 +1222,14 @@
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#aggregate-and-resample-raster",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "Aggregate and Resample Raster",
-    "text": "Aggregate and Resample Raster\n\n# reduce the resolution by combining 2 cells in each direction into larger cells\n# sum the values of all cells for the resulting elevation value\nnz_raster_low &lt;- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\n# convert the new raster's resolution back to the 3kmx3km resolution of original raster\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 6 x 6 km\", \"Resample 6 x 6 km\")\nplot(plots, main = labs)\n\n\n\n\n\n\n\nplot(nz_raster_low, main = \"Resample 3 x 3 km\")"
+    "text": "Aggregate and Resample Raster\n\n# Reduce the resolution by combining 2 cells in each direction into larger cells\n# Sum the values of all cells for the resulting elevation value\nnz_raster_low &lt;- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\n# Convert the new raster's resolution back to the 3kmx3km resolution of original raster\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 6 x 6 km\", \"Resample 6 x 6 km\")\nplot(plots, main = labs)\n\n\n\n\n\n\n\nplot(nz_raster_low, main = \"Resample 3 x 3 km\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#vectorize-raster",
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#vectorize-raster",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "Vectorize Raster",
-    "text": "Vectorize Raster\n\n# convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
+    "text": "Vectorize Raster\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html",
