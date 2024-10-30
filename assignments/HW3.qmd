@@ -103,10 +103,10 @@ As you're learning in EDS 220, accessing, downloading, and preparing remote sens
 
 **Data files:**
 
--   `VNP46A1.A2021038.h08v05.001.2021039064328.h5.tif`: tile h08v05, collected on 2021-02-07  
--   `VNP46A1.A2021038.h08v06.001.2021039064329.h5.tif`: tile h08v06, collected on 2021-02-07  
--   `VNP46A1.A2021047.h08v05.001.2021048091106.h5.tif`: tile h08v05, collected on 2021-02-16  
--   `VNP46A1.A2021047.h08v06.001.2021048091105.h5.tif`: tile h08v06, collected on 2021-02-16  
+-   `VNP46A1.A2021038.h08v05.001.2021039064328.tif`: tile h08v05, collected on 2021-02-07  
+-   `VNP46A1.A2021038.h08v06.001.2021039064329.tif`: tile h08v06, collected on 2021-02-07  
+-   `VNP46A1.A2021047.h08v05.001.2021048091106.tif`: tile h08v05, collected on 2021-02-16  
+-   `VNP46A1.A2021047.h08v06.001.2021048091105.tif`: tile h08v06, collected on 2021-02-16  
 
 ### Roads
 **Data file:** `gis_osm_roads_free_1.gpkg`
@@ -142,7 +142,7 @@ To complete complete the tasks of this assignment, you will need to break your a
 - find locations that experienced a blackout by creating a mask
 - exclude highways from analysis
 - identify homes that experienced blackouts by combining the locations of homes and blackouts
-- identify 
+- identify the census tracts likely impacted by blackout
 
 Below is guidance and suggestions for each of these steps.
 
