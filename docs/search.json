@@ -546,214 +546,32 @@
     "text": "Plot Results\nLet’s plot the results:\n\nggplot(sites_clean,\n       aes(x = date, y = NDVI,\n           group = study_site, col = study_site)) +\n  scale_color_manual(values = c(\"#EAAC8B\", \"#315C2B\", \"#315C2B\", \"#315C2B\",\"#9EA93F\")) +\n  geom_line() +\n  theme_minimal() +\n  labs(x = \"\", y = \"Normalized Difference Vegetation Index (NDVI)\", col = \"Vegetation type\",\n       title = \"Seasonal cycles of vegetation productivity\")"
   },
   {
-    "objectID": "assignments/HW3.html#learning-outcomes",
-    "href": "assignments/HW3.html#learning-outcomes",
-    "title": "Homework Assignment 3",
-    "section": "Learning outcomes",
-    "text": "Learning outcomes\nThis assignment will reinforce key concepts in geospatial analysis by practicing the following:\n\nload vector/raster data\n\nsimple raster operations\n\nsimple vector operations\n\nspatial joins"
+    "objectID": "assignments/PR.html#assignment-overview",
+    "href": "assignments/PR.html#assignment-overview",
+    "title": "Data Science Portfolio",
+    "section": "Assignment overview",
+    "text": "Assignment overview\nThe purpose of this assignment is to create an online portfolio to showcase your spatial data science skills.\nTo do so, please:\n\nCreate two presentation-worthy GitHub repositories based on assignments 2-4 or labs 8 & 9\n\n\n\n\n\n\n\nTip\n\n\n\nPick the assignments or labs that highlight the skills you are most interested in showcasing to potential employers."
   },
   {
-    "objectID": "assignments/HW3.html#instructions",
-    "href": "assignments/HW3.html#instructions",
-    "title": "Homework Assignment 3",
-    "section": "Instructions",
-    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW3\n│   README.md\n│   Rmd/Proj files    \n│\n└───data\n    │   gis_osm_buildings_a_free_1.gpkg\n    │   gis_osm_roads_free_1.gpkg\n    │\n    └───ACS_2019_5YR_TRACT_48_TEXAS.gdb\n    |   │   census tract gdb files\n    |\n    └───VNP46A1\n    |   │   VIIRS data files"
+    "objectID": "assignments/PR.html#guidance-for-creating-repositories",
+    "href": "assignments/PR.html#guidance-for-creating-repositories",
+    "title": "Data Science Portfolio",
+    "section": "Guidance for creating repositories",
+    "text": "Guidance for creating repositories\nThe goal of creating new repositories is to transform your existing repositories from homework assignments or labs into organized and well-documented projects that showcase an environmental data science workflow. The audience for a repository is a potential collaborator(s) or employer(s) who wants to understand your workflow. Therefore, it is appropriate intermediate outputs in addition to final results as well as custom print statements and warning messages to check results.\nEach repository should have:\n\nA brief, but informative name (e.g. “assignment-2” is not acceptable)\nA clear and organized structure\n\nShould include folders for data and scripts, where appropriate\n\nA README\n\nContents should follow the guidance from EDS 296\nAdd a section articulating the skills that you are using in this repo. The idea is to make it easy for potential employers to understand your skills\n\nA .gitignore\n\nThis should include any files that you don’t want git to track (i.e. files that you don’t want pushed to GitHub)\n\nYour revised homework assignment, as a rendered Quarto document (both .qmd and .html files). Include the following updates:\n\nGive it a brief, but informative file name (e.g. hw2.qmd is not acceptable)\nDouble check that all contents meet the standard of professional output\nAny other updates you want to make! Including updating the theme"
   },
   {
-    "objectID": "assignments/HW3.html#background",
-    "href": "assignments/HW3.html#background",
-    "title": "Homework Assignment 3",
-    "section": "Background",
-    "text": "Background\nClimate change is increasing the frequency and intensity of extreme weather events, with devastating impacts. “In February 2021, the state of Texas suffered a major power crisis, which came about as a result of three severe winter storms sweeping across the United States on February 10–11, 13–17, and 15–20.”1 For more background, check out these engineering and political perspectives.\nIn this assignment, you will identify the impacts of these series of extreme winter storms by estimating the number of homes in the Houston metropolitan area that lost power and investigate whether not these impacts were disproportionately felt.\nYour analysis will be based on remotely-sensed night lights data, acquired from the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi satellite. In particular, you will use the VNP46A1 to detect differences in night lights before and after the storm to identify areas that lost electric power.\nTo determine the number of homes that lost power, you link (spatially join) these areas with OpenStreetMap data on buildings and roads.\nTo investigate potential socioeconomic factors that influenced recovery, you will link your analysis with data from the US Census Bureau."
-  },
-  {
-    "objectID": "assignments/HW3.html#description",
-    "href": "assignments/HW3.html#description",
-    "title": "Homework Assignment 3",
-    "section": "Description",
-    "text": "Description\nFor this assignment, you must produce the following:\n\na set of maps comparing night light intensities before and after the first to storms\na map of the homes in in Houston that lost power\nan estimate of the number of homes in Houston that lost power\na map of the census tracts in Houston that lost power\na plot comparing the distributions of median household income for census tracts that did and did not experience blackouts\na brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study"
-  },
-  {
-    "objectID": "assignments/HW3.html#data-details",
-    "href": "assignments/HW3.html#data-details",
-    "title": "Homework Assignment 3",
-    "section": "Data details",
-    "text": "Data details\n\nNight lights\nUse NASA’s Worldview to explore the data around the day of the storm. There are several days with too much cloud cover to be useful, but 2021-02-07 and 2021-02-16 provide two clear, contrasting images to visualize the extent of the power outage in Texas.\nVIIRS data is distributed through NASA’s Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC). Many NASA Earth data products are distributed in 10x10 degree tiles in sinusoidal equal-area projection. Tiles are identified by their horizontal and vertical position in the grid. Houston lies on the border of tiles h08v05 and h08v06. We therefore need to download two tiles per date.\nAs you’re learning in EDS 220, accessing, downloading, and preparing remote sensing data is a skill in it’s own right! To prevent this assignment from being a large data wrangling challenge, we have downloaded and prepped the following files for you to work with, stored in the VNP46A1 folder.\n\nData files:\n\nVNP46A1.A2021038.h08v05.001.2021039064328.h5.tif: tile h08v05, collected on 2021-02-07\n\nVNP46A1.A2021038.h08v06.001.2021039064329.h5.tif: tile h08v06, collected on 2021-02-07\n\nVNP46A1.A2021047.h08v05.001.2021048091106.h5.tif: tile h08v05, collected on 2021-02-16\n\nVNP46A1.A2021047.h08v06.001.2021048091105.h5.tif: tile h08v06, collected on 2021-02-16\n\n\n\nRoads\nData file: gis_osm_roads_free_1.gpkg Typically highways account for a large portion of the night lights observable from space (see Google’s Earth at Night). To minimize falsely identifying areas with reduced traffic as areas without power, we will ignore areas near highways.\nOpenStreetMap (OSM) is a collaborative project which creates publicly available geographic data of the world. Ingesting this data into a database where it can be subsetted and processed is a large undertaking. Fortunately, third party companies redistribute OSM data. We used Geofabrik’s download sites to retrieve a shapefile of all highways in Texas and prepared a Geopackage (.gpkg file) containing just the subset of roads that intersect the Houston metropolitan area. \n\n\nHouses\nData file: gis_osm_buildings_a_free_1.gpkg\nWe can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.\n\n\n\nSocioeconomic\nWe cannot readily get socioeconomic information for every home, so instead we obtained data from the U.S. Census Bureau’s American Community Survey for census tracts in 2019. The folder ACS_2019_5YR_TRACT_48.gdb is an ArcGIS “file geodatabase”, a multi-file proprietary format that’s roughly analogous to a GeoPackage file.\n\nYou can use st_layers() to explore the contents of the geodatabase. Each layer contains a subset of the fields documents in the ACS metadata.\n\nThe geodatabase contains a layer holding the geometry information (ACS_2019_5YR_TRACT_48_TEXAS), separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that sf can use.\n\n\n\n\n\n\nTip\n\n\n\nMake sure to check that these datasets have the same coordinate reference systems! If not, transform them to match."
-  },
-  {
-    "objectID": "assignments/HW3.html#workflow-outline",
-    "href": "assignments/HW3.html#workflow-outline",
-    "title": "Homework Assignment 3",
-    "section": "Workflow outline",
-    "text": "Workflow outline\nTo complete complete the tasks of this assignment, you will need to break your analysis into the following key steps:\n\nfind locations that experienced a blackout by creating a mask\nexclude highways from analysis\nidentify homes that experienced blackouts by combining the locations of homes and blackouts\nidentify\n\nBelow is guidance and suggestions for each of these steps.\n\n\n\n\n\n\nTip\n\n\n\nFor improved computational efficiency and easier interoperability with sf, I recommend using the stars package for raster handling.\n\n\n\nCreate blackout mask\nTo identify places that experienced a blackout, you should create a “mask” that indicates for each cell whether or not it experienced a blackout.\n\nfind the change in night lights intensity (presumably) caused by the storm\n\nhint: this will require creating a raster object for each day (2021-02-07 and 2021-02-16)\n\nreclassify the difference raster, assuming that any location that experienced a drop of more than 200 nW cm-2sr-1 experienced a blackout\nassign NA to all locations that experienced a drop of less than 200 nW cm-2sr-1 change\nvectorize the blackout mask\n\nhint: use st_as_sf() to convert from a raster to a vector and fix any invalid geometries with st_make_valid()\n\ncrop (spatially subset) the blackout mask to the Houston area as defined by the following coordinates:\n\n(-96.5, 29), (-96.5, 30.5), (-94.5, 30.5), (-94.5, 29)\n\nre-project the cropped blackout dataset to EPSG:3083 (NAD83 / Texas Centric Albers Equal Area)\n\n\n\nExclude highways from the cropped blackout mask\nHighways may have experienced changes in their night light intensities that are unrelated to the storm. Therefore, you should excluded any locations within 200 meters of all highways in the Houston area.\n\nidentify areas within 200m of all highways\n\nhint: you may need to use st_union\n\nfind areas that experienced blackouts that are further than 200m from a highway\n\n\n\n\n\n\n\nTip\n\n\n\nThe roads geopackage includes data on roads other than highways. However, we can avoid reading in data we don’t need by taking advantage of st_read’s ability to subset using a SQL query.\nBelow is a SQL query that can be used as an argument in st_read:\n\n\"SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'\"\n\n\n\n\n\nIdentify homes likely impacted by blackouts\n\nidentify homes that overlap with areas that experienced blackouts\n\n\n\n\n\n\n\nTip\n\n\n\nThe buildings geopackage includes data on many types of buildings. As with the roads data, we can avoid reading in data we don’t need.\nBelow is a SQL query that can be used as an argument in st_read:\n\n\"SELECT *\nFROM gis_osm_buildings_a_free_1`\nWHERE (type IS NULL AND name IS NULL)`\nOR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')\"\n\n\n\n\n\nIdentify the census tracts likely impacted by blackout\n\njoin the median household income from the previous 12 months to the census tract geometries\n\nhint: make sure to join by geometry ID\n\nidentify census tracts that that contained homes that experienced blackouts"
-  },
-  {
-    "objectID": "assignments/HW3.html#rubric-specifications",
-    "href": "assignments/HW3.html#rubric-specifications",
-    "title": "Homework Assignment 3",
-    "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nYour output should serve as a stand-alone item that someone unfamiliar with the assignment would be able to understand your analysis, including the decisions made in selecting your approach and interpretation of the results.\nAssignments will be deemed “Satisfactory” based on the following criteria:\n\nData analysis\n\nCode must produce expected output based on correct data manipulation\nMultiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. “Correct” answers are not sufficient. Justification and verification of approach should be demonstrated using the following:\n\ncustom warning and error message (e.g. warning() and stop(); resources from EDS 221)\ninformative comments (resource from EDS 220)\nBONUS: unit tests (e.g. using {testthat}; resources from EDS 221)\n\n\n\n\nPlots, tables, and maps\n\nAll plots, tables, and maps must be clear, accurate, and effectively convey the intended information\nAll plots and maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\nfor maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\nfor figures: axes with legible labels and titles, including units\n\nAll tables should be rendered with legible titles and stypling (e.g. {kableExtra})\n\n\n\nWritten reflections\n\nReflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.\n\n\n\nProfessional output\n\nQuarto document must be rendered to html\nThe rendered output must include the following elements:\n\ndocument header with title, name, and date (ideally the date rendered)\nall packages are loaded together at the top of the document\nall unnecessary/distracting warnings and messages are suppressed\ninclude informative code comments when appropriate (resource from EDS 220)\nfolding code or sourcing separate scripts when appropriate to direct reader’s attention\nsuccinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation\ncomplete and detailed data citations\nall defined variables are used in analysis (no variables are defined that are not used)\n\n\n\n\n\n\n\n\nGuide to professional output\n\n\n\nSee examples of professional and unprofessional output on the Assignments page"
-  },
-  {
-    "objectID": "assignments/HW3.html#footnotes",
-    "href": "assignments/HW3.html#footnotes",
-    "title": "Homework Assignment 3",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nWikipedia. 2021. “2021 Texas power crisis.” Last modified October 2, 2021. https://en.wikipedia.org/wiki/2021_Texas_power_crisis.↩︎"
-  },
-  {
-    "objectID": "assignments/HW1.html",
-    "href": "assignments/HW1.html",
-    "title": "Homework Assignment 1",
-    "section": "",
-    "text": "Important\n\n\n\nYou must earn a “Satisfactory” on all parts of the assignment to earn a “Satisfactory” on the assignment.\nThe assignment must be submitted through GitHub Classrooms. Each student receives one “free pass” for not submitting assignments via specified channels, after which you will receive a “Not Yet” mark.\nRead each part of the assignment carefully, and use the check boxes to ensure you’ve addressed all elements of the assignment!"
-  },
-  {
-    "objectID": "assignments/HW1.html#learning-outcomes",
-    "href": "assignments/HW1.html#learning-outcomes",
-    "title": "Homework Assignment 1",
-    "section": "Learning outcomes",
-    "text": "Learning outcomes\n\nbuild effective, responsible, accessible and aesthetically-pleasing maps\npractice manipulating vector and raster data to build multi-layer maps\npractice making maps in R, specifically using tmap"
-  },
-  {
-    "objectID": "assignments/HW1.html#instructions",
-    "href": "assignments/HW1.html#instructions",
-    "title": "Homework Assignment 1",
-    "section": "Instructions",
-    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   HW1.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───easter-island\n     └───ejscreen"
-  },
-  {
-    "objectID": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
-    "href": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
-    "title": "Homework Assignment 1",
-    "section": "Part 1: Easter Island from land to sea",
-    "text": "Part 1: Easter Island from land to sea\nIn this week’s discussion section, you practiced making a map of Easter Island. We will continue by extending our map into the sea by including bathymetry and seamounts.\n\nDescription\nCreate a map of Easter Island, including the following:\n\nthe island’s border and road network\nelevation of the island (indicated in meters above sea level)\nlocation of the island’s volcanoes (indicating their height in meters)\nbathymetry surrounding the island (indicated in meters below sea level)\nsurrounding seamounts (indicating their height in meters)\n\n\n\nData details\nYou will use the following new datasets:\n\nSeamounts from the Pacific Data Hub\nBathymetry (or seadepth) from NOAA’s marmap API\n\nThe following code is provided to read in each dataset:\n\nlibrary(sf)\nlibrary(here)\nlibrary(terra)\n\n# read in major points on the island\nei_points &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\n# subset points to volcanoes\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\n\n# read in island elevation\nei_elev &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\n\n# read in island border\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\n\n# read in island road network\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))\n\n# read in bathymetry\nei_bathymetry &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_bathy.tif\"))\n\n# read in seamounts\nei_seamounts &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_seamounts.gpkg\"))\n\n\n\n\n\n\n\nSetting a bounding box for the map\n\n\n\nTo make sure that all the bathymetry and seamount data are included in the map, create a bounding box that includes both.\n\n# define larger plot bbox that is buffered around both of \n# the two largest layers to display all 4 seamounts in view \n\nbbox_seamount &lt;- st_bbox(ei_seamounts) # seamount bounding box\nbbox_bathymetry &lt;- st_bbox(ei_bathymetry) # bathymetry bounding box\nbbox_largest &lt;- st_bbox(c(xmin = min(bbox_bathymetry[1], bbox_seamount[1]),\n                         ymin = min(bbox_bathymetry[2], bbox_seamount[2]),\n                         xmax = max(bbox_bathymetry[3], bbox_seamount[3]),\n                         ymax = max(bbox_bathymetry[4], bbox_seamount[4])))\n\nNow that you’ve defined the bounding box, make sure to use it!"
-  },
-  {
-    "objectID": "assignments/HW1.html#part-2-exploring-environmental-injustice",
-    "href": "assignments/HW1.html#part-2-exploring-environmental-injustice",
-    "title": "Homework Assignment 1",
-    "section": "Part 2: Exploring environmental (in)justice",
-    "text": "Part 2: Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
-  },
-  {
-    "objectID": "assignments/HW1.html#rubric-specifications",
-    "href": "assignments/HW1.html#rubric-specifications",
-    "title": "Homework Assignment 1",
-    "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nEJScreen maps and text must communicate about an issue\n\nit is not sufficient to make two unrelated maps\n\nThe rendered Quarto doc must show all required elements in a professional style\n\nsee examples of professional and unprofessional output on the Assignments page"
-  },
-  {
-    "objectID": "assignments/SR2.html",
-    "href": "assignments/SR2.html",
-    "title": "Mid-Course Self Reflection (SR #2)",
-    "section": "",
-    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
-  },
-  {
-    "objectID": "assignments/SR2.html#description",
-    "href": "assignments/SR2.html#description",
-    "title": "Mid-Course Self Reflection (SR #2)",
-    "section": "",
-    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
-  },
-  {
-    "objectID": "assignments/SR2.html#rubric-specifications",
-    "href": "assignments/SR2.html#rubric-specifications",
-    "title": "Mid-Course Self Reflection (SR #2)",
-    "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions can be requested by redeeming tokens.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
-  },
-  {
-    "objectID": "assignments.html",
-    "href": "assignments.html",
-    "title": "Assignments",
-    "section": "",
-    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
-  },
-  {
-    "objectID": "assignments.html#calendar",
-    "href": "assignments.html#calendar",
-    "title": "Assignments",
-    "section": "",
-    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
-  },
-  {
-    "objectID": "assignments.html#assignments",
-    "href": "assignments.html#assignments",
-    "title": "Assignments",
-    "section": "Assignments",
-    "text": "Assignments\n\n\n\n\n\n\nImportant\n\n\n\nEarning “Satisfactory” marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.\n\n\nLinks to assignments will become available as they are assigned.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2024\n10/05/2024\n\n\nHW\nHomework Assignment #1\n09/30/2024\n10/05/2024\n\n\nHW\nHomework Assignment #2\n10/07/2024\n10/19/2024\n\n\nHW\nHomework Assignment #3\n10/21/2024\n11/09/2024\n\n\nSR\nMid-course Self Reflection (SR#2)\n10/28/2024\n11/02/2024\n\n\nHW\nHomework Assignment #4\n11/11/2024\n11/30/2024\n\n\nPR\nPortfolio Repository\n11/11/2024\n12/07/2024\n\n\nSR\nFinal Self Reflection (SR#3)\n12/02/2024\n12/07/2024"
-  },
-  {
-    "objectID": "assignments.html#end-of-class-surveys",
-    "href": "assignments.html#end-of-class-surveys",
-    "title": "Assignments",
-    "section": "End-of-class surveys",
-    "text": "End-of-class surveys\n\n\n\n\n\n\nImportant\n\n\n\nEnd-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:59 PM). Completing EOCs by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nEOC link\nDate Assigned\nDate Due\n\n\n\n\nEOC (week 1)\nMon 09/30/2024\nMon 09/30/2024\n\n\nEOC (week 2)\nMon 10/07/2024\nMon 10/07/2024\n\n\nEOC (week 3)\nMon 10/14/2024\nMon 10/14/2024\n\n\nEOC (week 4)\nMon 10/21/2024\nMon 10/21/2024\n\n\nEOC (week 5)\nMon 10/28/2024\nMon 10/28/2024\n\n\nEOC (week 6)\nMon 11/04/2024\nMon 11/04/2024\n\n\nNo lecture or EOC (week 7)\nNA\nNA\n\n\nEOC (week 8)\nMon 11/18/2024\nMon 11/18/2024\n\n\nEOC (week 9)\nMon 11/25/2024\nMon 11/25/2024\n\n\nEOC (week 10)\nMon 12/02/2024\nMon 12/02/2024"
-  },
-  {
-    "objectID": "assignments.html#grade-tracker",
-    "href": "assignments.html#grade-tracker",
-    "title": "Assignments",
-    "section": "Grade Tracker",
-    "text": "Grade Tracker\nUse the Grade Tracker, below, to determine your course grade:\n\n\n\n\n\n\n\n\n\nRedeem tokens in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a “Not Yet” mark."
-  },
-  {
-    "objectID": "assignments.html#rubric",
-    "href": "assignments.html#rubric",
-    "title": "Assignments",
+    "objectID": "assignments/PR.html#rubric",
+    "href": "assignments/PR.html#rubric",
+    "title": "Data Science Portfolio",
     "section": "Rubric",
-    "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
+    "text": "Rubric\nTo receive a “Satisfactory”, both repositories must include the elements described above."
   },
   {
-    "objectID": "assignments.html#getting-unstuck",
-    "href": "assignments.html#getting-unstuck",
-    "title": "Assignments",
-    "section": "Getting unstuck",
-    "text": "Getting unstuck\n\nWhere to find help\nBeing a great data scientist isn’t about writing perfect code; it’s about learning how to teach yourself and when to ask for help. The only way to get better at this process is to practice by taking the time to troubleshoot on our own, so you should always plan to start there! The graphic below shows the order in which you should approach different resources for help:\n\n\n\n\n\n\n\n\n\n\n\nRoadblock checklist\nIf you hit a roadblock, run through this checklist to make sure you’ve done your due diligence before bringing your question(s) to a peer, TA, or instructor.\n\nrevisit the course materials - your question may already be answered in the slides, textbook, or discussion section materials\nread the documentation - you can do so directly from RStudio by typing ?function_name in the console\nread the package’s vignette, if available - these are often linked on CRAN under the Documents sections (e.g. see {dplyr} on CRAN) or can be found through the command vignette(package = \"package-name\") and vignette(\"vignette-name\")\ntry Googling! - don’t forget to look back at our suggested troubleshooting and Googling tips (Teach Me How to Google)\n\n\n\nHow to ask questions\nWhen you decide to ask a question to a peer, TA, or instructor be sure to:\n\nProvide context. For example, “I’m trying to do this…” or “I’m working on the task where we do this…”\nShare the specific challenge. “I’m specifically trying to [insert function / package] to do this thing.”\nShare what happens and what you’ve learned. “I repeatedly get an error message that says [this]. I’ve tried [this] and [this]”\nShow your code ideally with a reprex that they can run / test.\nValue and expect the Socratic method, especially in classes and workshops – our goal is to provide critical thinking that is transferable, not just to provide a quick fix for a single error."
-  },
-  {
-    "objectID": "assignments/SR1.html",
-    "href": "assignments/SR1.html",
-    "title": "Pre-Course Self Reflection (SR #1)",
-    "section": "",
-    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
-  },
-  {
-    "objectID": "assignments/SR1.html#description",
-    "href": "assignments/SR1.html#description",
-    "title": "Pre-Course Self Reflection (SR #1)",
-    "section": "",
-    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
-  },
-  {
-    "objectID": "assignments/SR1.html#rubric-specifications",
-    "href": "assignments/SR1.html#rubric-specifications",
-    "title": "Pre-Course Self Reflection (SR #1)",
-    "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions are not allowed on this first assignment.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
-  },
-  {
-    "objectID": "assignments/SR3.html",
-    "href": "assignments/SR3.html",
-    "title": "Final Self Reflection (SR #3)",
-    "section": "",
-    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
-  },
-  {
-    "objectID": "assignments/SR3.html#description",
-    "href": "assignments/SR3.html#description",
-    "title": "Final Self Reflection (SR #3)",
-    "section": "",
-    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
-  },
-  {
-    "objectID": "assignments/SR3.html#rubric-specifications",
-    "href": "assignments/SR3.html#rubric-specifications",
-    "title": "Final Self Reflection (SR #3)",
-    "section": "Rubric (specifications)",
-    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions can be requested by redeeming tokens.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
+    "objectID": "assignments/PR.html#submitting-assignment",
+    "href": "assignments/PR.html#submitting-assignment",
+    "title": "Data Science Portfolio",
+    "section": "Submitting assignment",
+    "text": "Submitting assignment\nPlease email links to your repositories to rutholiver@bren.ucsb.edu."
   },
   {
     "objectID": "assignments/HW2.html#learning-outcomes",
@@ -810,6 +628,216 @@
     "title": "Homework Assignment 2",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nGee, G. C. (2008). A multilevel analysis of the relationship between institutional and individual racial discrimination and health status. American journal of public health, 98(Supplement_1), S48-S56.↩︎\nNardone, A., Rudolph, K. E., Morello-Frosch, R., & Casey, J. A. (2021). Redlines and greenspace: the relationship between historical redlining and 2010 greenspace across the United States. Environmental health perspectives, 129(1), 017006.↩︎\nHoffman, J. S., Shandas, V., & Pendleton, N. (2020). The effects of historical housing policies on resident exposure to intra-urban heat: a study of 108 US urban areas. Climate, 8(1), 12.↩︎\nEllis-Soto, D., Chapman, M., & Locke, D. H. (2023). Historical redlining is associated with increasing geographical disparities in bird biodiversity sampling in the United States. Nature Human Behaviour, 1-9.↩︎\nRobert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al., “Mapping Inequality,” American Panorama, ed. Robert K. Nelson and Edward L. Ayers, accessed October 17, 2023, https://dsl.richmond.edu/panorama/redlining/↩︎"
+  },
+  {
+    "objectID": "assignments/SR3.html",
+    "href": "assignments/SR3.html",
+    "title": "Final Self Reflection (SR #3)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
+  },
+  {
+    "objectID": "assignments/SR3.html#description",
+    "href": "assignments/SR3.html#description",
+    "title": "Final Self Reflection (SR #3)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your learning through the course. Reread your response to the Pre-Course Self Reflection (SR #1) and Mid-Course Self Reflection (SR #2) and answer the following questions:\n\n\n\nSince SR #2, have you improved any of your existing skills or learned new ones?\nHave you accomplished the learning goals you outlined for this course in SR #1 (and potentially expanded on SR #2)? If you did, how did you do it? If you didn’t why do you think you didn’t?\nDid you learn new strategies for being accomplishing your goals? Will you revise your plan for future quarters?\nWhat are you proudest of accomplishing in this course?\n\n\n\n\n\nWhat are some transferable skills that you developed in this course? How might you apply them to other courses or deliverables in your degree or to jobs in the future?\nWhat is one thing you really liked about this course, and why? What is one thing you think could be improved about this course, and how?\nIs there anything else you’d like the instructors to know about your experience in this course?"
+  },
+  {
+    "objectID": "assignments/SR3.html#rubric-specifications",
+    "href": "assignments/SR3.html#rubric-specifications",
+    "title": "Final Self Reflection (SR #3)",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions can be requested by redeeming tokens.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
+  },
+  {
+    "objectID": "assignments/SR1.html",
+    "href": "assignments/SR1.html",
+    "title": "Pre-Course Self Reflection (SR #1)",
+    "section": "",
+    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
+  },
+  {
+    "objectID": "assignments/SR1.html#description",
+    "href": "assignments/SR1.html#description",
+    "title": "Pre-Course Self Reflection (SR #1)",
+    "section": "",
+    "text": "In this assignment you’ll introduce yourself, define your learning goals for this course, and outline a plan for how to meet them. You’ll revisit these goals and plans throughout the quarter, so it’s good to be reflective from the start!\n\n\nEveryone brings their own unique background and experiences to the course. So I can best understand your specific context, please address the following:\n\nDo you have a particular career goal in mind? If so, how does this course apply to your future career, if at all?\nHow confident do you feel in your coding skills in R? In other languages? Why?\nHow confident do you feel in your geospatial analysis skills? Why? Have you worked with a GIS before?\nIs there anything you wish your instructors knew about you, but don’t (e.g. responsibilities outside of school)?\n\n\n\n\n\nWhat skills or knowledge do you hope to gain from this course? Why?\nWhat learning objectives from the course are you most excited about? Why?\nMost importantly, how do you plan to accomplish your learning goals for this course? Be specific! Instead of stating “I will complete assignments on time”, reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc."
+  },
+  {
+    "objectID": "assignments/SR1.html#rubric-specifications",
+    "href": "assignments/SR1.html#rubric-specifications",
+    "title": "Pre-Course Self Reflection (SR #1)",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions are not allowed on this first assignment.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+  },
+  {
+    "objectID": "assignments.html#calendar",
+    "href": "assignments.html#calendar",
+    "title": "Assignments",
+    "section": "",
+    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+  },
+  {
+    "objectID": "assignments.html#assignments",
+    "href": "assignments.html#assignments",
+    "title": "Assignments",
+    "section": "Assignments",
+    "text": "Assignments\n\n\n\n\n\n\nImportant\n\n\n\nEarning “Satisfactory” marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.\n\n\nLinks to assignments will become available as they are assigned.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2024\n10/05/2024\n\n\nHW\nHomework Assignment #1\n09/30/2024\n10/05/2024\n\n\nHW\nHomework Assignment #2\n10/07/2024\n10/19/2024\n\n\nHW\nHomework Assignment #3\n10/21/2024\n11/09/2024\n\n\nSR\nMid-course Self Reflection (SR#2)\n10/28/2024\n11/02/2024\n\n\nHW\nHomework Assignment #4\n11/11/2024\n11/30/2024\n\n\nPR\nPortfolio Repository\n11/11/2024\n12/07/2024\n\n\nSR\nFinal Self Reflection (SR#3)\n12/02/2024\n12/07/2024"
+  },
+  {
+    "objectID": "assignments.html#end-of-class-surveys",
+    "href": "assignments.html#end-of-class-surveys",
+    "title": "Assignments",
+    "section": "End-of-class surveys",
+    "text": "End-of-class surveys\n\n\n\n\n\n\nImportant\n\n\n\nEnd-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:59 PM). Completing EOCs by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nEOC link\nDate Assigned\nDate Due\n\n\n\n\nEOC (week 1)\nMon 09/30/2024\nMon 09/30/2024\n\n\nEOC (week 2)\nMon 10/07/2024\nMon 10/07/2024\n\n\nEOC (week 3)\nMon 10/14/2024\nMon 10/14/2024\n\n\nEOC (week 4)\nMon 10/21/2024\nMon 10/21/2024\n\n\nEOC (week 5)\nMon 10/28/2024\nMon 10/28/2024\n\n\nEOC (week 6)\nMon 11/04/2024\nMon 11/04/2024\n\n\nNo lecture or EOC (week 7)\nNA\nNA\n\n\nEOC (week 8)\nMon 11/18/2024\nMon 11/18/2024\n\n\nEOC (week 9)\nMon 11/25/2024\nMon 11/25/2024\n\n\nEOC (week 10)\nMon 12/02/2024\nMon 12/02/2024"
+  },
+  {
+    "objectID": "assignments.html#grade-tracker",
+    "href": "assignments.html#grade-tracker",
+    "title": "Assignments",
+    "section": "Grade Tracker",
+    "text": "Grade Tracker\nUse the Grade Tracker, below, to determine your course grade:\n\n\n\n\n\n\n\n\n\nRedeem tokens in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a “Not Yet” mark."
+  },
+  {
+    "objectID": "assignments.html#rubric",
+    "href": "assignments.html#rubric",
+    "title": "Assignments",
+    "section": "Rubric",
+    "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
+  },
+  {
+    "objectID": "assignments.html#getting-unstuck",
+    "href": "assignments.html#getting-unstuck",
+    "title": "Assignments",
+    "section": "Getting unstuck",
+    "text": "Getting unstuck\n\nWhere to find help\nBeing a great data scientist isn’t about writing perfect code; it’s about learning how to teach yourself and when to ask for help. The only way to get better at this process is to practice by taking the time to troubleshoot on our own, so you should always plan to start there! The graphic below shows the order in which you should approach different resources for help:\n\n\n\n\n\n\n\n\n\n\n\nRoadblock checklist\nIf you hit a roadblock, run through this checklist to make sure you’ve done your due diligence before bringing your question(s) to a peer, TA, or instructor.\n\nrevisit the course materials - your question may already be answered in the slides, textbook, or discussion section materials\nread the documentation - you can do so directly from RStudio by typing ?function_name in the console\nread the package’s vignette, if available - these are often linked on CRAN under the Documents sections (e.g. see {dplyr} on CRAN) or can be found through the command vignette(package = \"package-name\") and vignette(\"vignette-name\")\ntry Googling! - don’t forget to look back at our suggested troubleshooting and Googling tips (Teach Me How to Google)\n\n\n\nHow to ask questions\nWhen you decide to ask a question to a peer, TA, or instructor be sure to:\n\nProvide context. For example, “I’m trying to do this…” or “I’m working on the task where we do this…”\nShare the specific challenge. “I’m specifically trying to [insert function / package] to do this thing.”\nShare what happens and what you’ve learned. “I repeatedly get an error message that says [this]. I’ve tried [this] and [this]”\nShow your code ideally with a reprex that they can run / test.\nValue and expect the Socratic method, especially in classes and workshops – our goal is to provide critical thinking that is transferable, not just to provide a quick fix for a single error."
+  },
+  {
+    "objectID": "assignments/SR2.html",
+    "href": "assignments/SR2.html",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+  },
+  {
+    "objectID": "assignments/SR2.html#description",
+    "href": "assignments/SR2.html#description",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nHave you discussed your plans with your classmates?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+  },
+  {
+    "objectID": "assignments/SR2.html#rubric-specifications",
+    "href": "assignments/SR2.html#rubric-specifications",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nSubmit your response here by 11:59 PM on the due date. Extensions can be requested by redeeming tokens.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
+  },
+  {
+    "objectID": "assignments/HW1.html",
+    "href": "assignments/HW1.html",
+    "title": "Homework Assignment 1",
+    "section": "",
+    "text": "Important\n\n\n\nYou must earn a “Satisfactory” on all parts of the assignment to earn a “Satisfactory” on the assignment.\nThe assignment must be submitted through GitHub Classrooms. Each student receives one “free pass” for not submitting assignments via specified channels, after which you will receive a “Not Yet” mark.\nRead each part of the assignment carefully, and use the check boxes to ensure you’ve addressed all elements of the assignment!"
+  },
+  {
+    "objectID": "assignments/HW1.html#learning-outcomes",
+    "href": "assignments/HW1.html#learning-outcomes",
+    "title": "Homework Assignment 1",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\n\nbuild effective, responsible, accessible and aesthetically-pleasing maps\npractice manipulating vector and raster data to build multi-layer maps\npractice making maps in R, specifically using tmap"
+  },
+  {
+    "objectID": "assignments/HW1.html#instructions",
+    "href": "assignments/HW1.html#instructions",
+    "title": "Homework Assignment 1",
+    "section": "Instructions",
+    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   HW1.qmd\n│   Rmd/Proj files    \n│\n└───data\n     └───easter-island\n     └───ejscreen"
+  },
+  {
+    "objectID": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
+    "href": "assignments/HW1.html#part-1-easter-island-from-land-to-sea",
+    "title": "Homework Assignment 1",
+    "section": "Part 1: Easter Island from land to sea",
+    "text": "Part 1: Easter Island from land to sea\nIn this week’s discussion section, you practiced making a map of Easter Island. We will continue by extending our map into the sea by including bathymetry and seamounts.\n\nDescription\nCreate a map of Easter Island, including the following:\n\nthe island’s border and road network\nelevation of the island (indicated in meters above sea level)\nlocation of the island’s volcanoes (indicating their height in meters)\nbathymetry surrounding the island (indicated in meters below sea level)\nsurrounding seamounts (indicating their height in meters)\n\n\n\nData details\nYou will use the following new datasets:\n\nSeamounts from the Pacific Data Hub\nBathymetry (or seadepth) from NOAA’s marmap API\n\nThe following code is provided to read in each dataset:\n\nlibrary(sf)\nlibrary(here)\nlibrary(terra)\n\n# read in major points on the island\nei_points &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\n# subset points to volcanoes\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\n\n# read in island elevation\nei_elev &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\n\n# read in island border\nei_borders &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\n\n# read in island road network\nei_roads &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))\n\n# read in bathymetry\nei_bathymetry &lt;- terra::rast(here::here(\"data\", \"easter_island\", \"ei_bathy.tif\"))\n\n# read in seamounts\nei_seamounts &lt;- sf::read_sf(here::here(\"data\", \"easter_island\", \"ei_seamounts.gpkg\"))\n\n\n\n\n\n\n\nSetting a bounding box for the map\n\n\n\nTo make sure that all the bathymetry and seamount data are included in the map, create a bounding box that includes both.\n\n# define larger plot bbox that is buffered around both of \n# the two largest layers to display all 4 seamounts in view \n\nbbox_seamount &lt;- st_bbox(ei_seamounts) # seamount bounding box\nbbox_bathymetry &lt;- st_bbox(ei_bathymetry) # bathymetry bounding box\nbbox_largest &lt;- st_bbox(c(xmin = min(bbox_bathymetry[1], bbox_seamount[1]),\n                         ymin = min(bbox_bathymetry[2], bbox_seamount[2]),\n                         xmax = max(bbox_bathymetry[3], bbox_seamount[3]),\n                         ymax = max(bbox_bathymetry[4], bbox_seamount[4])))\n\nNow that you’ve defined the bounding box, make sure to use it!"
+  },
+  {
+    "objectID": "assignments/HW1.html#part-2-exploring-environmental-injustice",
+    "href": "assignments/HW1.html#part-2-exploring-environmental-injustice",
+    "title": "Homework Assignment 1",
+    "section": "Part 2: Exploring environmental (in)justice",
+    "text": "Part 2: Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
+  },
+  {
+    "objectID": "assignments/HW1.html#rubric-specifications",
+    "href": "assignments/HW1.html#rubric-specifications",
+    "title": "Homework Assignment 1",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nEJScreen maps and text must communicate about an issue\n\nit is not sufficient to make two unrelated maps\n\nThe rendered Quarto doc must show all required elements in a professional style\n\nsee examples of professional and unprofessional output on the Assignments page"
+  },
+  {
+    "objectID": "assignments/HW3.html#learning-outcomes",
+    "href": "assignments/HW3.html#learning-outcomes",
+    "title": "Homework Assignment 3",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\nThis assignment will reinforce key concepts in geospatial analysis by practicing the following:\n\nload vector/raster data\n\nsimple raster operations\n\nsimple vector operations\n\nspatial joins"
+  },
+  {
+    "objectID": "assignments/HW3.html#instructions",
+    "href": "assignments/HW3.html#instructions",
+    "title": "Homework Assignment 3",
+    "section": "Instructions",
+    "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nEdit Quarto document with responses\nPush final edits before deadline\n\nYour repository should have the following structure:\n\nEDS223-HW3\n│   README.md\n│   Rmd/Proj files    \n│\n└───data\n    │   gis_osm_buildings_a_free_1.gpkg\n    │   gis_osm_roads_free_1.gpkg\n    │\n    └───ACS_2019_5YR_TRACT_48_TEXAS.gdb\n    |   │   census tract gdb files\n    |\n    └───VNP46A1\n    |   │   VIIRS data files"
+  },
+  {
+    "objectID": "assignments/HW3.html#background",
+    "href": "assignments/HW3.html#background",
+    "title": "Homework Assignment 3",
+    "section": "Background",
+    "text": "Background\nClimate change is increasing the frequency and intensity of extreme weather events, with devastating impacts. “In February 2021, the state of Texas suffered a major power crisis, which came about as a result of three severe winter storms sweeping across the United States on February 10–11, 13–17, and 15–20.”1 For more background, check out these engineering and political perspectives.\nIn this assignment, you will identify the impacts of these series of extreme winter storms by estimating the number of homes in the Houston metropolitan area that lost power and investigate whether not these impacts were disproportionately felt.\nYour analysis will be based on remotely-sensed night lights data, acquired from the Visible Infrared Imaging Radiometer Suite (VIIRS) onboard the Suomi satellite. In particular, you will use the VNP46A1 to detect differences in night lights before and after the storm to identify areas that lost electric power.\nTo determine the number of homes that lost power, you link (spatially join) these areas with OpenStreetMap data on buildings and roads.\nTo investigate potential socioeconomic factors that influenced recovery, you will link your analysis with data from the US Census Bureau."
+  },
+  {
+    "objectID": "assignments/HW3.html#description",
+    "href": "assignments/HW3.html#description",
+    "title": "Homework Assignment 3",
+    "section": "Description",
+    "text": "Description\nFor this assignment, you must produce the following:\n\na set of maps comparing night light intensities before and after the first to storms\na map of the homes in in Houston that lost power\nan estimate of the number of homes in Houston that lost power\na map of the census tracts in Houston that lost power\na plot comparing the distributions of median household income for census tracts that did and did not experience blackouts\na brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study"
+  },
+  {
+    "objectID": "assignments/HW3.html#data-details",
+    "href": "assignments/HW3.html#data-details",
+    "title": "Homework Assignment 3",
+    "section": "Data details",
+    "text": "Data details\n\nNight lights\nUse NASA’s Worldview to explore the data around the day of the storm. There are several days with too much cloud cover to be useful, but 2021-02-07 and 2021-02-16 provide two clear, contrasting images to visualize the extent of the power outage in Texas.\nVIIRS data is distributed through NASA’s Level-1 and Atmospheric Archive & Distribution System Distributed Active Archive Center (LAADS DAAC). Many NASA Earth data products are distributed in 10x10 degree tiles in sinusoidal equal-area projection. Tiles are identified by their horizontal and vertical position in the grid. Houston lies on the border of tiles h08v05 and h08v06. We therefore need to download two tiles per date.\nAs you’re learning in EDS 220, accessing, downloading, and preparing remote sensing data is a skill in it’s own right! To prevent this assignment from being a large data wrangling challenge, we have downloaded and prepped the following files for you to work with, stored in the VNP46A1 folder.\n\nData files:\n\nVNP46A1.A2021038.h08v05.001.2021039064328.h5.tif: tile h08v05, collected on 2021-02-07\n\nVNP46A1.A2021038.h08v06.001.2021039064329.h5.tif: tile h08v06, collected on 2021-02-07\n\nVNP46A1.A2021047.h08v05.001.2021048091106.h5.tif: tile h08v05, collected on 2021-02-16\n\nVNP46A1.A2021047.h08v06.001.2021048091105.h5.tif: tile h08v06, collected on 2021-02-16\n\n\n\nRoads\nData file: gis_osm_roads_free_1.gpkg Typically highways account for a large portion of the night lights observable from space (see Google’s Earth at Night). To minimize falsely identifying areas with reduced traffic as areas without power, we will ignore areas near highways.\nOpenStreetMap (OSM) is a collaborative project which creates publicly available geographic data of the world. Ingesting this data into a database where it can be subsetted and processed is a large undertaking. Fortunately, third party companies redistribute OSM data. We used Geofabrik’s download sites to retrieve a shapefile of all highways in Texas and prepared a Geopackage (.gpkg file) containing just the subset of roads that intersect the Houston metropolitan area. \n\n\nHouses\nData file: gis_osm_buildings_a_free_1.gpkg\nWe can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.\n\n\n\nSocioeconomic\nWe cannot readily get socioeconomic information for every home, so instead we obtained data from the U.S. Census Bureau’s American Community Survey for census tracts in 2019. The folder ACS_2019_5YR_TRACT_48.gdb is an ArcGIS “file geodatabase”, a multi-file proprietary format that’s roughly analogous to a GeoPackage file.\n\nYou can use st_layers() to explore the contents of the geodatabase. Each layer contains a subset of the fields documents in the ACS metadata.\n\nThe geodatabase contains a layer holding the geometry information (ACS_2019_5YR_TRACT_48_TEXAS), separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that sf can use.\n\n\n\n\n\n\nTip\n\n\n\nMake sure to check that these datasets have the same coordinate reference systems! If not, transform them to match."
+  },
+  {
+    "objectID": "assignments/HW3.html#workflow-outline",
+    "href": "assignments/HW3.html#workflow-outline",
+    "title": "Homework Assignment 3",
+    "section": "Workflow outline",
+    "text": "Workflow outline\nTo complete complete the tasks of this assignment, you will need to break your analysis into the following key steps:\n\nfind locations that experienced a blackout by creating a mask\nexclude highways from analysis\nidentify homes that experienced blackouts by combining the locations of homes and blackouts\nidentify\n\nBelow is guidance and suggestions for each of these steps.\n\n\n\n\n\n\nTip\n\n\n\nFor improved computational efficiency and easier interoperability with sf, I recommend using the stars package for raster handling.\n\n\n\nCreate blackout mask\nTo identify places that experienced a blackout, you should create a “mask” that indicates for each cell whether or not it experienced a blackout.\n\nfind the change in night lights intensity (presumably) caused by the storm\n\nhint: this will require creating a raster object for each day (2021-02-07 and 2021-02-16)\n\nreclassify the difference raster, assuming that any location that experienced a drop of more than 200 nW cm-2sr-1 experienced a blackout\nassign NA to all locations that experienced a drop of less than 200 nW cm-2sr-1 change\nvectorize the blackout mask\n\nhint: use st_as_sf() to convert from a raster to a vector and fix any invalid geometries with st_make_valid()\n\ncrop (spatially subset) the blackout mask to the Houston area as defined by the following coordinates:\n\n(-96.5, 29), (-96.5, 30.5), (-94.5, 30.5), (-94.5, 29)\n\nre-project the cropped blackout dataset to EPSG:3083 (NAD83 / Texas Centric Albers Equal Area)\n\n\n\nExclude highways from the cropped blackout mask\nHighways may have experienced changes in their night light intensities that are unrelated to the storm. Therefore, you should excluded any locations within 200 meters of all highways in the Houston area.\n\nidentify areas within 200m of all highways\n\nhint: you may need to use st_union\n\nfind areas that experienced blackouts that are further than 200m from a highway\n\n\n\n\n\n\n\nTip\n\n\n\nThe roads geopackage includes data on roads other than highways. However, we can avoid reading in data we don’t need by taking advantage of st_read’s ability to subset using a SQL query.\nBelow is a SQL query that can be used as an argument in st_read:\n\n\"SELECT * FROM gis_osm_roads_free_1 WHERE fclass='motorway'\"\n\n\n\n\n\nIdentify homes likely impacted by blackouts\n\nidentify homes that overlap with areas that experienced blackouts\n\n\n\n\n\n\n\nTip\n\n\n\nThe buildings geopackage includes data on many types of buildings. As with the roads data, we can avoid reading in data we don’t need.\nBelow is a SQL query that can be used as an argument in st_read:\n\n\"SELECT *\nFROM gis_osm_buildings_a_free_1`\nWHERE (type IS NULL AND name IS NULL)`\nOR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')\"\n\n\n\n\n\nIdentify the census tracts likely impacted by blackout\n\njoin the median household income from the previous 12 months to the census tract geometries\n\nhint: make sure to join by geometry ID\n\nidentify census tracts that that contained homes that experienced blackouts"
+  },
+  {
+    "objectID": "assignments/HW3.html#rubric-specifications",
+    "href": "assignments/HW3.html#rubric-specifications",
+    "title": "Homework Assignment 3",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nYour output should serve as a stand-alone item that someone unfamiliar with the assignment would be able to understand your analysis, including the decisions made in selecting your approach and interpretation of the results.\nAssignments will be deemed “Satisfactory” based on the following criteria:\n\nData analysis\n\nCode must produce expected output based on correct data manipulation\nMultiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. “Correct” answers are not sufficient. Justification and verification of approach should be demonstrated using the following:\n\ncustom warning and error message (e.g. warning() and stop(); resources from EDS 221)\ninformative comments (resource from EDS 220)\nBONUS: unit tests (e.g. using {testthat}; resources from EDS 221)\n\n\n\n\nPlots, tables, and maps\n\nAll plots, tables, and maps must be clear, accurate, and effectively convey the intended information\nAll plots and maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\nfor maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\nfor figures: axes with legible labels and titles, including units\n\nAll tables should be rendered with legible titles and stypling (e.g. {kableExtra})\n\n\n\nWritten reflections\n\nReflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.\n\n\n\nProfessional output\n\nQuarto document must be rendered to html\nThe rendered output must include the following elements:\n\ndocument header with title, name, and date (ideally the date rendered)\nall packages are loaded together at the top of the document\nall unnecessary/distracting warnings and messages are suppressed\ninclude informative code comments when appropriate (resource from EDS 220)\nfolding code or sourcing separate scripts when appropriate to direct reader’s attention\nsuccinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation\ncomplete and detailed data citations\nall defined variables are used in analysis (no variables are defined that are not used)\n\n\n\n\n\n\n\n\nGuide to professional output\n\n\n\nSee examples of professional and unprofessional output on the Assignments page"
+  },
+  {
+    "objectID": "assignments/HW3.html#footnotes",
+    "href": "assignments/HW3.html#footnotes",
+    "title": "Homework Assignment 3",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nWikipedia. 2021. “2021 Texas power crisis.” Last modified October 2, 2021. https://en.wikipedia.org/wiki/2021_Texas_power_crisis.↩︎"
   },
   {
     "objectID": "index.html#course-description",
