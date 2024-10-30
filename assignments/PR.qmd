@@ -1,0 +1,66 @@
+---
+title: "Data Science Portfolio"
+description: "Creating a professional GitHub presence"
+author: "Ruth Oliver"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/github.png")
+```
+
+
+## Assignment overview
+
+The purpose of this assignment is to create an online portfolio to showcase your spatial data science skills.
+
+To do so, please:
+
+- Create **two** presentation-worthy GitHub repositories based on assignments 2-4 or labs 8 & 9
+
+:::{.callout-tip icon=true}
+# Tip
+
+Pick the assignments or labs that highlight the skills you are most interested in showcasing to potential employers.
+:::
+
+## Guidance for creating repositories
+
+The goal of creating new repositories is to transform your existing repositories from homework assignments or labs into organized and well-documented projects that showcase an environmental data science workflow. The audience for a repository is a potential collaborator(s) or employer(s) who wants to understand your workflow. Therefore, it is appropriate intermediate outputs in addition to final results as well as custom print statements and warning messages to check results. 
+
+Each repository should have:
+
+- A brief, but informative name (e.g. “assignment-2” is not acceptable)
+- A clear and organized structure
+  - Should include folders for data and scripts, where appropriate
+- A `README`
+  - Contents should follow the [guidance from EDS 296](https://ucsb-meds.github.io/README-guidelines/#repository-level-readmes)
+  - Add a section articulating the skills that you are using in this repo. The idea is to make it easy for potential employers to understand your skills
+- A `.gitignore`
+  - This should include any files that you don’t want git to track  (i.e. files that you don’t want pushed to GitHub)
+- Your revised homework assignment, as a rendered Quarto document (both `.qmd` and `.html` files). Include the  following updates:
+  - Give it a brief, but informative file name (e.g. `hw2.qmd` is not acceptable)
+  - Double check that all contents meet the [standard of professional output](https://eds-223-geospatial.github.io/assignments.html#rubric)
+  - Any other updates you want to make! Including [updating the theme](https://quarto.org/docs/output-formats/html-themes.html#theme-options)
+  
+## Rubric
+
+To receive a "Satisfactory", both repositories must include the elements described above.
+
+## Submitting assignment
+
+Please email links to your repositories to `rutholiver@bren.ucsb.edu`.
+
+
+
