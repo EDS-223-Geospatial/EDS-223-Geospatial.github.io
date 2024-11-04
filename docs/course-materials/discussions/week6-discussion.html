@@ -319,7 +319,7 @@ Many Ways To Plot a False Color Image
 <blockquote class="blockquote">
 <p>“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”</p>
 </blockquote>
-<p>You are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.</p>
+<p>You are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The fire occurred from July 10-14, 2016 and the Landsat images are from June 5, 2016 (pre-fire) and August 8, 2016 (post-fire). The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 40%">
@@ -396,25 +396,31 @@ Many Ways To Plot a False Color Image
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set directory for folder</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pre_fire_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat"</span>, <span class="st">"LC80340322016189-SC20170128091153"</span>, <span class="st">"crop"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>pre_fire_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"LC80340322016189-SC20170128091153"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of all images that have the extension .tif and contain the word band</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>pre_fire_bands <span class="ot">&lt;-</span> <span class="fu">list.files</span>(pre_fire_dir,</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">pattern =</span> <span class="fu">glob2rx</span>(<span class="st">"*band*.tif$"</span>),</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a raster stack</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pre_fire_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(pre_fire_bands)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>pre_fire_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(pre_fire_bands)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Read mask raster</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>pre_mask <span class="ot">&lt;-</span> <span class="fu">rast</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"LC80340322016189-SC20170128091153"</span>, <span class="st">"LC80340322016189LGN00_cfmask_crop.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set directory for folder</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>post_fire_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat"</span>, <span class="st">"LC80340322016205-SC20170127160728"</span>, <span class="st">"crop"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>post_fire_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"LC80340322016205-SC20170127160728"</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a list of all images that have the extension .tif and contain the word band</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>post_fire_bands <span class="ot">&lt;-</span> <span class="fu">list.files</span>(post_fire_dir,</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">pattern =</span> <span class="fu">glob2rx</span>(<span class="st">"*band*.tif$"</span>),</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a raster stack</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>post_fire_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(post_fire_bands)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>post_fire_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(post_fire_bands)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Read mask raster</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>post_mask <span class="ot">&lt;-</span> <span class="fu">rast</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"LC80340322016189-SC20170128091153"</span>, <span class="st">"LC80340322016205LGN00_cfmask_crop.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nbr_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, swir2){</span>
@@ -430,6 +436,28 @@ Many Ways To Plot a False Color Image
 </ol>
 <p>Next, for each of the <code>pre_fire</code> and <code>post_fire</code> rasters…</p>
 <ol start="2" type="1">
+<li>Mask out clouds and shadows with the <code>pre_mask</code> and <code>post_mask</code> rasters</li>
+</ol>
+<ul>
+<li><strong>Hint</strong>: Set <code>mask &gt; 0</code> to <code>NA</code></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dealing with Clouds and Shadows
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>“Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)” (<a href="https://www.earthdatascience.org/courses/earth-analytics/multispectral-remote-sensing-modis/intro-spectral-data-r/">Earth Lab</a>)</p>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
 <li>Plot a true color composite using <code>plotRGB()</code></li>
 </ol>
 <ul>
@@ -437,7 +465,7 @@ Many Ways To Plot a False Color Image
 <li>Apply a linear stretch <code>“lin”</code> or histogram equalization <code>“hist”</code></li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -446,7 +474,7 @@ How To Decide How To “Stretch” Raster Imagery?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:</p>
 <div class="cell">
@@ -458,7 +486,7 @@ How To Decide How To “Stretch” Raster Imagery?
 </div>
 </div>
 </div>
-<ol start="3" type="1">
+<ol start="4" type="1">
 <li>Plot two false color composite using <code>plotRGB()</code></li>
 </ol>
 <ul>
@@ -478,14 +506,14 @@ What is the SWIR, NIR, Red false color scheme?
 <p>“Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image” (<a href="https://eos.com/make-an-analysis/false-color/">EOS Data Analytics</a>)</p>
 </div>
 </div>
-<ol start="4" type="1">
+<ol start="5" type="1">
 <li>Calculate the normalized burn ratio (NBR)</li>
 </ol>
 <ul>
 <li><strong>Hint</strong>: Use <code>lapp()</code> like you previously did for NDVI and NDWI in <a href="https://eds-223-geospatial.github.io/course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi">Week 4</a></li>
 </ul>
 <p>Let’s bring it home!</p>
-<ol start="5" type="1">
+<ol start="6" type="1">
 <li>Find the difference NBR, where <span class="math inline">\(dNBR = prefireNBR - postfireNBR\)</span></li>
 <li>Plot the <code>dnBR</code> raster</li>
 </ol>

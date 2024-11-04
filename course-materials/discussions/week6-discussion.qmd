@@ -37,7 +37,7 @@ But why would you want to normalize the colors in an image?
 
 > "When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image."
 
-You are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.
+You are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The fire occurred from July 10-14, 2016 and the Landsat images are from June 5, 2016 (pre-fire) and August 8, 2016 (post-fire). The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.
 
 | Band | Wavelength range (nanometers) | Spatial Resolution (m) | Spectral Width (nm)|
 |-------------------------------------|------------------|--------------------|----------------|
@@ -64,7 +64,7 @@ library(terra)
 
 ```{r}
 # Set directory for folder
-pre_fire_dir <- here::here("data", "landsat", "LC80340322016189-SC20170128091153", "crop")
+pre_fire_dir <- here::here("data", "LC80340322016189-SC20170128091153")
 
 # Create a list of all images that have the extension .tif and contain the word band
 pre_fire_bands <- list.files(pre_fire_dir,
@@ -72,11 +72,14 @@ pre_fire_bands <- list.files(pre_fire_dir,
                              full.names = TRUE)
 # Create a raster stack
 pre_fire_rast <- rast(pre_fire_bands)
+
+# Read mask raster
+pre_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC80340322016189LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
 # Set directory for folder
-post_fire_dir <- here::here("data", "landsat", "LC80340322016205-SC20170127160728", "crop")
+post_fire_dir <- here::here("data", "LC80340322016205-SC20170127160728")
 
 # Create a list of all images that have the extension .tif and contain the word band
 post_fire_bands <- list.files(post_fire_dir,
@@ -84,6 +87,9 @@ post_fire_bands <- list.files(post_fire_dir,
                              full.names = TRUE)
 # Create a raster stack
 post_fire_rast <- rast(post_fire_bands)
+
+# Read mask raster
+post_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC80340322016205LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
@@ -100,7 +106,15 @@ Now, to meet this week's learning objectives, your task:
 
 Next, for each of the `pre_fire` and `post_fire` rasters...
 
-2. Plot a true color composite using `plotRGB()` 
+2. Mask out clouds and shadows with the `pre_mask` and `post_mask` rasters
+  - **Hint**: Set `mask > 0` to `NA`
+  
+:::{.callout-tip icon=true collapse=true}
+# Dealing with Clouds and Shadows
+"Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)" ([Earth Lab](https://www.earthdatascience.org/courses/earth-analytics/multispectral-remote-sensing-modis/intro-spectral-data-r/))
+:::
+
+3. Plot a true color composite using `plotRGB()` 
   - Map the red band to the red channel, green to green, and blue to blue
   - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
 
@@ -116,7 +130,7 @@ hist(pre_fire_rast,
 ```
 :::  
 
-3. Plot two false color composite using `plotRGB()`
+4. Plot two false color composite using `plotRGB()`
   - Map the SWIR2 band to the red channel, NIR to green, and green to blue
   - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
 
@@ -126,13 +140,13 @@ hist(pre_fire_rast,
 "Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image" ([EOS Data Analytics](https://eos.com/make-an-analysis/false-color/))
 :::
 
-4. Calculate the normalized burn ratio (NBR)
+5. Calculate the normalized burn ratio (NBR)
   - **Hint**: Use `lapp()` like you previously did for NDVI and NDWI in [Week 4](https://eds-223-geospatial.github.io/course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi)
 
 Let's bring it home!
 
-5. Find the difference NBR, where $dNBR = prefireNBR - postfireNBR$
-6. Plot the `dnBR` raster
+6. Find the difference NBR, where $dNBR = prefireNBR - postfireNBR$
+7. Plot the `dnBR` raster
   - **Bonus Challenge**: Use `classify()` to assign the severity levels below:
   
 | Severity Level | dNBR Range |

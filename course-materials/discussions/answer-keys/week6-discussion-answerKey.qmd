@@ -25,7 +25,7 @@ library(tmaptools)
 #| eval: false
 
 # Set directory for folder
-pre_fire_dir <- here::here("data", "landsat", "LC80340322016189-SC20170128091153", "crop")
+pre_fire_dir <- here::here("data", "LC80340322016189-SC20170128091153")
 
 # Create a list of all images that have the extension .tif and contain the word band
 pre_fire_bands <- list.files(pre_fire_dir,
@@ -33,13 +33,16 @@ pre_fire_bands <- list.files(pre_fire_dir,
                              full.names = TRUE)
 # Create a raster stack
 pre_fire_rast <- rast(pre_fire_bands)
+
+# Read mask raster
+pre_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC80340322016189LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
 #| eval: false
 
 # Set directory for folder
-post_fire_dir <- here::here("data", "landsat", "LC80340322016205-SC20170127160728", "crop")
+post_fire_dir <- here::here("data", "LC80340322016205-SC20170127160728")
 
 # Create a list of all images that have the extension .tif and contain the word band
 post_fire_bands <- list.files(post_fire_dir,
@@ -47,13 +50,16 @@ post_fire_bands <- list.files(post_fire_dir,
                              full.names = TRUE)
 # Create a raster stack
 post_fire_rast <- rast(post_fire_bands)
+
+# Read mask raster
+post_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC80340322016205LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
 #| echo: false
 
 # Set directory for folder
-pre_fire_dir <- here::here("course-materials", "data", "week6-discussion", "landsat", "LC80340322016189-SC20170128091153", "crop")
+pre_fire_dir <- here::here("course-materials", "data", "week6-discussion", "LC80340322016189-SC20170128091153")
 
 # Create a list of all images that have the extension .tif and contain the word band
 pre_fire_bands <- list.files(pre_fire_dir,
@@ -61,13 +67,16 @@ pre_fire_bands <- list.files(pre_fire_dir,
                              full.names = TRUE)
 # Create a raster stack
 pre_fire_rast <- rast(pre_fire_bands)
+
+# Read mask raster
+pre_mask <- rast(here::here("course-materials", "data", "week6-discussion", "LC80340322016189-SC20170128091153", "LC80340322016189LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
 #| echo: false
 
 # Set directory for folder
-post_fire_dir <- here::here("course-materials", "data", "week6-discussion", "landsat", "LC80340322016205-SC20170127160728", "crop")
+post_fire_dir <- here::here("course-materials", "data", "week6-discussion", "LC80340322016205-SC20170127160728")
 
 # Create a list of all images that have the extension .tif and contain the word band
 post_fire_bands <- list.files(post_fire_dir,
@@ -75,6 +84,9 @@ post_fire_bands <- list.files(post_fire_dir,
                              full.names = TRUE)
 # Create a raster stack
 post_fire_rast <- rast(post_fire_bands)
+
+# Read mask raster
+post_mask <- rast(here::here("course-materials", "data", "week6-discussion", "LC80340322016205-SC20170127160728", "LC80340322016205LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
@@ -91,24 +103,48 @@ names(pre_fire_rast) <- bands
 names(post_fire_rast) <- bands
 ```
 
-## Plot True Color Composite 
+## Mask Clouds and Shadows
 
 ```{r}
-plotRGB(pre_fire_rast, r = 4, g = 3, b = 2, stretch = "lin")
+# Set all cells with values greater than 0 to NA
+pre_mask[pre_mask > 0] <- NA
+
+# Subset raster based on mask
+pre_fire_rast <- mask(pre_fire_rast, mask = pre_mask)
+
+# View raster
+plot(pre_fire_rast)
 ```
 
 ```{r}
-plotRGB(post_fire_rast, r = 4, g = 3, b = 2, stretch = "lin")
+# Set all cells with values greater than 0 to NA
+post_mask[post_mask > 0] <- NA
+
+# Subset raster based on mask
+post_fire_rast <- mask(post_fire_rast, mask = post_mask)
+
+# View raster
+plot(post_fire_rast)
+```
+
+## Plot True Color Composite 
+
+```{r}
+plotRGB(pre_fire_rast, r = 4, g = 3, b = 2, stretch = "lin", colNA = "black")
+```
+
+```{r}
+plotRGB(post_fire_rast, r = 4, g = 3, b = 2, stretch = "lin", colNA = "black")
 ```
 
 ## Plot False Color Composite
 
 ```{r}
-plotRGB(pre_fire_rast, r = 7, g = 5, b = 3, stretch = "lin")
+plotRGB(pre_fire_rast, r = 7, g = 5, b = 3, stretch = "lin", colNA = "black")
 ```
 
 ```{r}
-plotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = "lin")
+plotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = "lin", colNA = "black")
 ```
 
 ## Calculate NBR and dNBR
@@ -116,24 +152,26 @@ plotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = "lin")
 ```{r}
 pre_nbr_rast <- terra::lapp(pre_fire_rast[[c(5, 7)]], fun = nbr_fun)
 
-plot(pre_nbr_rast, main = "Cold Springs Pre-Fire NBR")
+plot(pre_nbr_rast, main = "Cold Springs Pre-Fire NBR", colNA = "black")
 ```
 
 ```{r}
 post_nbr_rast <- terra::lapp(post_fire_rast[[c(5, 7)]], fun = nbr_fun)
 
-plot(post_nbr_rast, main = "Cold Springs Post-Fire NBR")
+plot(post_nbr_rast, main = "Cold Springs Post-Fire NBR", colNA = "black")
 ```
 
 ## Calculate and Plot dNBR
 
 ```{r}
+#| warning: false
+
 diff_nbr <- pre_nbr_rast - post_nbr_rast
 
 tm_shape(diff_nbr) +
   tm_raster(style = "equal", n = 6, 
             palette = get_brewer_pal("YlOrRd", n = 6, plot = FALSE),
-            title = "Difference NBR (dNBR)") +
+            title = "Difference NBR (dNBR)", colorNA = "black") +
   tm_layout(legend.outside = TRUE)
 ```
 
@@ -160,9 +198,9 @@ values(reclassified) <- as.factor(values(reclassified))
 ```{r}
 tm_shape(reclassified) +
   tm_raster(style = "cat",
-            labels = categories,
+            labels = c(categories, "Missing"),
             palette = get_brewer_pal("YlOrRd", n = 5, plot = FALSE),
-            title = "Severity Level")+
+            title = "Severity Level", colorNA = "black")+
   tm_layout(legend.outside = TRUE)
 ```
 
