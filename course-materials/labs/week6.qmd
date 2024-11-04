@@ -21,7 +21,7 @@ knitr::include_graphics("images/sf-terra.png")
 ```
 
 ::: {.gray-text .center-text}
-[terra](https://rspatial.github.io/terra/){target="_blank"}
+[sf](https://r-spatial.github.io/sf/) and [terra](https://rspatial.github.io/terra/){target="_blank"}
 :::
 
 ::: {.callout-note icon=true}
@@ -46,7 +46,7 @@ library(spDataLarge) # spatial data
 ```
 
 # Raster-vector interactions
-## Rasterization
+## 2. Rasterization
 
 "Rasterization" is the process of representing vector objects as raster objects. You might consider "rasterizing" vector data for the following reasons:
 
@@ -62,75 +62,32 @@ To "rasterize" data using the `{terra}` package, we use the `rasterize()` functi
 
 :::{.callout-warning icon=true}
 # Defining the template raster
+
+The geographic resolution of the input raster has a major impact on the results.
+
+- **If it is too low** (cell size is too large), the result may miss the full geographic variability of the vector data
+- **If it is too high** (cell size is too small), computational times may be excessive
+
+There are no simple rules to follow when deciding an appropriate geographic resolution, which is heavily dependent on the intended use of the results. Often the target resolution is imposed on the user, for example when the output of rasterization needs to be aligned to some other existing raster.
+
 :::
 
-The terra package contains the function rasterize() for doing this work. Its first two arguments are, x, vector object to be rasterized and, y, a ‘template raster’ object defining the extent, resolution and CRS of the output. The geographic resolution of the input raster has a major impact on the results: if it is too low (cell size is too large), the result may miss the full geographic variability of the vector data; if it is too high, computational times may be excessive. There are no simple rules to follow when deciding an appropriate geographic resolution, which is heavily dependent on the intended use of the results. Often the target resolution is imposed on the user, for example when the output of rasterization needs to be aligned to some other existing raster.
+### Line and polygon rasterization
 
-To demonstrate rasterization in action, we will use a template raster that has the same extent and CRS as the input vector data cycle_hire_osm_projected (a dataset on cycle hire points in London is illustrated in Figure 6.5(A)) and spatial resolution of 1000 meters:
+The simplest case of rasterization is simply converting the geometries of vector objects to raster objects. In this case, all we are hoping to do is indicate within each raster cell whether or not the vector object is present there.
 
-```{r}
-cycle_hire_osm = spData::cycle_hire_osm
-cycle_hire_osm_projected = st_transform(cycle_hire_osm, "EPSG:27700")
-raster_template = rast(ext(cycle_hire_osm_projected), resolution = 1000,
-                       crs = crs(cycle_hire_osm_projected))
-```
+In most cases, the purpose behind rasterizing vector object is to make it more directly comparable to data that is represented as raster objects. In that case, you want to use the raster object that you would like to compare to as the 'template' raster.
+
+Let's check out how this works by investigating an example from Zion National Park
 
 ```{r}
-ch_raster1 = rasterize(cycle_hire_osm_projected, raster_template)
-ch_raster2 = rasterize(cycle_hire_osm_projected, raster_template, 
-                       fun = "length")
+# load Zion park boundary (vector object to rasterize)
+boundary <- read_sf(system.file("vector/zion.gpkg", package = "spDataLarge")) 
 
-ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template, 
-                       field = "capacity", fun = sum, na.rm = TRUE)
-```
-
-```{r}
-tm_shape(cycle_hire_osm_projected) +
-  tm_symbols(col = "capacity")
-
-tm_shape(ch_raster1) +
-  tm_raster()
-
-tm_shape(ch_raster2) +
-  tm_raster()
-
-tm_shape(ch_raster3) +
-  tm_raster()
-```
-
-
-```{r}
-california = dplyr::filter(us_states, NAME == "California")
-california_borders = st_cast(california, "MULTILINESTRING")
-raster_template2 = rast(ext(california), resolution = 0.5,
-                        crs = st_crs(california)$wkt)
-```
-
-```{r}
-california_raster1 = rasterize(california_borders, raster_template2,
-                               touches = TRUE)
-```
-
-```{r}
-california_raster2 = rasterize(california, raster_template2) 
-```
-
-```{r}
-tm_shape(california_raster1) +
-  tm_raster()
-
-tm_shape(california_raster2) +
-  tm_raster()
-```
-
-
-```{r}
-# load raster dataset
+# load elevation raster to use as template raster object
 elevation <- rast(system.file("raster/srtm.tif", package = "spDataLarge"))
 
-# load vector dataset
-boundary <- read_sf(system.file("vector/zion.gpkg", package = "spDataLarge"))
-
+# check and transform coordinate reference systems
 if(crs(elevation) == crs(boundary)) {
   print("Coordinate reference systems match")
 } else{
@@ -138,31 +95,254 @@ if(crs(elevation) == crs(boundary)) {
   # transform data to match
   boundary <- st_transform(boundary, st_crs(elevation))
 }
+```
 
-zion_rasterize <- rasterize(boundary, elevation)
+Rasterization gives different results for polygon versus line vector objects. 
 
-tm_shape(zion_rasterize) +
-  tm_raster()
+- Rasterized polygons: all grid cells intersecting polygon (including cells inside polygon)
+- Rasterized lines: grid cells intersecting line (excluding cells potentially enclose by line)
+
+Let's check out whether or not the park boundary is represented as polygon or line. We can always inspect the geometry type of a vector object using `sf::st_geometry_type()`.
+
+```{r}
+if(sf::st_geometry_type(boundary) == "POLYGON"){
+  print("polygon data")
+} else {
+  print("not polygon data")
+}
+```
+
+The park boundary is a polygon, so let's make a version that just represents the park border using a line geometry. 
+
+```{r}
+# update park boundary object name to clarify that it's a polygon
+park_polygon <- boundary
+
+# create line version park boundary
+park_border <- boundary %>%
+  sf::st_cast(., "MULTILINESTRING")
 ```
 
 
 ```{r}
-landsat <- rast(system.file("raster/landsat.tif", package = "spDataLarge"))
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(park_polygon) +
+  tm_polygons() +
+  tm_layout(main.title = "polygon")
 
-landsat <- (landsat*0.0001)
+map2 <- tm_shape(park_border) +
+  tm_lines() +
+  tm_layout(main.title = "line")
 
-tm_shape(landsat) +
-  tm_rgb(r = 1, g = 2, b = 3)
+tmap_arrange(map1, map2, nrow = 1)
+```
 
+Now we can rasterize both the polygon and line representations of the park boundary.
+```{r}
+polygon_raster <- terra::rasterize(park_polygon, elevation)
+border_raster <- terra::rasterize(park_border, elevation)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+
+map1 <- tm_shape(polygon_raster) +
+  tm_raster() +
+  tm_layout(main.title = "rasterized polygon")
+
+map2 <- tm_shape(border_raster) +
+  tm_raster() +
+  tm_layout(main.title = "rasterized line")
+
+tmap_arrange(map1, map2, nrow = 1)
+```
+
+In the case where you are rasterizing without a pre-existing raster you would like to match to, you can create a template raster from scratch.
+
+:::{.callout-tip icon=true}
+# Impact of resolution
+
+Using a custom template raster is a also a great way to explore how the resolution impacts the results of rasterization!
+:::
+
+```{r}
+# create low spatial resolution template raster
+template_raster_low <- terra::rast(ext(park_polygon), resolution = 0.05,
+                        crs = st_crs(park_polygon))
+
+# create high spatial resolution template raster
+template_raster_high <- terra::rast(ext(park_polygon), resolution = 0.01,
+                        crs = st_crs(park_polygon))
+
+# rasterize to low resolution template raster
+polygon_raster_low <- terra::rasterize(park_polygon, template_raster_low)
+
+# rasterize to high resolution template raster
+polygon_raster_high <- terra::rasterize(park_polygon, template_raster_high)
 ```
 
 
 ```{r}
-file = system.file("tif/L7_ETMs.tif", package = "stars")
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(polygon_raster_low) +
+  tm_raster() +
+  tm_layout(main.title = "low resolution")
 
-L7 = stars::read_stars(file)
+map2 <- tm_shape(polygon_raster_high) +
+  tm_raster() +
+  tm_layout(main.title = "high resolution")
 
-tm_shape(L7) +
-  tm_rgb(r = 2, g = 3, b = 3)
+tmap_arrange(map1, map2, nrow = 1)
+```
+
+### Rasterizing point data
+
+When working with point data, we can use the same process as with line and polygon data. However, in some cases we might want to perform more complex operations. Instead of simply indicating whether or not the vector object falls within each grid cell, we might want to count the number of points in each grid cell or even summarize the attributes of points within each cell.
+
+Let's try an example using data on cycle hire points in London from `{spData}`.
+
+```{r}
+# define point data
+cycle_hire_osm <- spData::cycle_hire_osm
+
+# transform to projected CRS
+cycle_hire_osm_projected = sf::st_transform(cycle_hire_osm, "EPSG:27700")
+
+# define raster template
+template_raster <- terra::rast(ext(cycle_hire_osm_projected), resolution = 1000,
+                       crs = crs(cycle_hire_osm_projected))
+```
+
+In the following code chunk we'll perform three versions of rasterization to produce the following:
+
+- raster representing the **presence/absence** of cycle hire points 
+- raster representing the **number** of cycle hire points
+- raster representing the **total capacity** of cycle hire points
+
+To represent the **presence/absence** of cycle hire points, we use the same procedure as before.
+
+```{r}
+ch_raster1 <- terra::rasterize(cycle_hire_osm_projected, template_raster)
+```
+
+To represent the **number** of cycle hire points, we use the `fun` argument which allows for various summarizing functions. Setting the argument `fun = "length"` will return a count of the number of points in each cell
+
+```{r}
+ch_raster2 <- rasterize(cycle_hire_osm_projected, template_raster, 
+                       fun = "length")
+```
+
+To represent the **total capacity** of cycle hire points, we need to take the sum of each points' capacity. We can do this by defining which field we would like to aggregate (in this case `capacity`) and what aggregating function we would like to use (in this case `fun = sum`).
+
+```{r}
+ch_raster3 <- rasterize(cycle_hire_osm_projected, template_raster, 
+                       field = "capacity", fun = sum, na.rm = TRUE)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(cycle_hire_osm_projected) +
+  tm_symbols(col = "capacity") +
+  tm_layout(main.title = "original points")
+
+map2 <- tm_shape(ch_raster1) +
+  tm_raster(title = "presence") +
+  tm_layout(main.title = "presence/absence")
+
+map3 <- tm_shape(ch_raster2) +
+  tm_raster(title = "Hire points (n)") +
+  tm_layout(main.title = "count of points")
+
+map4 <- tm_shape(ch_raster3) +
+  tm_raster(title = "Capacity (n bikes)") +
+  tm_layout(main.title = "sum of capacity")
+
+tmap_arrange(map1, map2, map3, map4, nrow = 2)
+```
+
+
+# False color imagery
+## 3. Creating false color images
+
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from [Humboldt State Geospatial Online](https://gsp.humboldt.edu/olm/Courses/GSP_216/lessons/composites.html).
+:::
+
+Each band of a multispectral image can be displayed one band at a time as a grey scale image, or in a combination of three bands at a time as a color composite image. Computer screens can display an image in three different channels (red, green, blue) at a time, by using a different primary color for each band. When we combine these three images we get a color composite image.
+
+**Natural or true color composite:**
+
+- displays red, green, blue RS bands in the red, green, blue channels, respectively
+
+**False color composite:**
+
+- displays RS bands beyond the visible portion of the spectrum, or
+- displays red, green, blue RS bands not necessarily in the red, green, and blue channels
+
+In this example, we'll work with a remote sensing image of Olinda, Brazil collected by the [Landsat-7 Enhanced Thematic Mapper](https://www.usgs.gov/landsat-missions/landsat-7).
+
+```{r}
+#| echo: false
+#| message: false
+
+attr_layers_df = tibble::tribble(
+  ~Band, ~Wavelengths,
+  "Band 1", "0.45 - 0.52 micrometers (blue)",
+  "Band 2", "0.52 - 0.60 micrometers (green)",
+  "Band 3", "0.63 - 0.69 micrometers (red)",
+  "Band 4", "0.77 - 0.90 micrometers (near-infrared)",
+  "Band 5", "1.55 - 1.75 micrometers (short-wave infrared)",
+  "Band 7", "2.08 - 2.35 micrometers (mid-infrared)"
+)
+
+
+options(kableExtra.html.bsTable = TRUE)
+knitr::kable(attr_layers_df, 
+             caption = "Landsat-7 bands",
+             booktabs = TRUE) %>%
+  kableExtra::kable_styling("striped",
+                            latex_options = "striped", 
+                            full_width = FALSE) %>% 
+  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE) 
+```
+
+```{r}
+# load Landsat image
+L7 <- terra::rast(system.file("tif/L7_ETMs.tif", package = "stars"))
+```
+
+To plot various band combinations, we can use `tmap::tm_rgb()` which allows us to define which band should be displayed in each channel.
+
+We can explore various band combinations, but there are a few common false color composites:
+
+- Near infrared (red channel), red (green channel), green (blue channel):
+  - Plants reflect near infrared and green light, while absorbing red 
+  - Plants appear deep red and therefore helpful for gauging plant health
+- Shortwave infrared (red channel), near infrared (green channel), green (blue channel):
+  - Water absorbs all three wavelengths, so appears black
+  - Water and wet soil stand out and therefore helpful for monitoring floods
+  
+```{r}
+#| code-fold: true
+#| message: false
+map1 <- tm_shape(L7) +
+  tm_rgb(r = 1, g = 2, b = 3) +
+  tm_layout(main.title = "true color")
+
+map2 <- tm_shape(L7) +
+  tm_rgb(r = 4, g = 3, b = 2) +
+  tm_layout(main.title = "NIR, red, green")
+
+map3 <- tm_shape(L7) +
+  tm_rgb(r = 5, g = 4, b = 2) +
+  tm_layout(main.title = "SWIR, NIR, green")
+
+tmap_arrange(map1, map2, map3, nrow = 1)
 ```
 
