@@ -54,13 +54,18 @@ Each repository should have:
   - Double check that all contents meet the [standard of professional output](https://eds-223-geospatial.github.io/assignments.html#rubric)
   - Any other updates you want to make! Including [updating the theme](https://quarto.org/docs/output-formats/html-themes.html#theme-options)
   
+:::{.callout-warning icon=true}
+# Changing repository ownership
+Your homework submissions are technically owned by our GitHub Classroom organization. To have them appear on your GitHub profile (and be visible to others), you need to create a new repository directly from your GitHub account and copy your code over.
+:::
+  
 ## Rubric
 
 To receive a "Satisfactory", both repositories must include the elements described above.
 
 ## Submitting assignment
 
-Please email links to your repositories to `rutholiver@bren.ucsb.edu`.
+Please submit your PR to [this Google Form](https://forms.gle/sSXfA8CvodbNFkRt7).
 
 
 

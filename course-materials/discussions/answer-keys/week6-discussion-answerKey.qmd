@@ -1,0 +1,106 @@
+---
+title: "Week 6: Discussion Section - Answer Key"
+subtitle: "Working with false color images"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+---
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(sf)
+library(terra)
+```
+
+```{r}
+#| eval: false
+
+# Set directory for folder
+pre_fire_dir <- here::here("data", "landsat", "LC80340322016189-SC20170128091153", "crop")
+
+# Create a list of all images that have the extension .tif and contain the word band
+pre_fire_bands <- list.files(pre_fire_dir,
+                             pattern = glob2rx("*band*.tif$"),
+                             full.names = TRUE)
+# Create a raster stack
+pre_fire_rast <- rast(pre_fire_bands)
+```
+
+```{r}
+#| eval: false
+
+# Set directory for folder
+post_fire_dir <- here::here("data", "landsat", "LC80340322016205-SC20170127160728", "crop")
+
+# Create a list of all images that have the extension .tif and contain the word band
+post_fire_bands <- list.files(post_fire_dir,
+                             pattern = glob2rx("*band*.tif$"),
+                             full.names = TRUE)
+# Create a raster stack
+post_fire_rast <- rast(post_fire_bands)
+```
+
+```{r}
+#| echo: false
+
+# Set directory for folder
+pre_fire_dir <- here::here("course-materials", "data", "week6-discussion", "landsat", "LC80340322016189-SC20170128091153", "crop")
+
+# Create a list of all images that have the extension .tif and contain the word band
+pre_fire_bands <- list.files(pre_fire_dir,
+                             pattern = glob2rx("*band*.tif$"),
+                             full.names = TRUE)
+# Create a raster stack
+pre_fire_rast <- rast(pre_fire_bands)
+```
+
+```{r}
+#| echo: false
+
+# Set directory for folder
+post_fire_dir <- here::here("course-materials", "data", "week6-discussion", "landsat", "LC80340322016205-SC20170127160728", "crop")
+
+# Create a list of all images that have the extension .tif and contain the word band
+post_fire_bands <- list.files(post_fire_dir,
+                             pattern = glob2rx("*band*.tif$"),
+                             full.names = TRUE)
+# Create a raster stack
+post_fire_rast <- rast(post_fire_bands)
+```
+
+```{r}
+nbr_fun <- function(nir, swir){
+    (nir - swir)/(nir + swir)
+}
+```
+
+:::{.callout-tip icon=true}
+# `ggplot2`
+
+You can plot false color composites with `ggplot2` too! Check out [this tutorial](https://shekeine.github.io/visualization/2014/09/27/sfcc_rgb_in_R)
+:::
+
+1. Rename the bands of the `pre_fire` and `post_fire` rasters using `names()`
+
+Next, for each of the `pre_fire` and `post_fire` rasters...
+
+2. Plot a true color composite using `plotRGB()` 
+3. Plot two false color composite using `plotRGB()`
+  - Map the near infrared (NIR) band to the red channel, red to green, and green to blue
+  - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
+4. Calculate the normalized burn ratio (NBR)
+  - **Hint**: Use `lapp()` like you previously did for NDVI and NDWI in [Week 4](https://eds-223-geospatial.github.io/course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi)
+
+Let's bring it home!
+
+5. Find the difference NBR, where $dNBR = prefireNBR - postfireNBR$
+6. Plot the `dnBR` raster! Was your false color composite a good exploratory test?
+
+## Subset 

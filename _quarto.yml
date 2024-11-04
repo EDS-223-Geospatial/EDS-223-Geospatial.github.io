@@ -28,8 +28,8 @@ website:
             href: course-materials/week4.qmd
           - text: week 5
             href: course-materials/week5.qmd
-          # - text: week 6
-          #   href: course-materials/week6.qmd
+          - text: week 6
+            href: course-materials/week6.qmd
           # - text: week 8
           #   href: course-materials/week8.qmd
           # - text: week 9
