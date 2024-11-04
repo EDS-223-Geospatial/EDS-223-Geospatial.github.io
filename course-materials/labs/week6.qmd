@@ -1,0 +1,168 @@
+---
+title: "Week 6: Lab"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Ruth Oliver"
+date: last-modified
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "50%"
+#| fig-align: "center"
+knitr::include_graphics("images/sf-terra.png")
+```
+
+::: {.gray-text .center-text}
+[terra](https://rspatial.github.io/terra/){target="_blank"}
+:::
+
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from [Chapter 6](https://r.geocompx.org/raster-vector#raster-vector) of *Geocomputation with R* by Robin Lovelace.
+:::
+
+In this lab we'll continue to explore operations that rely on interactions between vector and raster data. Today, we'll see how to convert raster data into vector data. We'll also explore creating false color imagery.
+
+## 1. Set up
+
+First, we'll load all relevant packages.
+```{r}
+#| message: false
+#| warning: false
+library(sf) # vector handling
+library(terra) # raster handling
+library(tidyverse)
+library(tmap) # map making
+library(spData) # spatial data
+library(spDataLarge) # spatial data
+```
+
+# Raster-vector interactions
+## Rasterization
+
+"Rasterization" is the process of representing vector objects as raster objects. You might consider "rasterizing" vector data for the following reasons:
+
+- to use in an analysis that benefits from raster operations (e.g. map algebra)
+- standardize with other data used in analysis
+- simplify data to reduce computational load
+- aggregated data to standard grid
+
+To "rasterize" data using the `{terra}` package, we use the `rasterize()` function. The first two arguments define the following:
+
+- `x`: vector object to be "rasterized"
+- `y`: a 'template' raster object defining the extent, resolution, and CRS of the output
+
+:::{.callout-warning icon=true}
+# Defining the template raster
+:::
+
+The terra package contains the function rasterize() for doing this work. Its first two arguments are, x, vector object to be rasterized and, y, a ‘template raster’ object defining the extent, resolution and CRS of the output. The geographic resolution of the input raster has a major impact on the results: if it is too low (cell size is too large), the result may miss the full geographic variability of the vector data; if it is too high, computational times may be excessive. There are no simple rules to follow when deciding an appropriate geographic resolution, which is heavily dependent on the intended use of the results. Often the target resolution is imposed on the user, for example when the output of rasterization needs to be aligned to some other existing raster.
+
+To demonstrate rasterization in action, we will use a template raster that has the same extent and CRS as the input vector data cycle_hire_osm_projected (a dataset on cycle hire points in London is illustrated in Figure 6.5(A)) and spatial resolution of 1000 meters:
+
+```{r}
+cycle_hire_osm = spData::cycle_hire_osm
+cycle_hire_osm_projected = st_transform(cycle_hire_osm, "EPSG:27700")
+raster_template = rast(ext(cycle_hire_osm_projected), resolution = 1000,
+                       crs = crs(cycle_hire_osm_projected))
+```
+
+```{r}
+ch_raster1 = rasterize(cycle_hire_osm_projected, raster_template)
+ch_raster2 = rasterize(cycle_hire_osm_projected, raster_template, 
+                       fun = "length")
+
+ch_raster3 = rasterize(cycle_hire_osm_projected, raster_template, 
+                       field = "capacity", fun = sum, na.rm = TRUE)
+```
+
+```{r}
+tm_shape(cycle_hire_osm_projected) +
+  tm_symbols(col = "capacity")
+
+tm_shape(ch_raster1) +
+  tm_raster()
+
+tm_shape(ch_raster2) +
+  tm_raster()
+
+tm_shape(ch_raster3) +
+  tm_raster()
+```
+
+
+```{r}
+california = dplyr::filter(us_states, NAME == "California")
+california_borders = st_cast(california, "MULTILINESTRING")
+raster_template2 = rast(ext(california), resolution = 0.5,
+                        crs = st_crs(california)$wkt)
+```
+
+```{r}
+california_raster1 = rasterize(california_borders, raster_template2,
+                               touches = TRUE)
+```
+
+```{r}
+california_raster2 = rasterize(california, raster_template2) 
+```
+
+```{r}
+tm_shape(california_raster1) +
+  tm_raster()
+
+tm_shape(california_raster2) +
+  tm_raster()
+```
+
+
+```{r}
+# load raster dataset
+elevation <- rast(system.file("raster/srtm.tif", package = "spDataLarge"))
+
+# load vector dataset
+boundary <- read_sf(system.file("vector/zion.gpkg", package = "spDataLarge"))
+
+if(crs(elevation) == crs(boundary)) {
+  print("Coordinate reference systems match")
+} else{
+  warning("Updating coordinate reference systems to match")
+  # transform data to match
+  boundary <- st_transform(boundary, st_crs(elevation))
+}
+
+zion_rasterize <- rasterize(boundary, elevation)
+
+tm_shape(zion_rasterize) +
+  tm_raster()
+```
+
+
+```{r}
+landsat <- rast(system.file("raster/landsat.tif", package = "spDataLarge"))
+
+landsat <- (landsat*0.0001)
+
+tm_shape(landsat) +
+  tm_rgb(r = 1, g = 2, b = 3)
+
+```
+
+
+```{r}
+file = system.file("tif/L7_ETMs.tif", package = "stars")
+
+L7 = stars::read_stars(file)
+
+tm_shape(L7) +
+  tm_rgb(r = 2, g = 3, b = 3)
+```
+
