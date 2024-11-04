@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2024-11-03">
+<meta name="dcterms.date" content="2024-11-04">
 
 <title>Week 6: Discussion Section</title>
 <style>
@@ -240,7 +240,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 3, 2024</p>
+        <p class="date">November 4, 2024</p>
       </div>
     </div>
     
@@ -285,6 +285,22 @@ Source Materials
 <section id="background" class="level2">
 <h2 class="anchored" data-anchor-id="background">1. Background</h2>
 <p>In <a href="https://eds-223-geospatial.github.io/course-materials/labs/week6.html">Lab #6</a>, you explored various band combinations and plotted false color images with <code>tm_rgb()</code> from <code>{tmap}</code>. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with <code>plotRGB()</code> from <code>{terra}</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Many Ways To Plot a False Color Image
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You can plot false color composites with <code>ggplot2</code> too! Check out <a href="https://shekeine.github.io/visualization/2014/09/27/sfcc_rgb_in_R">this tutorial</a>.</p>
+</div>
+</div>
+</div>
 <p>The <code>plotRGB()</code> function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.</p>
 <p>But why would you want to normalize the colors in an image?</p>
 <div>
@@ -303,6 +319,67 @@ Source Materials
 <blockquote class="blockquote">
 <p>“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”</p>
 </blockquote>
+<p>You are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 19%">
+<col style="width: 21%">
+<col style="width: 17%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Band</th>
+<th>Wavelength range (nanometers)</th>
+<th>Spatial Resolution (m)</th>
+<th>Spectral Width (nm)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Band 1 - Coastal aerosol</td>
+<td>430 - 450</td>
+<td>30</td>
+<td>2.0</td>
+</tr>
+<tr class="even">
+<td>Band 2 - Blue</td>
+<td>450 - 510</td>
+<td>30</td>
+<td>6.0</td>
+</tr>
+<tr class="odd">
+<td>Band 3 - Green</td>
+<td>530 - 590</td>
+<td>30</td>
+<td>6.0</td>
+</tr>
+<tr class="even">
+<td>Band 4 - Red</td>
+<td>640 - 670</td>
+<td>30</td>
+<td>0.03</td>
+</tr>
+<tr class="odd">
+<td>Band 5 - Near Infrared (NIR)</td>
+<td>850 - 880</td>
+<td>30</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td>Band 6 - Short-Wave Infrared 1 (SWIR1)</td>
+<td>1570 - 1650</td>
+<td>30</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td>Band 7 - Short-Wave Infrared 2 (SWIR2)</td>
+<td>2110 - 2290</td>
+<td>30</td>
+<td>18</td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="get-started" class="level2">
 <h2 class="anchored" data-anchor-id="get-started">2. Get Started</h2>
@@ -340,8 +417,8 @@ Source Materials
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>post_fire_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(post_fire_bands)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nbr_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, swir){</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (nir <span class="sc">-</span> swir)<span class="sc">/</span>(nir <span class="sc">+</span> swir)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nbr_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, swir2){</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    (nir <span class="sc">-</span> swir2)<span class="sc">/</span>(nir <span class="sc">+</span> swir2)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -354,12 +431,53 @@ Source Materials
 <p>Next, for each of the <code>pre_fire</code> and <code>post_fire</code> rasters…</p>
 <ol start="2" type="1">
 <li>Plot a true color composite using <code>plotRGB()</code></li>
+</ol>
+<ul>
+<li>Map the red band to the red channel, green to green, and blue to blue</li>
+<li>Apply a linear stretch <code>“lin”</code> or histogram equalization <code>“hist”</code></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+How To Decide How To “Stretch” Raster Imagery?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View histogram for each band</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(pre_fire_rast,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">maxpixels =</span> <span class="fu">ncell</span>(pre_fire_rast),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"orange"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
 <li>Plot two false color composite using <code>plotRGB()</code></li>
 </ol>
 <ul>
-<li>Map the near infrared (NIR) band to the red channel, red to green, and green to blue</li>
+<li>Map the SWIR2 band to the red channel, NIR to green, and green to blue</li>
 <li>Apply a linear stretch <code>“lin”</code> or histogram equalization <code>“hist”</code></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+What is the SWIR, NIR, Red false color scheme?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>“Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image” (<a href="https://eos.com/make-an-analysis/false-color/">EOS Data Analytics</a>)</p>
+</div>
+</div>
 <ol start="4" type="1">
 <li>Calculate the normalized burn ratio (NBR)</li>
 </ol>
@@ -369,8 +487,41 @@ Source Materials
 <p>Let’s bring it home!</p>
 <ol start="5" type="1">
 <li>Find the difference NBR, where <span class="math inline">\(dNBR = prefireNBR - postfireNBR\)</span></li>
-<li>Plot the <code>dnBR</code> raster! Was your false color composite a good exploratory test?</li>
+<li>Plot the <code>dnBR</code> raster</li>
 </ol>
+<ul>
+<li><strong>Bonus Challenge</strong>: Use <code>classify()</code> to assign the severity levels below:</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Severity Level</th>
+<th>dNBR Range</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Enhanced Regrowth</td>
+<td>&lt; -.1</td>
+</tr>
+<tr class="even">
+<td>Unburned</td>
+<td>-.1 to +.1</td>
+</tr>
+<tr class="odd">
+<td>Low Severity</td>
+<td>+.1 to +.27</td>
+</tr>
+<tr class="even">
+<td>Moderate Severity</td>
+<td>+.27 to +.66</td>
+</tr>
+<tr class="odd">
+<td>High Severity</td>
+<td>&gt; .66</td>
+</tr>
+</tbody>
+</table>
 
 
 </section>

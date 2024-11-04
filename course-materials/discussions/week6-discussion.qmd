@@ -19,6 +19,12 @@ The following materials are modified from curriculum developed by [Earth Lab](ht
 
 In [Lab #6](https://eds-223-geospatial.github.io/course-materials/labs/week6.html), you explored various band combinations and plotted false color images with `tm_rgb()` from `{tmap}`. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with `plotRGB()` from `{terra}`.
 
+:::{.callout-tip icon=true collapse=true}
+# Many Ways To Plot a False Color Image
+
+You can plot false color composites with `ggplot2` too! Check out [this tutorial](https://shekeine.github.io/visualization/2014/09/27/sfcc_rgb_in_R).
+:::
+
 The `plotRGB()` function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.
 
 But why would you want to normalize the colors in an image?
@@ -30,6 +36,18 @@ But why would you want to normalize the colors in an image?
 :::
 
 > "When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image."
+
+You are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.
+
+| Band | Wavelength range (nanometers) | Spatial Resolution (m) | Spectral Width (nm)|
+|-------------------------------------|------------------|--------------------|----------------|
+| Band 1 - Coastal aerosol | 430 - 450 | 30 | 2.0 |
+| Band 2 - Blue | 450 - 510 | 30 | 6.0 |
+| Band 3 - Green | 530 - 590 | 30 | 6.0 |
+| Band 4 - Red | 640 - 670 | 30 | 0.03 |
+| Band 5 - Near Infrared (NIR) | 850 - 880 | 30 | 3.0 |
+| Band 6 - Short-Wave Infrared  1 (SWIR1) | 1570 - 1650 | 30 | 8.0  |
+| Band 7 - Short-Wave Infrared  2 (SWIR2) | 2110 - 2290 | 30 | 18 |
 
 ## 2. Get Started
 
@@ -69,8 +87,8 @@ post_fire_rast <- rast(post_fire_bands)
 ```
 
 ```{r}
-nbr_fun <- function(nir, swir){
-    (nir - swir)/(nir + swir)
+nbr_fun <- function(nir, swir2){
+    (nir - swir2)/(nir + swir2)
 }
 ```
 
@@ -83,13 +101,44 @@ Now, to meet this week's learning objectives, your task:
 Next, for each of the `pre_fire` and `post_fire` rasters...
 
 2. Plot a true color composite using `plotRGB()` 
-3. Plot two false color composite using `plotRGB()`
-  - Map the near infrared (NIR) band to the red channel, red to green, and green to blue
+  - Map the red band to the red channel, green to green, and blue to blue
   - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
+
+:::{.callout-tip icon=true collapse=true}
+# How To Decide How To “Stretch” Raster Imagery?
+To make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:
+
+```{r}
+# View histogram for each band
+hist(pre_fire_rast,
+     maxpixels = ncell(pre_fire_rast),
+     col = "orange")
+```
+:::  
+
+3. Plot two false color composite using `plotRGB()`
+  - Map the SWIR2 band to the red channel, NIR to green, and green to blue
+  - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
+
+:::{.callout-tip icon=true}
+# What is the SWIR, NIR, Red false color scheme?
+
+"Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image" ([EOS Data Analytics](https://eos.com/make-an-analysis/false-color/))
+:::
+
 4. Calculate the normalized burn ratio (NBR)
   - **Hint**: Use `lapp()` like you previously did for NDVI and NDWI in [Week 4](https://eds-223-geospatial.github.io/course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi)
 
 Let's bring it home!
 
 5. Find the difference NBR, where $dNBR = prefireNBR - postfireNBR$
-6. Plot the `dnBR` raster! Was your false color composite a good exploratory test?
+6. Plot the `dnBR` raster
+  - **Bonus Challenge**: Use `classify()` to assign the severity levels below:
+  
+| Severity Level | dNBR Range |
+|-------------------------------------|------------------|
+| Enhanced Regrowth | < -.1 |
+| Unburned  | -.1 to +.1 |
+| Low Severity     | +.1 to +.27 |
+| Moderate Severity  | +.27 to +.66 |
+| High Severity     | > .66 |

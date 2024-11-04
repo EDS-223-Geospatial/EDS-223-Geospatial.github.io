@@ -17,6 +17,8 @@ format:
 library(tidyverse)
 library(sf)
 library(terra)
+library(tmap)
+library(tmaptools)
 ```
 
 ```{r}
@@ -76,31 +78,91 @@ post_fire_rast <- rast(post_fire_bands)
 ```
 
 ```{r}
-nbr_fun <- function(nir, swir){
-    (nir - swir)/(nir + swir)
+nbr_fun <- function(nir, swir2){
+    (nir - swir2)/(nir + swir2)
 }
 ```
 
-:::{.callout-tip icon=true}
-# `ggplot2`
+## Rename Bands
 
-You can plot false color composites with `ggplot2` too! Check out [this tutorial](https://shekeine.github.io/visualization/2014/09/27/sfcc_rgb_in_R)
-:::
+```{r}
+bands <- c("Aerosol", "Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2")
+names(pre_fire_rast) <- bands
+names(post_fire_rast) <- bands
+```
 
-1. Rename the bands of the `pre_fire` and `post_fire` rasters using `names()`
+## Plot True Color Composite 
 
-Next, for each of the `pre_fire` and `post_fire` rasters...
+```{r}
+plotRGB(pre_fire_rast, r = 4, g = 3, b = 2, stretch = "lin")
+```
 
-2. Plot a true color composite using `plotRGB()` 
-3. Plot two false color composite using `plotRGB()`
-  - Map the near infrared (NIR) band to the red channel, red to green, and green to blue
-  - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
-4. Calculate the normalized burn ratio (NBR)
-  - **Hint**: Use `lapp()` like you previously did for NDVI and NDWI in [Week 4](https://eds-223-geospatial.github.io/course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi)
+```{r}
+plotRGB(post_fire_rast, r = 4, g = 3, b = 2, stretch = "lin")
+```
 
-Let's bring it home!
+## Plot False Color Composite
 
-5. Find the difference NBR, where $dNBR = prefireNBR - postfireNBR$
-6. Plot the `dnBR` raster! Was your false color composite a good exploratory test?
+```{r}
+plotRGB(pre_fire_rast, r = 7, g = 5, b = 3, stretch = "lin")
+```
 
-## Subset 
+```{r}
+plotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = "lin")
+```
+
+## Calculate NBR and dNBR
+
+```{r}
+pre_nbr_rast <- terra::lapp(pre_fire_rast[[c(5, 7)]], fun = nbr_fun)
+
+plot(pre_nbr_rast, main = "Cold Springs Pre-Fire NBR")
+```
+
+```{r}
+post_nbr_rast <- terra::lapp(post_fire_rast[[c(5, 7)]], fun = nbr_fun)
+
+plot(post_nbr_rast, main = "Cold Springs Post-Fire NBR")
+```
+
+## Calculate and Plot dNBR
+
+```{r}
+diff_nbr <- pre_nbr_rast - post_nbr_rast
+
+tm_shape(diff_nbr) +
+  tm_raster(style = "equal", n = 6, 
+            palette = get_brewer_pal("YlOrRd", n = 6, plot = FALSE),
+            title = "Difference NBR (dNBR)") +
+  tm_layout(legend.outside = TRUE)
+```
+
+## Reclassification
+```{r}
+# Set categories for severity levels
+categories <- c("Enhanced Regrowth", "Unburned", "Low Severity", "Moderate Severity", "High Severity")
+
+# Create reclassification matrix
+rcl <- matrix(c(-Inf, -0.1, 1, # group 1 ranges for Enhanced Regrowth
+                -0.1, 0.1, 2, # group 2 ranges for Unburned
+                0.1, 0.27, 3, # group 3 ranges for Low Severity
+                0.27, 0.66, 4, # group 4 ranges for Moderity Severity
+                0.66, Inf, 5), # group 5 ranges for High Severity
+                ncol = 3, byrow = TRUE)
+
+# Use reclassification matrix to reclassify dNBR raster
+reclassified <- classify(diff_nbr, rcl = rcl)
+
+# Change reclassified values into factors
+values(reclassified) <- as.factor(values(reclassified))
+```
+
+```{r}
+tm_shape(reclassified) +
+  tm_raster(style = "cat",
+            labels = categories,
+            palette = get_brewer_pal("YlOrRd", n = 5, plot = FALSE),
+            title = "Severity Level")+
+  tm_layout(legend.outside = TRUE)
+```
+
