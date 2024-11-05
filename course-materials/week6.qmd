@@ -21,7 +21,7 @@ knitr::include_graphics("images/week6-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Resolutions: spatial, temporal, spectral, radiometric](https://docs.google.com/presentation/d/1WPl_WN0_JqjscQIfsiKkYKLqispPcWEJqOdf1gFbPuA/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Vector and raster interactions cont.; False color images](labs/week6.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | Working with false color images (*Answer Key*) <!--[Working with false color images](discussions/week6-discussion.qmd){target="_blank"} ([*Answer Key*](discussions/answer-keys/week6-discussion-answerKey.qmd){target="_blank"})--> |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Working with false color images](discussions/week6-discussion.qmd){target="_blank"} ([*Answer Key*](discussions/answer-keys/week6-discussion-answerKey.qmd){target="_blank"}) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

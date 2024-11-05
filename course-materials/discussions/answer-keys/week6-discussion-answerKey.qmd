@@ -191,8 +191,7 @@ rcl <- matrix(c(-Inf, -0.1, 1, # group 1 ranges for Enhanced Regrowth
 # Use reclassification matrix to reclassify dNBR raster
 reclassified <- classify(diff_nbr, rcl = rcl)
 
-# Change reclassified values into factors
-values(reclassified) <- as.factor(values(reclassified))
+reclassified[is.nan(reclassified)] <- NA
 ```
 
 ```{r}
