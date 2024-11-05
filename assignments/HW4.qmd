@@ -17,11 +17,11 @@ editor_options:
 #| echo: false
 #| out-width: "80%"
 #| fig-align: "center"
-knitr::include_graphics("images/texas.jpg")
+knitr::include_graphics("images/aquaculture.jpg")
 ```
 
 ::: {.gray-text .center-text}
-[soa.org](https://www.soa.org/news-and-publications/newsletters/general-insurance/2021/june/gii-2021-06/texas-winter-storm-2021-accounting-for-subsequent-events/){target="_blank"}
+[Unsplash](https://unsplash.com/photos/aerial-photography-of-white-frames-on-top-of-water-eUfnha6ev9g){target="_blank"}
 :::
 
 :::{.callout-important icon=true}
@@ -45,11 +45,12 @@ This assignment will reinforce key concepts in geospatial analysis by practicing
 
 ## Instructions
 
-1. Clone repository from GitHub Classrooms
-2. Download data from [here](https://drive.google.com/file/d/1bTk62xwOzBqWmmT791SbYbHxnCdjmBtw/view?usp=drive_link)
+1. [Clone repository from GitHub Classrooms](https://classroom.github.com/a/M7SH_7jN)
+2. Download data from [here](https://drive.google.com/file/d/1u-iwnPDbe6ZK7wSFVMI-PpCKaRQ3RVmg/view?usp=sharing)
 3. Unzip data and place in repository
-4. Edit Quarto document with responses
-5. Push final edits before deadline
+4. Update `.gitignore` to ignore `data` folder
+5. Edit Quarto document with responses
+6. Push final edits before deadline
 
 Your repository should have the following structure:
 
