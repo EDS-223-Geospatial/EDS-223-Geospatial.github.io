@@ -1,0 +1,251 @@
+---
+title: "Homework Assignment 4"
+subtitle: "Prioritizing potential aquaculture"
+author: "Ruth Oliver"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/aquaculture.jpg")
+```
+
+::: {.gray-text .center-text}
+[Unsplash](https://unsplash.com/photos/aerial-photography-of-white-frames-on-top-of-water-eUfnha6ev9g){target="_blank"}
+:::
+
+:::{.callout-important icon=true}
+
+You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.
+
+The assignment **must be submitted through GitHub Classrooms**. Each student receives one "free pass" for not submitting assignments via specified channels, after which you will receive a "Not Yet" mark.
+
+**Read each part of the assignment carefully**, and use the check boxes to ensure you've addressed all elements of the assignment!
+
+:::
+
+## Learning outcomes
+
+This assignment will reinforce key concepts in geospatial analysis by practicing the following:
+
+-   combining vector/raster data
+-   resampling raster data
+-   masking raster data
+-   map algebra
+
+## Instructions
+
+1. [Clone repository from GitHub Classrooms](https://classroom.github.com/a/M7SH_7jN)
+2. Download data from [here](https://drive.google.com/file/d/1u-iwnPDbe6ZK7wSFVMI-PpCKaRQ3RVmg/view?usp=sharing)
+3. Unzip data and place in repository
+4. Update `.gitignore` to ignore `data` folder
+5. Edit Quarto document with responses
+6. Push final edits before deadline
+
+Your repository should have the following structure:
+
+```{md}
+EDS223-HW3
+│   README.md
+│   qmd/Rmd/Proj files
+|   .gitignore
+│
+└───data
+    │   wc_regions_clean.shp
+    │   depth.tif
+    │   average_annual_sst_2008.tif
+    │   average_annual_sst_2009.tif
+    │   average_annual_sst_2010.tif
+    │   average_annual_sst_2011.tif
+    │   average_annual_sst_2012.tif
+```
+
+
+## Background
+Marine aquaculture has the potential to play an important role in the global food supply as a more sustainable protein option than land-based meat production.[^hall] [Gentry et al.](https://www.nature.com/articles/s41559-017-0257-9) mapped the potential for marine aquaculture globally based on multiple constraints, including ship traffic, dissolved oxygen, and bottom depth. They found that global seafood demand could be met using less than 0.015% of the global ocean area[^gentry] 
+
+## Description
+For this assignment, you are tasked with determining which Exclusive Economic Zones (EEZ) on the West Coast of the US are best suited to developing marine aquaculture for several species of oysters ***and*** a species of your choice. Suitable locations will be determined based on range of suitable sea surface temperature (SST) and depth values for the species.
+
+To make your workflow generalizable, you must create a function that has the following characteristics:
+
+- **arguments:**
+  - minimum and maximum sea surface temperature
+  - minimum and maximum depth
+  - species name
+- **outputs:**
+  - map of EEZ regions colored by amount of suitable area
+    - species name should be included in the map's title
+
+:::{.callout-tip icon=true}
+# Tip: Building a generalizable workflow
+
+Remember, functions can be hard to debug! So it's highly recommended that you build the workflow for a single species (not in a function). Then you can start translating your workflow into a function by identifying the pieces that need to be generalized. 
+
+**Questions to ask yourself:**
+which variables can stay the same for each species and which ones would need to change?
+
+:::
+
+### Generalize your workflow! 
+Now that you've worked through the solution for one group of species, let's update your workflow to work for other species. Please create a function that would allow you to reproduce your results for other species. Your function should be able to do the following:
+
+-   accept temperature and depth ranges and species name as inputs
+-   create maps of total suitable area and percent suitable area per EEZ with the species name in the title
+
+Run your function for a species of your choice! 
+
+## Data details
+
+### Suitable growing conditions
+#### Oysters
+Research has shown that oysters need the following conditions for optimal growth:
+
+-   sea surface temperature: 11-30&deg;C
+-   depth: 0-70 meters below sea level
+
+#### Choose-your-own species
+You can find information on species depth and temperature requirements on [SeaLifeBase](https://www.sealifebase.ca/search.php). Remember, we are thinking about the potential for marine aquaculture, so these species should have some reasonable potential for commercial consumption. 
+
+### Sea Surface Temperature
+We will use average annual sea surface temperature (SST) from the years 2008 to 2012 to characterize the average sea surface temperature within the region. The data we are working with was originally generated from [NOAA's 5km Daily Global Satellite Sea Surface Temperature Anomaly v3.1](https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php).
+
+**Data files:**
+
+ -   `average_annual_sst_2008.tif`
+ -   `average_annual_sst_2009.tif`
+ -   `average_annual_sst_2010.tif`
+ -   `average_annual_sst_2011.tif`
+ -   `average_annual_sst_2012.tif`
+
+### Bathymetry
+To characterize the depth of the ocean we will use the [General Bathymetric Chart of the Oceans (GEBCO)](https://www.gebco.net/data_and_products/gridded_bathymetry_data/#area).[^gebco]
+
+**Data file:** `depth.tif`
+
+### Exclusive Economic Zones
+We will be designating maritime boundaries using Exclusive Economic Zones off of the west coast of US from [Marineregions.org](https://www.marineregions.org/eez.php).
+
+**Data file:** `wc_regions_clean.shp`
+
+## Workflow outline
+
+Below is an outline of the steps you should consider taking to achieve the assignment tasks. 
+
+### Prepare data
+To start, we need to load all necessary data and make sure it has the coordinate reference system. 
+
+- shapefile for the West Coast EEZ
+- bathymetry raster
+- SST rasters
+  - combine SST rasters into a raster stack
+
+:::{.callout-tip icon=true}
+
+Make sure to check that these datasets have the same coordinate reference systems! If not, transform them to match.
+
+:::
+
+### Process data
+Next, we need to process the SST and depth data so that they can be combined. In this case the SST and depth data have slightly different resolutions, extents, and positions. 
+
+-   find the mean SST from 2008-2012 (e.g. create single raster of average SST)
+-   convert average SST from Kelvin to Celsius
+    -   hint: subtract by 273.15
+-   crop depth raster to match the extent of the SST raster
+-   note: the resolutions of the SST and depth data do not match
+    -   resample the depth data to match the resolution of the SST data using the nearest neighbor approach
+-   check that the depth and SST match in resolution, extent, and coordinate reference system
+    -   hint: can the rasters be stacked?
+    
+
+### Find suitable locations
+To find suitable locations for marine aquaculture, we'll need to find locations that are suitable in terms of both SST and depth.
+
+-   reclassify SST and depth data into locations that are suitable for oysters
+    -   hint: set suitable values to `1` and unsuitable values to `0`
+-   find locations that satisfy both SST and depth conditions
+
+:::{.callout-tip icon=true}
+# Tip: finding suitable locations
+
+The SST and depth rasters should now identify the suitability of locations as `0` or `1`. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiple the values of the cells, using the `lapp()` function.
+
+:::
+
+### Determine the most suitable EEZ 
+We want to determine the total suitable area within each EEZ in order to rank zones by priority. To do so, we need to find the total area of suitable locations within each EEZ.
+
+-   select suitable cells within West Coast EEZs
+-   find area of grid cells
+-   find the total suitable area within each EEZ
+    -   hint: it might be helpful to rasterize the EEZ data
+
+    
+  
+
+
+[^hall]:Hall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M. Blue Frontiers: Managing the Environmental Costs of Aquaculture (The WorldFish Center, Penang, Malaysia, 2011). 
+
+[^gentry]:Gentry, R. R., Froehlich, H. E., Grimm, D., Kareiva, P., Parke, M., Rust, M., Gaines, S. D., & Halpern, B. S. Mapping the global potential for marine aquaculture. *Nature Ecology & Evolution*, 1, 1317-1324 (2017).
+
+[^gebco]:GEBCO Compilation Group (2022) GEBCO_2022 Grid (doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c).
+
+
+
+## Rubric (specifications)
+
+Your output should serve as a stand-alone item that someone unfamiliar with the assignment would be able to understand your analysis, including the decisions made in selecting your approach and interpretation of the results.
+
+Assignments will be deemed "Satisfactory" based on the following criteria:
+
+#### Data analysis
+- [ ] Code must produce expected output based on correct data manipulation
+- [ ] Multiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. "Correct" answers are not sufficient. Justification and verification of approach should be demonstrated using the following:
+  - custom warning and error message (e.g. `warning()` and `stop()`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages))
+  - informative comments ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
+  - **BONUS:** unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
+
+#### Plots, tables, and maps
+- [ ] All plots, tables, and maps must be clear, accurate, and effectively convey the intended information
+- [ ] All plots and maps must include the following elements:
+  - an informative title
+  - legends with legible titles, including units
+  - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
+  - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
+  - for figures: axes with legible labels and titles, including units
+- All tables should be rendered with legible titles and stypling (e.g. `{kableExtra}`)
+
+#### Written reflections
+
+- [ ] Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.
+
+
+#### Professional output
+- [ ] Quarto document must be rendered to `html`
+- [ ] The rendered output must include the following elements:
+  - document header with title, name, and date (ideally the date rendered)
+  - all packages are loaded together at the top of the document
+  - all unnecessary/distracting [warnings and messages are suppressed](https://quarto.org/docs/computations/execution-options.html)
+  - include informative code comments when appropriate ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
+  - [folding code](https://quarto.org/docs/output-formats/html-code.html#folding-code) or sourcing separate scripts when appropriate to direct reader's attention
+  - succinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation
+  - complete and detailed data citations
+  - all defined variables are used in analysis (no variables are defined that are not used)
+
+:::{.callout-tip icon=true}
+# Guide to professional output
+
+See examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
+
+:::
