@@ -1,6 +1,6 @@
 ---
 title: "Homework Assignment 4"
-subtitle: "Identifying the impacts of extreme weather"
+subtitle: "Prioritizing potential aquaculture"
 author: "Ruth Oliver"
 date: last-modified
 execute: 
@@ -57,44 +57,71 @@ Your repository should have the following structure:
 ```{md}
 EDS223-HW3
 │   README.md
-│   Rmd/Proj files    
+│   qmd/Rmd/Proj files
+|   .gitignore
 │
 └───data
-    │   gis_osm_buildings_a_free_1.gpkg
-    │   gis_osm_roads_free_1.gpkg
-    │
-    └───ACS_2019_5YR_TRACT_48_TEXAS.gdb
-    |   │   census tract gdb files
-    |
-    └───VNP46A1
-    |   │   VIIRS data files
+    │   wc_regions_clean.shp
+    │   depth.tif
+    │   average_annual_sst_2008.tif
+    │   average_annual_sst_2009.tif
+    │   average_annual_sst_2010.tif
+    │   average_annual_sst_2011.tif
+    │   average_annual_sst_2012.tif
 ```
 
 
 ## Background
-Marine aquaculture has the potential to play an important role in the global food supply as a more sustainable protein option than land-based meat production.[^hall] [Gentry et al.](https://www.nature.com/articles/s41559-017-0257-9) mapped the potential for marine aquaculture globally based on multiple constraints, including ship traffic, dissolved oxygen, bottom depth .[^gentry]
+Marine aquaculture has the potential to play an important role in the global food supply as a more sustainable protein option than land-based meat production.[^hall] [Gentry et al.](https://www.nature.com/articles/s41559-017-0257-9) mapped the potential for marine aquaculture globally based on multiple constraints, including ship traffic, dissolved oxygen, and bottom depth. They found that global seafood demand could be met using less than 0.015% of the global ocean area[^gentry] 
 
 ## Description
-For this assignment, you are tasked with determining which Exclusive Economic Zones (EEZ) on the West Coast of the US are best suited to developing marine aquaculture for several species of oysters.
+For this assignment, you are tasked with determining which Exclusive Economic Zones (EEZ) on the West Coast of the US are best suited to developing marine aquaculture for several species of oysters ***and*** a species of your choice. Suitable locations will be determined based on range of suitable sea surface temperature (SST) and depth values for the species.
 
-Based on previous research, we know that oysters needs the following conditions for optimal growth:
+To make your workflow generalizable, you must create a function that has the following characteristics:
+
+- **arguments:**
+  - minimum and maximum sea surface temperature
+  - minimum and maximum depth
+  - species name
+- **outputs:**
+  - map of EEZ regions colored by amount of suitable area
+    - species name should be included in the map's title
+
+:::{.callout-tip icon=true}
+# Tip: Building a generalizable workflow
+
+Remember, functions can be hard to debug! So it's highly recommended that you build the workflow for a single species (not in a function). Then you can start translating your workflow into a function by identifying the pieces that need to be generalized. 
+
+**Questions to ask yourself:**
+which variables can stay the same for each species and which ones would need to change?
+
+:::
+
+### Generalize your workflow! 
+Now that you've worked through the solution for one group of species, let's update your workflow to work for other species. Please create a function that would allow you to reproduce your results for other species. Your function should be able to do the following:
+
+-   accept temperature and depth ranges and species name as inputs
+-   create maps of total suitable area and percent suitable area per EEZ with the species name in the title
+
+Run your function for a species of your choice! 
+
+## Data details
+
+### Suitable growing conditions
+#### Oysters
+Research has shown that oysters need the following conditions for optimal growth:
 
 -   sea surface temperature: 11-30&deg;C
 -   depth: 0-70 meters below sea level
 
-Create the following maps:
+#### Choose-your-own species
+You can find information on species depth and temperature requirements on [SeaLifeBase](https://www.sealifebase.ca/search.php). Remember, we are thinking about the potential for marine aquaculture, so these species should have some reasonable potential for commercial consumption. 
 
--   total suitable area by region
--   percent suitable area by region
-
--   accept temperature and depth ranges and species name as inputs
-
-
-## Data details
 ### Sea Surface Temperature
 We will use average annual sea surface temperature (SST) from the years 2008 to 2012 to characterize the average sea surface temperature within the region. The data we are working with was originally generated from [NOAA's 5km Daily Global Satellite Sea Surface Temperature Anomaly v3.1](https://coralreefwatch.noaa.gov/product/5km/index_5km_ssta.php).
 
 **Data files:**
+
  -   `average_annual_sst_2008.tif`
  -   `average_annual_sst_2009.tif`
  -   `average_annual_sst_2010.tif`
@@ -118,10 +145,10 @@ Below is an outline of the steps you should consider taking to achieve the assig
 ### Prepare data
 To start, we need to load all necessary data and make sure it has the coordinate reference system. 
 
--   read in the shapefile for the West Coast EEZ ()
--   read in SST rasters
--   combine SST rasters into a raster stack
--   read in bathymetry raster
+- shapefile for the West Coast EEZ
+- bathymetry raster
+- SST rasters
+  - combine SST rasters into a raster stack
 
 :::{.callout-tip icon=true}
 
@@ -130,10 +157,10 @@ Make sure to check that these datasets have the same coordinate reference system
 :::
 
 ### Process data
-Next, we need process the SST and depth data so that they can be combined. In this case the SST and depth data have slightly different resolutions, extents, and positions. We don't want to change the underlying depth data, so we will need to resample to match the SST data using the nearest neighbor approach. 
+Next, we need to process the SST and depth data so that they can be combined. In this case the SST and depth data have slightly different resolutions, extents, and positions. 
 
--   find the mean SST from 2008-2012
--   convert SST data from Kelvin to Celsius
+-   find the mean SST from 2008-2012 (e.g. create single raster of average SST)
+-   convert average SST from Kelvin to Celsius
     -   hint: subtract by 273.15
 -   crop depth raster to match the extent of the SST raster
 -   note: the resolutions of the SST and depth data do not match
@@ -143,13 +170,19 @@ Next, we need process the SST and depth data so that they can be combined. In th
     
 
 ### Find suitable locations
-In order to find suitable locations for marine aquaculture, we'll need to find locations that are suitable in terms of both SST and depth.
+To find suitable locations for marine aquaculture, we'll need to find locations that are suitable in terms of both SST and depth.
 
 -   reclassify SST and depth data into locations that are suitable for oysters
-    -   hint: set suitable values to `1` and unsuitable values to `NA`
+    -   hint: set suitable values to `1` and unsuitable values to `0`
 -   find locations that satisfy both SST and depth conditions
-    -   hint: create an overlay using the `lapp()` function multiplying cell values
-    
+
+:::{.callout-tip icon=true}
+# Tip: finding suitable locations
+
+The SST and depth rasters should now identify the suitability of locations as `0` or `1`. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiple the values of the cells, using the `lapp()` function.
+
+:::
+
 ### Determine the most suitable EEZ 
 We want to determine the total suitable area within each EEZ in order to rank zones by priority. To do so, we need to find the total area of suitable locations within each EEZ.
 
@@ -157,17 +190,10 @@ We want to determine the total suitable area within each EEZ in order to rank zo
 -   find area of grid cells
 -   find the total suitable area within each EEZ
     -   hint: it might be helpful to rasterize the EEZ data
--   find the percentage of each zone that is suitable
-    -   hint: it might be helpful to join the suitable area by region onto the EEZ vector data
+
     
   
-### Generalize your workflow! 
-Now that you've worked through the solution for one group of species, let's update your workflow to work for other species. Please create a function that would allow you to reproduce your results for other species. Your function should be able to do the following:
 
--   accept temperature and depth ranges and species name as inputs
--   create maps of total suitable area and percent suitable area per EEZ with the species name in the title
-
-Run your function for a species of your choice! You can find information on species depth and temperature requirements on [SeaLifeBase](https://www.sealifebase.ca/search.php). Remember, we are thinking about the potential for marine aquaculture, so these species should have some reasonable potential for commercial consumption. 
 
 [^hall]:Hall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M. Blue Frontiers: Managing the Environmental Costs of Aquaculture (The WorldFish Center, Penang, Malaysia, 2011). 
 
