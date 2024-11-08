@@ -97,14 +97,6 @@ which variables can stay the same for each species and which ones would need to 
 
 :::
 
-### Generalize your workflow! 
-Now that you've worked through the solution for one group of species, let's update your workflow to work for other species. Please create a function that would allow you to reproduce your results for other species. Your function should be able to do the following:
-
--   accept temperature and depth ranges and species name as inputs
--   create maps of total suitable area and percent suitable area per EEZ with the species name in the title
-
-Run your function for a species of your choice! 
-
 ## Data details
 
 ### Suitable growing conditions
