@@ -12,6 +12,19 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/santa-clara-river.jpg")
+```
+
+::: {.gray-text .center-text}
+[The Nature Conservancy](https://www.nature.org/en-us/get-involved/how-to-help/places-we-protect/the-nature-conservancy-in-california-santa-clara-river-california-con/){target="_blank"}
+:::
+
 ::: {.callout-note icon=true}
 # Source Materials
 The following materials are based on materials developed by [Dr. Chris Kibler](https://www.geog.ucsb.edu/people/researchers/christopher-kibler) for the UCSB Geography Department.
@@ -26,18 +39,17 @@ Plant species may employ the following phenological strategies:
 - **Drought deciduous**: lose leaves in the summer when water is limited
 - **Evergreen**: maintain leaves year-round
 
-This lab is based on a materials developed by Chris Kibler.
 
-## Task
+# Task
 In this lab we are analyzing plant phenology near the Santa Clara River which flows from Santa Clarita to Ventura. We will investigate the phenology of the following plant communities:
 
 - **Riparian forests**: grow along the river, dominated by winter deciduous cottonwood and willow trees
 - **Grasslands**: grow in openspaces, dominated by drought deciduous grasses
 - **Chaparral shrublands**: grow in more arid habitats, dominated by evergreen shrubs
 
-To investigate the phenology of these plant communities we will a time series of Landsat imagery and polygons identifying the locations of study sites within each plant community.
+To investigate the phenology of these plant communities we will use a time series of Landsat imagery and polygons identifying the locations of study sites within each plant community.
 
-Our goals in this lab are:
+Our primary goal is to compare seasonal patterns across vegetation communities. To do so, we will:
 
 - Convert spectral reflectance into a measure of vegetation productivity (NDVI)
 - Calculate NDVI throughout the year
@@ -46,8 +58,9 @@ Our goals in this lab are:
 
 ## Data
 
-**Landsat's Operational Land Imager (OLI)**
+**Multi-spectral remote sensing data:**
 
+- [Landsat's Operational Land Imager (OLI)](https://landsat.gsfc.nasa.gov/satellites/landsat-8/spacecraft-instruments/operational-land-imager/)
 - 8 pre-processed scenes
     - Level 2 surface reflectance products
     - Erroneous values set to NA
@@ -55,17 +68,19 @@ Our goals in this lab are:
     - Bands 2-7
     - Dates in file name
 
-**Study sites**
+**Locations of representative vegetation communities:**
 
 - Polygons representing sites
   - *study_site*: character string with plant type
 
-
-## Prerequisites
+# Workflow
+## 1. Prerequisites
 
 Let's load all necessary packages:
 
 ```{r load}
+#| warning: false
+#| message: false
 library(terra)
 library(sf)
 library(tidyverse)
