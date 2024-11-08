@@ -301,8 +301,6 @@ We want a list of the scenes so that we can tell our function to compute NDVI fo
 files <- list.files(
   here("course-materials", "data", "week8"), pattern = "*.tif", 
   full.names = TRUE)
-  
-head(files)  
 ```
 
 ```{r}
@@ -310,8 +308,6 @@ head(files)
 files <- list.files(
   here("data"), pattern = "*.tif", 
   full.names = TRUE)
-
-head(files)
 ```
 
 Now let's update our function to work with list of file names we created:
@@ -372,6 +368,7 @@ First, we'll read in a shapefile of study sites:
 #| echo: false
 #| warning: false
 #| message: false
+#| output: false
 sites <- st_read(here("course-materials", "data","week8","study_sites.shp"))
 ```
 
@@ -409,7 +406,9 @@ We're done! Except our data is very untidy... Let's tidy it up!
 - Turn from wide to long format
 - Turn layer names into date format
 
-```{r include=TRUE}
+```{r}
+#| message: false
+#| warning: false
 sites_clean <- sites_annotated %>%
   st_drop_geometry() %>%
   select(-ID) %>%
@@ -420,7 +419,12 @@ sites_clean <- sites_annotated %>%
          "day" = str_sub(name, -2, -1)) %>%
   unite("date", 4:6, sep = "-") %>%
   mutate("date" = lubridate::as_date(date)) %>%
-  group_by(study_site) %>%
+  mutate("veg_type" = case_when(study_site == "forest1" ~ "forest",
+                                study_site == "forest2" ~ "forest",
+                                study_site == "forest3" ~ "forest",
+                                study_site == "grassland" ~ "grassland",
+                                study_site == "chaparral" ~ "chaparral")) %>%
+  group_by(veg_type, date) %>%
   summarize("NDVI" = mean(NDVI, na.rm = TRUE))
 ```
 
@@ -428,29 +432,26 @@ sites_clean <- sites_annotated %>%
 
 Let's plot the results!
 
-```{r include=TRUE}
-#| eval: false
-
+```{r}
+#| code-fold: true
 ggplot(sites_clean,
        aes(x = date, y = NDVI,
-           group = study_site, col = study_site)) +
+           group = veg_type, col = veg_type)) +
   scale_color_manual(values = c("#EAAC8B", "#315C2B","#9EA93F")) +
   geom_line() +
+  geom_point() +
   theme_minimal() +
   labs(x = "", y = "Normalized Difference Vegetation Index (NDVI)", col = "Vegetation type",
        title = "Seasonal cycles of vegetation productivity") 
 ```
 
+:::{.callout-tip icon=true}
+# Critical thinking
+What do we notice in the seasonal cycle in NDVI across vegetation communities?
 
-```{r include=TRUE}
-#| eval: false
-ggplot(sites_clean,
-       aes(x = date, y = NDVI,
-           group = study_site, col = study_site)) +
-  scale_color_manual(values = c("#EAAC8B", "#315C2B", "#315C2B", "#315C2B","#9EA93F")) +
-  geom_line() +
-  theme_minimal() +
-  labs(x = "", y = "Normalized Difference Vegetation Index (NDVI)", col = "Vegetation type",
-       title = "Seasonal cycles of vegetation productivity") 
-```
+- **chaparral:** NDVI stays relatively constant throughout the year
+- **forest:** NDVI is *lowest* in the winter and *highest* in the summer
+- **grassland:** NDVI is *highest* in the winter and *lowest* in the summer
 
+Does this match our expectations?
+:::
