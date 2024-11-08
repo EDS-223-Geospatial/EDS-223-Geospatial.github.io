@@ -4,51 +4,78 @@ subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Ruth Oliver"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "95%"
+#| fig-align: "center"
+knitr::include_graphics("images/sjer.jpg")
+```
+
+::: {.gray-text .center-text}
+[NEON](https://www.neonscience.org/field-sites/sjer){target="_blank"}
+:::
+
+# Background
 The National Science Foundation's [National Ecological Observatory Network (NEON)](https://www.neonscience.org/about) collects standardized, open-access ecological data at 81 freshwater and terrestrial field sites across the country. In addition to an amazing array of on-the-ground surveys, they also periodically collect Lidar data at the sites. All data is publicly available through the NEON Data Portal.
 
 For this exercise, we will imagine that we are interested in studying canopy structure (tree height) at the San Joaquin Experimental Range in California. We're interested in figuring out if we can rely on the Lidar data NEON is collecting by comparing tree height estimates to on-the-ground field surveys. If the estimates between the two methods are similar, we could save ourselves a lot of time and effort measuring trees!
 
 This lab is based on [materials](https://www.neonscience.org/resources/learning-hub/tutorials/introduction-light-detection-and-ranging-lidar-explore-point) developed by Edmund Hart, Leah Wasser, and Donal O'Leary for NEON.
 
-## Task
+# Task
 To estimate tree height from Lidar data, we will create a canopy height model (CHM) from Lidar-derived digital surface and terrain models. We will then extract tree height estimates within the locations of on-the-ground surveys and compare Lidar estimates to measured tree height in each plot. 
 
-## Data
+:::{.callout-note icon=true}
+# Getting started
+To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week10){target="_blank"} to access all necessary data.
+:::
 
-**Lidar data**
+## 1. Data
 
-- **SJER2013_DSM.tif**, digital surface model (DSM)
-- **SJER2013_DTM.tif**, digital terrain model (DTM)
-- DSMs represent the elevation of the top of all objects
-- DTMs represent the elevation of the ground (or terrain)
+### Lidar data
 
-**Vegetation plot geometries**
+- digital surface models (DSM) represent the elevation of the top of all objects
+- digital terrain model (DTM) represent the elevation of the ground (or terrain)
 
-- **SJERPlotCentroids_Buffer.shp**
+**Data files:**
+
+- `SJER2013_DSM.tif`
+- `SJER2013_DTM.tif`
+
+### Vegetation plot geometries
+
 - Contains locations of vegetation surveys
 - Polygons representing 20m buffer around plot centroids
 
-**Vegetation surveys**
+**Data file:** `SJERPlotCentroids_Buffer.shp`
 
-- **D17_2013_vegStr.csv**
+### Vegetation surveys
+
 - Measurements for individual trees in each plot
-- Metadata available in **D17_2013_vegStr_metadata_desc.csv**
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+**Data files:**
+- `D17_2013_vegStr.csv`
+- Metadata available in `D17_2013_vegStr_metadata_desc.csv`
 
-## Prerequisites
+
+# Workflow
+
+## 1. Set up
 
 Let's load all necessary packages:
 
-```{r load-packages, warning=FALSE, message=FALSE}
+```{r}
+#| warning: false
+#| message: false
 library(terra)
 library(sf)
 library(tidyverse)
@@ -56,9 +83,19 @@ library(tmap)
 library(here)
 ```
 
-## Load Lidar data
+## 2. Load Lidar data
 
-```{r load-lidar}
+```{r}
+#| eval: false
+# digital surface model (DSM)
+dsm <- rast(here::here("data", "SJER2013_DSM.tif"))
+
+# digital terrain model (DTM)
+dtm <- rast(here::here("data", "SJER2013_DTM.tif"))
+```
+
+```{r}
+#| echo: false
 # digital surface model (DSM)
 dsm <- rast(here::here("course-materials", "data", "week10", "SJER2013_DSM.tif"))
 
@@ -78,35 +115,48 @@ Create the canopy height model (CHM) or the height of all objects by finding the
 chm <- dsm - dtm
 ```
 
-## Load vegetation plot geometries
+## 3. Load vegetation plot geometries
 
 This includes the locations of study plots and the surveys of individual trees in each plot.
 
-```{r load-centroids, warning=FALSE, message=FALSE, results='hide'}
+```{r}
+#| eval: false
 # read in plot centroids
-plot_centroids <- st_read(here::here("course-materials", "data", "week10", "PlotCentroids", "SJERPlotCentroids_Buffer.shp"))
-
-# test if the plot CRS matches the Lidar CRS
-st_crs(plot_centroids) == st_crs(chm)
+plot_centroids <- st_read(here::here("data", "PlotCentroids", "SJERPlotCentroids_Buffer.shp"))
 ```
 
-```{r warning=FALSE, message=FALSE}
+
+```{r load-centroids, warning=FALSE, message=FALSE, results='hide'}
+#| echo: false
+# read in plot centroids
+plot_centroids <- st_read(here::here("course-materials", "data", "week10", "PlotCentroids", "SJERPlotCentroids_Buffer.shp"))
+```
+
+```{r}
+# test if the plot CRS matches the Lidar CRS
+if(st_crs(plot_centroids) == st_crs(chm)) {
+  print("coordinate reference systems match")
+} else{
+  plot_centroids <- st_transform(plot_centroids, crs = st_crs(chm))
+}
+```
+
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
 tm_shape(chm) +
-  tm_raster() +
+  tm_raster(title = "Digital surface model (m)") +
   tm_shape(plot_centroids) +
   tm_polygons()
 ```
 
-## Load vegetation survey data
+## 4. Load vegetation survey data
 
 Let's find the maximum tree height in each plot:
 
 ```{r load-surveys}
-# read in the vegetation surveys, which include the height of each tree
-
-# setting this option will keep all character strings as characters
-options(stringsAsFactors=FALSE)
-
 # read in survey data and find the maximum tree height in each plot
 veg_surveys <- read.csv(here::here("course-materials", "data", "week10", "VegetationData", "D17_2013_vegStr.csv")) %>%
   group_by(plotid) %>%
@@ -128,7 +178,7 @@ plot_centroids <- cbind(plot_centroids, extract_chm_height) %>%
   left_join(.,veg_surveys, by = c("Plot_ID" = "plotid"))
 ```
 
-## Plot results
+## 5. Plot results
 
 Let's compare the estimates between the two methods: Lidar and on-the-ground surveys
 
@@ -136,7 +186,10 @@ Let's compare the estimates between the two methods: Lidar and on-the-ground sur
   - If all the points fall along this line it means that both methods give the same answer
 - Let's also add a regression line with confidence intervals to compare how the overall fit between methods compares to the 1:1 line
 
-```{r plot-results, message=FALSE, warning=FALSE}
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
 ggplot(plot_centroids, aes(y=chm_height, x= survey_height)) +
   geom_abline(slope=1, intercept=0, alpha=.5, lty=2) + #plotting our "1:1" line
   geom_point() +
@@ -149,4 +202,8 @@ ggplot(plot_centroids, aes(y=chm_height, x= survey_height)) +
 
 We've now compared Lidar estimates of tree height to on-the-ground measurements! 
 
+:::{.callout-warning icon=true}
+# Interpreting results
 It looks like the Lidar estimates tend to underestimate tree height for shorter trees and overestimates tree height for taller trees. Or maybe human observers underestimate the height of tall trees because they're challenging to measure? Or maybe the digital terrain model misjudged the elevation of the ground? There could be many reasons that the answers don't line up! It's then up to the researcher to figure out if the mismatch is important for their problem.
+:::
+
