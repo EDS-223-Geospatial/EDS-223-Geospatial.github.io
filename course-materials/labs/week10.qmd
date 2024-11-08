@@ -142,7 +142,10 @@ if(st_crs(plot_centroids) == st_crs(chm)) {
 ```
 
 
-```{r warning=FALSE, message=FALSE}
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
 tm_shape(chm) +
   tm_raster(title = "Digital surface model (m)") +
   tm_shape(plot_centroids) +
