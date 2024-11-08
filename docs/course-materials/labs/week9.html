@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ruth Oliver">
-<meta name="dcterms.date" content="2024-10-09">
+<meta name="dcterms.date" content="2024-11-08">
 
 <title>Week 9: Lab</title>
 <style>
@@ -163,6 +163,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week6.html">
  <span class="dropdown-text">week 6</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week8.html">
+ <span class="dropdown-text">week 8</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week9.html">
+ <span class="dropdown-text">week 9</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week10.html">
+ <span class="dropdown-text">week 10</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -211,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 9, 2024</p>
+        <p class="date">November 8, 2024</p>
       </div>
     </div>
     
@@ -227,15 +239,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#task" id="toc-task" class="nav-link active" data-scroll-target="#task">Task</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
-  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">Set Up</a></li>
-  <li><a href="#load-landsat-data" id="toc-load-landsat-data" class="nav-link" data-scroll-target="#load-landsat-data">Load Landsat Data</a></li>
-  <li><a href="#load-study-area" id="toc-load-study-area" class="nav-link" data-scroll-target="#load-study-area">Load Study Area</a></li>
-  <li><a href="#crop-and-mask-landsat-data-to-study-area" id="toc-crop-and-mask-landsat-data-to-study-area" class="nav-link" data-scroll-target="#crop-and-mask-landsat-data-to-study-area">Crop and Mask Landsat Data to Study Area</a></li>
-  <li><a href="#convert-landsat-values-to-reflectance" id="toc-convert-landsat-values-to-reflectance" class="nav-link" data-scroll-target="#convert-landsat-values-to-reflectance">Convert Landsat Values to Reflectance</a></li>
-  <li><a href="#classify-image" id="toc-classify-image" class="nav-link" data-scroll-target="#classify-image">Classify Image</a></li>
-  <li><a href="#plot-results" id="toc-plot-results" class="nav-link" data-scroll-target="#plot-results">Plot Results</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#task" id="toc-task" class="nav-link" data-scroll-target="#task">Task</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">1. Data</a>
+  <ul class="collapse">
+  <li><a href="#landsat-5-thematic-mapper" id="toc-landsat-5-thematic-mapper" class="nav-link" data-scroll-target="#landsat-5-thematic-mapper">Landsat 5 Thematic Mapper</a></li>
+  <li><a href="#study-area" id="toc-study-area" class="nav-link" data-scroll-target="#study-area">Study area</a></li>
+  <li><a href="#training-data" id="toc-training-data" class="nav-link" data-scroll-target="#training-data">Training data</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#workflow" id="toc-workflow" class="nav-link" data-scroll-target="#workflow">Workflow</a>
+  <ul class="collapse">
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">1. Set up</a></li>
+  <li><a href="#load-landsat-data" id="toc-load-landsat-data" class="nav-link" data-scroll-target="#load-landsat-data">2. Load Landsat data</a></li>
+  <li><a href="#load-study-area" id="toc-load-study-area" class="nav-link" data-scroll-target="#load-study-area">3. Load study area</a></li>
+  <li><a href="#crop-and-mask-landsat-data-to-study-area" id="toc-crop-and-mask-landsat-data-to-study-area" class="nav-link" data-scroll-target="#crop-and-mask-landsat-data-to-study-area">4. Crop and mask Landsat data to study area</a></li>
+  <li><a href="#convert-landsat-values-to-reflectance" id="toc-convert-landsat-values-to-reflectance" class="nav-link" data-scroll-target="#convert-landsat-values-to-reflectance">5. Convert Landsat values to reflectance</a></li>
+  <li><a href="#training-classifier" id="toc-training-classifier" class="nav-link" data-scroll-target="#training-classifier">6. Training classifier</a></li>
+  <li><a href="#classify-image" id="toc-classify-image" class="nav-link" data-scroll-target="#classify-image">7. Classify image</a></li>
+  <li><a href="#plot-results" id="toc-plot-results" class="nav-link" data-scroll-target="#plot-results">8. Plot results</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -246,20 +270,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/santa-barbara.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="gray-text center-text">
+<p><a href="hhttps://unsplash.com/photos/a-pier-in-the-middle-of-a-body-of-water-JpSaot2H1M0" target="_blank">Unsplash</a></p>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Source Materials
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The following materials are based on materials developed by <a href="https://www.geog.ucsb.edu/people/researchers/christopher-kibler" target="_blank">Dr.&nbsp;Chris Kibler</a> for the UCSB Geography Department.</p>
+</div>
+</div>
+<section id="background" class="level1">
+<h1>Background</h1>
 <p>Monitoring the distribution and change in land cover types can help us understand the impacts of phenomena like climate change, natural disasters, deforestation, and urbanization. Determining land cover types over large areas is a major application of remote sensing because we are able to distinguish different materials based on their spectral reflectance.</p>
 <p>Classifying remotely sensed imagery into land cover classes enables us to understand the distribution and change in land cover types over large areas.</p>
 <p>There are many approaches for performing land cover classification:</p>
 <ul>
-<li><em>Supervised</em> approaches use training data labeled by the user</li>
-<li><em>Unsupervised</em> approaches use algorithms to create groups which are identified by the user afterward</li>
+<li><strong>Supervised</strong> approaches use training data labeled by the user</li>
+<li><strong>Unsupervised</strong> approaches use algorithms to create groups which are identified by the user afterward</li>
 </ul>
-<p>This lab is based on a materials developed by Chris Kibler.</p>
-<section id="task" class="level2">
-<h2 class="anchored" data-anchor-id="task">Task</h2>
-<p>In this lab, we are using a form of supervised classification, a decision tree classifier.</p>
+</section>
+<section id="task" class="level1">
+<h1>Task</h1>
+<p>In this lab, we are using a form of supervised classification – a decision tree classifier.</p>
 <p><a href="https://medium.com/@ml.at.berkeley/machine-learning-crash-course-part-5-decision-trees-and-ensemble-models-dcc5a36af8cd">Decision trees</a> classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data.</p>
-<p>In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: (1) green vegetation; (2) dry grass or soil; (3) urban; and (4) water.</p>
-<p>Our goals in this lab are:</p>
+<p>In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types:</p>
+<ul>
+<li>green vegetation</li>
+<li>dry grass or soil</li>
+<li>urban</li>
+<li>water</li>
+</ul>
+<p>To do so, we will need to:</p>
 <ul>
 <li>Load and process Landsat scene</li>
 <li>Crop and mask Landsat data to study area</li>
@@ -267,95 +324,154 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Train and apply decision tree classifier</li>
 <li>Plot results</li>
 </ul>
-</section>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Getting started
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To get started, fork and clone <a href="https://github.com/EDS-223-Geospatial/eds223-week9" target="_blank">this repository</a> to access all necessary data.</p>
+</div>
+</div>
 <section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p><strong>Landsat 5 Thematic Mapper</strong></p>
+<h2 class="anchored" data-anchor-id="data">1. Data</h2>
+<section id="landsat-5-thematic-mapper" class="level3">
+<h3 class="anchored" data-anchor-id="landsat-5-thematic-mapper">Landsat 5 Thematic Mapper</h3>
 <ul>
 <li><a href="https://www.usgs.gov/landsat-missions/landsat-5">Landsat 5</a></li>
-<li>1 scene from September 25, 2007<br>
-</li>
+<li>1 scene from September 25, 2007</li>
 <li>Bands: 1, 2, 3, 4, 5, 7</li>
 <li>Collection 2 surface reflectance product</li>
 </ul>
-<p><strong>Study area and training data</strong></p>
+<p><strong>Data files:</strong></p>
 <ul>
-<li>Polygon representing southern Santa Barbara county</li>
-<li>Polygons representing training sites
-<ul>
-<li><em>type</em>: character string with land cover type</li>
-</ul></li>
+<li><code>landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B1.tif</code></li>
+<li><code>landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B2.tif</code></li>
+<li><code>landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B3.tif</code></li>
+<li><code>landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B4.tif</code></li>
+<li><code>landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B5.tif</code></li>
+<li><code>landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B7.tif</code></li>
 </ul>
 </section>
+<section id="study-area" class="level3">
+<h3 class="anchored" data-anchor-id="study-area">Study area</h3>
+<p>Polygon representing southern Santa Barbara county</p>
+<p><strong>Data file:</strong> <code>SB_county_south.shp</code></p>
+</section>
+<section id="training-data" class="level3">
+<h3 class="anchored" data-anchor-id="training-data">Training data</h3>
+<p>Polygons representing sites with training data - <em>type</em>: character string with land cover type</p>
+<p><strong>Data file:</strong> <code>trainingdata.shp</code></p>
+</section>
+</section>
+</section>
+<section id="workflow" class="level1">
+<h1>Workflow</h1>
 <section id="set-up" class="level2">
-<h2 class="anchored" data-anchor-id="set-up">Set Up</h2>
-<p>We’ll be working with vector and raster data, so will need both <strong>sf</strong> and <strong>terra</strong>. To train our classification algorithm and plot the results, we’ll use the <code>rpart</code> and <code>rpart.plot</code> packages.</p>
-<p>Set your working directory to the folder that holds the data for this lab.<br>
-- <strong>Note:</strong> my filepaths may look different than yours!</p>
+<h2 class="anchored" data-anchor-id="set-up">1. Set up</h2>
+<p>To train our classification algorithm and plot the results, we’ll use the <code>rpart</code> and <code>rpart.plot</code> packages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rpart"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rpart.plot"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Let’s load all necessary packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># vector data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra) <span class="co"># raster data</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here) <span class="co"># file path management</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart) <span class="co"># recursive partitioning and regression trees</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rpart.plot) <span class="co"># plotting for rpart</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap) <span class="co"># map making</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-landsat-data" class="level2">
-<h2 class="anchored" data-anchor-id="load-landsat-data">Load Landsat Data</h2>
-<p>Let’s create a raster stack. Each file name ends with the band number (e.g.&nbsp;<strong>B1.tif</strong>).</p>
+<h2 class="anchored" data-anchor-id="load-landsat-data">2. Load Landsat data</h2>
+<p>Let’s create a raster stack. Each file name ends with the band number (e.g.&nbsp;<code>B1.tif</code>).</p>
 <ul>
 <li>Notice that we are missing a file for band 6</li>
 <li>Band 6 corresponds to thermal data, which we will not be working with for this lab</li>
 </ul>
-<p>To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the <code>rast</code> function. We’ll then update the names of the layers to match the spectral bands and plot a true color image to see what we’re working with.</p>
+<p>To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the <code>terra::rast()</code> function. We’ll then update the names of the layers to match the spectral bands and plot a true color image to see what we’re working with.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list files for each band, including the full file path</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>filelist <span class="ot">&lt;-</span> <span class="fu">list.files</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"course-materials"</span>, <span class="st">"data"</span>, <span class="st">"week9"</span>, <span class="st">"landsat-data"</span>), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in and store as a raster stack</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>landsat_20070925 <span class="ot">&lt;-</span> <span class="fu">rast</span>(filelist)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># update layer names to match band</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20070925) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot true color image</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_20070925, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># list files for each band, including the full file path</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>filelist <span class="ot">&lt;-</span> <span class="fu">list.files</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat-data"</span>), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># read in and store as a raster stack</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> <span class="fu">rast</span>(filelist)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># update layer names to match band</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot true color image</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week9_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="load-study-area" class="level2">
-<h2 class="anchored" data-anchor-id="load-study-area">Load Study Area</h2>
+<h2 class="anchored" data-anchor-id="load-study-area">3. Load study area</h2>
 <p>We want to constrain our analysis to the southern portion of the county where we have training data, so we’ll read in a file that defines the area we would like to study.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in shapefile for southern portion of SB county</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>SB_county_south <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"course-materials"</span>, <span class="st">"data"</span>, <span class="st">"week9"</span>, <span class="st">"SB_county_south.shp"</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># project to match the Landsat data</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>SB_county_south <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(SB_county_south, <span class="at">crs =</span> <span class="fu">crs</span>(landsat_20070925))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in shapefile for southern portion of SB county</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SB_county_south <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"SB_county_south.shp"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">st_transform</span>(SB_county_south, <span class="at">crs =</span> <span class="fu">crs</span>(landsat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(SB_county_south) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week9_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="crop-and-mask-landsat-data-to-study-area" class="level2">
-<h2 class="anchored" data-anchor-id="crop-and-mask-landsat-data-to-study-area">Crop and Mask Landsat Data to Study Area</h2>
+<h2 class="anchored" data-anchor-id="crop-and-mask-landsat-data-to-study-area">4. Crop and mask Landsat data to study area</h2>
 <p>Now, we can crop and mask the Landsat data to our study area.</p>
 <ul>
 <li><strong>Why</strong>? This reduces the amount of data we’ll be working with and therefore saves computational time</li>
 <li><strong>Bonus</strong>: We can also remove any objects we’re no longer working with to save space</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crop Landsat scene to the extent of the SB county shapefile</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>landsat_cropped <span class="ot">&lt;-</span> <span class="fu">crop</span>(landsat_20070925, SB_county_south)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mask the raster to southern portion of SB county</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>landsat_masked <span class="ot">&lt;-</span> <span class="fu">mask</span>(landsat_cropped, SB_county_south)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove unnecessary object from environment</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(landsat_20070925, SB_county_south, landsat_cropped)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crop Landsat scene to the extent of the SB county shapefile</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>landsat_cropped <span class="ot">&lt;-</span> <span class="fu">crop</span>(landsat, SB_county_south)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mask the raster to southern portion of SB county</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>landsat_masked <span class="ot">&lt;-</span> <span class="fu">mask</span>(landsat_cropped, SB_county_south)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove unnecessary object from environment</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(landsat, SB_county_south, landsat_cropped)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_masked, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week9_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="convert-landsat-values-to-reflectance" class="level2">
-<h2 class="anchored" data-anchor-id="convert-landsat-values-to-reflectance">Convert Landsat Values to Reflectance</h2>
+<h2 class="anchored" data-anchor-id="convert-landsat-values-to-reflectance">5. Convert Landsat values to reflectance</h2>
 <p>Now we need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any <a href="https://www.usgs.gov/faqs/how-do-i-use-scale-factor-landsat-level-2-science-products#:~:text=Landsat%20Collection%202%20surface%20temperature,the%20scale%20factor%20is%20applied.">scaling factors</a> to convert to reflectance.</p>
 <p>In this case, we are working with <a href="https://www.usgs.gov/landsat-missions/landsat-collection-2">Landsat Collection 2</a>.</p>
 <ul>
@@ -367,94 +483,160 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Let’s reclassify any erroneous values as <code>NA</code> and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-100%!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reclassify erroneous values as NA</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>rcl <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">7273</span>, <span class="cn">NA</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">43636</span>, <span class="cn">Inf</span>, <span class="cn">NA</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> <span class="fu">classify</span>(landsat_masked, <span class="at">rcl =</span> rcl)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust values based on scaling factor</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> (landsat <span class="sc">*</span> <span class="fl">0.0000275</span> <span class="sc">-</span> <span class="fl">0.2</span>) <span class="sc">*</span> <span class="dv">100</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot true color image to check results</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># check values are 0 - 100</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(landsat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reclassify erroneous values as NA</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>rcl <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="dv">7273</span>, <span class="cn">NA</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="dv">43636</span>, <span class="cn">Inf</span>, <span class="cn">NA</span>), <span class="at">ncol =</span> <span class="dv">3</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> <span class="fu">classify</span>(landsat_masked, <span class="at">rcl =</span> rcl)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust values based on scaling factor</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> (landsat <span class="sc">*</span> <span class="fl">0.0000275</span> <span class="sc">-</span> <span class="fl">0.2</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># check values are 0 - 100</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(landsat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      blue           green            red             NIR       
+ Min.   : 1.11   Min.   : 0.74   Min.   : 0.00   Min.   : 0.23  
+ 1st Qu.: 2.49   1st Qu.: 2.17   1st Qu.: 1.08   1st Qu.: 0.75  
+ Median : 3.06   Median : 4.59   Median : 4.45   Median :14.39  
+ Mean   : 3.83   Mean   : 5.02   Mean   : 4.92   Mean   :11.52  
+ 3rd Qu.: 4.63   3rd Qu.: 6.76   3rd Qu.: 7.40   3rd Qu.:19.34  
+ Max.   :39.42   Max.   :53.32   Max.   :56.68   Max.   :57.08  
+ NA's   :39856   NA's   :39855   NA's   :39855   NA's   :39856  
+     SWIR1           SWIR2      
+ Min.   : 0.10   Min.   : 0.20  
+ 1st Qu.: 0.41   1st Qu.: 0.60  
+ Median :13.43   Median : 8.15  
+ Mean   :11.88   Mean   : 8.52  
+ 3rd Qu.:18.70   3rd Qu.:13.07  
+ Max.   :49.13   Max.   :48.07  
+ NA's   :42892   NA's   :46809  </code></pre>
+</div>
 </div>
 </section>
-<section id="classify-image" class="level2">
-<h2 class="anchored" data-anchor-id="classify-image">Classify Image</h2>
+<section id="training-classifier" class="level2">
+<h2 class="anchored" data-anchor-id="training-classifier">6. Training classifier</h2>
 <p>Let’s begin by extracting reflectance values for training data!</p>
-<ol type="1">
-<li>We will load the shapefile identifying different locations within our study area as containing one of our 4 land cover types.</li>
-<li>We can then extract the spectral values at each site to create a data frame that relates land cover types to their spectral reflectance.</li>
-</ol>
+<p>We will load the shapefile identifying locations within our study area as containing one of our 4 land cover types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in and transform training data</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>training_data <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"course-materials"</span>, <span class="st">"data"</span>, <span class="st">"week9"</span>, <span class="st">"trainingdata.shp"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(., <span class="at">crs =</span> <span class="fu">crs</span>(landsat))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># extract reflectance values at training sites</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>training_data_values <span class="ot">&lt;-</span> <span class="fu">extract</span>(landsat, training_data, <span class="at">df =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># convert training data to data frame</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>training_data_attributes <span class="ot">&lt;-</span> training_data <span class="sc">%&gt;%</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># join training data attributes and extracted reflectance values</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>SB_training_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(training_data_values, training_data_attributes,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span> <span class="ot">=</span> <span class="st">"id"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type)) <span class="co"># convert landcover type to factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in and transform training data</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>training_data <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>( <span class="st">"data"</span>, <span class="st">"trainingdata.shp"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(., <span class="at">crs =</span> <span class="fu">crs</span>(landsat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, we can extract the spectral reflectance values at each site to create a data frame that relates land cover types to their spectral reflectance.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract reflectance values at training sites</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>training_data_values <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(landsat, training_data, <span class="at">df =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># convert training data to data frame</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>training_data_attributes <span class="ot">&lt;-</span> training_data <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># join training data attributes and extracted reflectance values</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>SB_training_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(training_data_values, training_data_attributes,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span> <span class="ot">=</span> <span class="st">"id"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type)) <span class="co"># convert landcover type to factor</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, let’s train the decision tree classifier!</p>
 <p>To train our decision tree, we first need to establish our model formula (i.e.&nbsp;what our response and predictor variables are).</p>
 <ul>
-<li>The <code>rpart</code> function implements the <a href="https://medium.com/geekculture/decision-trees-with-cart-algorithm-7e179acee8ff">CART algorithm</a></li>
-<li>The <code>rpart</code> function needs to know the model formula and training data you would like to use</li>
+<li>The <code>rpart()</code> function implements the <a href="https://medium.com/geekculture/decision-trees-with-cart-algorithm-7e179acee8ff">CART algorithm</a></li>
+<li>The <code>rpart()</code> function needs to know the model formula and training data you would like to use</li>
 <li>Because we are performing a classification, we set <code>method = "class"</code></li>
 <li>We also set <code>na.action = na.omit</code> to remove any pixels with <code>NA</code>s from the analysis.</li>
 </ul>
-<p>To understand how our decision tree will classify pixels, we can plot the results!</p>
-<ul>
-<li>Note: The decision tree is comprised of a hierarchy of binary decisions. Each decision rule has 2 outcomes based on a conditional statement pertaining to values in each spectral band.</li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># establish model formula</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SB_formula <span class="ot">&lt;-</span> type <span class="sc">~</span> red <span class="sc">+</span> green <span class="sc">+</span> blue <span class="sc">+</span> NIR <span class="sc">+</span> SWIR1 <span class="sc">+</span> SWIR2</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># train decision tree</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>SB_decision_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="at">formula =</span> SB_formula,</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> SB_training_data,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"class"</span>,</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.action =</span> na.omit)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># plot decision tree</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(SB_decision_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># establish model formula</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SB_formula <span class="ot">&lt;-</span> type <span class="sc">~</span> red <span class="sc">+</span> green <span class="sc">+</span> blue <span class="sc">+</span> NIR <span class="sc">+</span> SWIR1 <span class="sc">+</span> SWIR2</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># train decision tree</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>SB_decision_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="at">formula =</span> SB_formula,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> SB_training_data,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"class"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.action =</span> na.omit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>…and apply the decision tree!</p>
+<p>To understand how our decision tree will classify pixels, we can plot the results!</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpreting decision trees
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Note:</strong> The decision tree is comprised of a hierarchy of binary decisions. Each decision rule has 2 outcomes based on a conditional statement pertaining to values in each spectral band.</p>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot decision tree</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(SB_decision_tree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week9_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="classify-image" class="level2">
+<h2 class="anchored" data-anchor-id="classify-image">7. Classify image</h2>
+<p>Now that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.</p>
 <p>The <code>terra</code> package includes a <code>predict()</code> function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The <code>predict()</code> function will return a raster layer with integer values. These integer values correspond to the <em>factor levels</em> in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classify image based on decision tree</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>SB_classification <span class="ot">&lt;-</span> <span class="fu">predict</span>(landsat, SB_decision_tree, <span class="at">type =</span> <span class="st">"class"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect level to understand the order of classes in prediction</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(SB_training_data<span class="sc">$</span>type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classify image based on decision tree</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SB_classification <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">predict</span>(landsat, SB_decision_tree, <span class="at">type =</span> <span class="st">"class"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect level to understand the order of classes in prediction</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(SB_training_data<span class="sc">$</span>type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "green_vegetation" "soil_dead_grass"  "urban"            "water"           </code></pre>
+</div>
 </div>
 </section>
 <section id="plot-results" class="level2">
-<h2 class="anchored" data-anchor-id="plot-results">Plot Results</h2>
+<h2 class="anchored" data-anchor-id="plot-results">8. Plot results</h2>
 <p>Now we can plot the results and check out our land cover map!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot results</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(SB_classification) <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale_categorical</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#8DB580"</span>, <span class="st">"#F2DDA4"</span>, <span class="st">"#7E8987"</span>, <span class="st">"#6A8EAE"</span>)),</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"green vegetation"</span>, <span class="st">"soil/dead grass"</span>, <span class="st">"urban"</span>, <span class="st">"water"</span>),</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">title =</span> <span class="st">"Landcover type"</span>)) <span class="sc">+</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot results</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(SB_classification) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#8DB580"</span>, <span class="st">"#F2DDA4"</span>, <span class="st">"#7E8987"</span>, <span class="st">"#6A8EAE"</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"green vegetation"</span>, <span class="st">"soil/dead grass"</span>, <span class="st">"urban"</span>, <span class="st">"water"</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="at">title =</span> <span class="st">"Landcover type"</span>) <span class="sc">+</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>),</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">main.title =</span> <span class="st">"Santa Barbara Landcover"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week9_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Critical thinking
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do these results make sense?</p>
+</div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
