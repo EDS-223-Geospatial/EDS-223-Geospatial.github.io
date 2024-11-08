@@ -27,7 +27,7 @@ knitr::include_graphics("images/santa-clara-river.jpg")
 
 ::: {.callout-note icon=true}
 # Source Materials
-The following materials are based on materials developed by [Dr. Chris Kibler](https://www.geog.ucsb.edu/people/researchers/christopher-kibler) for the UCSB Geography Department.
+The following materials are based on materials developed by [Dr. Chris Kibler](https://www.geog.ucsb.edu/people/researchers/christopher-kibler){target="_blank"} for the UCSB Geography Department.
 :::
 
 # Background
@@ -58,7 +58,7 @@ Our primary goal is to compare seasonal patterns across vegetation communities. 
 
 :::{.callout-note icon=true}
 # Getting started
-To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week8) to access all necessary data.
+To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week8){target="_blank"} to access all necessary data.
 :::
 
 ## 1. Data
