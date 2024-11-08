@@ -61,7 +61,7 @@ Our primary goal is to compare seasonal patterns across vegetation communities. 
 To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week8) to access all necessary data.
 :::
 
-## Data
+## 1. Data
 
 **Multi-spectral remote sensing data:**
 

@@ -4,31 +4,56 @@ subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Ruth Oliver"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/santa-barbara.jpg")
+```
+
+::: {.gray-text .center-text}
+[Unsplash](hhttps://unsplash.com/photos/a-pier-in-the-middle-of-a-body-of-water-JpSaot2H1M0){target="_blank"}
+:::
+
+
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are based on materials developed by [Dr. Chris Kibler](https://www.geog.ucsb.edu/people/researchers/christopher-kibler) for the UCSB Geography Department.
+:::
+
+# Background
 Monitoring the distribution and change in land cover types can help us understand the impacts of phenomena like climate change, natural disasters, deforestation, and urbanization. Determining land cover types over large areas is a major application of remote sensing because we are able to distinguish different materials based on their spectral reflectance. 
 
 Classifying remotely sensed imagery into land cover classes enables us to understand the distribution and change in land cover types over large areas. 
 
 There are many approaches for performing land cover classification:
 
-- *Supervised* approaches use training data labeled by the user
-- *Unsupervised* approaches use algorithms to create groups which are identified by the user afterward
+- **Supervised** approaches use training data labeled by the user
+- **Unsupervised** approaches use algorithms to create groups which are identified by the user afterward
 
-This lab is based on a materials developed by Chris Kibler.
 
-## Task
+# Task
 In this lab, we are using a form of supervised classification, a decision tree classifier. 
 
 [Decision trees](https://medium.com/@ml.at.berkeley/machine-learning-crash-course-part-5-decision-trees-and-ensemble-models-dcc5a36af8cd) classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data. 
 
-In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: (1) green vegetation; (2) dry grass or soil; (3) urban; and (4) water. 
+In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: 
 
-Our goals in this lab are:
+- green vegetation 
+- dry grass or soil 
+- urban 
+- water
+
+To do so, we will need to:
 
 - Load and process Landsat scene
 - Crop and mask Landsat data to study area
@@ -36,7 +61,12 @@ Our goals in this lab are:
 - Train and apply decision tree classifier
 - Plot results
 
-## Data
+:::{.callout-note icon=true}
+# Getting started
+To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week9) to access all necessary data.
+:::
+
+## 1. Data
 
 **Landsat 5 Thematic Mapper**
 
@@ -51,38 +81,42 @@ Our goals in this lab are:
 - Polygons representing training sites
   - *type*: character string with land cover type
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+# Workflow
+
+## 1. Set up
+
+We'll be working with vector and raster data, so will need both `sf` and `terra`. To train our classification algorithm and plot the results, we'll use the `rpart` and `rpart.plot` packages.
+
+```{r}
+#| eval: false
+install.packages("rpart")
+install.packages("rpart.plot")
 ```
 
-## Set Up
-
-We'll be working with vector and raster data, so will need both **sf** and **terra**. To train our classification algorithm and plot the results, we'll use the `rpart` and `rpart.plot` packages.
-
-Set your working directory to the folder that holds the data for this lab.\
-- **Note:** my filepaths may look different than yours!
 
 Let's load all necessary packages:
 
-```{r include=TRUE, message=FALSE, warning=FALSE}
+```{r}
+#| warning: false
+#| message: false
 library(sf)
 library(terra)
 library(here)
-library(dplyr)
+library(tidyverse)
 library(rpart)
 library(rpart.plot)
 library(tmap)
 ```
 
-## Load Landsat Data
-Let's create a raster stack. Each file name ends with the band number (e.g. **B1.tif**). 
+## 2. Load Landsat data
+Let's create a raster stack. Each file name ends with the band number (e.g. `B1.tif`). 
 
 - Notice that we are missing a file for band 6
 - Band 6 corresponds to thermal data, which we will not be working with for this lab
 
-To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the `rast` function. We'll then update the names of the layers to match the spectral bands and plot a true color image to see what we're working with.
+To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the `terra::rast()` function. We'll then update the names of the layers to match the spectral bands and plot a true color image to see what we're working with.
 
-```{r include=TRUE}
+```{r}
 # list files for each band, including the full file path
 filelist <- list.files(here::here("course-materials", "data", "week9", "landsat-data"), full.names = TRUE)
 
@@ -122,6 +156,9 @@ landsat_masked <- mask(landsat_cropped, SB_county_south)
 
 # remove unnecessary object from environment
 rm(landsat_20070925, SB_county_south, landsat_cropped)
+
+plotRGB(landsat_masked, r = 3, g = 2, b = 1, stretch = "lin")
+
 ```
 
 ## Convert Landsat Values to Reflectance
@@ -166,7 +203,7 @@ training_data <- st_read(here::here("course-materials", "data", "week9", "traini
   st_transform(., crs = crs(landsat))
 
 # extract reflectance values at training sites
-training_data_values <- extract(landsat, training_data, df = TRUE)
+training_data_values <- terra::extract(landsat, training_data, df = TRUE)
 
 # convert training data to data frame
 training_data_attributes <- training_data %>%
@@ -211,7 +248,7 @@ The `terra` package includes a `predict()` function that allows us to apply a mo
 
 ```{r include=TRUE}
 # classify image based on decision tree
-SB_classification <- predict(landsat, SB_decision_tree, type = "class", na.rm = TRUE)
+SB_classification <- terra::predict(landsat, SB_decision_tree, type = "class", na.rm = TRUE)
 
 # inspect level to understand the order of classes in prediction
 levels(SB_training_data$type)
@@ -223,9 +260,10 @@ Now we can plot the results and check out our land cover map!
 ```{r}
 # plot results
 tm_shape(SB_classification) +
-  tm_raster(col.scale = tm_scale_categorical(values = c("#8DB580", "#F2DDA4", "#7E8987", "#6A8EAE")),
-            col.legend = tm_legend(labels = c("green vegetation", "soil/dead grass", "urban", "water"),
-                                   title = "Landcover type")) +
-  tm_layout(legend.position = c("left", "bottom"))
+  tm_raster(palette = c("#8DB580", "#F2DDA4", "#7E8987", "#6A8EAE"),
+labels = c("green vegetation", "soil/dead grass", "urban", "water"),
+title = "Landcover type") +
+  tm_layout(legend.position = c("left", "bottom"),
+            main.title = "Santa Barbara Landcover")
 
 ```
