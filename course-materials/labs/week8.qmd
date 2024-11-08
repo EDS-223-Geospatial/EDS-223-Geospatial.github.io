@@ -4,12 +4,20 @@ subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Ruth Oliver"
 date: last-modified
 execute: 
-  eval: false
+  eval: true
 format:
   html:
     toc: true
+editor_options: 
+  chunk_output_type: console
 ---
 
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are based on materials developed by [Dr. Chris Kibler](https://www.geog.ucsb.edu/people/researchers/christopher-kibler) for the UCSB Geography Department.
+:::
+
+# Background
 Phenology is the timing of life history events. Important phenological events for plants involve the growth of leaves, flowering, and senescence (death of leaves). Plants species adapt the timing of these events to local climate conditions to ensure successful reproduction. Subsequently, animal species often adapt their phenology to take advantage of food availability. As the climate shifts this synchronization is being thrown out of whack. Shifts in phenology are therefore a common yardstick of understanding how and if ecosystems are adjusting to climate change.
 
 Plant species may employ the following phenological strategies:
@@ -45,31 +53,24 @@ Our goals in this lab are:
     - Erroneous values set to NA
     - Scale factor set to 100
     - Bands 2-7
-    - Dates in filenname
+    - Dates in file name
 
 **Study sites**
 
 - Polygons representing sites
   - *study_site*: character string with plant type
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, include = TRUE)
-```
 
 ## Prerequisites
 
 Let's load all necessary packages:
 
-```{r load, include=TRUE, message=FALSE, warning=FALSE}
+```{r load}
 library(terra)
 library(sf)
-library(dplyr)
-library(tidyr)
-library(stringr)
-library(ggplot2)
+library(tidyverse)
 library(here)
 library(tmap)
-library(cowplot)
 ```
 
 ## Create NDVI Function
