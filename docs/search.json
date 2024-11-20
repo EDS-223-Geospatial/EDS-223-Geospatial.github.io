@@ -1642,7 +1642,7 @@
     "href": "course-materials/discussions/week8-discussion.html#your-task",
     "title": "Week 8: Discussion Section",
     "section": "3. Your Task",
-    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nUpdate the bioclim_rast layer names to match the Bioclimatic variables using names()\nUse st_as_sf to convert and find the geographic extent of species occurrence data magpie using st_bbox()\nCrop bioclim_rast to match the extent of species occurrence data magpie\nExtract points from bioclim_rast for each occurrence in magpie\nCreate “background values” by using dismo::randomPoints() to generate random sample points from bioclim_rast\nExtract points from bioclim_rast for each random sample point generated in Step #5\nPlot species climate niche and background climate (temperature vs. precipitation)\nModify steps 2-7 into a generalizable workflow for other species occurence data\nTry your new function with spcecies occurence data tule_elk"
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nUpdate the bioclim_rast layer names to match the Bioclimatic variables using names()\nUse st_as_sf to convert and find the geographic extent of species occurrence data magpie using st_bbox()\nCrop bioclim_rast to match the extent of species occurrence data magpie\nExtract points from the cropped bioclim_rast for each occurrence in magpie\nCreate “background values” by using dismo::randomPoints() to generate random sample points from the cropped bioclim_rast\nExtract points from bioclim_rast for each random sample point generated in Step #5\nPlot species climate niche and background climate (temperature vs. precipitation)\nModify steps 2-7 into a generalizable workflow for other species occurrence data\nTry your new function with species occurrence data tule_elk"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#try-it-out-with-magpie",
@@ -1663,7 +1663,7 @@
     "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#find-geographic-extent-of-species-occurences",
     "title": "Week 8: Discussion Section - Answer Key",
     "section": "Find Geographic Extent of Species Occurences",
-    "text": "Find Geographic Extent of Species Occurences\n\nmagpie_sf &lt;- magpie %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n# Obtain geographic extent/bounding box of the species occurrences\nmagpie_bbox &lt;- st_bbox(magpie_sf)"
+    "text": "Find Geographic Extent of Species Occurences\n\nmagpie_sf &lt;- magpie %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long, lat) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n# Obtain geographic extent/bounding box of the species occurrences\nmagpie_bbox &lt;- st_bbox(magpie_sf)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#crop-raster-and-extract-points-for-species-occurences",

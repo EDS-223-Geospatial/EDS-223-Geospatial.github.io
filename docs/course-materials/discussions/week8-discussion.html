@@ -332,12 +332,12 @@ Warning
 <li>Update the <code>bioclim_rast</code> layer names to match the <a href="https://www.worldclim.org/data/bioclim.html">Bioclimatic variables</a> using <code>names()</code></li>
 <li>Use <code>st_as_sf</code> to convert and find the geographic extent of species occurrence data <code>magpie</code> using <code>st_bbox()</code></li>
 <li>Crop <code>bioclim_rast</code> to match the extent of species occurrence data <code>magpie</code></li>
-<li>Extract points from <code>bioclim_rast</code> for each occurrence in <code>magpie</code></li>
-<li>Create “background values” by using <code>dismo::randomPoints()</code> to generate random sample points from <code>bioclim_rast</code></li>
+<li>Extract points from the cropped <code>bioclim_rast</code> for each occurrence in <code>magpie</code></li>
+<li>Create “background values” by using <code>dismo::randomPoints()</code> to generate random sample points from the cropped <code>bioclim_rast</code></li>
 <li>Extract points from <code>bioclim_rast</code> for each random sample point generated in Step #5</li>
 <li>Plot species climate niche and background climate (temperature vs.&nbsp;precipitation)</li>
-<li>Modify steps 2-7 into a generalizable workflow for other species occurence data</li>
-<li>Try your new function with spcecies occurence data <code>tule_elk</code></li>
+<li>Modify steps 2-7 into a generalizable workflow for other species occurrence data</li>
+<li>Try your new function with species occurrence data <code>tule_elk</code></li>
 </ol>
 
 

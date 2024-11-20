@@ -58,7 +58,7 @@ names(bioclim_rast) <- variables
 magpie_sf <- magpie %>%
   rename(long = longitude,
          lat = latitude) %>%
-  drop_na(long) %>%
+  drop_na(long, lat) %>%
   st_as_sf(coords = c("long", "lat"), crs = 4326)
 ```
 

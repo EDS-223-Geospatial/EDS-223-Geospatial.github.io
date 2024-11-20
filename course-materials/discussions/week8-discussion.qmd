@@ -73,10 +73,10 @@ Now, to meet this week's learning objectives, your task:
 1. Update the `bioclim_rast` layer names to match the [Bioclimatic variables](https://www.worldclim.org/data/bioclim.html) using `names()` 
 2. Use `st_as_sf` to convert and find the geographic extent of species occurrence data `magpie` using `st_bbox()`
 3. Crop `bioclim_rast` to match the extent of species occurrence data `magpie`
-4. Extract points from `bioclim_rast` for each occurrence in `magpie`
-5. Create "background values" by using `dismo::randomPoints()` to generate random sample points from `bioclim_rast`
+4. Extract points from the cropped `bioclim_rast` for each occurrence in `magpie`
+5. Create “background values” by using `dismo::randomPoints()` to generate random sample points from the cropped `bioclim_rast`
 6. Extract points from `bioclim_rast` for each random sample point generated in Step #5
 7. Plot species climate niche and background climate (temperature vs. precipitation)
-8. Modify steps 2-7 into a generalizable workflow for other species occurence data
-9. Try your new function with spcecies occurence data `tule_elk`
+8. Modify steps 2-7 into a generalizable workflow for other species occurrence data
+9. Try your new function with species occurrence data `tule_elk`
 
