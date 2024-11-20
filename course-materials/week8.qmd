@@ -20,8 +20,8 @@ knitr::include_graphics("images/week8-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Spectral properties of vegetation (leaf, canopy, and landscape)](https://docs.google.com/presentation/d/1-psgXQYkCCVh_k3h0ATDBZWqPh75_GpcYcE8qwgHnDc/present?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [NDVI and phenology](labs/week8.qmd){target="_blank"}        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with raster time series data](discussions/week8-discussion.qmd){target="_blank"} |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [NDVI and phenology](labs/week8.qmd)       |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week8-discussion.qmd) ([Answer Key](discussions/answer-keys/week8-discussion-answerKey.qmd)) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

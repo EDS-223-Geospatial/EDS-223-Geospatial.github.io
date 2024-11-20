@@ -1,6 +1,6 @@
 ---
 title: "Week 8: Discussion Section"
-subtitle: "Practice function making with raster time series data"
+subtitle: "Practice function making with rasters"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
@@ -10,77 +10,73 @@ format:
     toc: true
 ---
 
-## Get Started
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "70%"
+#| fig-align: "center"
+knitr::include_graphics("images/tule_elk.jpg")
+```
 
-Let's load the necessary packages:
+::: {.gray-text .center-text}
+Photo by <a href="https://unsplash.com/@hariprasad000?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Hari Nandakumar</a> on <a href="https://unsplash.com/photos/herd-of-deer-on-brown-grass-field-during-daytime-ocQSj25qFJk?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+:::
+
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from [Leander Anderegg's niche modeling exercise](https://github.com/leanderegg/EEMB_508/tree/main). 
+:::
+
+## 1. Background
+
+This week, you will practice function making with rasters and create a generalizable workflow to determine the climate envelope (or the climate where a species currently lives) of two endemic species to California:
+
+- Tule elk (*Cervus canadensis nannodes*)
+- Yellow-billed magpie (*Pica nutalli*)
+
+## 2. Get Started
+
+- Create an `.Rproj` as your version controlled project for Week 8
+- Create a Quarto document inside your project
+- Download [this data folder from Google Drive](https://drive.google.com/file/d/1kcIQdG1c8Y01DCiI--h3a2MTaDsxfqQ2/view) and move it inside your project
+- Load all necessary packages and read spatial objects
+
+::: {.callout-warning}
+If you don't have `dismo` installed, make sure to run:
+<br>
+```{r}
+install.packages("dismo")
+```
+:::
 
 ```{r}
-#| message: false
-#| warning: false
-
-library(sf)
 library(tidyverse)
+library(sf)
 library(terra)
+library(dismo)
+library(tmap)
 ```
 
 ```{r}
-nc <- sf::st_read(system.file("shape/nc.shp", package = "sf"))
+magpie <- read_csv(here::here("data", "magpie_obvs.csv"))
+tule_elk <- read_csv(here::here("data", "tule_elk_obvs.csv"))
+
+bioclim_dir <- here::here("data", "climate", "wc2.1_2.5m")
+bioclim <- list.files(bioclim_dir, pattern = glob2rx("*.tif$"), full.names = TRUE)
+bioclim_rast <- rast(bioclim)
 ```
 
-And create a raster:
+## 3. Your Task
 
-```{r}
-elev <- terra::rast(nrows = 6, 
-                    ncols = 6, 
-                    resolution = 0.5,
-                    xmin = -1.5, xmax = 1.5, 
-                    ymin = -1.5, ymax = 1.5,
-                    vals = 1:36)
-```
+Now, to meet this week's learning objectives, your task:
 
-Now, to meet our learning objectives, your task:
+1. Update the `bioclim_rast` layer names to match the [Bioclimatic variables](https://www.worldclim.org/data/bioclim.html) using `names()` 
+2. Use `st_as_sf` to convert and find the geographic extent of species occurrence data `magpie` using `st_bbox()`
+3. Crop `bioclim_rast` to match the extent of species occurrence data `magpie`
+4. Extract points from `bioclim_rast` for each occurrence in `magpie`
+5. Create "background values" by using `dismo::randomPoints()` to generate random sample points from `bioclim_rast`
+6. Extract points from `bioclim_rast` for each random sample point generated in Step #5
+7. Plot species climate niche and background climate (temperature vs. precipitation)
+8. Modify steps 2-7 into a generalizable workflow for other species occurence data
+9. Try your new function with spcecies occurence data `tule_elk`
 
-1. Practice filtering a raster
-  - Set all cells to NA where `elev < 20`
-2. Practice combining (or unioning) geometries
-  - Combine all geometries without resolving borders of `nc`
-  - Find union of all geometries
-  - Remove geometries
-3. Create a new geometry that is the difference of two geometries
-  - **Hint**: Plot the difference! Counties should be missing!
-
-## Answer Key
-
-### Filter a Raster
-```{r}
-elev[elev < 20] <- NA
-```
-
-### Combine Geometries
-```{r}
-nc_combine <- sf::st_combine(nc)
-plot(nc_combine)
-
-nc_union <- sf::st_union(nc)
-plot(nc_union)
-
-counties <- nc %>%
-  dplyr::filter(NAME %in% c("Ashe", "Alleghany", "Surry")) %>%
-  sf::st_union()
-
-# Plot counties on top of NC unioned
-ggplot() +
-  geom_sf(data = nc_union, fill = "grey", color = "transparent") +
-  geom_sf(data = counties, fill = "black", color = "transparent")
-```
-
-### Create a New Geometry
-```{r}
-nc_difference <- sf::st_difference(nc_union, counties)
-nc_disjoint <- sf::st_disjoint(nc_union, counties)
-nc_intersection <- sf::st_intersection(nc_union, counties)
-
-ggplot() + 
-  geom_sf(data = nc_difference, fill = "grey", color = "transparent") +
-  geom_sf(data = nc_intersection, fill = "grey", color = "transparent")
-```

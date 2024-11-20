@@ -151,7 +151,7 @@
     "href": "course-materials/week9.html#class-materials",
     "title": "Week 9: Land Cover Classification",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with decision trees\n\n\n No Discussion Section"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with random forests\n\n\n Discussion\nNo discussion section"
   },
   {
     "objectID": "course-materials/week9.html#assignment-reminders",
@@ -1313,14 +1313,14 @@
     "href": "course-materials/discussions/week8-discussion.html",
     "title": "Week 8: Discussion Section",
     "section": "",
-    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(terra)\n\n\nnc &lt;- sf::st_read(system.file(\"shape/nc.shp\", package = \"sf\"))\n\nAnd create a raster:\n\nelev &lt;- terra::rast(nrows = 6, \n                    ncols = 6, \n                    resolution = 0.5,\n                    xmin = -1.5, xmax = 1.5, \n                    ymin = -1.5, ymax = 1.5,\n                    vals = 1:36)\n\nNow, to meet our learning objectives, your task:\n\nPractice filtering a raster\n\n\nSet all cells to NA where elev &lt; 20\n\n\nPractice combining (or unioning) geometries\n\n\nCombine all geometries without resolving borders of nc\nFind union of all geometries\nRemove geometries\n\n\nCreate a new geometry that is the difference of two geometries\n\n\nHint: Plot the difference! Counties should be missing!"
+    "text": "Source Materials\n\n\n\nThe following materials are modified from Leander Anderegg’s niche modeling exercise."
   },
   {
     "objectID": "course-materials/discussions/week8-discussion.html#get-started",
     "href": "course-materials/discussions/week8-discussion.html#get-started",
     "title": "Week 8: Discussion Section",
-    "section": "",
-    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(terra)\n\n\nnc &lt;- sf::st_read(system.file(\"shape/nc.shp\", package = \"sf\"))\n\nAnd create a raster:\n\nelev &lt;- terra::rast(nrows = 6, \n                    ncols = 6, \n                    resolution = 0.5,\n                    xmin = -1.5, xmax = 1.5, \n                    ymin = -1.5, ymax = 1.5,\n                    vals = 1:36)\n\nNow, to meet our learning objectives, your task:\n\nPractice filtering a raster\n\n\nSet all cells to NA where elev &lt; 20\n\n\nPractice combining (or unioning) geometries\n\n\nCombine all geometries without resolving borders of nc\nFind union of all geometries\nRemove geometries\n\n\nCreate a new geometry that is the difference of two geometries\n\n\nHint: Plot the difference! Counties should be missing!"
+    "section": "2. Get Started",
+    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 8\nCreate a Quarto document inside your project\nDownload this data folder from Google Drive and move it inside your project\nLoad all necessary packages and read spatial objects\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you don’t have dismo installed, make sure to run: \n\ninstall.packages(\"dismo\")\n\n\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(dismo)\nlibrary(tmap)\n\n\nmagpie &lt;- read_csv(here::here(\"data\", \"magpie_obvs.csv\"))\ntule_elk &lt;- read_csv(here::here(\"data\", \"tule_elk_obvs.csv\"))\n\nbioclim_dir &lt;- here::here(\"data\", \"climate\", \"wc2.1_2.5m\")\nbioclim &lt;- list.files(bioclim_dir, pattern = glob2rx(\"*.tif$\"), full.names = TRUE)\nbioclim_rast &lt;- rast(bioclim)"
   },
   {
     "objectID": "course-materials/discussions/week8-discussion.html#answer-key",
@@ -1446,7 +1446,7 @@
     "href": "course-materials/week8.html#class-materials",
     "title": "Remote sensing of vegetation",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\nPractice function making with raster time series data"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
   },
   {
     "objectID": "course-materials/week8.html#assignment-reminders",
@@ -1622,5 +1622,82 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(dismo)\nlibrary(tmap)\nlibrary(patchwork)\nmagpie &lt;- read_csv(here::here(\"data\", \"magpie_obvs.csv\"))\ntule_elk &lt;- read_csv(here::here(\"data\", \"tule_elk_obvs.csv\"))\n\nbioclim_dir &lt;- here::here(\"data\", \"climate\", \"wc2.1_2.5m\")\nbioclim &lt;- list.files(bioclim_dir, pattern = glob2rx(\"*.tif$\"), full.names = TRUE)\nbioclim_rast &lt;- rast(bioclim)"
+  },
+  {
+    "objectID": "course-materials/discussions/week8-discussion.html#background",
+    "href": "course-materials/discussions/week8-discussion.html#background",
+    "title": "Week 8: Discussion Section",
+    "section": "1. Background",
+    "text": "1. Background\nThis week, you will practice function making with rasters and create a generalizable workflow to determine the climate envelope (or the climate where a species currently lives) of two endemic species to California:\n\nTule elk (Cervus canadensis nannodes)\nYellow-billed magpie (Pica nutalli)"
+  },
+  {
+    "objectID": "course-materials/discussions/week8-discussion.html#your-task",
+    "href": "course-materials/discussions/week8-discussion.html#your-task",
+    "title": "Week 8: Discussion Section",
+    "section": "3. Your Task",
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nUpdate the bioclim_rast layer names to match the Bioclimatic variables using names()\nUse st_as_sf to convert and find the geographic extent of species occurrence data magpie using st_bbox()\nCrop bioclim_rast to match the extent of species occurrence data magpie\nExtract points from bioclim_rast for each occurrence in magpie\nCreate “background values” by using dismo::randomPoints() to generate random sample points from bioclim_rast\nExtract points from bioclim_rast for each random sample point generated in Step #5\nPlot species climate niche and background climate (temperature vs. precipitation)\nModify steps 2-7 into a generalizable workflow for other species occurence data\nTry your new function with spcecies occurence data tule_elk"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#try-it-out-with-magpie",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#try-it-out-with-magpie",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "Try It Out With Magpie",
+    "text": "Try It Out With Magpie\n\nvariables &lt;- c(\"annualMeanTemp\", \"meanDiurnalRange\", \"isothermality\", \"tempSeasonality\", \"maxTempWarmMonth\", \"maxTempColdMonth\", \"tempAnnualRange\", \"meanTempWetQ\", \"meanTempDryQ\", \"meanTempWarmQ\", \"meanTempColdQ\", \"annualPrecip\", \"precipWetMonth\", \"precipDryMonth\", \"precipSeasonality\", \"precipWetQ\", \"precipDryQ\", \"precipWarmQ\", \"precipColdQ\")\nnames(bioclim_rast) &lt;- variables\n\n\nmagpie_sf &lt;- magpie %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n# Obtain geographic extent/bounding box of the species occurrences\nmagpie_bbox &lt;- st_bbox(magpie_sf)\n\n\n# Crop raster to match the geographic extent of the species occurrences\nbioclim_crop &lt;- crop(bioclim_rast, magpie_bbox)\n\n\n# Extract points from raster for all species occurrences\nbioClim_pts &lt;- extract(bioclim_crop, magpie_sf)\n\n\nset.seed(42) # for reproducibility\n# Generate random sample points from raster\nrandom_pts &lt;- dismo::randomPoints(mask = raster(bioclim_crop[[\"annualMeanTemp\"]]),\n                                  n = nrow(magpie) * 2,\n                                  ext = magpie_bbox)\n\n\n# Extract points from raster for random sample points\nbioClim_random_pts &lt;- extract(bioclim_crop, random_pts)\n\n\nmap_1 &lt;- tm_shape(raster(bioclim_crop[[\"annualPrecip\"]])) +\n  tm_raster(palette = \"Blues\", title = \"Annual Precipitation\") +\n  tm_shape(magpie_sf) +\n  tm_dots(col = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = c(\"left\", \"bottom\"),\n            legend.bg.color = \"white\")\n\nmap_2 &lt;- tm_shape(raster(bioclim_crop[[\"annualMeanTemp\"]])) +\n  tm_raster(palette = \"-RdYlBu\", title = \"Annual Mean Temp\") +\n  tm_shape(magpie_sf) +\n  tm_dots(col = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = c(\"left\", \"bottom\"),\n            legend.bg.color = \"white\")\n\ntmap_arrange(map_1, map_2)\n\n\n\n\n\n\n\n\n\nplot_1 &lt;- ggplot(data = bioClim_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16, color = \"#3a5a40\") +\n  labs(x = \"Annual Precipitation\",\n       y = \"Annual Mean Temperature\", \n       title = \"Species Climate Niche\") +\n  theme_bw()\n\nplot_2 &lt;- ggplot(data = bioClim_random_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16) +\n  labs(x = \"Annual Precipitation\",\n       y = element_blank(), \n       title = \"Background Climate\") +\n  theme_bw()\n\nplot_1 + plot_2"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#name-raster-layers",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#name-raster-layers",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "Name Raster Layers",
+    "text": "Name Raster Layers\n\nvariables &lt;- c(\"annualMeanTemp\", \"meanDiurnalRange\", \"isothermality\", \"tempSeasonality\", \"maxTempWarmMonth\", \"maxTempColdMonth\", \"tempAnnualRange\", \"meanTempWetQ\", \"meanTempDryQ\", \"meanTempWarmQ\", \"meanTempColdQ\", \"annualPrecip\", \"precipWetMonth\", \"precipDryMonth\", \"precipSeasonality\", \"precipWetQ\", \"precipDryQ\", \"precipWarmQ\", \"precipColdQ\")\nnames(bioclim_rast) &lt;- variables"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#find-geographic-extent-of-species-occurences",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#find-geographic-extent-of-species-occurences",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "Find Geographic Extent of Species Occurences",
+    "text": "Find Geographic Extent of Species Occurences\n\nmagpie_sf &lt;- magpie %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n\n# Obtain geographic extent/bounding box of the species occurrences\nmagpie_bbox &lt;- st_bbox(magpie_sf)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#crop-raster-and-extract-points-for-species-occurences",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#crop-raster-and-extract-points-for-species-occurences",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "Crop Raster and Extract Points for Species Occurences",
+    "text": "Crop Raster and Extract Points for Species Occurences\n\n# Crop raster to match the geographic extent of the species occurrences\nbioclim_crop &lt;- crop(bioclim_rast, magpie_bbox)\n\n\n# Extract points from raster for all species occurrences\nbioClim_pts &lt;- as_tibble(extract(bioclim_crop, magpie_sf))"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#crop-raster-and-extract-random-points",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#crop-raster-and-extract-random-points",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "Crop Raster and Extract Random Points",
+    "text": "Crop Raster and Extract Random Points\n\nset.seed(42) # for reproducibility\n# Generate random sample points from raster\nrandom_pts &lt;- dismo::randomPoints(mask = raster(bioclim_crop[[\"annualMeanTemp\"]]),\n                                  n = nrow(magpie) * 2,\n                                  ext = magpie_bbox)\n\n\n# Extract points from raster for random sample points\nbioClim_random_pts &lt;- as_tibble(extract(bioclim_crop, random_pts))"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#view-map",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#view-map",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "View Map",
+    "text": "View Map\n\nmap_1 &lt;- tm_shape(raster(bioclim_crop[[\"annualPrecip\"]])) +\n  tm_raster(palette = \"Blues\", title = \"Annual Precipitation\") +\n  tm_shape(magpie_sf) +\n  tm_dots(col = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = c(\"left\", \"bottom\"),\n            legend.bg.color = \"white\")\n\nmap_2 &lt;- tm_shape(raster(bioclim_crop[[\"annualMeanTemp\"]])) +\n  tm_raster(palette = \"-RdYlBu\", title = \"Annual Mean Temp\") +\n  tm_shape(magpie_sf) +\n  tm_dots(col = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = c(\"left\", \"bottom\"),\n            legend.bg.color = \"white\")\n\ntmap_arrange(map_1, map_2)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#view-plot",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#view-plot",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "View Plot",
+    "text": "View Plot\n\nplot_1 &lt;- ggplot(data = bioClim_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16, color = \"#3a5a40\") +\n  labs(x = \"Annual Precipitation\",\n       y = \"Annual Mean Temperature\", \n       title = \"Species Climate Niche\") +\n  theme_bw()\n\nplot_2 &lt;- ggplot(data = bioClim_random_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16) +\n  labs(x = \"Annual Precipitation\",\n       y = element_blank(), \n       title = \"Background Climate\") +\n  theme_bw()\n\nplot_1 + plot_2"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#create-generalizable-workflow",
+    "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#create-generalizable-workflow",
+    "title": "Week 8: Discussion Section - Answer Key",
+    "section": "Create Generalizable Workflow",
+    "text": "Create Generalizable Workflow\n\nclimate_envelope &lt;- function(clim_rast, clim_var1, clim_var2, occurences, species_name){\n  \n  species_name &lt;- species_name %&gt;%\n    str_to_lower() %&gt;%\n    str_replace_all(\" \", \"_\")\n  \n  occurences_sf &lt;- occurences %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n  \n  occurences_bbox &lt;- st_bbox(occurences_sf)\n  \n  clim_crop &lt;- crop(clim_rast, occurences_bbox)\n  \n  clim_pts &lt;- as_tibble(extract(clim_crop, occurences_sf))\n  \n  random_pts &lt;- randomPoints(mask = raster(clim_rast[[clim_var1]]),\n                             n = nrow(occurences) * 2,\n                             ext = occurences_bbox)\n\n  clim_random_pts &lt;- as_tibble(extract(clim_crop, random_pts))\n  \n  map_1 &lt;- tm_shape(raster(clim_crop[[clim_var1]])) +\n    tm_raster(palette = \"Blues\") +\n    tm_shape(occurences_sf) +\n    tm_dots(col = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = c(\"left\", \"bottom\"),\n              legend.bg.color = \"white\")\n  \n  map_2 &lt;- tm_shape(raster(clim_crop[[clim_var2]])) +\n    tm_raster(palette = \"-RdYlBu\") +\n    tm_shape(occurences_sf) +\n    tm_dots(col = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = c(\"left\", \"bottom\"),\n              legend.bg.color = \"white\")\n  \n  plot_1 &lt;- ggplot(data = clim_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16, color = \"#3a5a40\") +\n    labs(title = \"Species Climate Niche\") +\n    theme_bw()\n  \n  plot_2 &lt;- ggplot(data = clim_random_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16) +\n    labs(y = element_blank(), \n         title = \"Background Climate\") +\n    theme_bw()\n  \n  assign(paste0(species_name, \"_map_1\"), map_1, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_map_2\"), map_2, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_plot_1\"), plot_1, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_plot_2\"), plot_2, envir = .GlobalEnv)\n  \n}\n\n\nclimate_envelope(clim_rast = bioclim_rast, clim_var1 = \"annualPrecip\", clim_var2 = \"annualMeanTemp\", occurences = tule_elk, species_name = \"Tule Elk\")\n\ntule_elk_map_1\n\n\n\n\n\n\n\ntule_elk_map_2\n\n\n\n\n\n\n\ntule_elk_plot_1\n\n\n\n\n\n\n\ntule_elk_plot_2"
   }
 ]
