@@ -29,7 +29,12 @@ tule_elk <- read_csv(here::here("data", "tule_elk_obvs.csv"))
 
 bioclim_dir <- here::here("data", "climate", "wc2.1_2.5m")
 bioclim <- list.files(bioclim_dir, pattern = glob2rx("*.tif$"), full.names = TRUE)
-bioclim_rast <- rast(bioclim)
+bioclim_sort <- bioclim[
+  # Sort filepaths based on numeric suffix
+  order(
+  # Extract numeric suffix of filenames and convert to numeric
+  as.numeric(gsub(".*_(\\d+)\\.tif$", "\\1", bioclim)))]
+bioclim_rast <- rast(bioclim_sort)
 ```
 
 ```{r}
@@ -42,7 +47,12 @@ tule_elk <- read_csv(here::here("course-materials", "data", "week8-discussion", 
 
 bioclim_dir <- here::here("course-materials", "data", "week8-discussion", "climate", "wc2.1_2.5m")
 bioclim <- list.files(bioclim_dir, pattern = glob2rx("*.tif$"), full.names = TRUE)
-bioclim_rast <- rast(bioclim)
+bioclim_sort <- bioclim[
+  # Sort filepaths based on numeric suffix
+  order(
+  # Extract numeric suffix of filenames and convert to numeric
+  as.numeric(gsub(".*_(\\d+)\\.tif$", "\\1", bioclim)))]
+bioclim_rast <- rast(bioclim_sort)
 ```
 
 ## Name Raster Layers

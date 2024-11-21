@@ -21,8 +21,8 @@ knitr::include_graphics("images/week9-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification with random forests](labs/week9.qmd) |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | No discussion section|
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification with decision trees](labs/week9.qmd){target="_blank"}        |
+| {{< fa comments title="two speech bubbles" >}} No Discussion Section |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -36,5 +36,3 @@ All assignments are **due at 11:59 PM** on the date listed.
 | EOC             | [End-of-class survey (week 9)](https://forms.gle/m4sDdLSxpe2pjzGz8){target="_blank"}              | 11/25/2024    | 11/25/2024 |
 | HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/11/2024    | 11/30/2024 |
 | PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/11/2024    | 12/07/2024 |
-
-

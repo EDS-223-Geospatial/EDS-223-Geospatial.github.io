@@ -270,7 +270,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>bioclim_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"climate"</span>, <span class="st">"wc2.1_2.5m"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>bioclim <span class="ot">&lt;-</span> <span class="fu">list.files</span>(bioclim_dir, <span class="at">pattern =</span> <span class="fu">glob2rx</span>(<span class="st">"*.tif$"</span>), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bioclim_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(bioclim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bioclim_sort <span class="ot">&lt;-</span> bioclim[</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sort filepaths based on numeric suffix</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract numeric suffix of filenames and convert to numeric</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">".*_(</span><span class="sc">\\</span><span class="st">d+)</span><span class="sc">\\</span><span class="st">.tif$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, bioclim)))]</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>bioclim_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(bioclim_sort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="name-raster-layers" class="level2">
 <h2 class="anchored" data-anchor-id="name-raster-layers">Name Raster Layers</h2>
