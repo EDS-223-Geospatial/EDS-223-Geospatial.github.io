@@ -228,14 +228,14 @@
     "href": "course-materials/discussions/week10-discussion.html",
     "title": "Week 10: Discussion Section",
     "section": "",
-    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(rspatial)\n\n\ndf &lt;- sp_data('precipitation')"
+    "text": "Source Materials\n\n\n\nThe following materials are modified from Spatial Interpolation in R."
   },
   {
     "objectID": "course-materials/discussions/week10-discussion.html#get-started",
     "href": "course-materials/discussions/week10-discussion.html#get-started",
     "title": "Week 10: Discussion Section",
-    "section": "",
-    "text": "Let’s load the necessary packages:\n\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(rspatial)\n\n\ndf &lt;- sp_data('precipitation')"
+    "section": "2. Get Started",
+    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 10\nCreate a Quarto document inside your project\nDownload this data folder from Google Drive and move it inside your project\nLoad all necessary packages and read spatial objects\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you don’t have gstat installed, make sure to run: \n\ninstall.packages(\"gstat\")\n\n\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(stars)\nlibrary(gstat)\nlibrary(tmap)\nlibrary(kableExtra)\n\n\nca_ecoregions &lt;- st_read(here::here(\"data\", \"CA_Level3_Ecoregions_EPA\", \"ca_eco_l3.shp\"))\n\nbioclim_dir &lt;- here::here(\"data\", \"wc2.1_2.5m\")\nbioclim &lt;- list.files(bioclim_dir, pattern = glob2rx(\"*.tif$\"), full.names = TRUE)\nbioclim_sort &lt;- bioclim[\n  # Sort filepaths based on numeric suffix\n  order(\n  # Extract numeric suffix of filenames and convert to numeric\n  as.numeric(gsub(\".*_(\\\\d+)\\\\.tif$\", \"\\\\1\", bioclim)))]\nbioclim_rast &lt;- rast(bioclim_sort)\n\nvariables &lt;- c(\"annualMeanTemp\", \"meanDiurnalRange\", \"isothermality\", \"tempSeasonality\", \"maxTempWarmMonth\", \"maxTempColdMonth\", \"tempAnnualRange\", \"meanTempWetQ\", \"meanTempDryQ\", \"meanTempWarmQ\", \"meanTempColdQ\", \"annualPrecip\", \"precipWetMonth\", \"precipDryMonth\", \"precipSeasonality\", \"precipWetQ\", \"precipDryQ\", \"precipWarmQ\", \"precipColdQ\")\nnames(bioclim_rast) &lt;- variables"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html",
@@ -1264,7 +1264,7 @@
     "href": "course-materials/week10.html#class-materials",
     "title": "Intro to active remote sensing",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\nPractice gridding and spatial interpolation"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\nPractice gridding and spatial interpolation (Answer Key)"
   },
   {
     "objectID": "course-materials/week10.html#assignment-reminders",
@@ -1286,5 +1286,61 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html",
+    "href": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html",
+    "title": "Week 10: Discussion Section - Answer Key",
+    "section": "",
+    "text": "library(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(stars)\nlibrary(gstat)\nlibrary(tmap)\nlibrary(kableExtra)\nca_ecoregions &lt;- st_read(here::here(\"data\", \"CA_Level3_Ecoregions_EPA\", \"ca_eco_l3.shp\"))\n\nbioclim_dir &lt;- here::here(\"data\", \"wc2.1_2.5m\")\nbioclim &lt;- list.files(bioclim_dir, pattern = glob2rx(\"*.tif$\"), full.names = TRUE)\nbioclim_sort &lt;- bioclim[\n  # Sort filepaths based on numeric suffix\n  order(\n  # Extract numeric suffix of filenames and convert to numeric\n  as.numeric(gsub(\".*_(\\\\d+)\\\\.tif$\", \"\\\\1\", bioclim)))]\nbioclim_rast &lt;- rast(bioclim_sort)\n\nvariables &lt;- c(\"annualMeanTemp\", \"meanDiurnalRange\", \"isothermality\", \"tempSeasonality\", \"maxTempWarmMonth\", \"maxTempColdMonth\", \"tempAnnualRange\", \"meanTempWetQ\", \"meanTempDryQ\", \"meanTempWarmQ\", \"meanTempColdQ\", \"annualPrecip\", \"precipWetMonth\", \"precipDryMonth\", \"precipSeasonality\", \"precipWetQ\", \"precipDryQ\", \"precipWarmQ\", \"precipColdQ\")\nnames(bioclim_rast) &lt;- variables"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#transform-crs",
+    "href": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#transform-crs",
+    "title": "Week 10: Discussion Section - Answer Key",
+    "section": "Transform CRS",
+    "text": "Transform CRS\n\nca_ecoregions &lt;- ca_ecoregions %&gt;%\n  st_transform(crs = st_crs(bioclim_rast))\n\n\nCrop and Mask Raster\n\nbioclim_rast_crop &lt;- crop(bioclim_rast, ca_ecoregions)\nbioclim_rast_mask &lt;- mask(bioclim_rast_crop, ca_ecoregions)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#sample-random-points-in-raster",
+    "href": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#sample-random-points-in-raster",
+    "title": "Week 10: Discussion Section - Answer Key",
+    "section": "Sample Random Points in Raster",
+    "text": "Sample Random Points in Raster\n\nset.seed(275)\npts &lt;- spatSample(bioclim_rast_mask,\n                  # Random sample non-NA cells\n                  na.rm = TRUE, \n                  # Sample size\n                  size = 1000, \n                  # Return SpatVector\n                  as.points = TRUE)\n\npts_sf &lt;- st_as_sf(pts)\n\n\ntm_shape(bioclim_rast_mask[[\"annualMeanTemp\"]]) +\n  tm_raster(palette = \"-RdYlBu\", title = \"Annual Mean Temp\") +\n  tm_shape(pts_sf) +\n  tm_dots(col = \"#403d39\", size = 0.075, \n          title = \"Random Samples\") +\n  tm_add_legend(type = \"symbol\", labels = \"Random Samples\", \n                col = \"#403d39\", size = 0.075) +\n  tm_layout(legend.position = c(\"right\", \"top\"),\n            legend.bg.color = \"white\")"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#perform-idw-interpolation",
+    "href": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#perform-idw-interpolation",
+    "title": "Week 10: Discussion Section - Answer Key",
+    "section": "Perform IDW Interpolation",
+    "text": "Perform IDW Interpolation\n\ngrid &lt;- st_make_grid(pts_sf)\ngrid &lt;- stars::st_as_stars(grid, crs = st_crs(pts_sf))\n\n\nannualMeanTemp_idw &lt;- idw(annualMeanTemp ~ 1, locations = pts_sf, newdata = grid, idp = 2)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#view-idw-interpolation",
+    "href": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#view-idw-interpolation",
+    "title": "Week 10: Discussion Section - Answer Key",
+    "section": "View IDW Interpolation",
+    "text": "View IDW Interpolation\n\nannualMeanTemp_idw &lt;- rast(annualMeanTemp_idw)\nannualMeanTemp_idw &lt;- mask(annualMeanTemp_idw, ca_ecoregions)\n\n\nmap_1 &lt;- tm_shape(bioclim_rast_mask[[\"annualMeanTemp\"]]) +\n  tm_raster(palette = \"-RdYlBu\", title = \"Annual Mean Temp\") +\n  tm_layout(legend.position = c(\"right\", \"top\"),\n            legend.bg.color = \"white\")\n\nmap_2 &lt;- tm_shape(ca_ecoregions) +\n  tm_polygons() +\n  tm_shape(pts_sf) +\n  tm_dots(col = \"#403d39\", size = 0.075, \n          title = \"Random Samples\") +\n  tm_add_legend(type = \"symbol\", labels = \"Random Samples\", \n                col = \"#403d39\", size = 0.075) +\n  tm_layout(legend.position = c(\"right\", \"top\"),\n            legend.bg.color = \"white\")\n\nmap_3 &lt;- tm_shape(annualMeanTemp_idw[[\"var1.pred_var1.pred\"]]) +\n  tm_raster(palette = \"-RdYlBu\", title = \"Annual Mean Temp\") +\n  tm_layout(legend.position = c(\"right\", \"top\"),\n            legend.bg.color = \"white\")\n\ntmap_arrange(map_1, map_2, map_3)"
+  },
+  {
+    "objectID": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#find-interpolated-mean-for-each-ecoregion",
+    "href": "course-materials/discussions/answer-keys/week10-discussion-answerKey.html#find-interpolated-mean-for-each-ecoregion",
+    "title": "Week 10: Discussion Section - Answer Key",
+    "section": "Find Interpolated Mean for Each Ecoregion",
+    "text": "Find Interpolated Mean for Each Ecoregion\n\ngrid_rast &lt;- rast(grid)\nca_ecoregions_rast &lt;- rasterize(ca_ecoregions, grid_rast, field = \"US_L3NAME\")\n\n\ntm_shape(ca_ecoregions_rast) +\n  tm_raster(title = \"Ecoregions\") +\n  tm_layout(legend.outside = TRUE,\n            legend.title.size = 0.75,\n            legend.text.size = 0.75,\n            legend.outside.size = 0.55,\n            legend.bg.color = \"white\")\n\n\n\n\n\n\n\n\n\npred_by_ecoregion &lt;- zonal(annualMeanTemp_idw, ca_ecoregions_rast, fun = \"mean\", na.rm = TRUE)\n\n\npred_by_ecoregion %&gt;%\n  rename(ecoregion = US_L3NAME,\n         mean_annualMeanTemp_pred = var1.pred_var1.pred) %&gt;%\n  select(ecoregion, mean_annualMeanTemp_pred) %&gt;%\n  kbl() %&gt;%\n  kable_minimal()\n\n\n\n\necoregion\nmean_annualMeanTemp_pred\n\n\n\n\nCascades\n9.268085\n\n\nCentral Basin and Range\n10.085137\n\n\nCentral California Foothills and Coastal Mountains\n14.465699\n\n\nCentral California Valley\n15.481970\n\n\nCoast Range\n12.190697\n\n\nEastern Cascades Slopes and Foothills\n8.471113\n\n\nKlamath Mountains/California High North Coast Range\n10.413797\n\n\nMojave Basin and Range\n17.363583\n\n\nNorthern Basin and Range\n8.532363\n\n\nSierra Nevada\n10.134800\n\n\nSonoran Basin and Range\n21.047092\n\n\nSouthern California Mountains\n15.140603\n\n\nSouthern California/Northern Baja Coast\n16.610146"
+  },
+  {
+    "objectID": "course-materials/discussions/week10-discussion.html#background",
+    "href": "course-materials/discussions/week10-discussion.html#background",
+    "title": "Week 10: Discussion Section",
+    "section": "1. Background",
+    "text": "1. Background\nSpatial interpolation is a method used to estimate values at unobserved locations based on observed data from nearby points. It assumes Tobler’s first law of geography, which states that everything is related to everything else, but near things are more related to each other. Two of the most popular spatial interpolation methods are Inverse Distance Weighting (IDW) and ordinary/universal Kriging. Today, IDW differs from the nearest neighbor approach by assigning less weight to points that are farther away."
+  },
+  {
+    "objectID": "course-materials/discussions/week10-discussion.html#your-task",
+    "href": "course-materials/discussions/week10-discussion.html#your-task",
+    "title": "Week 10: Discussion Section",
+    "section": "3. Your Task",
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nCrop and mask bioclim_rast with ca_ecoregions\nUse terra::spatSample to generate random points in cropped and masked bioclim_rast\n\nHint: Set as.points = TRUE within spatSample and convert to sf object for Step #3\n\nCreate a grid with sf::st_make_grid and convert grid to stars object with st_as_stars\nUse gstat::idw to perform an inverse distance weighted interpolation for a variable of interest (annualMeanTemp, meanDiurnalRange, isothermality, etc.)\nUse rast and mask on interpolated stars object from Step #4\nFind interpolated mean of the variable of interest for each ecoregion in California using zonal\n\nHint: Convert ca_ecoregions to rast object with rasterize"
   }
 ]
