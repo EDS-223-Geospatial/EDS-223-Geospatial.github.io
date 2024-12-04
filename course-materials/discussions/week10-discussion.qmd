@@ -23,7 +23,7 @@ Spatial interpolation is a method used to estimate values at unobserved location
 
 - Create an `.Rproj` as your version controlled project for Week 10
 - Create a Quarto document inside your project
-- Download [this data folder from Google Drive]() and move it inside your project
+- Download [this data folder from Google Drive](https://drive.google.com/file/d/1JOsFrZkk4TuX6NbZr7GodYtqXQHMA1GB/view?usp=sharing) and move it inside your project
 - Load all necessary packages and read spatial objects
 
 ::: {.callout-warning}
