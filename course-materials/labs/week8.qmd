@@ -147,8 +147,7 @@ ndvi_20180612 <- lapp(landsat_20180612[[c(4, 3)]], fun = ndvi_fun)
 #| code-fold: true
 #| message: false
 tm_shape(ndvi_20180612) +
-  tm_raster(title = "NDVI") +
-  tm_layout(legend.outside = TRUE)
+  tm_raster(col.legend  = tm_legend("NDVI")) 
 ```
 
 # Approach #1
