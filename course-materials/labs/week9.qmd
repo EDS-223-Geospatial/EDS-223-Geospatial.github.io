@@ -328,11 +328,14 @@ Now we can plot the results and check out our land cover map!
 #| code-fold: true
 # plot results
 tm_shape(SB_classification) +
-  tm_raster(palette = c("#8DB580", "#F2DDA4", "#7E8987", "#6A8EAE"),
-labels = c("green vegetation", "soil/dead grass", "urban", "water"),
-title = "Landcover type") +
-  tm_layout(legend.position = c("left", "bottom"),
-            main.title = "Santa Barbara Landcover")
+  tm_raster(
+    col.scale = tm_scale(
+      values = c("#8DB580", "#F2DDA4", "#7E8987", "#6A8EAE"),
+      labels = c("green vegetation", "soil/dead grass", "urban", "water")
+    ),
+    col.legend = tm_legend("Landcover type")
+  ) +
+  tm_title(text = "Santa Barbara Landcover")
 
 ```
 
