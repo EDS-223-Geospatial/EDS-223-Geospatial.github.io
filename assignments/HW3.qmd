@@ -182,9 +182,10 @@ Below is a SQL query that can be used as an argument in `st_read`:
 ```
 :::
 
-### Identify homes likely impacted by blackouts
+### Identify the number of homes likely impacted by blackouts
 
 - [ ] identify homes that overlap with areas that experienced blackouts
+
 
 :::{.callout-tip icon=true}
 The buildings geopackage includes data on many types of buildings. As with the roads data, we can avoid reading in data we don't need.
@@ -199,12 +200,6 @@ OR type in ('residential', 'apartments', 'house', 'static_caravan', 'detached')"
 ```
 
 :::
-
-### Identify the census tracts likely impacted by blackout
-
-- [ ] join the median household income from the previous 12 months to the census tract geometries
-  -   hint: make sure to join by geometry ID
-- [ ] identify census tracts that that contained homes that experienced blackouts
 
 ## Rubric (specifications)
 

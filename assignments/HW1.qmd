@@ -16,7 +16,7 @@ editor_options:
 
 You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.
 
-The assignment **must be submitted through GitHub Classrooms**. Each student receives one "free pass" for not submitting assignments via specified channels, after which you will receive a "Not Yet" mark.
+The assignment **must be submitted through Gradescope**. 
 
 **Read each part of the assignment carefully**, and use the check boxes to ensure you've addressed all elements of the assignment!
 
@@ -51,78 +51,11 @@ EDS223-HW1
 
 
 
-## Part 1: Easter Island from land to sea
 
-In this week's [discussion section](../course-materials/discussions/week1-discussion.qmd), you practiced making a map of Easter Island. We will continue by extending our map into the sea by including [bathymetry](https://oceanservice.noaa.gov/facts/bathymetry.html) and [seamounts](https://oceanexplorer.noaa.gov/facts/seamounts.html#:~:text=A%20seamount%20is%20an%20underwater,meters%20taller%20than%20previously%20thought.).
 
-### Description
 
-Create a map of Easter Island, including the following:
 
-- [ ] the island's border and road network
-- [ ] elevation of the island (indicated in meters above sea level)
-- [ ] location of the island's volcanoes (indicating their height in meters)
-- [ ] bathymetry surrounding the island (indicated in meters below sea level)
-- [ ] surrounding seamounts (indicating their height in meters)
-
-### Data details
-
-You will use the following new datasets:
-
-- [Seamounts from the Pacific Data Hub](https://pacificdata.org/data/dataset/global-distribution-of-seamounts-and-knolls368d9116-7b6f-43b2-8933-0ab97d1a9e80)
-- Bathymetry (or seadepth) from [NOAA's `marmap` API](https://cran.r-project.org/web/packages/marmap/index.html)
-
-The following code is provided to read in each dataset:
-```{r}
-library(sf)
-library(here)
-library(terra)
-
-# read in major points on the island
-ei_points <- sf::read_sf(here::here("data", "easter_island", "ei_points.gpkg"))
-# subset points to volcanoes
-volcanoes <- subset(ei_points, type == "volcano")
-
-# read in island elevation
-ei_elev <- terra::rast(here::here("data", "easter_island", "ei_elev.tif"))
-
-# read in island border
-ei_borders <- sf::read_sf(here::here("data", "easter_island", "ei_border.gpkg"))
-
-# read in island road network
-ei_roads <- sf::read_sf(here::here("data", "easter_island", "ei_roads.gpkg"))
-
-# read in bathymetry
-ei_bathymetry <- terra::rast(here::here("data", "easter_island", "ei_bathy.tif"))
-
-# read in seamounts
-ei_seamounts <- sf::read_sf(here::here("data", "easter_island", "ei_seamounts.gpkg"))
-
-```
-
-:::{.callout-tip icon=true}
-## Setting a bounding box for the map
-
-To make sure that all the bathymetry and seamount data are included in the map, create a bounding box that includes both.
-
-```{r}
-# define larger plot bbox that is buffered around both of 
-# the two largest layers to display all 4 seamounts in view 
-
-bbox_seamount <- st_bbox(ei_seamounts) # seamount bounding box
-bbox_bathymetry <- st_bbox(ei_bathymetry) # bathymetry bounding box
-bbox_largest <- st_bbox(c(xmin = min(bbox_bathymetry[1], bbox_seamount[1]),
-                         ymin = min(bbox_bathymetry[2], bbox_seamount[2]),
-                         xmax = max(bbox_bathymetry[3], bbox_seamount[3]),
-                         ymax = max(bbox_bathymetry[4], bbox_seamount[4])))
-
-```
-
-Now that you've defined the bounding box, make sure to use it!
-
-:::
-
-## Part 2: Exploring environmental (in)justice
+## Exploring environmental (in)justice
 
 As many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:
 
