@@ -92,12 +92,15 @@ class(zion_elevation)
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(legend.outside = TRUE)
+  tm_raster(col.legend = tm_legend("Elevation (m)"))+   
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
+  
 
 map2 <- tm_shape(zion_land) +
-  tm_raster(title = "Land cover") +
-  tm_layout(legend.outside = TRUE)
+  tm_raster(col.legend = tm_legend("Land cover"))+
+      tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 tmap_arrange(map1, map2, nrow = 1)
 ```
@@ -117,7 +120,9 @@ nlyr(landsat) # test number of layers in raster object
 #| message: false
 
 tm_shape(landsat) +
-  tm_raster(title = "Unscaled reflectance")
+  tm_raster(col.legend = tm_legend("Unscaled reflectance"),
+            col.free = FALSE )
+
 ```
 
 We can subset layers using either the layer number or name:
@@ -152,18 +157,24 @@ merged <- merge(austria, switzerland)
 #| message: false
   
 map1 <- tm_shape(austria) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "Austria")
+  tm_raster(col.legend = tm_legend( "Elevation (m)")) +
+  tm_title(text = "Austria")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
   
 map2 <- tm_shape(switzerland) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "Switzerland")  
+  tm_raster(col.legend = tm_legend( "Elevation (m)")) +
+  tm_title(text = "Switzerland")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 map3 <- tm_shape(merged) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "Merged")   
+ tm_raster(col.legend = tm_legend( "Elevation (m)")) +
+  tm_title(text = "Merged") +
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
   
-tmap_arrange(map1, map2, map3, nrow = 1) 
+tmap_arrange(map1, map2, map3, nrow = 1)  
 ```
 
 
@@ -281,12 +292,16 @@ zion_elevation_clip <- zion_elevation[clip, drop = FALSE]
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "original")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "original")+
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 map2 <- tm_shape(zion_elevation_clip) +
-  tm_raster(title = "Elevation (m)") +
-    tm_layout(main.title = "clipped")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "clipped")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 
 tmap_arrange(map1, map2, nrow = 1)  
@@ -333,16 +348,19 @@ masked2 <- mask(zion_elevation, rmask)
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "original")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "original")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(masked1) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "bracket subsetting")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "bracket subsetting")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map3 <- tm_shape(masked2) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "mask()")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "mask()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, map3, nrow = 1) 
 ```
@@ -389,12 +407,16 @@ values(reclassified) <- as.factor(values(reclassified))
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "original")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "original")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 map2 <- tm_shape(reclassified) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "reclassified")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text= "reclassified")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 tmap_arrange(map1, map2, nrow = 1) 
 ```
@@ -424,7 +446,7 @@ ndvi_rast <- lapp(landsat[[c(4, 3)]], fun = ndvi_fun)
 #| code-fold: true
 #| message: false
 tm_shape(ndvi_rast) +
-  tm_raster(title = "NDVI")
+  tm_raster(col.legend = tm_legend(title = "NDVI"))
 ```
 
 ### Focal Operations
@@ -467,12 +489,16 @@ elevation_focal <- focal(zion_elevation,
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "original")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "original")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 map2 <- tm_shape(elevation_focal) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "aggregated")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "aggregated")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 tmap_arrange(map1, map2, nrow = 1) 
 ```
@@ -548,14 +574,18 @@ zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "original")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "original")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 map2 <- tm_shape(zion_elevation_coarse) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "aggregated")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "aggregated")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, nrow = 1) 
+
 ```
 
 :::{.callout-tip icon=true collapse=true}
@@ -610,8 +640,10 @@ if(identical(zion_elevation, zion_elevation_disagg)){
 #| message: false
 
 map3 <- tm_shape(zion_elevation_disagg) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "disaggregated")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "disaggregated")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 tmap_arrange(map1, map2, map3, nrow = 1) 
 ```
@@ -655,8 +687,10 @@ zion_elevation_resample <- resample(zion_elevation, y = target_rast, method = "b
 #| message: false
 
 map4 <- tm_shape(zion_elevation_resample) +
-  tm_raster(title = "Elevation (m)") +
-  tm_layout(main.title = "resampled")
+  tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
+  tm_title(text = "resampled")+
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 tmap_arrange(map1, map4, nrow = 1) 
 ```

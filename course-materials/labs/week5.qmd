@@ -96,10 +96,9 @@ if(crs(elevation) == crs(boundary)) {
 #| message: false
 
 tm_shape(elevation) +
-  tm_raster(title = "Elevation (meters)") +
+  tm_raster(col.legend = tm_legend(title = "Elevation (meters)")) +
 tm_shape(boundary) +
-  tm_borders(lwd = 2) +
-tm_layout(legend.outside = TRUE)
+  tm_borders(lwd = 2) 
 ```
 
 
@@ -142,34 +141,34 @@ elevation_inv_masked <- mask(elevation_cropped, boundary, inverse = TRUE)
 #| message: false
 
 map1 <- tm_shape(elevation) +
-  tm_raster(legend.show = FALSE) +
+  tm_raster(col.legend = tm_legend_hide()) +
 tm_shape(boundary) +
   tm_borders(lwd = 2) +
-tm_layout(main.title = "original")
+tm_title(text = "original")
 
 map2 <- tm_shape(elevation_cropped) +
-  tm_raster(legend.show = FALSE) +
+  tm_raster(col.legend = tm_legend_hide()) +
 tm_shape(boundary) +
   tm_borders(lwd = 2) +
-tm_layout(main.title = "cropped")
+tm_title(text =  "cropped")
 
 map3 <- tm_shape(elevation_masked) +
-  tm_raster(legend.show = FALSE) +
+  tm_raster(col.legend = tm_legend_hide()) +
 tm_shape(boundary) +
   tm_borders(lwd = 2) +
-tm_layout(main.title = "masked")
+tm_title(text  = "masked")
 
 map4 <- tm_shape(elevation_final) +
-  tm_raster(legend.show = FALSE) +
+  tm_raster(col.legend = tm_legend_hide()) +
 tm_shape(boundary) +
   tm_borders(lwd = 2) +
-tm_layout(main.title = "cropped & masked")
+tm_title(text =  "cropped & masked")
 
 map5 <- tm_shape(elevation_inv_masked) +
-  tm_raster(legend.show = FALSE) +
+  tm_raster(col.legend = tm_legend_hide()) +
 tm_shape(boundary) +
   tm_borders(lwd = 2) +
-tm_layout(main.title = "inverse mask")
+tm_title(text =  "inverse mask")
 
 tmap_arrange(map1, map2, map3, map4, map5, nrow = 2)
 ```
@@ -207,14 +206,15 @@ elevation_mask_poly <- as.polygons(elevation_mask) %>%
 #| code-fold: true
 #| message: false
 
+
 map1 <- tm_shape(elevation_mask) +
   tm_raster() +
-  tm_layout(legend.outside = TRUE,
-            main.title = "masked raster")
+  tm_title( text = "masked raster")+ 
+  tm_layout(legend.position = c("left", "bottom"))
 
 map2 <- tm_shape(elevation_mask_poly) +
   tm_polygons() +
-  tm_layout(main.title = "vectorized raster")
+  tm_title(text = "vectorized raster")
 
 tmap_arrange(map1, map2, nrow = 1)
 ```

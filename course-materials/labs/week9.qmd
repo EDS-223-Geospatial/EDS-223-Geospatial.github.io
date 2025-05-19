@@ -151,7 +151,7 @@ plotRGB(landsat, r = 3, g = 2, b = 1, stretch = "lin")
 ```{r}
 #| echo: false
 # list files for each band, including the full file path
-filelist <- list.files(here::here("course-materials", "data", "week9", "landsat-data"), full.names = TRUE)
+filelist <- list.files(here::here("course-materials","data", "week9", "landsat-data"), full.names = TRUE)
 
 # read in and store as a raster stack
 landsat <- rast(filelist)
@@ -178,7 +178,7 @@ SB_county_south <- st_read(here::here("data", "SB_county_south.shp")) %>%
 #| echo: false
 #| output: false  
 # read in shapefile for southern portion of SB county
-SB_county_south <- st_read(here::here("course-materials", "data", "week9", "SB_county_south.shp")) %>%
+SB_county_south <- st_read(here::here( "course-materials","data", "week9", "SB_county_south.shp")) %>%
       st_transform(SB_county_south, crs = crs(landsat))
 ```
 
@@ -335,7 +335,8 @@ tm_shape(SB_classification) +
     ),
     col.legend = tm_legend("Landcover type")
   ) +
-  tm_title(text = "Santa Barbara Landcover")
+  tm_title(text = "Santa Barbara Landcover") + 
+  tm_layout( legend.position = c("left", "bottom"))
 
 ```
 

@@ -81,7 +81,7 @@ Let's load three spatial data objects to plot:
 
 ```{r}
 #| echo: false
-
+#| eval: true
 # raster of global elevations
 world_elevation <- read_stars(here("course-materials","data", "week1","worldelevation.tif"))
 
@@ -173,15 +173,14 @@ tm_shape(world_vector) +
 
 ```
 
-Sometimes this can present sticky issues! Imagine the case where we want to use the spatial extent and projection from the `world_cities` data, but want it plotted on top of the other datasets. We can do this by changing the main *shape* using the `is.master` argument.
+Sometimes this can present sticky issues! Imagine the case where we want to use the spatial extent and projection from the `world_cities` data, but want it plotted on top of the other datasets. We can do this by changing the main *shape* using the `is.main` argument.
 
 ```{r}
-
 tm_shape(world_elevation) + 
   tm_raster() + 
 tm_shape(world_vector) +
   tm_borders() +
-tm_shape(world_cities, is.master = TRUE) + # plot world_cities last, but set as main shape
+tm_shape(world_cities, is.main = TRUE) + # plot world_cities last, but set as main shape
   tm_dots() +
   tm_text("name")
 
@@ -293,7 +292,7 @@ We modify the colors useing the `col` and `border.col` arguments and other argum
 ```{r}
 
 tm_shape(world_vector) +
-  tm_polygons(col = "lightblue",
+  tm_polygons(fill = "lightblue",
               border.col = "black",
               lwd = 0.5,
               lty = "dashed")
@@ -315,7 +314,7 @@ tm_shape(world_vector) +
 # fill polygons with fixed color
 
 tm_shape(world_vector) +
-  tm_fill(col = "lightblue")
+  tm_fill(fill = "lightblue")
 
 ```
 
@@ -410,9 +409,9 @@ Just like updating axis labels, we always need to update legend titles. In `tmap
 # vector of colors
 
 tm_shape(world_vector) +
-  tm_polygons("life_expectancy", 
-              palette = c("yellow", "darkgreen"),
-              title = "Life Expectancy (years)")
+  tm_polygons(fill = "life_expectancy",
+              fill.scale = tm_scale(values = c("yellow", "darkgreen")),
+              fill.legend = tm_legend(title = "Life Expectancy (years)"))
 
 ```
 
@@ -426,9 +425,9 @@ Another approach is to provide the output of a palette function. When using a pa
 library(viridisLite)
 
 tm_shape(world_vector) +
-  tm_polygons("life_expectancy", 
-              palette = viridis(8),
-              title = "Life Expectancy (years)")
+ tm_polygons(fill = "life_expectancy",
+              fill.scale = tm_scale(values = viridis(8)),
+              fill.legend = tm_legend(title = "Life Expectancy (years)"))
 
 ```
 
@@ -437,10 +436,11 @@ Finally, the last approach is to use the name of one of the built-in color palet
 ```{r}
 # built-in color palette
 
+
 tm_shape(world_vector) +
-  tm_polygons("life_expectancy", 
-              palette = "YlGn",
-              title = "Life Expectancy (years)")
+ tm_polygons(fill = "life_expectancy",
+              fill.scale = tm_scale(values = "YlGn"),
+              fill.legend = tm_legend(title = "Life Expectancy (years)"))
 
 ```
 
@@ -451,10 +451,9 @@ Sizes can be used for points, lines (line widths), or text to represent quantita
 ```{r}
 
 tm_shape(world_vector) +
-  tm_polygons(col = "lightblue") +
+  tm_polygons(fill = "lightblue") +
 tm_shape(world_cities) +
-  tm_symbols(size = "pop2020",
-             legend.size.is.portrait = TRUE)
+  tm_symbols(size = "pop2020")
 
 ```
 
@@ -525,7 +524,7 @@ A scale bar is a graphic indicator of the relation between a distance on a map a
 
 tm_shape(world_vector) +
   tm_fill() +
-  tm_scale_bar() +
+  tm_scalebar() +
   tm_compass(position = c("left", "top"))
 
 ```
@@ -535,13 +534,15 @@ tm_shape(world_vector) +
 Similar to the `theme()` function in `ggplot2`, the `tm_layout()` function in `tmap` controls many of the map elements of the map layout.
 
 ```{r}
+
 tm_shape(world_vector) +
-  tm_fill(col = "wb_income_region",
-          palette = viridisLite::plasma(5),
-          title = "Regional Income") +
-  tm_layout(bg.color = "grey95",
-            main.title = "Global income",
-            frame = FALSE)
+  tm_polygons(
+    fill = "wb_income_region",
+    fill.scale = tm_scale(values = plasma(5)),
+    fill.legend = tm_legend(title = "Regional Income")
+  ) +
+  tm_layout(bg.color = "grey95", frame = FALSE) +
+  tm_title("Global income")
 ```
 
 
@@ -554,8 +555,8 @@ One of the most powerful aspects of `tmap` is the ease of creating interactive m
 tmap_mode("view")
 
 tm_shape(world_vector) +
-  tm_fill(col = "gdp_per_cap",
-          title = "GDP per capita") 
+  tm_fill(fill = "gdp_per_cap",
+          fill.legend = tm_legend("GDP per capita")) 
 ```
 
 To return to regular plotting mode, simply reset `tmap_mode`.
@@ -572,11 +573,12 @@ Maps can be stored as objects for for adding additional layers and saving progra
 #| eval: false
 
 map1 <- tm_shape(world_vector) +
-  tm_fill(col = "gdp_per_cap",
-          palette = viridisLite::plasma(10),
-          title = "GDP per capita") +
-  tm_layout(main.title = "Global gross domesic product")
+  tm_fill(fill = "gdp_per_cap",
+          fill.scale = tm_scale(value = plasma(10)),
+          fill.legend = tm_legend("GDP per capita")) +
+  tm_title(text = "Global gross domesic product")
 
+  
 tmap_save(map1, here("tmap-example.png"))
 
 ```
