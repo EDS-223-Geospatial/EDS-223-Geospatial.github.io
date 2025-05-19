@@ -138,10 +138,10 @@ canterbury <- nz %>%
 #| code-fold: true
 tm_shape(nz) +
   tm_polygons() +
-  tm_shape(canterbury) +
-  tm_fill(col = "darkgrey") +
-  tm_shape(nz_height) +
-  tm_dots(col = "red")
+tm_shape(canterbury) +
+  tm_polygons(fill = "darkgrey") +
+tm_shape(nz_height) +
+  tm_dots(fill = "red")
 ```
 
 #### Bracket subsetting
@@ -206,26 +206,29 @@ Now let's plot results from all three methods to confirm they gave the same resu
 map1 <- tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
-  tm_fill(col = "darkgrey") +
+  tm_fill(fill = "darkgrey") +
   tm_shape(c_height1) +
-  tm_dots(col = "red") +
-tm_layout(title = "Bracket subsetting")
+  tm_dots(fill = "red") +
+  tm_title(text = "Bracket subsetting")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
-  tm_fill(col = "darkgrey") +
+  tm_fill(fill = "darkgrey") +
   tm_shape(c_height1) +
-  tm_dots(col = "red") +
-tm_layout(title = "st_filter()")
+  tm_dots(fill = "red") +
+  tm_title(text = "st_filter()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map3 <- tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
-  tm_fill(col = "darkgrey") +
+  tm_fill(fill = "darkgrey") +
   tm_shape(c_height3) +
-  tm_dots(col = "red") +
-tm_layout(title = "st_intersects()")
+  tm_dots(fill = "red") +
+  tm_title(text = "st_intersects()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
@@ -251,9 +254,9 @@ Now, we should see points appear that do not *intersect* Caterbury, but are with
 tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
-  tm_fill(col = "darkgrey") +
+  tm_fill(fill = "darkgrey") +
   tm_shape(c_height4) +
-  tm_dots(col = "red")
+  tm_dots(fill = "red")
 ```
 
 ## 3. Spatial joins
@@ -331,9 +334,9 @@ if(any(st_intersects(cycle_hire, cycle_hire_osm, sparse = FALSE)) == TRUE){
 tmap_mode("view")
 
 tm_shape(cycle_hire) +
-  tm_symbols(col = "red", alpha = 0.2) +
+  tm_symbols(fill = "red" , fill_alpha = 0.2)+
 tm_shape(cycle_hire_osm) +
-  tm_symbols(col = "blue", alpha = 0.2)
+  tm_symbols(fill = "blue", fill_alpha = 0.2)
 ```
 
 We can join by again using `st_join()`, but this time including a distance threshold using `st_is_within_distance`.
@@ -403,16 +406,19 @@ nz_elevation <- aggregate(x = nz_height, by = nz, FUN = mean)
 
 ```{r}
 #| code-fold: true
+#| message: false
 
 map1 <- tm_shape(nz_elevation) +
-  tm_polygons(col = "elevation",
-              title = "Mean elevation (meters)") +
-  tm_layout(title = "group_by()")
+  tm_polygons(fill = "elevation",
+              fill.legend= tm_legend(title = "Mean elevation (meters)")) +
+  tm_title(text = "group_by()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(nz_elevation) +
-  tm_polygons(col = "elevation",
-              title = "Mean elevation (meters)") +
-  tm_layout(title = "aggregate()")
+  tm_polygons(fill = "elevation",
+              fill.legend = tm_legend(title = "Mean elevation (meters)")) +
+  tm_title(text = "aggregate()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, nrow = 1)
 
@@ -431,7 +437,7 @@ incongruent <- spData::incongruent
 aggregating_zones <- spData::aggregating_zones
 
 tm_shape(incongruent) +
-  tm_polygons(col = "lightblue",
+  tm_polygons(fill = "lightblue",
               border.col = "blue") +
   tm_shape(aggregating_zones) +
   tm_borders(col = "red")
@@ -488,19 +494,22 @@ regions2 <- aggregate(x = us_states[, "total_pop_15"], # data and attribute to b
 #| warning: false
 
 map1 <- tm_shape(us_states) +
-  tm_polygons(col = "total_pop_15",
-              title = "Total population") +
-  tm_layout(title = "US States")
+  tm_polygons(fill = "total_pop_15",
+              fill.legend  = tm_legend("Total population")) +
+  tm_title(text = "US States")+
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(regions1) +
-  tm_polygons(col = "population",
-              title = "Total population") +
-  tm_layout(title = "group_by()")
+  tm_polygons(fill = "population",
+              fill.legend  = tm_legend("Total population")) +
+  tm_title(text = "group_by()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map3 <- tm_shape(regions2) +
-  tm_polygons(col = "total_pop_15",
-              title = "Total population") +
-  tm_layout(title = "aggregate()")
+  tm_polygons(fill = "total_pop_15",
+              fill.legend  = tm_legend("Total population")) +
+  tm_title(text = "aggregate()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
@@ -524,19 +533,23 @@ texas_union <- st_union(us_west_union, texas)
 
 map1 <- tm_shape(us_west) +
   tm_polygons() +
-  tm_layout(main.title = "western states")
+  tm_title(text = "western states")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(us_west_union) +
   tm_polygons() +
-  tm_layout(main.title = "western states union")
+  tm_title(text = "western states union")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map3 <- tm_shape(texas) +
   tm_polygons() +
-  tm_layout(main.title = "TX")
+  tm_title(text = "TX")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map4 <- tm_shape(texas_union) +
   tm_polygons() +
-  tm_layout(main.title = "TX + western states union")
+  tm_title(text = "TX + western states union")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, map3, map4, nrow = 2)
 ```
@@ -560,13 +573,15 @@ map1 <- tm_shape(seine_buffer_5km) +
   tm_polygons() +
   tm_shape(seine) +
   tm_lines() +
-  tm_layout(title = "5km buffer")
+  tm_title(text = "5km buffer")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(seine_buffer_50km) +
   tm_polygons() +
   tm_shape(seine) +
   tm_lines() +
-  tm_layout(title = "50km buffer")
+  tm_title(text = "50km buffer")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, nrow = 1)
 ```
@@ -579,12 +594,11 @@ seine_union <- st_union(seine_buffer_50km)
 
 ```{r}
 #| code-fold: true
-
 tm_shape(seine_union) +
   tm_polygons() +
   tm_shape(seine) +
   tm_lines() +
-  tm_layout(title = "50km buffer")
+  tm_title(text= "50km buffer")
 ```
 
 Now let's see an example of using a buffer to find objects within a set distance. Here, we'll repeat our previous example of finding points within 100 km of Canterbury. And check to see if the results match our previous approach!
@@ -622,18 +636,18 @@ There are several options for clipping geometries:
 To illustrate the concept, we will start with a simple example: two overlapping circles with a center point one unit away from each other and a radius of one.
 ```{r}
 x <- st_sfc(st_point(c(0, 1))) %>%
-  st_buffer(., dist = 1) %>%
-  st_as_sf()
+  st_buffer(dist = 1) %>%
+  st_sf() 
 
 y <- st_sfc(st_point(c(1, 1))) %>%
-  st_buffer(., dist = 1) %>%
-  st_as_sf()
+  st_buffer(dist = 1) %>%
+  st_sf()
 
-intersection <- st_intersection(x, y)
-difference_x_y <- st_difference(x, y)
+intersection <- st_intersection(x, y) 
+difference_x_y <- st_difference(x, y) 
 difference_y_x <- st_difference(y, x)
 union <- st_union(x, y)
-sym_difference <- st_sym_difference(x, y)
+sym_difference <- st_sym_difference(x, y) 
 ```
 
 
@@ -641,37 +655,46 @@ sym_difference <- st_sym_difference(x, y)
 #| warning: false
 #| code-fold: true
 
+x <- x %>% st_set_crs(4326)
+y <- y %>% st_set_crs(4326)
 bbox <- st_union(x, y)
 
 map1 <- tm_shape(x, bbox = bbox) +
   tm_borders(col = "red") +
   tm_shape(y) +
-  tm_borders(col = "blue")
+  tm_borders(col = "blue")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- map1 +
   tm_shape(intersection, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_layout(title = "st_intersection()")
+  tm_title(text = "st_intersection()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map3 <- map1 +
   tm_shape(difference_x_y, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_layout(title = "st_difference(x,y)")
+  tm_title(text = "st_difference(x,y)")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
+
 
 map4 <- map1 +
   tm_shape(difference_y_x, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_layout(title = "st_difference(y,x)")
+  tm_title(text = "st_difference(y,x)")+
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map5 <- map1 +
   tm_shape(union, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_layout(title = "st_union()")
+  tm_title(text = "st_union()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map6 <- map1 +
   tm_shape(sym_difference, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_layout(title = "st_sym_diffference()")
+  tm_title(text = "st_sym_diffference()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, map3, map4, map5, map6, nrow = 2)
 ```
@@ -679,8 +702,11 @@ tmap_arrange(map1, map2, map3, map4, map5, map6, nrow = 2)
 Now let's see how we could use these updated geometries for filtering. Extending this simple example, we'll create 100 random points. We want to find the points that intersect both `x` and `y`. We have a few different approaches that all produce the same results.
 
 ```{r}
+#| eval: false
+
+
 # create random points
-bb <- st_bbox(st_union(x, y)) # create bounding box of x and y
+bb <- st_bbox(bbox) # create bounding box of x and y
 box <- st_as_sfc(bb)
 p <- st_sample(x = box, size = 100) %>% # randomly sample the bounding box
   st_as_sf()
@@ -704,6 +730,7 @@ p_xy3 = st_intersection(p, x_and_y)
 ```{r}
 #| warning: false
 #| code-fold: true
+#| eval: false
 
 map2 <- map1 +
   tm_shape(p) +
@@ -758,16 +785,18 @@ seine_pos <- st_point_on_surface(seine)
 map1 <- tm_shape(nz) +
   tm_polygons() +
   tm_shape(nz_centroid) +
-  tm_symbols(col = "red", alpha = 0.5) +
+  tm_symbols(fill = "red", fill_alpha = 0.5) +
   tm_shape(nz_pos) +
-  tm_symbols(col = "blue", alpha = 0.5)
+  tm_symbols(fill = "blue", fill_alpha = 0.5)+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(seine) +
   tm_lines() +
   tm_shape(seine_centroid) +
-  tm_symbols(col = "red", alpha = 0.5) +
+  tm_symbols(fill = "red", fill_alpha = 0.5) +
   tm_shape(seine_pos) +
-  tm_symbols(col = "blue", alpha = 0.5)
+  tm_symbols(fill = "blue", fill_alpha = 0.5)+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, nrow = 1)
 ```
@@ -785,11 +814,13 @@ seine_simple <- st_simplify(seine, dTolerance = 2000)  # 2000 m
 
 map1 <- tm_shape(seine) +
   tm_lines() +
-  tm_layout("original")
+  tm_title("original")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 map2 <- tm_shape(seine_simple) +
   tm_lines() +
-  tm_layout("st_simplify()")
+  tm_title("st_simplify()")+ 
+  tm_layout(meta.margins = c(.2, 0, 0, 0))
 
 tmap_arrange(map1, map2, nrow = 1)
 ```

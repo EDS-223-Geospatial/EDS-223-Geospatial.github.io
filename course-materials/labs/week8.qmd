@@ -147,8 +147,8 @@ ndvi_20180612 <- lapp(landsat_20180612[[c(4, 3)]], fun = ndvi_fun)
 #| code-fold: true
 #| message: false
 tm_shape(ndvi_20180612) +
-  tm_raster(title = "NDVI") +
-  tm_layout(legend.outside = TRUE)
+  tm_raster(col.legend  = tm_legend("NDVI")) +
+  tm_layout(legend.outside.position = "right")
 ```
 
 # Approach #1
@@ -168,7 +168,23 @@ Now we want to repeat the same operations for all 8 scenes. Below is a possible 
 
 Let's load each layer:
 
-```{r rast}
+```{r}
+#| eval: false
+landsat_20180612 <-rast(here( "data", "landsat_20180612.tif"))
+landsat_20180815 <- rast(here("data", "landsat_20180815.tif"))
+landsat_20181018 <- rast(here("data", "landsat_20181018.tif"))
+landsat_20181103 <- rast(here("data", "landsat_20181103.tif"))
+landsat_20190122 <- rast(here("data", "landsat_20190122.tif"))
+landsat_20190223 <- rast(here("data", "landsat_20190223.tif"))
+landsat_20190412 <- rast(here("data", "landsat_20190412.tif"))
+landsat_20190701 <- rast(here("data", "landsat_20190701.tif"))
+```
+
+
+
+```{r}
+#| echo: false
+
 landsat_20180612 <-rast(here("course-materials", "data", "week8", "landsat_20180612.tif"))
 landsat_20180815 <- rast(here("course-materials", "data", "week8", "landsat_20180815.tif"))
 landsat_20181018 <- rast(here("course-materials", "data", "week8", "landsat_20181018.tif"))
@@ -372,10 +388,6 @@ First, we'll read in a shapefile of study sites:
 sites <- st_read(here("course-materials", "data","week8","study_sites.shp"))
 ```
 
-```{r}
-#| eval: false
-sites <- st_read(here("data","study_sites.shp"))
-```
 
 
 ```{r }
