@@ -23,42 +23,41 @@ knitr::include_graphics("images/assignment-calendar.png")
 
 ## Assignments
 :::{.callout-important icon=true}
-Earning "Satisfactory" marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.
+Earning "Satisfactory"/ "Almost"/ "Not Yet" marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.
 :::
 
 Links to assignments will become available as they are assigned.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| SR              | [Pre-course Self Reflection (SR#1)](assignments/SR1.qmd){target="_blank"} | 09/30/2024    | 10/05/2024 |
-| HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 09/30/2024    | 10/05/2024 |
-| HW              | [Homework Assignment #2](assignments/HW2.qmd){target="_blank"}            | 10/07/2024    | 10/19/2024 |
-| HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/21/2024    | 11/09/2024 |
-| SR              | [Mid-course Self Reflection (SR#2)](assignments/SR2.qmd){target="_blank"} | 10/28/2024    | 11/02/2024 |
-| HW              | [Homework Assignment #4](assignments/HW4.qmd){target="_blank"}            | 11/11/2024    | 11/30/2024 |
-| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2024    | 12/07/2024 |
-| SR              | [Final Self Reflection (SR#3)](assignments/SR3.qmd){target="_blank"}      | 12/02/2024    | 12/07/2024 |
+| SR              | [Pre-course Self Reflection (SR#1)](assignments/SR1.qmd){target="_blank"} | 09/30/2025    | 10/04/2025 |
+| HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 09/30/2025    | 10/04/2025 |
+| HW              | [Homework Assignment #2](assignments/HW2.qmd){target="_blank"}            | 10/07/2025    | 10/18/2025 |
+| HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/21/2025    | 11/09/2025 |
+| HW              | [Homework Assignment #4](assignments/HW4.qmd){target="_blank"}            | 11/11/2025    | 11/26/2025 |
+| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2025    | 12/06/2025 |
+| SR              | [Final Self Reflection (SR#2)](assignments/SR3.qmd){target="_blank"}      | 12/02/2025    | 12/06/2025 |
 
 ## End-of-class surveys
 :::{.callout-important icon=true}
-End-of-class surveys (EOCs) will become available at the end of each class (Mondays) and are due by end-of-day (11:59 PM). Completing EOCs by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.
+End-of-class Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.
 :::
 
 Links to surveys will become available as they are assigned.
  
 
-| EOC link                     | Date Assigned  | Date Due                   |
+| Weekly Check-Ins                    | Date Assigned  | Date Due                   |
 |------------------------------|----------------|----------------------------|
-| [EOC (week 1)](https://forms.gle/7KsrhTo8eKGVbnV48){target="_blank"}  | Mon 09/30/2024 | Mon 09/30/2024|
-| [EOC (week 2)](https://forms.gle/cojXqsJsFAotQndC8){target="_blank"}  | Mon 10/07/2024 | Mon 10/07/2024|
-| [EOC (week 3)](https://forms.gle/sk7RrZeaCNjLVkru5){target="_blank"}  | Mon 10/14/2024 | Mon 10/14/2024|
-| [EOC (week 4)](https://forms.gle/u43BYi3McB4nPxEp8){target="_blank"}  | Mon 10/21/2024 | Mon 10/21/2024|
-| [EOC (week 5)](https://forms.gle/uey6mQc2CyUUAc6k7){target="_blank"}  | Mon 10/28/2024 | Mon 10/28/2024|
-| [EOC (week 6)](https://forms.gle/nTf1iao32byVN7ZUA){target="_blank"}  | Mon 11/04/2024 | Mon 11/04/2024|
-| *No lecture or EOC (week 7)* | *NA*           | *NA*        |
-| [EOC (week 8)](https://forms.gle/TRj7vNBDEQmLFR9b8){target="_blank"}  | Mon 11/18/2024 | Mon 11/18/2024|
-| [EOC (week 9)](https://forms.gle/m4sDdLSxpe2pjzGz8){target="_blank"}  | Mon 11/25/2024 | Mon 11/25/2024|
-| [EOC (week 10)](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"} | Mon 12/02/2024 | Mon 12/02/2024|
+| [Week 1 Check-In](https://forms.gle/7KsrhTo8eKGVbnV48){target="_blank"}  | Thurs 10/02/2025 |Thurs 10/02/2025|
+| [Week 2 Check-In](https://forms.gle/cojXqsJsFAotQndC8){target="_blank"}  |Thurs 10/09/2025 | Thurs 10/09/2025|
+| [Week 3 Check-In](https://forms.gle/sk7RrZeaCNjLVkru5){target="_blank"}  | Thurs 10/16/2025 | Thurs 10/64/2025|
+| [Week 4 Check-In](https://forms.gle/u43BYi3McB4nPxEp8){target="_blank"}  | Thurs 10/23/2025 | Thurs 10/23/2025|
+| [Week 5 Check-In](https://forms.gle/uey6mQc2CyUUAc6k7){target="_blank"}  | Thurs 10/30/2025 | Thurs 10/30/2025|
+| [Week 6 Check-In](https://forms.gle/nTf1iao32byVN7ZUA){target="_blank"}  | Thurs 11/06/2025 | Thurs 11/06/2025|
+| [Week 7 Check-In]() | Thurs 11/13/2025        | Thurs 11/13/2025       |
+| [Week 8 Check-In](https://forms.gle/TRj7vNBDEQmLFR9b8){target="_blank"}  | Thurs 11/20/2025 | Thurs 11/20/2025|
+| No Check-In Week 9 | *NA*   | *NA*   |
+| [Week 10 Check-In](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"} | Thurs 12/04/2025 | Thurs 12/04/2025|
 
 ## Grade Tracker 
 
@@ -72,7 +71,7 @@ Use the Grade Tracker, below, to determine your course grade:
 knitr::include_graphics("images/grade-tracker.png")
 ```
 
-[Redeem tokens](https://forms.gle/u51tdaAhSAQerHxh6) in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received a "Not Yet" mark.
+[Redeem tokens](https://script.google.com/a/macros/ucsb.edu/s/AKfycbxg517S3NoG8CT51pdz5xHVshhgHX3vKrTQnKJu6GU/dev) in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received an "Almost" or "Not Yet" mark.
 
 ## Rubric
 

@@ -28,7 +28,7 @@ knitr::include_graphics("images/holc-la.png")
 
 You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.
 
-The assignment **must be submitted through GitHub Classrooms**. Each student receives one "free pass" for not submitting assignments via specified channels, after which you will receive a "Not Yet" mark.
+The assignment **must be submitted through Gradescope**. 
 
 **Read each part of the assignment carefully**, and use the check boxes to ensure you've addressed all elements of the assignment!
 
