@@ -18,6 +18,8 @@ website:
         target: _blank
       - text: course materials
         menu: 
+          - text: week 0
+            href: course-materials/week0.qmd
           - text: week 1
             href: course-materials/week1.qmd
           - text: week 2

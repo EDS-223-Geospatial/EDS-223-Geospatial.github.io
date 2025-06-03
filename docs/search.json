@@ -1657,5 +1657,47 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+  },
+  {
+    "objectID": "course-materials/week0.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/week0.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "Intro to EDS 223 and map making",
+    "section": " Class Materials",
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nWelcome to EDS 223!"
+  },
+  {
+    "objectID": "course-materials/week0.html#assignment-reminders",
+    "href": "course-materials/week0.html#assignment-reminders",
+    "title": "Intro to EDS 223 and map making",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025"
+  },
+  {
+    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "title": "Intro to EDS 223 and map making",
+    "section": " Background Reading",
+    "text": "Background Reading\n\nGeocomputation with R, Chapter 9\nGIS Fundamentals, Chapter 2\nGIS Fundamentals, Chapter 3\nA Gentle Introduction to GIS, Chapter 8\nGeographic vs projected coordinate systems (Esri)"
+  },
+  {
+    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
+    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
+    "title": "Intro to EDS 223 and map making",
+    "section": " Technical Background",
+    "text": "Technical Background\n\ntmap: thematic maps in R documentation\ntmap overview\nCreating thematic maps in R"
+  },
+  {
+    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "title": "Intro to EDS 223 and map making",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nMEDS Installation Guide"
+  },
+  {
+    "objectID": "assignments.html#weekly-check-ins",
+    "href": "assignments.html#weekly-check-ins",
+    "title": "Assignments",
+    "section": "Weekly Check-Ins",
+    "text": "Weekly Check-Ins\n\n\n\n\n\n\nImportant\n\n\n\nWeekly Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nWeekly Check-Ins\nDate Assigned\nDate Due\n\n\n\n\nWeek 1 Check-In\nThurs 10/02/2025\nThurs 10/02/2025\n\n\nWeek 2 Check-In\nThurs 10/09/2025\nThurs 10/09/2025\n\n\nWeek 3 Check-In\nThurs 10/16/2025\nThurs 10/64/2025\n\n\nWeek 4 Check-In\nThurs 10/23/2025\nThurs 10/23/2025\n\n\nWeek 5 Check-In\nThurs 10/30/2025\nThurs 10/30/2025\n\n\nWeek 6 Check-In\nThurs 11/06/2025\nThurs 11/06/2025\n\n\nWeek 7 Check-In\nThurs 11/13/2025\nThurs 11/13/2025\n\n\nWeek 8 Check-In\nThurs 11/20/2025\nThurs 11/20/2025\n\n\nNo Check-In Week 9\nNA\nNA\n\n\nWeek 10 Check-In\nThurs 12/04/2025\nThurs 12/04/2025"
   }
 ]
