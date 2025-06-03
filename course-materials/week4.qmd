@@ -32,8 +32,8 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| EOC             | [End-of-class survey (week 4)](https://forms.gle/u43BYi3McB4nPxEp8){target="_blank"}              | 10/21/2024    | 10/21/2024 |
-| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"} | 10/21/2024    | 11/09/2024 |
+| Check-In             | [Check-In (week 4)](https://forms.gle/u43BYi3McB4nPxEp8){target="_blank"}              | 10/23/2025    | 10/23/2025 |
+| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"} | 10/21/2025    | 11/08/2025 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading

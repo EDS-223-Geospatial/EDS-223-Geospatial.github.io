@@ -63,7 +63,7 @@ knitr::include_graphics("images/annie.png")
 
 ::: {.center-text}
 [**Annie Adamsr**]{.teal-text}  
-**Email:** [aradams@ucsb.edu](mailto::aradamsr@ucsb.edu)  
+**Email:** [aradams@ucsb.edu](mailto::aradams@ucsb.edu)  
 **Learn more:** [annieradams.github.io](https://annieradams.github.io/)  
 :::
 

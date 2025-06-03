@@ -21,7 +21,7 @@ knitr::include_graphics("images/week10-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of active remote sensing: LiDAR and RADAR](https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Validating LiDAR tree height estimates](labs/week10.qmd)       |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice gridding and spatial interpolation](discussions/week10-discussion.qmd) ([Answer Key](discussions/answer-keys/week10-discussion-answerKey.qmd)) |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice gridding and spatial interpolation](discussions/_week10-discussion.qmd) ([Answer Key](discussions/answer-keys/_week10-discussion-answerKey.qmd)) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -32,9 +32,9 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                | Date Assigned | Date Due   |
 |-----------------|-------------------------------------------------|---------------|------------|
-| EOC             | [End-of-class survey (week 10)](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"}               | 11/25/2024    | 11/25/2024 |
-| SR              | [End-of-course reflection (SR#3)](../assignments/SR3.qmd){target="_blank"} | 12/02/2024    | 12/07/2023 |
-| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/11/2024    | 12/07/2024 |
+| Check-In             | [Check-In (week 10)](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"}               | 12/04/2025    | 12/04/2025 |
+| SR              | [End-of-course reflection (SR#3)](../assignments/SR3.qmd){target="_blank"} | 12/02/2025    | 12/06/2023 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/11/2025    | 12/06/2025 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
