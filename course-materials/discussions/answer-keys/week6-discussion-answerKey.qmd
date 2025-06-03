@@ -59,7 +59,7 @@ post_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC803
 #| echo: false
 
 # Set directory for folder
-pre_fire_dir <- here::here("course-materials", "data", "week6-discussion", "LC80340322016189-SC20170128091153")
+pre_fire_dir <- here::here("course-materials", "data", "LC80340322016189-SC20170128091153")
 
 # Create a list of all images that have the extension .tif and contain the word band
 pre_fire_bands <- list.files(pre_fire_dir,
@@ -69,14 +69,14 @@ pre_fire_bands <- list.files(pre_fire_dir,
 pre_fire_rast <- rast(pre_fire_bands)
 
 # Read mask raster
-pre_mask <- rast(here::here("course-materials", "data", "week6-discussion", "LC80340322016189-SC20170128091153", "LC80340322016189LGN00_cfmask_crop.tif"))
+pre_mask <- rast(here::here("course-materials", "data",  "LC80340322016189-SC20170128091153", "LC80340322016189LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
 #| echo: false
 
 # Set directory for folder
-post_fire_dir <- here::here("course-materials", "data", "week6-discussion", "LC80340322016205-SC20170127160728")
+post_fire_dir <- here::here("course-materials", "data",  "LC80340322016205-SC20170127160728")
 
 # Create a list of all images that have the extension .tif and contain the word band
 post_fire_bands <- list.files(post_fire_dir,
@@ -86,7 +86,7 @@ post_fire_bands <- list.files(post_fire_dir,
 post_fire_rast <- rast(post_fire_bands)
 
 # Read mask raster
-post_mask <- rast(here::here("course-materials", "data", "week6-discussion", "LC80340322016205-SC20170127160728", "LC80340322016205LGN00_cfmask_crop.tif"))
+post_mask <- rast(here::here("course-materials", "data",  "LC80340322016205-SC20170127160728", "LC80340322016205LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}

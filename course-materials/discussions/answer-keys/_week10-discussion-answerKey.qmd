@@ -1,0 +1,176 @@
+---
+render: false
+title: "Week 10: Discussion Section - Answer Key"
+subtitle: "Practice gridding and spatial interpolation"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+---
+
+```{r}
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(sf)
+library(terra)
+library(stars)
+library(gstat)
+library(tmap)
+library(kableExtra)
+```
+
+```{r}
+#| eval: false
+ca_ecoregions <- st_read(here::here("data", "CA_Level3_Ecoregions_EPA", "ca_eco_l3.shp"))
+
+bioclim_dir <- here::here("data", "wc2.1_2.5m")
+bioclim <- list.files(bioclim_dir, pattern = glob2rx("*.tif$"), full.names = TRUE)
+bioclim_sort <- bioclim[
+  # Sort filepaths based on numeric suffix
+  order(
+  # Extract numeric suffix of filenames and convert to numeric
+  as.numeric(gsub(".*_(\\d+)\\.tif$", "\\1", bioclim)))]
+bioclim_rast <- rast(bioclim_sort)
+
+variables <- c("annualMeanTemp", "meanDiurnalRange", "isothermality", "tempSeasonality", "maxTempWarmMonth", "maxTempColdMonth", "tempAnnualRange", "meanTempWetQ", "meanTempDryQ", "meanTempWarmQ", "meanTempColdQ", "annualPrecip", "precipWetMonth", "precipDryMonth", "precipSeasonality", "precipWetQ", "precipDryQ", "precipWarmQ", "precipColdQ")
+names(bioclim_rast) <- variables
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| results: 'hide'
+ca_ecoregions <- st_read(here::here("course-materials", "data", "week10-discussion", "CA_Level3_Ecoregions_EPA", "ca_eco_l3.shp"))
+
+bioclim_dir <- here::here("course-materials", "data", "week10-discussion", "wc2.1_2.5m")
+bioclim <- list.files(bioclim_dir, pattern = glob2rx("*.tif$"), full.names = TRUE)
+bioclim_sort <- bioclim[
+  # Sort filepaths based on numeric suffix
+  order(
+  # Extract numeric suffix of filenames and convert to numeric
+  as.numeric(gsub(".*_(\\d+)\\.tif$", "\\1", bioclim)))]
+bioclim_rast <- rast(bioclim_sort)
+
+variables <- c("annualMeanTemp", "meanDiurnalRange", "isothermality", "tempSeasonality", "maxTempWarmMonth", "maxTempColdMonth", "tempAnnualRange", "meanTempWetQ", "meanTempDryQ", "meanTempWarmQ", "meanTempColdQ", "annualPrecip", "precipWetMonth", "precipDryMonth", "precipSeasonality", "precipWetQ", "precipDryQ", "precipWarmQ", "precipColdQ")
+names(bioclim_rast) <- variables
+```
+
+## Transform CRS 
+```{r}
+ca_ecoregions <- ca_ecoregions %>%
+  st_transform(crs = st_crs(bioclim_rast))
+```
+
+### Crop and Mask Raster
+```{r}
+bioclim_rast_crop <- crop(bioclim_rast, ca_ecoregions)
+bioclim_rast_mask <- mask(bioclim_rast_crop, ca_ecoregions)
+```
+
+## Sample Random Points in Raster
+```{r}
+set.seed(275)
+pts <- spatSample(bioclim_rast_mask,
+                  # Random sample non-NA cells
+                  na.rm = TRUE, 
+                  # Sample size
+                  size = 1000, 
+                  # Return SpatVector
+                  as.points = TRUE)
+
+pts_sf <- st_as_sf(pts)
+```
+
+```{r}
+#| warning: false
+#| message: false
+tm_shape(bioclim_rast_mask[["annualMeanTemp"]]) +
+  tm_raster(palette = "-RdYlBu", title = "Annual Mean Temp") +
+  tm_shape(pts_sf) +
+  tm_dots(col = "#403d39", size = 0.075, 
+          title = "Random Samples") +
+  tm_add_legend(type = "symbol", labels = "Random Samples", 
+                col = "#403d39", size = 0.075) +
+  tm_layout(legend.position = c("right", "top"),
+            legend.bg.color = "white")
+```
+
+## Perform IDW Interpolation
+```{r}
+grid <- st_make_grid(pts_sf)
+grid <- stars::st_as_stars(grid, crs = st_crs(pts_sf))
+```
+
+```{r}
+#| message: false
+#| results: 'hide'
+annualMeanTemp_idw <- idw(annualMeanTemp ~ 1, locations = pts_sf, newdata = grid, idp = 2)
+```
+
+## View IDW Interpolation
+```{r}
+annualMeanTemp_idw <- rast(annualMeanTemp_idw)
+annualMeanTemp_idw <- mask(annualMeanTemp_idw, ca_ecoregions)
+```
+
+```{r}
+#| warning: false
+#| message: false
+map_1 <- tm_shape(bioclim_rast_mask[["annualMeanTemp"]]) +
+  tm_raster(palette = "-RdYlBu", title = "Annual Mean Temp") +
+  tm_layout(legend.position = c("right", "top"),
+            legend.bg.color = "white")
+
+map_2 <- tm_shape(ca_ecoregions) +
+  tm_polygons() +
+  tm_shape(pts_sf) +
+  tm_dots(col = "#403d39", size = 0.075, 
+          title = "Random Samples") +
+  tm_add_legend(type = "symbol", labels = "Random Samples", 
+                col = "#403d39", size = 0.075) +
+  tm_layout(legend.position = c("right", "top"),
+            legend.bg.color = "white")
+
+map_3 <- tm_shape(annualMeanTemp_idw[["var1.pred_var1.pred"]]) +
+  tm_raster(palette = "-RdYlBu", title = "Annual Mean Temp") +
+  tm_layout(legend.position = c("right", "top"),
+            legend.bg.color = "white")
+
+tmap_arrange(map_1, map_2, map_3)
+```
+## Find Interpolated Mean for Each Ecoregion
+```{r}
+grid_rast <- rast(grid)
+ca_ecoregions_rast <- rasterize(ca_ecoregions, grid_rast, field = "US_L3NAME")
+```
+
+```{r}
+#| warning: false
+#| message: false
+tm_shape(ca_ecoregions_rast) +
+  tm_raster(title = "Ecoregions") +
+  tm_layout(legend.outside = TRUE,
+            legend.title.size = 0.75,
+            legend.text.size = 0.75,
+            legend.outside.size = 0.55,
+            legend.bg.color = "white")
+```
+
+```{r}
+pred_by_ecoregion <- zonal(annualMeanTemp_idw, ca_ecoregions_rast, fun = "mean", na.rm = TRUE)
+```
+
+```{r}
+pred_by_ecoregion %>%
+  rename(ecoregion = US_L3NAME,
+         mean_annualMeanTemp_pred = var1.pred_var1.pred) %>%
+  select(ecoregion, mean_annualMeanTemp_pred) %>%
+  kbl() %>%
+  kable_minimal()
+```

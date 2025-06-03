@@ -36,6 +36,10 @@ Visualizing vector data, raster data, or both overlaid can be accomplished in va
 
 
 ```{r Import Packages, include = FALSE}
+
+# Set CRAN mirror
+options(repos = c(CRAN = "https://cran.rstudio.com/"))
+
 # install all required packages if not already installed
 pkg <- c("sf", 
          "terra", 
@@ -530,33 +534,33 @@ Note that `ggplot` does _not_ automatically derive the units of meters from the 
 ### tmap: rasters and polygons
 
 ```{r}
-tmap_mode("plot")
-
-tmap_options(max.categories = 9)
-
-tm_shape(arctic_ice_scaled) +
-  tm_raster(palette = blue_palette,
-            title = "Sea Ice\nConcentration",
-            style = "cont",
-            breaks = seq(0, 100, length.out = 11),
-            midpoint = NA) +
-tm_shape(pb_habitat_arctic) +
-  tm_polygons(col = "yellow",
-              border.col = "darkgoldenrod1",
-              lwd = 1,
-              alpha = 0.1) +
-tm_graticules(n.x = 5, n.y = 5, 
-              labels.show = TRUE, 
-              labels.size = 0.6,
-              alpha = 0.3) +
-tm_layout(title = "Sea Ice\nConcentration\nand Polar Bear\nHabitat Range",
-          main.title.size = 0.8,
-          title.fontface = "bold",
-          legend.outside = TRUE,
-          legend.title.size = 1,
-          legend.outside.position = "right",
-          inner.margins = c(0.1, 0.1, 0.1, 0.1)) +
-tm_scale_bar(position = c("left", "bottom"))
+# tmap_mode("plot")
+# 
+# #tmap_options(max.categories = 9)
+# 
+# tm_shape(arctic_ice_scaled) +
+#   tm_raster(palette = blue_palette,
+#             title = "Sea Ice\nConcentration",
+#             style = "cont",
+#             breaks = seq(0, 100, length.out = 11),
+#             midpoint = NA) +
+# tm_shape(pb_habitat_arctic) +
+#   tm_polygons(col = "yellow",
+#               border.col = "darkgoldenrod1",
+#               lwd = 1,
+#               alpha = 0.1) +
+# tm_graticules(n.x = 5, n.y = 5, 
+#               labels.show = TRUE, 
+#               labels.size = 0.6,
+#               alpha = 0.3) +
+# tm_layout(title = "Sea Ice\nConcentration\nand Polar Bear\nHabitat Range",
+#           main.title.size = 0.8,
+#           title.fontface = "bold",
+#           legend.outside = TRUE,
+#           legend.title.size = 1,
+#           legend.outside.position = "right",
+#           inner.margins = c(0.1, 0.1, 0.1, 0.1)) +
+# tm_scale_bar(position = c("left", "bottom"))
 ```
 
 ## Data Citations
