@@ -38,9 +38,9 @@ Links to assignments will become available as they are assigned.
 | PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2025    | 12/06/2025 |
 | SR              | [Final Self Reflection (SR#2)](assignments/SR3.qmd){target="_blank"}      | 12/02/2025    | 12/06/2025 |
 
-## End-of-class surveys
+## Weekly Check-Ins 
 :::{.callout-important icon=true}
-End-of-class Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.
+Weekly Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.
 :::
 
 Links to surveys will become available as they are assigned.
