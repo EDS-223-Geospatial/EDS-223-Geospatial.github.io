@@ -64,6 +64,7 @@ knitr::include_graphics("images/annie.png")
 ::: {.center-text}
 [**Annie Adamsr**]{.teal-text}  
 **Email:** [aradams@ucsb.edu](mailto::aradams@ucsb.edu)  
+**Student Hours:** Thursday 11 am - 12 pm @ BH 3418
 **Learn more:** [annieradams.github.io](https://annieradams.github.io/)  
 :::
 
@@ -87,6 +88,7 @@ knitr::include_graphics("images/alessandra.png")
 [**Alessandra Vidal Meza**]{.teal-text}  
 **Email:** [avidalmeza@ucsb.edu](mailto::avidalmeza@ucsb.edu)   
 **Learn more:** [avidalmeza.github.io](https://avidalmeza.github.io/)
+**Student Hours:** Tuesday 3 pm - 4 pm
 :::
 
 :::
