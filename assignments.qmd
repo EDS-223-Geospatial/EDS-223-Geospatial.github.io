@@ -17,7 +17,7 @@ All assignments are **due at 11:59 PM** on the date listed. Homework Assignments
 #| fig-align: "center"
 #| out-width: "55%" 
 
-knitr::include_graphics("images/assignment-calendar.png")
+knitr::include_graphics("images/assignment_calendar.png")
 ```
 
 
@@ -48,7 +48,7 @@ Links to surveys will become available as they are assigned.
 
 | Weekly Check-Ins                    | Date Assigned  | Date Due                   |
 |------------------------------|----------------|----------------------------|
-| [Week 1 Check-In](https://forms.gle/7KsrhTo8eKGVbnV48){target="_blank"}  | Thurs 10/02/2025 |Thurs 10/02/2025|
+| [Week 1 Check-In](https://docs.google.com/forms/d/e/1FAIpQLSfShAdrydydZaDV7jtDiYHaV5NOVKHMTcycfhWV0UUJYPhWWQ/viewform?usp=sharing&ouid=114976243173632226566){target="_blank"}  | Thurs 10/02/2025 |Thurs 10/02/2025|
 | [Week 2 Check-In](https://forms.gle/cojXqsJsFAotQndC8){target="_blank"}  |Thurs 10/09/2025 | Thurs 10/09/2025|
 | [Week 3 Check-In](https://forms.gle/sk7RrZeaCNjLVkru5){target="_blank"}  | Thurs 10/16/2025 | Thurs 10/64/2025|
 | [Week 4 Check-In](https://forms.gle/u43BYi3McB4nPxEp8){target="_blank"}  | Thurs 10/23/2025 | Thurs 10/23/2025|
@@ -68,7 +68,7 @@ Use the Grade Tracker, below, to determine your course grade:
 #| fig-align: "center"
 #| out-width: "55%" 
 #| fig-alt: "The Grade Tracker table, which can be used to determine an individual's course grade based on the number of 'Satisfactory' assignments completed, as well as descriptions on how to earn and use tokens"
-knitr::include_graphics("images/grade-tracker.png")
+knitr::include_graphics("images/grade_tracker.png")
 ```
 
 [Redeem tokens](https://script.google.com/a/macros/ucsb.edu/s/AKfycbxg517S3NoG8CT51pdz5xHVshhgHX3vKrTQnKJu6GU/dev) in exchange for assignment extensions, missing class, or to revise / resubmit an assignment that received an "Almost" or "Not Yet" mark.

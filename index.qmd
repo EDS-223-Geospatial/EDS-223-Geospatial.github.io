@@ -25,7 +25,7 @@ This course introduces the spatial modeling and analytic techniques of geographi
 
 ## Weekly Schedule
 
-- Lecture: Tuesday/Thursday 8- 9:15 AM at Bren Hall 1424
+- Lecture: Tuesday/Thursday 8- 9:15 AM at Bren Hall 4016
 - Discussion Section: Friday 9:00 - 10:20 AM in Bren Hall 3022
 
 ## Readings and References
@@ -64,6 +64,7 @@ knitr::include_graphics("images/annie.png")
 ::: {.center-text}
 [**Annie Adamsr**]{.teal-text}  
 **Email:** [aradams@ucsb.edu](mailto::aradams@ucsb.edu)  
+**Student Hours:** Thursday 11 am - 12 pm @ BH 3418
 **Learn more:** [annieradams.github.io](https://annieradams.github.io/)  
 :::
 
@@ -87,6 +88,7 @@ knitr::include_graphics("images/alessandra.png")
 [**Alessandra Vidal Meza**]{.teal-text}  
 **Email:** [avidalmeza@ucsb.edu](mailto::avidalmeza@ucsb.edu)   
 **Learn more:** [avidalmeza.github.io](https://avidalmeza.github.io/)
+**Student Hours:** Tuesday 3 pm - 4 pm
 :::
 
 :::
