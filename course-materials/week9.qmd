@@ -1,6 +1,6 @@
 ---
-title: "Week 9: Land Cover Classification"
-subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+title: "Land Cover Classification"
+subtitle: "Week 9"
 ---
 
 

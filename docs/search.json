@@ -149,14 +149,14 @@
   {
     "objectID": "course-materials/week9.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
     "href": "course-materials/week9.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "Week 9: Land Cover Classification",
+    "title": "Land Cover Classification",
     "section": " Class Materials",
     "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with decision trees\n\n\n No Discussion Section"
   },
   {
     "objectID": "course-materials/week9.html#assignment-reminders",
     "href": "course-materials/week9.html#assignment-reminders",
-    "title": "Week 9: Land Cover Classification",
+    "title": "Land Cover Classification",
     "section": " Assignment Reminders",
     "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
@@ -1479,21 +1479,21 @@
   {
     "objectID": "course-materials/week8.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
     "href": "course-materials/week8.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "Remote sensing of vegetation",
+    "title": "Multispectral Remote Sensing Analysis",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nMultispectral RS Analysis\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
   },
   {
     "objectID": "course-materials/week8.html#assignment-reminders",
     "href": "course-materials/week8.html#assignment-reminders",
-    "title": "Remote sensing of vegetation",
+    "title": "Multispectral Remote Sensing Analysis",
     "section": " Assignment Reminders",
     "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 8)\n11/20/2025\n11/20/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week8.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
     "href": "course-materials/week8.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "title": "Remote sensing of vegetation",
+    "title": "Multispectral Remote Sensing Analysis",
     "section": " Background Reading",
     "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 10"
   },
@@ -1699,5 +1699,19 @@
     "title": "Assignments",
     "section": "Weekly Check-Ins",
     "text": "Weekly Check-Ins\n\n\n\n\n\n\nImportant\n\n\n\nWeekly Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nWeekly Check-Ins\nDate Assigned\nDate Due\n\n\n\n\nWeek 1 Check-In\nThurs 10/02/2025\nThurs 10/02/2025\n\n\nWeek 2 Check-In\nThurs 10/09/2025\nThurs 10/09/2025\n\n\nWeek 3 Check-In\nThurs 10/16/2025\nThurs 10/64/2025\n\n\nWeek 4 Check-In\nThurs 10/23/2025\nThurs 10/23/2025\n\n\nWeek 5 Check-In\nThurs 10/30/2025\nThurs 10/30/2025\n\n\nWeek 6 Check-In\nThurs 11/06/2025\nThurs 11/06/2025\n\n\nWeek 7 Check-In\nThurs 11/13/2025\nThurs 11/13/2025\n\n\nWeek 8 Check-In\nThurs 11/20/2025\nThurs 11/20/2025\n\n\nNo Check-In Week 9\nNA\nNA\n\n\nWeek 10 Check-In\nThurs 12/04/2025\nThurs 12/04/2025"
+  },
+  {
+    "objectID": "course-materials/week7.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/week7.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "Remote sensing of vegetation",
+    "section": " Class Materials",
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\nNo Lab this week!\n\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
+  },
+  {
+    "objectID": "course-materials/week7.html#assignment-reminders",
+    "href": "course-materials/week7.html#assignment-reminders",
+    "title": "Remote sensing of vegetation",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   }
 ]
