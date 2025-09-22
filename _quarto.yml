@@ -20,30 +20,11 @@ website:
         menu: 
           - text: week 0
             href: course-materials/week0.qmd
-          - text: week 1
-            href: course-materials/week1.qmd
-          - text: week 2
-            href: course-materials/week2.qmd
-          - text: week 3
-            href: course-materials/week3.qmd
-          - text: week 4
-            href: course-materials/week4.qmd
-          - text: week 5
-            href: course-materials/week5.qmd
-          - text: week 6
-            href: course-materials/week6.qmd
-          - text: week 7
-            href: course-materials/week7.qmd
-          - text: week 8
-            href: course-materials/week8.qmd
-          - text: week 9
-            href: course-materials/week9.qmd
-          - text: week 10
-            href: course-materials/week10.qmd
+          
       - text: assignments
         href: assignments.qmd
       - text: redeem tokens
-        href: https://script.google.com/a/macros/ucsb.edu/s/AKfycbxg517S3NoG8CT51pdz5xHVshhgHX3vKrTQnKJu6GU/dev
+        href: https://script.google.com/a/macros/ucsb.edu/s/AKfycbx2l5pbXt0J8y2PnNi9Ohi3jxRZGd4dZfZMBMT_MWA23OPQ0Dt31vC7zbAWVHtcFC5C/exec
       - text: resources
         href: resources.qmd
       - icon: github
