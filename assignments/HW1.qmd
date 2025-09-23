@@ -45,7 +45,6 @@ EDS223-HW1
 │   ej_screen.qmd
 |   ej_screen.pdf
 │   Rmd/Proj files    
-│
 └───data
      └───ejscreen
 ```
