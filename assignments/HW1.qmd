@@ -30,11 +30,12 @@ The assignment **must be submitted through Gradescope**.
 
 ## Instructions
 
-1. Clone repository from GitHub Classrooms
+1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
 2. Download data from [here](https://drive.google.com/file/d/1nG6Nj1bXfzQFOVMO8Km3eNy4SWu1YcIQ/view?usp=sharing)
 3. Unzip data and place in repository
-4. Edit Quarto document with responses
-5. Push final edits before deadline
+4. Create a Quarto document with responses
+5. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+6. Add the link to your github repository to this [spreadsheet](https://docs.google.com/spreadsheets/d/1c1qxKPAW6S94Eq5f3U81RvN7TlUvELTqhrdF7PpPat0/edit?gid=0#gid=0)
 
 Your repository should have the following structure:
 
@@ -42,13 +43,12 @@ Your repository should have the following structure:
 EDS223-HW1
 │   README.md
 │   HW1.qmd
+|   HW1.pdf
 │   Rmd/Proj files    
 │
 └───data
-     └───easter-island
      └───ejscreen
 ```
-
 
 
 
