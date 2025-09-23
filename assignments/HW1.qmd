@@ -42,10 +42,9 @@ Your repository should have the following structure:
 ```{md}
 EDS223-HW1
 │   README.md
-│   HW1.qmd
-|   HW1.pdf
+│   ej_screen.qmd
+|   ej_screen.pdf
 │   Rmd/Proj files    
-│
 └───data
      └───ejscreen
 ```
