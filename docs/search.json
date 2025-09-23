@@ -879,7 +879,7 @@
     "href": "assignments/HW1.html#instructions",
     "title": "Homework Assignment 1",
     "section": "Instructions",
-    "text": "Instructions\n\nCreate a new GitHub repository.Be sure to include a README that follows these guidelines\nDownload data from here\nUnzip data and place in repository\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope\nAdd the link to your github repository to this spreadsheet\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   HW1.qmd\n|   HW1.pdf\n│   Rmd/Proj files    \n│\n└───data\n     └───ejscreen"
+    "text": "Instructions\n\nCreate a new GitHub repository.Be sure to include a README that follows these guidelines\nDownload data from here\nUnzip data and place in repository\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope\nAdd the link to your github repository to this spreadsheet\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   ej_screen.qmd\n|   ej_screen.pdf\n│   Rmd/Proj files    \n│\n└───data\n     └───ejscreen"
   },
   {
     "objectID": "assignments/HW1.html#exploring-environmental-injustice",
