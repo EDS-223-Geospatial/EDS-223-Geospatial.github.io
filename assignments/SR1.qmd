@@ -34,7 +34,7 @@ Everyone brings their own unique background and experiences to the course. So I 
 ## Rubric (specifications)
 To receive a "Satisfactory" score, you must adhere to the following:
 
-- [ ] Submit your response [here](https://forms.gle/YFj7y4d8BqrJ3Rt1A) by 11:59 PM on the due date. Extensions are not allowed on this first assignment.
+- [ ] Respond to each of the above questions on a word document. Upload a pdf of this document to Gradescope by 11:59 PM on the due date. Extensions are not allowed on this first assignment.
 - [ ] Your response must include answers to each question listed in the Description section.
 - [ ] You should aim to answer each question in 2-4 sentences.
 - [ ] Your responses must demonstrate genuine reflection. Obviously low effort responses will receive a "Not Yet". 
