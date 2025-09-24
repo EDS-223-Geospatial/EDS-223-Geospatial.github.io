@@ -31,11 +31,11 @@ Everyone brings their own unique background and experiences to the course. So I 
 - [ ] **Most importantly**, how do you plan to accomplish your learning goals for this course? **Be specific!** Instead of stating "I will complete assignments on time", reflect on what strategies you will employ. For example, creating a learning schedule, structured collaboration with peers, participating in online learning communities, etc.
 
 ### A bit about you!
-- [] What do like to do for fun outside of school/work? 
-- [] What is a piece of media you enjoyed recently? (e.g. music, book, movie, meme)
-- [] Where do you call home? 
+- [ ] What do like to do for fun outside of school/work? 
+- [ ] What is a piece of media you enjoyed recently? (e.g. music, book, movie, meme)
+- [ ] Where do you call home? 
         
-    Your answer here
+
 ## Rubric (specifications)
 To receive a "Satisfactory" score, you must adhere to the following:
 
