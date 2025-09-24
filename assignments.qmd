@@ -34,9 +34,9 @@ Links to assignments will become available as they are assigned.
 | HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 09/30/2025    | 10/04/2025 |
 | HW              | [Homework Assignment #2](assignments/HW2.qmd){target="_blank"}            | 10/07/2025    | 10/18/2025 |
 | HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/21/2025    | 11/09/2025 |
+| SR              | [Mid Quarter Self Reflection (SR#2)](assignments/SR3.qmd){target="_blank"}            | 10/28/2025    |     11/01/2025 |
 | HW              | [Homework Assignment #4](assignments/HW4.qmd){target="_blank"}            | 11/11/2025    | 11/26/2025 |
-| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2025    | 12/06/2025 |
-| SR              | [Final Self Reflection (SR#2)](assignments/SR3.qmd){target="_blank"}      | 12/02/2025    | 12/06/2025 |
+| PR              | [Portfolio Repository](assignments/PR.qmd){target="_blank"}               | 11/11/2025    | 12/06/2025 |    | [Final Self Reflection (SR#2)](assignments/SR3.qmd){target="_blank"}      | 12/02/2025    | 12/06/2025 |
 
 ## Weekly Check-Ins 
 :::{.callout-important icon=true}
