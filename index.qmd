@@ -92,9 +92,9 @@ knitr::include_graphics("images/alessandra.png")
 
 **Email:** [avidalmeza@ucsb.edu](mailto::avidalmeza@ucsb.edu)   
 
-**Student Hours:** Tuesday 3 pm - 4 pm
+**Student Hours:** Tuesday 3 pm - 4 pm @ BH 1001
 
-**Learn more:** [avidalmeza.github.io](https://avidalmeza.github.io/)
+**Learn more:** [avidalmeza.com](https://avidalmeza.com/)
 :::
 
 :::
