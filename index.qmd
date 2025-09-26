@@ -94,7 +94,7 @@ knitr::include_graphics("images/alessandra.png")
 
 **Student Hours:** Tuesday 3 pm - 4 pm @ BH 1001
 
-**Learn more:** [avidalmeza.github.io](https://avidalmeza.github.io/)
+**Learn more:** [avidalmeza.com](https://avidalmeza.com/)
 :::
 
 :::

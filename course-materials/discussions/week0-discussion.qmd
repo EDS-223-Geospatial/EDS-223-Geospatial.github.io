@@ -1,0 +1,197 @@
+---
+title: "Week 0: Discussion Section"
+subtitle: "Data wrangling refresher"
+author: "Alessandra Vidal Meza"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: inline
+---
+
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "55%"
+#| fig-align: "center"
+knitr::include_graphics("images/dams.jpg")
+```
+
+::: {.gray-text .center-text}
+Kölnbrein Dam in Austria
+:::
+
+In this section, we'll refresh our data wrangling skills and refamiliarize some key functions, using a subset of the [Global Dam Watch (GDW)](https://www.globaldamwatch.org/){target="_blank"} database. This data source brings together open-access, georeferenced regional and global dam data, in order to improve our understanding of the environmental effects of dams and flood risks.
+
+### What's up with dams?
+
+Dams can offer many advantages as a renewable energy, but they can also pose several risks on agriculture, river connectivity, and biodiversity. On the one hand, while dams help manage water flow, they also slow it down and raise downstream water temperatures, which can encourage harmful algae and parasites. This can further drive biodiversity loss, where dams already block fish migration, fragment habitats, and trap sediment.
+
+## 1. Get Started
+
+- Create a version-controlled R Project
+- Add (at least) two subfolders to your R project: `data` and `figs`
+
+Let's install and load all necessary packages:
+
+```{r}
+packages <- c("here", "janitor", "tidyverse", "sf", "terra", "tmap", "spData", "spDataLarge", "geodata", "kableExtra", "viridisLite")
+installed_packages <- packages %in% rownames(installed.packages())
+
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+```
+
+```{r}
+#| eval: true
+#| message: false
+#| warning: false
+library(here)
+library(janitor)
+library(tidyverse)
+library(sf)
+library(kableExtra)
+```
+
+Next, let's [download our GDW data subset](https://drive.google.com/file/d/1a8t6JH2jvreKE3qXwfis1nlbxXMd1Srd/view) to practice our data wrangling skills from EDS 221. Unzip and move this to your version-controlled R Project's `data` folder. 
+
+## 2. Load Data
+
+- Read in the `gdw.csv` file as `gdw_df` (and point to the filepath with help of `here()`)
+- Use the `|>` or `%>%` operator to pipe your `read_csv()` output to `clean_names()`
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{r}
+gdw_df <- read_csv(here("data", "gdw.csv")) |>
+  clean_names() # Convert variable names to lower snake case
+```
+
+```{r}
+#| eval: true
+#| include: false
+gdw_df <- read_csv(here("course-materials", "data", "gdw.csv")) |>
+  clean_names() # Convert variable names to lower snake case
+```
+:::
+
+## 3. Data Exploration
+
+- Show the first and last 10 rows of `gdw_df` and use `kable()` to make nice HTML tables
+- Print the number of rows and number of columns in `gdw_df`
+- Print the column names in `gdw_df`
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{r}
+head(gdw_df, n = 10) |> 
+  kable()
+
+tail(gdw_df, n = 10) |> 
+  kable()
+```
+
+```{r}
+dim(gdw_df)
+nrow(gdw_df)
+ncol(gdw_df)
+```
+
+```{r}
+names(gdw_df)
+```
+:::
+
+## 4. Index, Summarize, Subset Data
+
+- Use indexing brackets to extract the `gdw_df` column containing country names as a vector and data frame
+- Use `group_by()` and `summarise()` to find the number of dams by dam type in `gdw_df`
+- Make a subset called `sub_dam` that only contains entries for `dam_type == "Dam"`
+- Re-order `gdw_df` by ascending order of installation year
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{r}
+country_df <- gdw_df[, "country"]
+country_vec <- gdw_df[["country"]]
+```
+
+```{r}
+gdw_df |> 
+  group_by(dam_type) |>
+  summarise(count = n()) |>
+  ungroup()
+```
+
+```{r}
+sub_dam <- gdw_df |>
+  filter(dam_type == "Dam")
+```
+
+```{r}
+gdw_df <- gdw_df |>
+  arrange(year_dam)
+```
+:::
+
+## 5. Data Visualization
+
+- Make a bar graph of average height of dam/barrier in meters (`dam_hgt_m`) by country
+- Make a scatterplot of height of dam/barrier versus representative maximum storage capacity of reservoir in million cubic meters (`cap_mcm`) 
+
+::: {.callout-tip collapse="true"}
+## Solution
+```{r}
+#| eval: true
+
+gdw_df |>
+  group_by(country) |>
+  summarize(mean_dam_hgt_m = mean(dam_hgt_m, na.rm = TRUE)) |>
+  ungroup() |> 
+  ggplot(aes(x = country, y = mean_dam_hgt_m)) +
+    geom_bar(stat = "identity") +
+    labs(x = "Country",
+         y = "Average height of dam/barrier in meters") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))
+```
+
+```{r}
+#| eval: true
+
+ggplot(data = gdw_df,
+      aes(x = cap_mcm, y = dam_hgt_m)) +
+  geom_point() +
+  labs(x = "Storage capacity of reservoir in million cubic meters",
+       y = "Height of dam/barrier in meters") +
+  theme_minimal()
+```
+:::
+
+## 6. Looking Ahead
+
+We have practiced wrangling a `data.frame` object, but `gdw_df` also has a `shape` column, which contains point coordinates (longitude and latitude). Let's print the first 3 rows of this column and take a look at its class. 
+
+```{r}
+#| eval: true
+head(gdw_df$shape, n = 3)
+class(gdw_df$shape)
+```
+
+While `gdw_df` contains spatial information, it needs to be spatially-enabled to be a spatial object. We use the `sf` package to do this. Over the next few weeks, you will be using the function `st_read()` (or `read_sf()`) to read all your shapefiles and geodatabases. 
+
+```{r}
+gdw_st <- st_read(here("data", "gdw.gdb")) |>
+  clean_names() # Convert variable names to lower snake case
+```
+
+```{r}
+gdw_sf <- read_sf(here("data", "gdw.gdb")) |>
+  clean_names() # Convert variable names to lower snake case
+```
+
