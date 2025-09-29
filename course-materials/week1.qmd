@@ -20,7 +20,8 @@ knitr::include_graphics("images/week1-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Welcome to EDS 223, why spatial?, and fundamentals of good maps](https://docs.google.com/presentation/d/1hMWl_QV6Z7gvUg4gRjSm3-0lSs1vW5_3fsaJ5Kvj_xY/present){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Making maps in R with `tmap`](labs/week1.qmd)        |
+| {{< fa download title="download" >}} Lab Materials to download              | [Making maps in R with `tmap`](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week1)        |
+| {{< fa key title="key" >}} Lab Solution                 | [Making maps in R with `tmap`](labs/week1.qmd)        |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Making maps with `tmap` and beyond](discussions/week1-discussion.qmd) ([Answer Key](discussions/answer-keys/week1-discussion-answerKey.qmd)) |
 
 
