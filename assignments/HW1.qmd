@@ -33,9 +33,10 @@ The assignment **must be submitted through Gradescope**.
 1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
 2. Download data from [here](https://drive.google.com/file/d/1nG6Nj1bXfzQFOVMO8Km3eNy4SWu1YcIQ/view?usp=sharing)
 3. Unzip data and place in repository
-4. Create a Quarto document with responses
-5. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
-6. Add the link to your github repository to this [spreadsheet](https://docs.google.com/spreadsheets/d/1c1qxKPAW6S94Eq5f3U81RvN7TlUvELTqhrdF7PpPat0/edit?gid=0#gid=0)
+4. Add the data to your `gitignore`!
+5. Create a Quarto document with responses
+6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+7. Add the link to your github repository to this [spreadsheet](https://docs.google.com/spreadsheets/d/1c1qxKPAW6S94Eq5f3U81RvN7TlUvELTqhrdF7PpPat0/edit?gid=0#gid=0)
 
 Your repository should have the following structure:
 
@@ -63,17 +64,10 @@ As many of us are aware, environmental degradation, pollution, and hazards is no
 > - are fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and
 > - have equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices
 
-For far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency's [EJScreen: Environmental Justice Screening and Mapping Tool](https://www.epa.gov/ejscreen).
 
-According to the [US EPA website](https://www.epa.gov/ejscreen/purposes-and-uses-ejscreen):
+The zipped data folder you will use on this assignment came from a previous version of the US EPA Website, specifically from the Environmental Justice Screening and Mapping Tool. As of January 2025, this tool is no longer available. The tool previously served to support a wide range of research and policy goals. 
 
->This screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.
->
->EPA is sharing EJScreen with the public:
->
-> - to be more transparent about how we consider environmental justice in our work,  
-> - to assist our stakeholders in making informed decisions about pursuing environmental justice and,   
-> - to create a common starting point between the agency and the public when looking at issues related to environmental justice.
+
 
 ### Description
 
