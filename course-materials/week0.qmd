@@ -20,6 +20,7 @@ knitr::include_graphics("images/week1-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Welcome to EDS 223! ](https://docs.google.com/presentation/d/1ZyhM8Gp0HG9R9B_JkfdqZN9x438KMRGrMGBhNkXAKk8/present){target="_blank"}                  |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Data wrangling refresher](discussions/week0-discussion.qmd) |
 
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}

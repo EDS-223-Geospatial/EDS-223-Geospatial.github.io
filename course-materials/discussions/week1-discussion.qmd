@@ -57,11 +57,11 @@ library(tmap)
 ```
 
 ```{r}
-ei_points <- sf::read_sf(here::here("data", "easter_island", "ei_points.gpkg"))
+ei_points <- read_sf(here::here("data", "easter_island", "ei_points.gpkg"))
 volcanoes <- subset(ei_points, type == "volcano")
-ei_elev <- stars::read_stars(here::here("data", "easter_island", "ei_elev.tif"))
-ei_borders <- sf::read_sf(here::here("data", "easter_island", "ei_border.gpkg"))
-ei_roads <- sf::read_sf(here::here("data", "easter_island", "ei_roads.gpkg"))
+ei_elev <- read_stars(here::here("data", "easter_island", "ei_elev.tif"))
+ei_borders <- read_sf(here::here("data", "easter_island", "ei_border.gpkg"))
+ei_roads <- read_sf(here::here("data", "easter_island", "ei_roads.gpkg"))
 ```
 
 ## 3. Your Task
