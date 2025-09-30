@@ -103,6 +103,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../course-materials/week0.html" rel="" target="">
  <span class="dropdown-text">week 0</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../course-materials/week1.html" rel="" target="">
+ <span class="dropdown-text">week 1</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -487,6 +491,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">This website is built with <a href="https://github.com/samanthacsik/EDS-212-essential-math"><i class="fa-brands fa-github" title="the github octocat logo" aria-label="github"></i></a>, <a href="https://www.r-project.org/about.html"><i class="fa-brands fa-r-project" title="R Project" aria-label="r-project"></i></a> and <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
 
 
 

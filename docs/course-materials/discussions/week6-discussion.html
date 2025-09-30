@@ -142,42 +142,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week1.html" rel="" target="">
  <span class="dropdown-text">week 1</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week2.html" rel="" target="">
- <span class="dropdown-text">week 2</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week3.html" rel="" target="">
- <span class="dropdown-text">week 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week4.html" rel="" target="">
- <span class="dropdown-text">week 4</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week5.html" rel="" target="">
- <span class="dropdown-text">week 5</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week6.html" rel="" target="">
- <span class="dropdown-text">week 6</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week7.html" rel="" target="">
- <span class="dropdown-text">week 7</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week8.html" rel="" target="">
- <span class="dropdown-text">week 8</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week9.html" rel="" target="">
- <span class="dropdown-text">week 9</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week10.html" rel="" target="">
- <span class="dropdown-text">week 10</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -185,7 +149,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">assignments</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbxg517S3NoG8CT51pdz5xHVshhgHX3vKrTQnKJu6GU/dev" rel="" target="">
+    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbx2l5pbXt0J8y2PnNi9Ohi3jxRZGd4dZfZMBMT_MWA23OPQ0Dt31vC7zbAWVHtcFC5C/exec" rel="" target="">
  <span class="menu-text">redeem tokens</span></a>
   </li>  
   <li class="nav-item">
@@ -780,6 +744,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     <div class="nav-footer-right">This website is built with <a href="https://github.com/samanthacsik/EDS-212-essential-math"><i class="fa-brands fa-github" title="the github octocat logo" aria-label="github"></i></a>, <a href="https://www.r-project.org/about.html"><i class="fa-brands fa-r-project" title="R Project" aria-label="r-project"></i></a> and <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
 
 
 
