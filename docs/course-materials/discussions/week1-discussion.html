@@ -145,6 +145,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week0.html">
  <span class="dropdown-text">week 0</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week1.html" rel="" target="">
+ <span class="dropdown-text">week 1</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -152,8 +156,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">assignments</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbx2l5pbXt0J8y2PnNi9Ohi3jxRZGd4dZfZMBMT_MWA23OPQ0Dt31vC7zbAWVHtcFC5C/exec"> 
-<span class="menu-text">redeem tokens</span></a>
+    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbx2l5pbXt0J8y2PnNi9Ohi3jxRZGd4dZfZMBMT_MWA23OPQ0Dt31vC7zbAWVHtcFC5C/exec" rel="" target="">
+ <span class="menu-text">redeem tokens</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../resources.html"> 
@@ -723,6 +727,15 @@ More map making in R
 </div>
   </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
 
 
 

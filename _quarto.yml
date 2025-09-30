@@ -46,6 +46,17 @@ format:
     title-block-banner: true
     page-layout: full
     callout-icon: false
+    include-after-body: 
+      text: |
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Reinitialize Bootstrap dropdowns on every page load
+          var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+          dropdownElementList.forEach(function(dropdownToggle) {
+            new bootstrap.Dropdown(dropdownToggle);
+          });
+        });
+        </script>
 
 editor: source
 

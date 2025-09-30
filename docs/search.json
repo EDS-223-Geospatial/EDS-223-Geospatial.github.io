@@ -70,32 +70,67 @@
     "text": "Additional Resources\n\nHow raster functions map to stars functions\nSpatiotemporal raster data handling with stars\nA comparison of terra and stars packages"
   },
   {
-    "objectID": "course-materials/week2.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "href": "course-materials/week2.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "Intro to spatial data models",
+    "objectID": "course-materials/week3.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/week3.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "Spatial and geometry operations with vector data",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to spatial/vector data models\n\n\n Lab\nSpatial operations with vector data\n\n\n Discussion\nWorking with multiple vector types (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice vector operations (Answer Key)"
   },
   {
-    "objectID": "course-materials/week2.html#assignment-reminders",
-    "href": "course-materials/week2.html#assignment-reminders",
-    "title": "Intro to spatial data models",
+    "objectID": "course-materials/week3.html#assignment-reminders",
+    "href": "course-materials/week3.html#assignment-reminders",
+    "title": "Spatial and geometry operations with vector data",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 2)\n10/09/2025\n10/09/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 3)\n10/16/2025\n10/16/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025"
   },
   {
-    "objectID": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "href": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "title": "Intro to spatial data models",
+    "objectID": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "href": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "title": "Spatial and geometry operations with vector data",
     "section": " Background Reading",
-    "text": "Background Reading\n\nGIS Fundamentals, Chapter 2 Part 2\nGeocomputation with R, Chapter 2\nGeocomputation with R, Chapter 3\nGeocomputation with R, Chapter 7"
+    "text": "Background Reading\n\nGeocomputation with R, Chapter 4\nGeocomputation with R, Chapter 5\nGIS Fundamentals, Chapter 9 Part 1\nDouglas–Peucker Algorithm (Cartography Playground)\nLine Simplification with Visvalingam–Whyatt Algorithm (Mike Bostok)"
   },
   {
-    "objectID": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
-    "href": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
-    "title": "Intro to spatial data models",
+    "objectID": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
+    "href": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
+    "title": "Spatial and geometry operations with vector data",
+    "section": " Technical Background",
+    "text": "Technical Background\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
+  },
+  {
+    "objectID": "course-materials/template.html",
+    "href": "course-materials/template.html",
+    "title": "template {add topic}",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\ndescription\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
+  },
+  {
+    "objectID": "course-materials/template.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/template.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "template {add topic}",
+    "section": "",
+    "text": "Session\nMaterials\n\n\n\n\n Lecture\ndescription\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
+  },
+  {
+    "objectID": "course-materials/template.html#assignment-reminders",
+    "href": "course-materials/template.html#assignment-reminders",
+    "title": "template {add topic}",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (Week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
+  },
+  {
+    "objectID": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "href": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "title": "template {add topic}",
+    "section": " Background Reading",
+    "text": "Background Reading"
+  },
+  {
+    "objectID": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "href": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "title": "template {add topic}",
     "section": " Additional Resources",
-    "text": "Additional Resources\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
+    "text": "Additional Resources"
   },
   {
     "objectID": "course-materials/week1.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
@@ -137,14 +172,14 @@
     "href": "course-materials/resources/good-bad-example/good_example.html",
     "title": "Professional Output Example",
     "section": "",
-    "text": "Professional documents should be easy to follow and get the point across to the reader in a concise manner.\nHelpful components include:\n\ndocument header with title, name, and date\n\nideally, the date reflects the day the document is most recently rendered\n\nall packages are loaded together at the top of the document\ninclude code comments when appropriate\nclean code indentation for lists, parameters, functions within functions, etc.\ndata visualizations such as maps and plots contain all necessary components such as a legend, axes labels, units, and appropriate palette (divergent, colorblind friendly, etc.)\nfolding code or sourcing separate scripts when appropriate to direct reader’s attention to the important output or to condense code\nhiding unnecessary output such as warning messages or loaded packages\nsuccinct documentation between steps, such as section headers, descriptions for an analysis step, and map/plot interpretation\ncomplete and detailed data citations\nfunction definitions should include warnings and errors that ensure the intended operations are executed\n\n\n\nElephants are intelligent and gregarious animals that tend to travel as a herd and seek out resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009 (Slotow et al. 2019).\nObjective: Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.\n\n\n\n\nShow the code\nlibrary(tidyverse)\n\n\nWarning: package 'ggplot2' was built under R version 4.3.3\n\n\nWarning: package 'purrr' was built under R version 4.3.3\n\n\nShow the code\nlibrary(here)\nlibrary(sf)\n\n\nWarning: package 'sf' was built under R version 4.3.3\n\n\nShow the code\nlibrary(tmap)\n\n\nWarning: package 'tmap' was built under R version 4.3.3\n\n\nShow the code\nlibrary(rnaturalearth)\nlibrary(osmdata)\n\n# source external script that defines custom functions\nsource(list.files(path = here(\"course-materials\"),\n                  pattern = \"functions.R\",\n                  recursive = TRUE,\n                  full.names = TRUE))\n\n\n\n\n\n\nImport the elephant movement data and configure its spatial components\n\n\nmetadata_df &lt;- load_csv(filename = \"elephants_metadata.csv\",\n                        directory = \"course-materials\",\n                        communicate = FALSE)\n\n\nAttaching package: 'tools'\n\n\nThe following object is masked from 'package:tmap':\n\n    toTitleCase\n\nelephants_df &lt;- load_csv(filename = \"elephants.csv\",\n                         directory = \"course-materials\",\n                         communicate = FALSE)\n\n# convert the elephant observations to sf objects\nelephants &lt;- to_spatial_points(data = elephants_df,\n                               latitude_col = \"location-lat\",\n                               longitude_col = \"location-long\")\n\n\n\n\n\nImport the spatial boundaries for Kruger National Park to serve as a basemap for the elephant tracks\n\n\n# set bbox to approximate boundaries of Kruger NP\nkruger &lt;- osmdata::opq(bbox = c(16, -35, 33, -22)) %&gt;%\n          add_osm_feature(key = \"boundary\", \n                          value = \"protected_area\") %&gt;%\n          add_osm_feature(key = \"name\", \n                          value = \"Kruger National Park\") %&gt;%\n          osmdata_sf()\n\n# subset imported list of elements to just the geodataframe\nkruger_bounds &lt;- kruger$osm_multipolygons\n\n\nProduce a map of elephant observations to visualize the individual movement of elephants\n\n\n\nShow the code\ntitle = \"Elephant Observations\\nKruger National Park\\n2007-2009\"\n\n# basemap: Kruger National Park geometry\ntm_shape(kruger_bounds) +\n  tm_borders(col = \"black\", lwd = 0.5) +\n  tm_fill(col = \"black\") +\n  # overlay all elephant GPS locations \n  tm_shape(elephants) +\n  tm_dots(col = \"individual-local-identifier\",\n          palette = \"Set3\",\n          # small dots to distinguish between individuals\n          size = 0.001,\n          border.col = \"black\",\n          title = \"Individual\") +\n  tm_layout(bg.color = \"darkgrey\",\n            legend.bg.color = \"white\",\n            title = title,\n            frame = TRUE,\n            title.position = c(\"center\", \"top\"),\n            title.size = 1.2,\n            title.fontface = \"bold\",\n            legend.frame = TRUE,\n            legend.outside = TRUE,\n            legend.position = c(0.08, 0.3),\n            legend.title.size = 0.8,\n            legend.text.size = 0.6) +\n  # add compass with only North arrow\n  tm_compass(position = c(0.0, 0.01),\n             show.labels = 1)\n\n\n\n\n\n── tmap v3 code detected ───────────────────────────────────────────────────────\n\n\n[v3-&gt;v4] `tm_tm_dots()`: migrate the argument(s) related to the scale of the\nvisual variable `fill` namely 'palette' (rename to 'values') to fill.scale =\ntm_scale(&lt;HERE&gt;).\n[v3-&gt;v4] `tm_dots()`: use 'fill' for the fill color of polygons/symbols\n(instead of 'col'), and 'col' for the outlines (instead of 'border.col').\n[tm_dots()] Argument `title` unknown.\n[v3-&gt;v4] `tm_layout()`: use `tm_title()` instead of `tm_layout(title = )`\n[cols4all] color palettes: use palettes from the R package cols4all. Run\n`cols4all::c4a_gui()` to explore them. The old palette name \"Set3\" is named\n\"brewer.set3\"\nMultiple palettes called \"set3\" found: \"brewer.set3\", \"hcl.set3\". The first one, \"brewer.set3\", is returned.\n\n[plot mode] fit legend/component: Some legend items or map compoments do not\nfit well, and are therefore rescaled.\nℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.\n\n\n\n\n\n\n\n\nElephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park. Alternatively, error in the GPS location for these points could explain this perceived movement.\nFuther analysis steps could include:\n\nzooming in further to the realized niche\npartitioning the data temporally\nusing metadata to advise how to subset the data to view fewer elephant locations at a time\noverlaying other vector or raster data layers such as surface water and vegetation to understand if the elephants’ movement is driven by these resources\n\n\n\n\n\n\n\nData\nCitation\nLink\n\n\n\n\nElephant observations\nSlotow R, Thaker M, Vanak AT. 2019. Data from: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water. Movebank Data Repository. https://doi.org/10.5441/001/1.403h24q5\nMoveBank Repository: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water"
+    "text": "Professional documents should be easy to follow and get the point across to the reader in a concise manner.\nHelpful components include:\n\ndocument header with title, name, and date\n\nideally, the date reflects the day the document is most recently rendered\n\nall packages are loaded together at the top of the document\ninclude code comments when appropriate\nclean code indentation for lists, parameters, functions within functions, etc.\ndata visualizations such as maps and plots contain all necessary components such as a legend, axes labels, units, and appropriate palette (divergent, colorblind friendly, etc.)\nfolding code or sourcing separate scripts when appropriate to direct reader’s attention to the important output or to condense code\nhiding unnecessary output such as warning messages or loaded packages\nsuccinct documentation between steps, such as section headers, descriptions for an analysis step, and map/plot interpretation\ncomplete and detailed data citations\nfunction definitions should include warnings and errors that ensure the intended operations are executed\n\n\n\nElephants are intelligent and gregarious animals that tend to travel as a herd and seek out resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009 (Slotow et al. 2019).\nObjective: Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.\n\n\n\n\nShow the code\nlibrary(tidyverse)\n\n\nWarning: package 'ggplot2' was built under R version 4.3.3\n\n\nWarning: package 'purrr' was built under R version 4.3.3\n\n\nShow the code\nlibrary(here)\n\n\nWarning: package 'here' was built under R version 4.3.3\n\n\nShow the code\nlibrary(sf)\n\n\nWarning: package 'sf' was built under R version 4.3.3\n\n\nShow the code\nlibrary(tmap)\n\n\nWarning: package 'tmap' was built under R version 4.3.3\n\n\nShow the code\nlibrary(rnaturalearth)\nlibrary(osmdata)\n\n# source external script that defines custom functions\nsource(list.files(path = here(\"course-materials\"),\n                  pattern = \"functions.R\",\n                  recursive = TRUE,\n                  full.names = TRUE))\n\n\n\n\n\n\nImport the elephant movement data and configure its spatial components\n\n\nmetadata_df &lt;- load_csv(filename = \"elephants_metadata.csv\",\n                        directory = \"course-materials\",\n                        communicate = FALSE)\n\n\nAttaching package: 'tools'\n\n\nThe following object is masked from 'package:tmap':\n\n    toTitleCase\n\nelephants_df &lt;- load_csv(filename = \"elephants.csv\",\n                         directory = \"course-materials\",\n                         communicate = FALSE)\n\n# convert the elephant observations to sf objects\nelephants &lt;- to_spatial_points(data = elephants_df,\n                               latitude_col = \"location-lat\",\n                               longitude_col = \"location-long\")\n\n\n\n\n\nImport the spatial boundaries for Kruger National Park to serve as a basemap for the elephant tracks\n\n\n# set bbox to approximate boundaries of Kruger NP\nkruger &lt;- osmdata::opq(bbox = c(16, -35, 33, -22)) %&gt;%\n          add_osm_feature(key = \"boundary\", \n                          value = \"protected_area\") %&gt;%\n          add_osm_feature(key = \"name\", \n                          value = \"Kruger National Park\") %&gt;%\n          osmdata_sf()\n\n# subset imported list of elements to just the geodataframe\nkruger_bounds &lt;- kruger$osm_multipolygons\n\n\nProduce a map of elephant observations to visualize the individual movement of elephants\n\n\n\nShow the code\ntitle = \"Elephant Observations\\nKruger National Park\\n2007-2009\"\n\n# basemap: Kruger National Park geometry\ntm_shape(kruger_bounds) +\n  tm_borders(col = \"black\", lwd = 0.5) +\n  tm_fill(col = \"black\") +\n  # overlay all elephant GPS locations \n  tm_shape(elephants) +\n  tm_dots(col = \"individual-local-identifier\",\n          palette = \"Set3\",\n          # small dots to distinguish between individuals\n          size = 0.001,\n          border.col = \"black\",\n          title = \"Individual\") +\n  tm_layout(bg.color = \"darkgrey\",\n            legend.bg.color = \"white\",\n            title = title,\n            frame = TRUE,\n            title.position = c(\"center\", \"top\"),\n            title.size = 1.2,\n            title.fontface = \"bold\",\n            legend.frame = TRUE,\n            legend.outside = TRUE,\n            legend.position = c(0.08, 0.3),\n            legend.title.size = 0.8,\n            legend.text.size = 0.6) +\n  # add compass with only North arrow\n  tm_compass(position = c(0.0, 0.01),\n             show.labels = 1)\n\n\n\n\n\n── tmap v3 code detected ───────────────────────────────────────────────────────\n\n\n[v3-&gt;v4] `tm_tm_dots()`: migrate the argument(s) related to the scale of the\nvisual variable `fill` namely 'palette' (rename to 'values') to fill.scale =\ntm_scale(&lt;HERE&gt;).\n[v3-&gt;v4] `tm_dots()`: use 'fill' for the fill color of polygons/symbols\n(instead of 'col'), and 'col' for the outlines (instead of 'border.col').\n[tm_dots()] Argument `title` unknown.\n[v3-&gt;v4] `tm_layout()`: use `tm_title()` instead of `tm_layout(title = )`\n[cols4all] color palettes: use palettes from the R package cols4all. Run\n`cols4all::c4a_gui()` to explore them. The old palette name \"Set3\" is named\n\"brewer.set3\"\nMultiple palettes called \"set3\" found: \"brewer.set3\", \"hcl.set3\". The first one, \"brewer.set3\", is returned.\n\n[plot mode] fit legend/component: Some legend items or map compoments do not\nfit well, and are therefore rescaled.\nℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.\n\n\n\n\n\n\n\n\nElephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park. Alternatively, error in the GPS location for these points could explain this perceived movement.\nFuther analysis steps could include:\n\nzooming in further to the realized niche\npartitioning the data temporally\nusing metadata to advise how to subset the data to view fewer elephant locations at a time\noverlaying other vector or raster data layers such as surface water and vegetation to understand if the elephants’ movement is driven by these resources\n\n\n\n\n\n\n\nData\nCitation\nLink\n\n\n\n\nElephant observations\nSlotow R, Thaker M, Vanak AT. 2019. Data from: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water. Movebank Data Repository. https://doi.org/10.5441/001/1.403h24q5\nMoveBank Repository: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water"
   },
   {
     "objectID": "course-materials/resources/good-bad-example/good_example.html#elephant-tracking-in-krugar-national-park",
     "href": "course-materials/resources/good-bad-example/good_example.html#elephant-tracking-in-krugar-national-park",
     "title": "Professional Output Example",
     "section": "",
-    "text": "Elephants are intelligent and gregarious animals that tend to travel as a herd and seek out resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009 (Slotow et al. 2019).\nObjective: Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.\n\n\n\n\nShow the code\nlibrary(tidyverse)\n\n\nWarning: package 'ggplot2' was built under R version 4.3.3\n\n\nWarning: package 'purrr' was built under R version 4.3.3\n\n\nShow the code\nlibrary(here)\nlibrary(sf)\n\n\nWarning: package 'sf' was built under R version 4.3.3\n\n\nShow the code\nlibrary(tmap)\n\n\nWarning: package 'tmap' was built under R version 4.3.3\n\n\nShow the code\nlibrary(rnaturalearth)\nlibrary(osmdata)\n\n# source external script that defines custom functions\nsource(list.files(path = here(\"course-materials\"),\n                  pattern = \"functions.R\",\n                  recursive = TRUE,\n                  full.names = TRUE))\n\n\n\n\n\n\nImport the elephant movement data and configure its spatial components\n\n\nmetadata_df &lt;- load_csv(filename = \"elephants_metadata.csv\",\n                        directory = \"course-materials\",\n                        communicate = FALSE)\n\n\nAttaching package: 'tools'\n\n\nThe following object is masked from 'package:tmap':\n\n    toTitleCase\n\nelephants_df &lt;- load_csv(filename = \"elephants.csv\",\n                         directory = \"course-materials\",\n                         communicate = FALSE)\n\n# convert the elephant observations to sf objects\nelephants &lt;- to_spatial_points(data = elephants_df,\n                               latitude_col = \"location-lat\",\n                               longitude_col = \"location-long\")\n\n\n\n\n\nImport the spatial boundaries for Kruger National Park to serve as a basemap for the elephant tracks\n\n\n# set bbox to approximate boundaries of Kruger NP\nkruger &lt;- osmdata::opq(bbox = c(16, -35, 33, -22)) %&gt;%\n          add_osm_feature(key = \"boundary\", \n                          value = \"protected_area\") %&gt;%\n          add_osm_feature(key = \"name\", \n                          value = \"Kruger National Park\") %&gt;%\n          osmdata_sf()\n\n# subset imported list of elements to just the geodataframe\nkruger_bounds &lt;- kruger$osm_multipolygons\n\n\nProduce a map of elephant observations to visualize the individual movement of elephants\n\n\n\nShow the code\ntitle = \"Elephant Observations\\nKruger National Park\\n2007-2009\"\n\n# basemap: Kruger National Park geometry\ntm_shape(kruger_bounds) +\n  tm_borders(col = \"black\", lwd = 0.5) +\n  tm_fill(col = \"black\") +\n  # overlay all elephant GPS locations \n  tm_shape(elephants) +\n  tm_dots(col = \"individual-local-identifier\",\n          palette = \"Set3\",\n          # small dots to distinguish between individuals\n          size = 0.001,\n          border.col = \"black\",\n          title = \"Individual\") +\n  tm_layout(bg.color = \"darkgrey\",\n            legend.bg.color = \"white\",\n            title = title,\n            frame = TRUE,\n            title.position = c(\"center\", \"top\"),\n            title.size = 1.2,\n            title.fontface = \"bold\",\n            legend.frame = TRUE,\n            legend.outside = TRUE,\n            legend.position = c(0.08, 0.3),\n            legend.title.size = 0.8,\n            legend.text.size = 0.6) +\n  # add compass with only North arrow\n  tm_compass(position = c(0.0, 0.01),\n             show.labels = 1)\n\n\n\n\n\n── tmap v3 code detected ───────────────────────────────────────────────────────\n\n\n[v3-&gt;v4] `tm_tm_dots()`: migrate the argument(s) related to the scale of the\nvisual variable `fill` namely 'palette' (rename to 'values') to fill.scale =\ntm_scale(&lt;HERE&gt;).\n[v3-&gt;v4] `tm_dots()`: use 'fill' for the fill color of polygons/symbols\n(instead of 'col'), and 'col' for the outlines (instead of 'border.col').\n[tm_dots()] Argument `title` unknown.\n[v3-&gt;v4] `tm_layout()`: use `tm_title()` instead of `tm_layout(title = )`\n[cols4all] color palettes: use palettes from the R package cols4all. Run\n`cols4all::c4a_gui()` to explore them. The old palette name \"Set3\" is named\n\"brewer.set3\"\nMultiple palettes called \"set3\" found: \"brewer.set3\", \"hcl.set3\". The first one, \"brewer.set3\", is returned.\n\n[plot mode] fit legend/component: Some legend items or map compoments do not\nfit well, and are therefore rescaled.\nℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.\n\n\n\n\n\n\n\n\nElephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park. Alternatively, error in the GPS location for these points could explain this perceived movement.\nFuther analysis steps could include:\n\nzooming in further to the realized niche\npartitioning the data temporally\nusing metadata to advise how to subset the data to view fewer elephant locations at a time\noverlaying other vector or raster data layers such as surface water and vegetation to understand if the elephants’ movement is driven by these resources\n\n\n\n\n\n\n\nData\nCitation\nLink\n\n\n\n\nElephant observations\nSlotow R, Thaker M, Vanak AT. 2019. Data from: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water. Movebank Data Repository. https://doi.org/10.5441/001/1.403h24q5\nMoveBank Repository: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water"
+    "text": "Elephants are intelligent and gregarious animals that tend to travel as a herd and seek out resources such as shrubs and water. Elephants in Krugar National Park were collared with GPS tracking devices from August 2007 through August 2009 (Slotow et al. 2019).\nObjective: Use GPS point locations of individual elephants to visualize their movement throughout Krugar National Park in South Africa between 2007 and 2009.\n\n\n\n\nShow the code\nlibrary(tidyverse)\n\n\nWarning: package 'ggplot2' was built under R version 4.3.3\n\n\nWarning: package 'purrr' was built under R version 4.3.3\n\n\nShow the code\nlibrary(here)\n\n\nWarning: package 'here' was built under R version 4.3.3\n\n\nShow the code\nlibrary(sf)\n\n\nWarning: package 'sf' was built under R version 4.3.3\n\n\nShow the code\nlibrary(tmap)\n\n\nWarning: package 'tmap' was built under R version 4.3.3\n\n\nShow the code\nlibrary(rnaturalearth)\nlibrary(osmdata)\n\n# source external script that defines custom functions\nsource(list.files(path = here(\"course-materials\"),\n                  pattern = \"functions.R\",\n                  recursive = TRUE,\n                  full.names = TRUE))\n\n\n\n\n\n\nImport the elephant movement data and configure its spatial components\n\n\nmetadata_df &lt;- load_csv(filename = \"elephants_metadata.csv\",\n                        directory = \"course-materials\",\n                        communicate = FALSE)\n\n\nAttaching package: 'tools'\n\n\nThe following object is masked from 'package:tmap':\n\n    toTitleCase\n\nelephants_df &lt;- load_csv(filename = \"elephants.csv\",\n                         directory = \"course-materials\",\n                         communicate = FALSE)\n\n# convert the elephant observations to sf objects\nelephants &lt;- to_spatial_points(data = elephants_df,\n                               latitude_col = \"location-lat\",\n                               longitude_col = \"location-long\")\n\n\n\n\n\nImport the spatial boundaries for Kruger National Park to serve as a basemap for the elephant tracks\n\n\n# set bbox to approximate boundaries of Kruger NP\nkruger &lt;- osmdata::opq(bbox = c(16, -35, 33, -22)) %&gt;%\n          add_osm_feature(key = \"boundary\", \n                          value = \"protected_area\") %&gt;%\n          add_osm_feature(key = \"name\", \n                          value = \"Kruger National Park\") %&gt;%\n          osmdata_sf()\n\n# subset imported list of elements to just the geodataframe\nkruger_bounds &lt;- kruger$osm_multipolygons\n\n\nProduce a map of elephant observations to visualize the individual movement of elephants\n\n\n\nShow the code\ntitle = \"Elephant Observations\\nKruger National Park\\n2007-2009\"\n\n# basemap: Kruger National Park geometry\ntm_shape(kruger_bounds) +\n  tm_borders(col = \"black\", lwd = 0.5) +\n  tm_fill(col = \"black\") +\n  # overlay all elephant GPS locations \n  tm_shape(elephants) +\n  tm_dots(col = \"individual-local-identifier\",\n          palette = \"Set3\",\n          # small dots to distinguish between individuals\n          size = 0.001,\n          border.col = \"black\",\n          title = \"Individual\") +\n  tm_layout(bg.color = \"darkgrey\",\n            legend.bg.color = \"white\",\n            title = title,\n            frame = TRUE,\n            title.position = c(\"center\", \"top\"),\n            title.size = 1.2,\n            title.fontface = \"bold\",\n            legend.frame = TRUE,\n            legend.outside = TRUE,\n            legend.position = c(0.08, 0.3),\n            legend.title.size = 0.8,\n            legend.text.size = 0.6) +\n  # add compass with only North arrow\n  tm_compass(position = c(0.0, 0.01),\n             show.labels = 1)\n\n\n\n\n\n── tmap v3 code detected ───────────────────────────────────────────────────────\n\n\n[v3-&gt;v4] `tm_tm_dots()`: migrate the argument(s) related to the scale of the\nvisual variable `fill` namely 'palette' (rename to 'values') to fill.scale =\ntm_scale(&lt;HERE&gt;).\n[v3-&gt;v4] `tm_dots()`: use 'fill' for the fill color of polygons/symbols\n(instead of 'col'), and 'col' for the outlines (instead of 'border.col').\n[tm_dots()] Argument `title` unknown.\n[v3-&gt;v4] `tm_layout()`: use `tm_title()` instead of `tm_layout(title = )`\n[cols4all] color palettes: use palettes from the R package cols4all. Run\n`cols4all::c4a_gui()` to explore them. The old palette name \"Set3\" is named\n\"brewer.set3\"\nMultiple palettes called \"set3\" found: \"brewer.set3\", \"hcl.set3\". The first one, \"brewer.set3\", is returned.\n\n[plot mode] fit legend/component: Some legend items or map compoments do not\nfit well, and are therefore rescaled.\nℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.\n\n\n\n\n\n\n\n\nElephants in Kruger National Park fitted with GPS collars are primarily located in the southern part of the park. The clustered tracks imply that this species is highly gregarious. Tracks that expand beyond park boundaries, notably on the western side, imply that the elephants could be seeking resources such as food or water outside of the park. Alternatively, error in the GPS location for these points could explain this perceived movement.\nFuther analysis steps could include:\n\nzooming in further to the realized niche\npartitioning the data temporally\nusing metadata to advise how to subset the data to view fewer elephant locations at a time\noverlaying other vector or raster data layers such as surface water and vegetation to understand if the elephants’ movement is driven by these resources\n\n\n\n\n\n\n\nData\nCitation\nLink\n\n\n\n\nElephant observations\nSlotow R, Thaker M, Vanak AT. 2019. Data from: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water. Movebank Data Repository. https://doi.org/10.5441/001/1.403h24q5\nMoveBank Repository: Fine-scale tracking of ambient temperature and movement reveals shuttling behavior of elephants to water"
   },
   {
     "objectID": "course-materials/week9.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
@@ -816,11 +851,11 @@
     "text": "Assignments\n\n\n\n\n\n\nImportant\n\n\n\nEarning “Satisfactory”/ “Almost”/ “Not Yet” marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.\n\n\nLinks to assignments will become available as they are assigned.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/06/2025\n\n\nHW\nHomework Assignment #1\n09/30/2025\n10/04/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/09/2025\n\n\nSR\nMid Quarter Self Reflection (SR#2)\n10/28/2025\n11/01/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
-    "objectID": "assignments.html#end-of-class-surveys",
-    "href": "assignments.html#end-of-class-surveys",
+    "objectID": "assignments.html#weekly-check-ins",
+    "href": "assignments.html#weekly-check-ins",
     "title": "Assignments",
-    "section": "End-of-class surveys",
-    "text": "End-of-class surveys\n\n\n\n\n\n\nImportant\n\n\n\nEnd-of-class Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nWeekly Check-Ins\nDate Assigned\nDate Due\n\n\n\n\nWeek 1 Check-In\nThurs 10/02/2025\nThurs 10/02/2025\n\n\nWeek 2 Check-In\nThurs 10/09/2025\nThurs 10/09/2025\n\n\nWeek 3 Check-In\nThurs 10/16/2025\nThurs 10/64/2025\n\n\nWeek 4 Check-In\nThurs 10/23/2025\nThurs 10/23/2025\n\n\nWeek 5 Check-In\nThurs 10/30/2025\nThurs 10/30/2025\n\n\nWeek 6 Check-In\nThurs 11/06/2025\nThurs 11/06/2025\n\n\nWeek 7 Check-In\nThurs 11/13/2025\nThurs 11/13/2025\n\n\nWeek 8 Check-In\nThurs 11/20/2025\nThurs 11/20/2025\n\n\nNo Check-In Week 9\nNA\nNA\n\n\nWeek 10 Check-In\nThurs 12/04/2025\nThurs 12/04/2025"
+    "section": "Weekly Check-Ins",
+    "text": "Weekly Check-Ins\n\n\n\n\n\n\nImportant\n\n\n\nWeekly Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nWeekly Check-Ins\nDate Assigned\nDate Due\n\n\n\n\nWeek 1 Check-In\nThurs 10/02/2025\nThurs 10/02/2025\n\n\nWeek 2 Check-In\nThurs 10/09/2025\nThurs 10/09/2025\n\n\nWeek 3 Check-In\nThurs 10/16/2025\nThurs 10/64/2025\n\n\nWeek 4 Check-In\nThurs 10/23/2025\nThurs 10/23/2025\n\n\nWeek 5 Check-In\nThurs 10/30/2025\nThurs 10/30/2025\n\n\nWeek 6 Check-In\nThurs 11/06/2025\nThurs 11/06/2025\n\n\nWeek 7 Check-In\nThurs 11/13/2025\nThurs 11/13/2025\n\n\nWeek 8 Check-In\nThurs 11/20/2025\nThurs 11/20/2025\n\n\nNo Check-In Week 9\nNA\nNA\n\n\nWeek 10 Check-In\nThurs 12/04/2025\nThurs 12/04/2025"
   },
   {
     "objectID": "assignments.html#grade-tracker",
@@ -883,14 +918,14 @@
     "href": "assignments/HW1.html#instructions",
     "title": "Homework Assignment 1",
     "section": "Instructions",
-    "text": "Instructions\n\nCreate a new GitHub repository.Be sure to include a README that follows these guidelines\nDownload data from here\nUnzip data and place in repository\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope\nAdd the link to your github repository to this spreadsheet\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   ej_screen.qmd\n|   ej_screen.pdf\n│   Rmd/Proj files    \n└───data\n     └───ejscreen"
+    "text": "Instructions\n\nCreate a new GitHub repository.Be sure to include a README that follows these guidelines\nDownload data from here\nUnzip data and place in repository\nAdd the data to your gitignore!\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope\nAdd the link to your github repository to this spreadsheet\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   ej_screen.qmd\n|   ej_screen.pdf\n│   Rmd/Proj files    \n└───data\n     └───ejscreen"
   },
   {
     "objectID": "assignments/HW1.html#exploring-environmental-injustice",
     "href": "assignments/HW1.html#exploring-environmental-injustice",
     "title": "Homework Assignment 1",
     "section": "Exploring environmental (in)justice",
-    "text": "Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.\nAccording to the US EPA website:\n\nThis screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.\nEPA is sharing EJScreen with the public:\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
+    "text": "Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nThe zipped data folder you will use on this assignment came from a previous version of the US EPA Website, specifically from the Environmental Justice Screening and Mapping Tool. As of January 2025, this tool is no longer available. The tool previously served to support a wide range of research and policy goals.\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
   },
   {
     "objectID": "assignments/HW1.html#rubric-specifications",
@@ -1551,67 +1586,67 @@
     "text": "Dataset\nCitation\n\n\n\n\nGBIF, polar bear observation points\nGBIF.org (01 September 2024) GBIF Occurrence Download https://doi.org/10.15468/dl.79778w\n\n\nIUCN Red List, polar bear range polygon\nIUCN. 2024. The IUCN Red List of Threatened Species. Version 2024-1. https://www.iucnredlist.org. Accessed on Septmeber 5, 2024.\n\n\nNSIDC, sea ice concentration raster\nFetterer, F., Knowles, K., Meier, W. N., Savoie, M. & Windnagel, A. K. (2017). Sea Ice Index. (G02135, Version 3). [Data Set]. Boulder, Colorado USA. National Snow and Ice Data Center. https://doi.org/10.7265/N5K072F8. [describe subset used if applicable]. Date Accessed 09-13-2024.\n\n\n\nNSIDC sea ice concentration metadata"
   },
   {
-    "objectID": "course-materials/template.html",
-    "href": "course-materials/template.html",
-    "title": "template {add topic}",
-    "section": "",
-    "text": "Session\nMaterials\n\n\n\n\n Lecture\ndescription\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
-  },
-  {
-    "objectID": "course-materials/template.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "href": "course-materials/template.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "template {add topic}",
-    "section": "",
-    "text": "Session\nMaterials\n\n\n\n\n Lecture\ndescription\n\n\n Lab\ndescription\n\n\n Discussion\ndescription"
-  },
-  {
-    "objectID": "course-materials/template.html#assignment-reminders",
-    "href": "course-materials/template.html#assignment-reminders",
-    "title": "template {add topic}",
-    "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nEOC\nEnd-of-class survey (Week 1)\nMon 01/08/2024\nMon 01/08/2024, 11:55pm PT\n\n\nSR\nSelf reflection (SR #1)\nMon 01/08/2024\nSat 01/13/2024, 11:59pm PT\n\n\nHW\nHomework Assignment #1\nMon 01/08/2024\nSat 01/20/2024, 11:59pm PT"
-  },
-  {
-    "objectID": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "href": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "title": "template {add topic}",
-    "section": " Background Reading",
-    "text": "Background Reading"
-  },
-  {
-    "objectID": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
-    "href": "course-materials/template.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
-    "title": "template {add topic}",
-    "section": " Additional Resources",
-    "text": "Additional Resources"
-  },
-  {
-    "objectID": "course-materials/week3.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "href": "course-materials/week3.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "Spatial and geometry operations with vector data",
+    "objectID": "course-materials/week0.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/week0.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "Intro to EDS 223 and map making",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice vector operations (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nWelcome to EDS 223!"
   },
   {
-    "objectID": "course-materials/week3.html#assignment-reminders",
-    "href": "course-materials/week3.html#assignment-reminders",
-    "title": "Spatial and geometry operations with vector data",
+    "objectID": "course-materials/week0.html#assignment-reminders",
+    "href": "course-materials/week0.html#assignment-reminders",
+    "title": "Intro to EDS 223 and map making",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 3)\n10/16/2025\n10/16/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025"
   },
   {
-    "objectID": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "href": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "title": "Spatial and geometry operations with vector data",
+    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "title": "Intro to EDS 223 and map making",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nMEDS Installation Guide"
+  },
+  {
+    "objectID": "course-materials/week2.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/week2.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "Intro to spatial data models",
+    "section": " Class Materials",
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to spatial/vector data models\n\n\n Lab\nSpatial operations with vector data\n\n\n Discussion\nWorking with multiple vector types (Answer Key)"
+  },
+  {
+    "objectID": "course-materials/week2.html#assignment-reminders",
+    "href": "course-materials/week2.html#assignment-reminders",
+    "title": "Intro to spatial data models",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 2)\n10/09/2025\n10/09/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025"
+  },
+  {
+    "objectID": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "href": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
+    "title": "Intro to spatial data models",
     "section": " Background Reading",
-    "text": "Background Reading\n\nGeocomputation with R, Chapter 4\nGeocomputation with R, Chapter 5\nGIS Fundamentals, Chapter 9 Part 1\nDouglas–Peucker Algorithm (Cartography Playground)\nLine Simplification with Visvalingam–Whyatt Algorithm (Mike Bostok)"
+    "text": "Background Reading\n\nGIS Fundamentals, Chapter 2 Part 2\nGeocomputation with R, Chapter 2\nGeocomputation with R, Chapter 3\nGeocomputation with R, Chapter 7"
   },
   {
-    "objectID": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
-    "href": "course-materials/week3.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
-    "title": "Spatial and geometry operations with vector data",
-    "section": " Technical Background",
-    "text": "Technical Background\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
+    "objectID": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "href": "course-materials/week2.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
+    "title": "Intro to spatial data models",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nsf overview\nsf cheatsheet\nIntroduction to sf and stars"
+  },
+  {
+    "objectID": "course-materials/week7.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "href": "course-materials/week7.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
+    "title": "Remote sensing of vegetation",
+    "section": " Class Materials",
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\nNo Lab this week!\n\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
+  },
+  {
+    "objectID": "course-materials/week7.html#assignment-reminders",
+    "href": "course-materials/week7.html#assignment-reminders",
+    "title": "Remote sensing of vegetation",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week4.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
@@ -1661,61 +1696,5 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
-  },
-  {
-    "objectID": "course-materials/week0.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "href": "course-materials/week0.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "Intro to EDS 223 and map making",
-    "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nWelcome to EDS 223!"
-  },
-  {
-    "objectID": "course-materials/week0.html#assignment-reminders",
-    "href": "course-materials/week0.html#assignment-reminders",
-    "title": "Intro to EDS 223 and map making",
-    "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025"
-  },
-  {
-    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-background-reading",
-    "title": "Intro to EDS 223 and map making",
-    "section": " Background Reading",
-    "text": "Background Reading\n\nGeocomputation with R, Chapter 9\nGIS Fundamentals, Chapter 2\nGIS Fundamentals, Chapter 3\nA Gentle Introduction to GIS, Chapter 8\nGeographic vs projected coordinate systems (Esri)"
-  },
-  {
-    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
-    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-technical-background",
-    "title": "Intro to EDS 223 and map making",
-    "section": " Technical Background",
-    "text": "Technical Background\n\ntmap: thematic maps in R documentation\ntmap overview\nCreating thematic maps in R"
-  },
-  {
-    "objectID": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
-    "href": "course-materials/week0.html#fa-clipboard-list-titlea-clipboard-with-a-to-do-list-additional-resources",
-    "title": "Intro to EDS 223 and map making",
-    "section": " Additional Resources",
-    "text": "Additional Resources\n\nMEDS Installation Guide"
-  },
-  {
-    "objectID": "assignments.html#weekly-check-ins",
-    "href": "assignments.html#weekly-check-ins",
-    "title": "Assignments",
-    "section": "Weekly Check-Ins",
-    "text": "Weekly Check-Ins\n\n\n\n\n\n\nImportant\n\n\n\nWeekly Check-Ins will become available at the end of each class on Thursday and are due by end-of-day (11:59 PM). Completing these Check-Ins by the due dates / times will determine whether you earn a +/- on your course grade. See Grade Tracker below.\n\n\nLinks to surveys will become available as they are assigned.\n\n\n\nWeekly Check-Ins\nDate Assigned\nDate Due\n\n\n\n\nWeek 1 Check-In\nThurs 10/02/2025\nThurs 10/02/2025\n\n\nWeek 2 Check-In\nThurs 10/09/2025\nThurs 10/09/2025\n\n\nWeek 3 Check-In\nThurs 10/16/2025\nThurs 10/64/2025\n\n\nWeek 4 Check-In\nThurs 10/23/2025\nThurs 10/23/2025\n\n\nWeek 5 Check-In\nThurs 10/30/2025\nThurs 10/30/2025\n\n\nWeek 6 Check-In\nThurs 11/06/2025\nThurs 11/06/2025\n\n\nWeek 7 Check-In\nThurs 11/13/2025\nThurs 11/13/2025\n\n\nWeek 8 Check-In\nThurs 11/20/2025\nThurs 11/20/2025\n\n\nNo Check-In Week 9\nNA\nNA\n\n\nWeek 10 Check-In\nThurs 12/04/2025\nThurs 12/04/2025"
-  },
-  {
-    "objectID": "course-materials/week7.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "href": "course-materials/week7.html#fa-person-chalkboard-titlea-person-pointing-at-a-chalkboard-class-materials",
-    "title": "Remote sensing of vegetation",
-    "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\nNo Lab this week!\n\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
-  },
-  {
-    "objectID": "course-materials/week7.html#assignment-reminders",
-    "href": "course-materials/week7.html#assignment-reminders",
-    "title": "Remote sensing of vegetation",
-    "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   }
 ]

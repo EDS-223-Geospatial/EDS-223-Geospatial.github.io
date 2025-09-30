@@ -108,6 +108,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="../course-materials/week0.html">
  <span class="dropdown-text">week 0</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../course-materials/week1.html" rel="" target="">
+ <span class="dropdown-text">week 1</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -663,6 +667,15 @@ Important
 </div>
   </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
 
 
 
