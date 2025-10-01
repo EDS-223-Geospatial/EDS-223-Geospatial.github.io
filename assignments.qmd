@@ -23,8 +23,8 @@ Links to assignments will become available as they are assigned.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| SR              | [Pre-course Self Reflection (SR#1)](assignments/SR1.qmd){target="_blank"} | 09/30/2025    | 10/06/2025 |
-| HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 09/30/2025    | 10/04/2025 |
+| SR              | [Pre-course Self Reflection (SR#1)](assignments/SR1.qmd){target="_blank"} | 09/30/2025    | 10/04/2025 |
+| HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 09/30/2025    | 10/06/2025 |
 | HW              | [Homework Assignment #2](){target="_blank"}            | 10/07/2025    | 10/18/2025 |
 | HW              | [Homework Assignment #3](){target="_blank"}            | 10/21/2025    | 11/09/2025 |
 | SR              | [Mid Quarter Self Reflection (SR#2)](){target="_blank"}            | 10/28/2025    |     11/01/2025 |
