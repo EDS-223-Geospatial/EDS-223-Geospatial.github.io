@@ -65,7 +65,22 @@ As many of us are aware, environmental degradation, pollution, and hazards is no
 > - have equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices
 
 
-The zipped data folder you will use on this assignment came from a previous version of the US EPA Website, specifically from the Environmental Justice Screening and Mapping Tool. As of January 2025, this tool is no longer available. The tool previously served to support a wide range of research and policy goals. 
+
+
+
+
+For far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency's previous [EJScreen: Environmental Justice Screening and Mapping Tool](https://www.epa.gov/ejscreen).
+
+The tool, when in existence, was intended to support research and policy goals. It was shared with the public to achieve the following: 
+
+
+> - to be more transparent about how we consider environmental justice in our work,  
+> - to assist our stakeholders in making informed decisions about pursuing environmental justice and,   
+> - to create a common starting point between the agency and the public when looking at issues related to environmental justice.
+
+While this tool is no longer available, an unofficial version of the tool can be found [here](https://pedp-ejscreen.azurewebsites.net/). 
+
+
 
 
 
