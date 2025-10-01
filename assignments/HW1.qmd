@@ -36,6 +36,7 @@ The assignment **must be submitted through Gradescope**.
 4. Add the data to your `gitignore`!
 5. Create a Quarto document with responses
 6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+      ** Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
 7. Add the link to your github repository to this [spreadsheet](https://docs.google.com/spreadsheets/d/1c1qxKPAW6S94Eq5f3U81RvN7TlUvELTqhrdF7PpPat0/edit?gid=0#gid=0)
 
 Your repository should have the following structure:
