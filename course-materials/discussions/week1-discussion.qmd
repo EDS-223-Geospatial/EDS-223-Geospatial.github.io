@@ -63,7 +63,7 @@ library(stars)
 library(tmap)
 ```
 
-Next, let's [download our Rapa Nui data](https://drive.google.com/drive/folders/1zoHTlNZZN7qrGIA7kIUtFZvDC6FJ8ggb/view). Unzip and move this to your version-controlled R Project's `data` folder. 
+Next, let's [download some data from Rapa Nui](https://drive.google.com/drive/folders/1zoHTlNZZN7qrGIA7kIUtFZvDC6FJ8ggb). Unzip and move this to your version-controlled R Project's `data` folder. 
 
 - Read in the spatial objects for Rapa Nui:
   -   `ei_points`: file contains several points on the island
