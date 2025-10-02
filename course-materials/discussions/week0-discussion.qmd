@@ -34,7 +34,7 @@ Dams can offer many advantages as a renewable energy, but they can also pose sev
 ## 1. Get Started
 
 - Create a version-controlled R Project
-- Add (at least) two subfolders to your R project: `data` and `figs`
+- Add (at least) a subfolder to your R project: `data`
 
 Let's install and load all necessary packages:
 

@@ -45,7 +45,8 @@ The following materials are modified from the [tmap book](https://r-tmap.github.
 
 ## 1. Get Started
 
-- Open your forked version of [this repository](https://github.com/EDS-223-Geospatial/eds223-week1) and navigate to your version controlled project for Week 1
+- Create a version-controlled R Project
+- Add (at least) a subfolder to your R project: `data`
 - Create a Quarto document
 
 Let's load all necessary packages:
@@ -61,6 +62,8 @@ library(sf)
 library(stars)
 library(tmap)
 ```
+
+Next, let's [download our Rapa Nui data](https://drive.google.com/drive/folders/1zoHTlNZZN7qrGIA7kIUtFZvDC6FJ8ggb/view). Unzip and move this to your version-controlled R Project's `data` folder. 
 
 - Read in the spatial objects for Rapa Nui:
   -   `ei_points`: file contains several points on the island
