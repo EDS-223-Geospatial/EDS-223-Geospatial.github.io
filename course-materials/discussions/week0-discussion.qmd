@@ -29,7 +29,7 @@ In this section, we'll refresh our data wrangling skills and refamiliarize some 
 
 ### What's up with dams?
 
-Dams can offer many advantages as a renewable energy, but they can also pose several risks on agriculture, river connectivity, and biodiversity. On the one hand, while dams help manage water flow, they also slow it down and raise downstream water temperatures, which can encourage harmful algae and parasites. This can further drive biodiversity loss, where dams already block fish migration, fragment habitats, and trap sediment.
+Dams can offer many advantages as a renewable energy, but they can also pose several risks on agriculture, river connectivity, and biodiversity. On the one hand, while dams help manage water flow, they also slow it down and raise downstream water temperatures, which can encourage harmful algae and parasites. This can further drive biodiversity loss, where dams already block fish migration, fragment habitats, and trap sediment. Datasets like GDW provide increased transparency for water and biodiversity management.
 
 ## 1. Get Started
 
@@ -65,7 +65,7 @@ Next, let's [download our GDW data subset](https://drive.google.com/file/d/1a8t6
 - Read in the `gdw.csv` file as `gdw_df` (and point to the filepath with help of `here()`)
 - Use the `|>` or `%>%` operator to pipe your `read_csv()` output to `clean_names()`
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="true" icon=true}
 ## Solution
 ```{r}
 gdw_df <- read_csv(here("data", "gdw.csv")) |>
@@ -86,7 +86,7 @@ gdw_df <- read_csv(here("course-materials", "data", "gdw.csv")) |>
 - Print the number of rows and number of columns in `gdw_df`
 - Print the column names in `gdw_df`
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="true" icon=true}
 ## Solution
 ```{r}
 head(gdw_df, n = 10) |> 
@@ -114,7 +114,7 @@ names(gdw_df)
 - Make a subset called `sub_dam` that only contains entries for `dam_type == "Dam"`
 - Re-order `gdw_df` by ascending order of installation year
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="true" icon=true}
 ## Solution
 ```{r}
 country_df <- gdw_df[, "country"]
@@ -144,7 +144,7 @@ gdw_df <- gdw_df |>
 - Make a bar graph of average height of dam/barrier in meters (`dam_hgt_m`) by country
 - Make a scatterplot of height of dam/barrier versus representative maximum storage capacity of reservoir in million cubic meters (`cap_mcm`) 
 
-::: {.callout-tip collapse="true"}
+::: {.callout-tip collapse="true" icon=true}
 ## Solution
 ```{r}
 #| eval: true

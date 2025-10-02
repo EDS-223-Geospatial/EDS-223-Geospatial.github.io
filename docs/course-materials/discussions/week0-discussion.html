@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-09-26">
+<meta name="dcterms.date" content="2025-09-27">
 
 <title>Week 0: Discussion Section</title>
 <style>
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 26, 2025</p>
+        <p class="date">September 27, 2025</p>
       </div>
     </div>
     
@@ -241,7 +241,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this section, we’ll refresh our data wrangling skills and refamiliarize some key functions, using a subset of the <a href="https://www.globaldamwatch.org/" target="_blank">Global Dam Watch (GDW)</a> database. This data source brings together open-access, georeferenced regional and global dam data, in order to improve our understanding of the environmental effects of dams and flood risks.</p>
 <section id="whats-up-with-dams" class="level3">
 <h3 class="anchored" data-anchor-id="whats-up-with-dams">What’s up with dams?</h3>
-<p>Dams can offer many advantages as a renewable energy, but they can also pose several risks on agriculture, river connectivity, and biodiversity. On the one hand, while dams help manage water flow, they also slow it down and raise downstream water temperatures, which can encourage harmful algae and parasites. This can further drive biodiversity loss, where dams already block fish migration, fragment habitats, and trap sediment.</p>
+<p>Dams can offer many advantages as a renewable energy, but they can also pose several risks on agriculture, river connectivity, and biodiversity. On the one hand, while dams help manage water flow, they also slow it down and raise downstream water temperatures, which can encourage harmful algae and parasites. This can further drive biodiversity loss, where dams already block fish migration, fragment habitats, and trap sediment. Datasets like GDW provide increased transparency for water and biodiversity management.</p>
 </section>
 <section id="get-started" class="level2">
 <h2 class="anchored" data-anchor-id="get-started">1. Get Started</h2>
@@ -273,10 +273,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Read in the <code>gdw.csv</code> file as <code>gdw_df</code> (and point to the filepath with help of <code>here()</code>)</li>
 <li>Use the <code>|&gt;</code> or <code>%&gt;%</code> operator to pipe your <code>read_csv()</code> output to <code>clean_names()</code></li>
 </ul>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Solution
@@ -300,10 +300,10 @@ Solution
 <li>Print the number of rows and number of columns in <code>gdw_df</code></li>
 <li>Print the column names in <code>gdw_df</code></li>
 </ul>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Solution
@@ -339,10 +339,10 @@ Solution
 <li>Make a subset called <code>sub_dam</code> that only contains entries for <code>dam_type == "Dam"</code></li>
 <li>Re-order <code>gdw_df</code> by ascending order of installation year</li>
 </ul>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Solution
@@ -379,10 +379,10 @@ Solution
 <li>Make a bar graph of average height of dam/barrier in meters (<code>dam_hgt_m</code>) by country</li>
 <li>Make a scatterplot of height of dam/barrier versus representative maximum storage capacity of reservoir in million cubic meters (<code>cap_mcm</code>)</li>
 </ul>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
 Solution
