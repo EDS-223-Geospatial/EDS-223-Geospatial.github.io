@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-09-27">
+<meta name="dcterms.date" content="2025-10-02">
 
 <title>Week 0: Discussion Section</title>
 <style>
@@ -145,6 +145,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week0.html">
  <span class="dropdown-text">week 0</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week1.html">
+ <span class="dropdown-text">week 1</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -193,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 27, 2025</p>
+        <p class="date">October 2, 2025</p>
       </div>
     </div>
     
@@ -247,7 +251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="get-started">1. Get Started</h2>
 <ul>
 <li>Create a version-controlled R Project</li>
-<li>Add (at least) two subfolders to your R project: <code>data</code> and <code>figs</code></li>
+<li>Add (at least) a subfolder to your R project: <code>data</code></li>
 </ul>
 <p>Let’s install and load all necessary packages:</p>
 <div class="cell">
@@ -870,6 +874,15 @@ Solution
 </div>
   </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
 
 
 
