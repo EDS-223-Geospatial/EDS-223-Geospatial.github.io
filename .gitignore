@@ -6,3 +6,4 @@
 **.DS_Store
 course-materials/data/*
 **/*.quarto_ipynb
+course-materials/labs/notes
