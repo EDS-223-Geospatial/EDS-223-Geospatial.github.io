@@ -7,3 +7,4 @@
 course-materials/data/*
 **/*.quarto_ipynb
 course-materials/labs/notes
+docs/course-materials/labs/notes/
