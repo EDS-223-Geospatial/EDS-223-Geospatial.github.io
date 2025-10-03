@@ -138,6 +138,7 @@ You must complete the following to receive a "Satisfactory" on the assignment:
   - legends with legible titles, including units
   - indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
   - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
+- [ ] Your github repository contains a README that follows the [MEDS README guidelines](https://ucsb-meds.github.io/README-guidelines/), and you added your repo link to this [sheet](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
 - [ ] EJScreen maps and text must communicate about an issue
   - it is not sufficient to make two unrelated maps
 - [ ] The rendered Quarto doc must show all required elements in a professional style
