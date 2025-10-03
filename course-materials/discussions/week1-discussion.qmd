@@ -125,32 +125,21 @@ Expand on your single-object map to create a map of Rapa Nui and...
 #| warning: false
 #| message: false
 
-# Plot the elevation raster
 ei_map <- tm_shape(ei_elev) +
-  tm_raster(style = "cont",                # Set continuous values for this layer
-            palette = "-rd_yl_gn",           # Set reversed red-yellow-green continuous palette
-            title = "Elevation (m asl)") + # Define legend title with units
-  
-  # Add Easter Island vector in default gray
-  tm_shape(ei_borders) +
+  tm_graticules() +
+  tm_raster(col.scale = tm_scale_continuous(values = "-rd_yl_gn"),
+            col.legend = tm_legend("Elevation (m asl)")) +
+  tm_shape(ei_borders) + 
     tm_borders() +
-  
-  # Add road lines vector in default black
   tm_shape(ei_roads) +
-    tm_lines(lwd = "strokelwd", # Set line width depends on attribute value
-             legend.lwd.show = FALSE) +
-  
-  # Add volcano points vector in default gray
+    tm_lines() +
   tm_shape(ei_points) +
-    tm_symbols(shape = 24,                         # Set triangle
-               size = "elevation",                 # Set symbol size depends on attribute value
-               title.size = "Volcanoes (m asl)") + # Define legend title with units
-  
-  # Set general map layout options
-  tm_layout(main.title = "Easter Island",
-            bg.color = "lightblue") +            # Set background color for map (ocean)
-  tm_scale_bar(position = c("left", "bottom")) +
-  tm_compass(show.labels = 1)                    # Only show North label on compass
+    tm_symbols(shape = 24, 
+               size = "elevation", 
+               size.legend = tm_legend("Volcanoes (m asl)")) +
+  tm_compass(position = c("right", "top")) +
+  tm_scalebar() +
+  tm_title("Easter Island")
 
 ei_map
 ```
