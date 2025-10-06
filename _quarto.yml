@@ -22,6 +22,8 @@ website:
             href: course-materials/week0.qmd
           - text: week 1
             href: course-materials/week1.qmd
+          - text: week 2
+            href: course-materials/wee2.qmd
           
       - text: assignments
         href: assignments.qmd
