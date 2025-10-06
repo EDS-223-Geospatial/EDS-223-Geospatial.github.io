@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ruth Oliver">
-<meta name="dcterms.date" content="2025-10-03">
+<meta name="dcterms.date" content="2025-10-06">
 
 <title>Homework Assignment 2</title>
 <style>
@@ -200,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 3, 2025</p>
+        <p class="date">October 6, 2025</p>
       </div>
     </div>
     
@@ -282,11 +282,15 @@ Important
 <section id="instructions" class="level2">
 <h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
 <ol type="1">
-<li>Clone repository from GitHub Classrooms</li>
-<li>Download data from <a href="https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing">here</a></li>
-<li>Unzip data and place in repository</li>
-<li>Edit Quarto document with responses</li>
-<li>Push final edits before deadline</li>
+<li><p>Create a new GitHub repository.Be sure to include a README that follows these <a href="https://ucsb-meds.github.io/README-guidelines/">guidelines</a></p></li>
+<li><p>Download data from <a href="https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing">here</a></p></li>
+<li><p>Unzip data and place in repository</p></li>
+<li><p>Add the data to your <code>gitignore</code>!</p></li>
+<li><p>Create a Quarto document with responses</p></li>
+<li><p>Render your quarto document as a pdf and submit on <a href="https://www.gradescope.com/courses/1133964">Gradescope</a></p>
+<ul class="task-list">
+<li><label><input type="checkbox">Make sure code-fold is <strong>not</strong> set to <code>True</code>! Your pdf should contain all your code and outputs!</label></li>
+</ul></li>
 </ol>
 <p>Your repository should have the following structure:</p>
 <div class="cell">
@@ -295,10 +299,11 @@ Important
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>│   HW2.qmd</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>│   Rmd/Proj files    </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>│</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>└───data</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     └───ejscreen</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>     └───gbif-birds-LA</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>     └───mapping-inequality</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>└───.gitignore</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>     └───data</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>         └───ejscreen</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>         └───gbif-birds-LA</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         └───mapping-inequality</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="background" class="level2">
@@ -313,21 +318,24 @@ Important
 <section id="ejscreen" class="level3">
 <h3 class="anchored" data-anchor-id="ejscreen">EJScreen</h3>
 <p><strong>Data file:</strong> <code>ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb</code></p>
-<p>We will be working with data from the United States Environmental Protection Agency’s EJScreen: Environmental Justice Screening and Mapping Tool.</p>
-<p>According to the <a href="https://www.epa.gov/ejscreen/purposes-and-uses-ejscreen">US EPA website</a>:</p>
+<p>We will be working with data from the United States Environmental Protection Agency’s former EJScreen: Environmental Justice Screening and Mapping Tool. This tool is no longer operating, but you can find an unofficial version of it <a href="https://pedp-ejscreen.azurewebsites.net/">here</a></p>
+<p>According to the former US EPA website:</p>
+<p>The tool, when in existence, was intended to support research and policy goals. It was shared with the public to achieve the following:</p>
 <blockquote class="blockquote">
-<p>This screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.</p>
-<p>EPA is sharing EJScreen with the public:<br>
-- to be more transparent about how we consider environmental justice in our work,<br>
-- to assist our stakeholders in making informed decisions about pursuing environmental justice and,<br>
-- to create a common starting point between the agency and the public when looking at issues related to environmental justice.</p>
+<ul>
+<li>to be more transparent about how we consider environmental justice in our work,<br>
+</li>
+<li>to assist our stakeholders in making informed decisions about pursuing environmental justice and,<br>
+</li>
+<li>to create a common starting point between the agency and the public when looking at issues related to environmental justice.</li>
+</ul>
 </blockquote>
-<p>EJScreen provides on environmental and demographic information for the US at the Census <a href="https://en.wikipedia.org/wiki/Census_tract">tract</a> and <a href="https://en.wikipedia.org/wiki/Census_block_group">block group</a> levels. You will be working with data at the block group level that has been downloaded from the <a href="https://www.epa.gov/ejscreen/download-ejscreen-data">EPA site</a>. To understand the associated data columns, you will need to explore the following in the <code>data</code> folder:</p>
+<p>While this tool is no longer available, an unofficial version of the tool can be found <a href="https://pedp-ejscreen.azurewebsites.net/">here</a>.</p>
+<p>EJScreen provided on environmental and demographic information for the US at the Census <a href="https://en.wikipedia.org/wiki/Census_tract">tract</a> and <a href="https://en.wikipedia.org/wiki/Census_block_group">block group</a> levels. You will be working with data at the block group level that has been downloaded from the <a href="https://www.epa.gov/ejscreen/download-ejscreen-data">EPA site</a>. To understand the associated data columns, you will need to explore the following in the <code>data</code> folder:</p>
 <ul>
 <li>Technical documentation: <code>ejscreen-tech-doc-version-2-2.pdf</code></li>
 <li>Column descriptions: <code>EJSCREEN_2023_BG_Columns.xlsx</code></li>
 </ul>
-<p>You should also explore the <a href="https://www.epa.gov/ejscreen/limitations-and-caveats-using-ejscreen">limitations and caveats</a> of the data.</p>
 </section>
 <section id="holc-redlining" class="level3">
 <h3 class="anchored" data-anchor-id="holc-redlining">HOLC Redlining</h3>
@@ -360,21 +368,38 @@ Tip
 <p>Your first task is to explore historical redlining in Los Angeles and its legacy on present-day environmental justice.</p>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>
-<p>For this assignment, you must produce the following:</p>
-<ul class="task-list">
-<li><label><input type="checkbox">a map of historical redlining neighborhoods, including:</label>
+<p>For this assignment, you must complete the following:</p>
+<ol type="1">
+<li>Create a map of historical redlining neighborhoods, including:</li>
+</ol>
 <ul class="task-list">
 <li><label><input type="checkbox">neighborhoods colored by HOLC grade</label></li>
 <li><label><input type="checkbox">an appropriate base map</label></li>
-</ul></li>
-<li><label><input type="checkbox">a table summarizing the percent of current census block groups within each HOLC grade (or none)</label></li>
-<li><label><input type="checkbox">a set of figures summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables:</label>
+<li><label><input type="checkbox">a clear title and legend</label></li>
+</ul>
+<ol start="2" type="1">
+<li>Create a table summarizing:</li>
+</ol>
+<ul class="task-list">
+<li><label><input type="checkbox">the percentage of census block groups that fall within each HOLC grade</label></li>
+<li><label><input type="checkbox">Also include the percent of census black groups that don’t fall within a HOLC grade</label></li>
+<li><label><input type="checkbox"><strong>Hint:</strong> The HOLC data contains the grades and the EJScreen data contains the census blocks, so you will need to combine the data spatially before doing summary statistics. Once you combine and no longer need the geometries, you can use <code>st_drop_geometry()</code>.</label></li>
+</ul>
+<ol start="3" type="1">
+<li>Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables or create separate plots):</li>
+</ol>
 <ul class="task-list">
 <li><label><input type="checkbox">% low income</label></li>
 <li><label><input type="checkbox">percentile for Particulate Matter 2.5</label></li>
 <li><label><input type="checkbox">percentile for low life expectancy</label></li>
-</ul></li>
-<li><label><input type="checkbox">a brief paragraph reflecting on these results</label></li>
+<li><label><input type="checkbox">Use <code>ggplot</code> for your visualizations! You will first need to calculate mean of each variable grouped by HOLC grade.</label></li>
+</ul>
+<ol start="4" type="1">
+<li>Write a brief paragraph reflecting on these results</li>
+</ol>
+<ul class="task-list">
+<li><label><input type="checkbox">Interpret the patterns you observe in your results</label></li>
+<li><label><input type="checkbox">Discuss potential relationships between historical redlining grades and current environmental/socioeconomic conditions</label></li>
 </ul>
 </section>
 </section>
@@ -383,31 +408,58 @@ Tip
 <p>Your second task is to explore the legacy of historical redlining in Los Angeles on the collection of bird observations.</p>
 <section id="description-1" class="level3">
 <h3 class="anchored" data-anchor-id="description-1">Description</h3>
-<p>For this assignment, you must produce the following based on observations from 2022:</p>
+<p>For this assignment, you must produce the following based on observations from 2021-2023:</p>
+<ol type="1">
+<li><p>A figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade</p>
+<p>Create a visualizations that shows:</p>
 <ul class="task-list">
-<li><label><input type="checkbox">a figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade</label></li>
-<li><label><input type="checkbox">a brief paragraph explaining whether these results match the findings from Ellis-Soto et al.&nbsp;2023</label></li>
-</ul>
+<li><label><input type="checkbox">The percentage of bird observations within each HOLC grade</label></li>
+<li><label><input type="checkbox">Include an appropiate title, axis labels, and legend</label></li>
+<li><label><input type="checkbox"><strong>Hints</strong>: Ensure the bird observations and HOLC dataset have matching CRS’, then perform a spatial join to assign each bird observations to a corresponding HOLC grade.</label></li>
+</ul></li>
+<li><p><strong>Spolier alert!!</strong> Our results don’t match the findings from Ellis-Soto et al.&nbsp;2023! Read the abstract provided in the description of this dataset. Why might we have obtained different results in our analysis? What did the paper consider that we did not?</p></li>
+</ol>
 </section>
 </section>
 <section id="rubric-specifications" class="level2">
 <h2 class="anchored" data-anchor-id="rubric-specifications">Rubric (specifications)</h2>
 <p>Assignments will be deemed “Satisfactory” based on the following criteria:</p>
+<section id="data-analysis" class="level4">
+<h4 class="anchored" data-anchor-id="data-analysis">Data analysis</h4>
 <ul class="task-list">
-<li><label><input type="checkbox">“Correct” answers are not sufficient. Analysis must demonstrate critical interrogation of each step by showing justification and verification of intermediate steps using the following:</label>
+<li><label><input type="checkbox">Code must produce expected output based on correct data manipulation</label></li>
+<li><label><input type="checkbox">Spatial operations must be performed correctly with appropriate verification (e.g., CRS matching, appropriate join methods, checking results)</label></li>
+<li><label><input type="checkbox">Multiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. “Correct” answers are not sufficient. Justification and verification of approach should be demonstrated using the following:</label>
 <ul>
 <li>custom warning and error message (e.g.&nbsp;<code>warning()</code> and <code>stop()</code>; <a href="https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages">resources from EDS 221</a>)</li>
-<li>unit tests (e.g.&nbsp;using <code>{testthat}</code>; <a href="https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat">resources from EDS 221</a>)</li>
 <li>informative comments (<a href="https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html">resource from EDS 220</a>)</li>
+<li><strong>BONUS:</strong> unit tests (e.g.&nbsp;using <code>{testthat}</code>; <a href="https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat">resources from EDS 221</a>)</li>
 </ul></li>
-<li><label><input type="checkbox">All maps and figures must include the following elements:</label>
+</ul>
+</section>
+<section id="plots-tables-and-maps" class="level4">
+<h4 class="anchored" data-anchor-id="plots-tables-and-maps">Plots, tables, and maps</h4>
+<ul>
+<li><label><input type="checkbox">All plots, tables, and maps must be clear, accurate, and effectively convey the intended information</label></li>
+<li><label><input type="checkbox">All plots and maps must include the following elements:</label>
 <ul>
 <li>an informative title</li>
 <li>legends with legible titles, including units</li>
 <li>color scales that are accessible (i.e.&nbsp;make intuitive sense) and appropriate to the data (i.e.&nbsp;discrete vs.&nbsp;continuous)</li>
-<li>for maps: indication of scale and orientation (i.e.&nbsp;graticules/gridlines or scale bar and compass)</li>
-<li>for figures: axes with legible titles, including units</li>
+<li>for maps: indication of scale and orientation (i.e.&nbsp;graticules/gridlines or scale bar and compass), and an appropiate basemap included where necessary</li>
 </ul></li>
+<li>All tables should be rendered with legible titles and styling (e.g.&nbsp;<a href="https://r-graph-gallery.com/package/gt.html"><code>{gt}</code></a>)</li>
+</ul>
+</section>
+<section id="written-reflections" class="level4">
+<h4 class="anchored" data-anchor-id="written-reflections">Written reflections</h4>
+<ul class="task-list">
+<li><label><input type="checkbox">Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.</label></li>
+</ul>
+</section>
+<section id="professional-output" class="level4">
+<h4 class="anchored" data-anchor-id="professional-output">Professional Output</h4>
+<ul class="task-list">
 <li><label><input type="checkbox">The rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis</label>
 <ul>
 <li>see examples of professional and unprofessional output on the <a href="../assignments.html">Assignments</a> page</li>
@@ -415,6 +467,7 @@ Tip
 </ul>
 
 
+</section>
 </section>
 
 
