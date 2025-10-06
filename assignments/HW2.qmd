@@ -51,6 +51,17 @@ The assignment **must be submitted through Gradescope**.
 
       - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
 
+## Instructions
+
+1. Clone repository from GitHub Classrooms
+2. Download data from [here](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
+3. Unzip data and place in repository
+4. Add the data to your `gitignore`!
+5. Create a Quarto document with responses
+6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+
+      - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
+
 
 Your repository should have the following structure:
 
@@ -94,7 +105,6 @@ The tool, when in existence, was intended to support research and policy goals. 
 > - to assist our stakeholders in making informed decisions about pursuing environmental justice and,   
 > - to create a common starting point between the agency and the public when looking at issues related to environmental justice.
 
-While this tool is no longer available, an unofficial version of the tool can be found [here](https://pedp-ejscreen.azurewebsites.net/). 
 
 EJScreen provided on environmental and demographic information for the US at the Census [tract](https://en.wikipedia.org/wiki/Census_tract) and [block group](https://en.wikipedia.org/wiki/Census_block_group) levels. You will be working with data at the block group level that has been downloaded from the [EPA site](https://www.epa.gov/ejscreen/download-ejscreen-data). To understand the associated data columns, you will need to explore the following in the `data` folder:
 
@@ -157,7 +167,6 @@ For this assignment, you must complete the following:
   - [ ] Interpret the patterns you observe in your results 
   - [ ] Discuss potential relationships between historical redlining grades and current                 environmental/socioeconomic conditions
 
-
 ## Part 2: Legacy of redlining in biodiversity observations
 
 Your second task is to explore the legacy of historical redlining in Los Angeles on the collection of bird observations.
@@ -174,7 +183,7 @@ For this assignment, you must produce the following based on observations from 2
     - [ ] **Hints**: Ensure the bird observations and HOLC dataset have matching CRS', then perform a spatial join to assign each bird observations to a corresponding HOLC grade. 
     
 2.  **Spolier alert!!** Our results don't match the findings from Ellis-Soto et al. 2023! Read the abstract provided in the description of this dataset. Why might we have obtained different results in our analysis? What did the paper consider that we did not? 
-
+ 
 ## Rubric (specifications)
 
 Assignments will be deemed "Satisfactory" based on the following criteria:
