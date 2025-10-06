@@ -25,7 +25,7 @@ knitr::include_graphics("images/easter-island.jpg")
 Rapa Nui (Easter Island or Isla de Pascua) in Chile
 :::
 
-In this section, we'll kick-off our mapmaking skills using the `tmap` package. Your task will be to make a map of Rapa Nui (Easter Island or Isla de Pascua) in Chile. Rapa Nui is a volcanic island in Polynesia and territory of Chile. It is widely known for monumental statues called moai, but it is also a place of geoscientific inquiry. Several research programs about the island's volcanic history, petrology, and human-environment interactions exist. 
+In this section, we'll kick-off our mapmaking skills using the `tmap` package. Your task will be to make a map of Rapa Nui (Easter Island or Isla de Pascua). Rapa Nui is a volcanic island in Polynesia and territory of Chile. It is widely known for monumental statues called moai, but it is also a place of geoscientific inquiry. Several research programs about the island's volcanic history, petrology, and human-environment interactions exist. 
 
 
 ::: {.callout-note icon=true}
