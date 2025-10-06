@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-09-26">
+<meta name="dcterms.date" content="2025-10-01">
 
 <title>Week 0: Discussion Section</title>
 <style>
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../images/favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5b088bc1b061208832f78ccf2e33693d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd4e4562af9062d9f200841793bf5c06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a3e411f41c4ff336b0e6206611796094.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-ee4c17f4ab7034be40864025011158b8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -118,6 +119,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">EDS 223</span>
     </a>
@@ -144,6 +147,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li>
     <a class="dropdown-item" href="../../course-materials/week0.html">
  <span class="dropdown-text">week 0</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week1.html">
+ <span class="dropdown-text">week 1</span></a>
   </li>  
     </ul>
   </li>
@@ -193,7 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 26, 2025</p>
+        <p class="date">October 1, 2025</p>
       </div>
     </div>
     
@@ -251,19 +258,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Let’s install and load all necessary packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"here"</span>, <span class="st">"janitor"</span>, <span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"terra"</span>, <span class="st">"tmap"</span>, <span class="st">"spData"</span>, <span class="st">"spDataLarge"</span>, <span class="st">"geodata"</span>, <span class="st">"kableExtra"</span>, <span class="st">"viridisLite"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>packages <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"here"</span>, <span class="st">"janitor"</span>, <span class="st">"tidyverse"</span>, <span class="st">"sf"</span>, <span class="st">"terra"</span>, <span class="st">"tmap"</span>, <span class="st">"spData"</span>, <span class="st">"spDataLarge"</span>, <span class="st">"geodata"</span>, <span class="st">"kableExtra"</span>, <span class="st">"viridisLite"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>installed_packages <span class="ot">&lt;-</span> packages <span class="sc">%in%</span> <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">any</span>(installed_packages <span class="sc">==</span> <span class="cn">FALSE</span>)) {</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(packages[<span class="sc">!</span>installed_packages])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, let’s <a href="https://drive.google.com/file/d/1a8t6JH2jvreKE3qXwfis1nlbxXMd1Srd/view">download our GDW data subset</a> to practice our data wrangling skills from EDS 221. Unzip and move this to your version-controlled R Project’s <code>data</code> folder.</p>
 </section>
@@ -274,20 +281,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Use the <code>|&gt;</code> or <code>%&gt;%</code> operator to pipe your <code>read_csv()</code> output to <code>clean_names()</code></li>
 </ul>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"gdw.csv"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="co"># Convert variable names to lower snake case</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"gdw.csv"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="co"># Convert variable names to lower snake case</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -301,31 +308,31 @@ Solution
 <li>Print the column names in <code>gdw_df</code></li>
 </ul>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdw_df, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdw_df, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(gdw_df, <span class="at">n =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(gdw_df)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(gdw_df)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(gdw_df)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(gdw_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(gdw_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gdw_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gdw_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -340,34 +347,34 @@ Solution
 <li>Re-order <code>gdw_df</code> by ascending order of installation year</li>
 </ul>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>country_df <span class="ot">&lt;-</span> gdw_df[, <span class="st">"country"</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>country_vec <span class="ot">&lt;-</span> gdw_df[[<span class="st">"country"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>country_df <span class="ot">&lt;-</span> gdw_df[, <span class="st">"country"</span>]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>country_vec <span class="ot">&lt;-</span> gdw_df[[<span class="st">"country"</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="sc">|&gt;</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dam_type) <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sub_dam <span class="ot">&lt;-</span> gdw_df <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dam_type <span class="sc">==</span> <span class="st">"Dam"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sub_dam <span class="ot">&lt;-</span> gdw_df <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dam_type <span class="sc">==</span> <span class="st">"Dam"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="ot">&lt;-</span> gdw_df <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year_dam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="ot">&lt;-</span> gdw_df <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(year_dam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -380,19 +387,19 @@ Solution
 <li>Make a scatterplot of height of dam/barrier versus representative maximum storage capacity of reservoir in million cubic meters (<code>cap_mcm</code>)</li>
 </ul>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>gdw_df <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country) <span class="sc">|&gt;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_dam_hgt_m =</span> <span class="fu">mean</span>(dam_hgt_m, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
@@ -401,7 +408,7 @@ Solution
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Country"</span>,</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Average height of dam/barrier in meters"</span>) <span class="sc">+</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -411,12 +418,12 @@ Solution
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gdw_df,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> gdw_df,</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>      <span class="fu">aes</span>(<span class="at">x =</span> cap_mcm, <span class="at">y =</span> dam_hgt_m)) <span class="sc">+</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Storage capacity of reservoir in million cubic meters"</span>,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Height of dam/barrier in meters"</span>) <span class="sc">+</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -433,24 +440,24 @@ Solution
 <h2 class="anchored" data-anchor-id="looking-ahead">6. Looking Ahead</h2>
 <p>We have practiced wrangling a <code>data.frame</code> object, but <code>gdw_df</code> also has a <code>shape</code> column, which contains point coordinates (longitude and latitude). Let’s print the first 3 rows of this column and take a look at its class.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdw_df<span class="sc">$</span>shape, <span class="at">n =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(gdw_df<span class="sc">$</span>shape, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "c(-97.8635419999999, 53.696359)" "c(-75.794246, 44.480557)"       
 [3] "c(104.321875, 52.2343930000001)"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gdw_df<span class="sc">$</span>shape)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(gdw_df<span class="sc">$</span>shape)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "character"</code></pre>
 </div>
 </div>
 <p>While <code>gdw_df</code> contains spatial information, it needs to be spatially-enabled to be a spatial object. We use the <code>sf</code> package to do this. Over the next few weeks, you will be using the function <code>st_read()</code> (or <code>read_sf()</code>) to read all your shapefiles and geodatabases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gdw_st <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"gdw.gdb"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="co"># Convert variable names to lower snake case</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gdw_st <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"gdw.gdb"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="co"># Convert variable names to lower snake case</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gdw_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"gdw.gdb"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="co"># Convert variable names to lower snake case</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>gdw_sf <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"gdw.gdb"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>() <span class="co"># Convert variable names to lower snake case</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 
@@ -508,13 +515,14 @@ Solution
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -870,6 +878,15 @@ Solution
 </div>
   </div>
 </footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
 
 
 
