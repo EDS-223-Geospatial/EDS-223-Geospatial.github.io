@@ -56,8 +56,12 @@ The assignment **must be submitted through Gradescope**.
 1. Clone repository from GitHub Classrooms
 2. Download data from [here](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
 3. Unzip data and place in repository
-4. Edit Quarto document with responses
-5. Push final edits before deadline
+4. Add the data to your `gitignore`!
+5. Create a Quarto document with responses
+6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+
+      - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
+
 
 Your repository should have the following structure:
 
@@ -102,12 +106,11 @@ The tool, when in existence, was intended to support research and policy goals. 
 > - to create a common starting point between the agency and the public when looking at issues related to environmental justice.
 
 
-EJScreen provides on environmental and demographic information for the US at the Census [tract](https://en.wikipedia.org/wiki/Census_tract) and [block group](https://en.wikipedia.org/wiki/Census_block_group) levels. You will be working with data at the block group level that has been downloaded from the [EPA site](https://www.epa.gov/ejscreen/download-ejscreen-data). To understand the associated data columns, you will need to explore the following in the `data` folder:
+EJScreen provided on environmental and demographic information for the US at the Census [tract](https://en.wikipedia.org/wiki/Census_tract) and [block group](https://en.wikipedia.org/wiki/Census_block_group) levels. You will be working with data at the block group level that has been downloaded from the [EPA site](https://www.epa.gov/ejscreen/download-ejscreen-data). To understand the associated data columns, you will need to explore the following in the `data` folder:
 
 - Technical documentation: `ejscreen-tech-doc-version-2-2.pdf`
 - Column descriptions: `EJSCREEN_2023_BG_Columns.xlsx`
 
-You should also explore the [limitations and caveats](https://www.epa.gov/ejscreen/limitations-and-caveats-using-ejscreen) of the data.
 
 ### HOLC Redlining
 
