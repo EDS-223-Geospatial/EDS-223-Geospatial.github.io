@@ -42,6 +42,17 @@ The assignment **must be submitted through Gradescope**.
 
 ## Instructions
 
+1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
+2. Download data from [here](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
+3. Unzip data and place in repository
+4. Add the data to your `gitignore`!
+5. Create a Quarto document with responses
+6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+
+      - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
+
+## Instructions
+
 1. Clone repository from GitHub Classrooms
 2. Download data from [here](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
 3. Unzip data and place in repository
@@ -56,10 +67,11 @@ EDS223-HW2
 │   HW2.qmd
 │   Rmd/Proj files    
 │
-└───data
-     └───ejscreen
-     └───gbif-birds-LA
-     └───mapping-inequality
+└───.gitignore
+     └───data
+         └───ejscreen
+         └───gbif-birds-LA
+         └───mapping-inequality
 ```
 
 ## Background
@@ -78,16 +90,17 @@ Check out coverage by [EOS](https://eos.org/articles/bird-biodiversity-reports-r
 
 **Data file:** `ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb`
 
-We will be working with data from the United States Environmental Protection Agency's EJScreen: Environmental Justice Screening and Mapping Tool.
+We will be working with data from the United States Environmental Protection Agency's former EJScreen: Environmental Justice Screening and Mapping Tool. This tool is no longer operating, but you can find an unofficial version of it [here](https://pedp-ejscreen.azurewebsites.net/)
 
-According to the [US EPA website](https://www.epa.gov/ejscreen/purposes-and-uses-ejscreen):
+According to the former US EPA website:
 
->This screening tool and data may be of interest to community residents or other stakeholders as they search for environmental or demographic information. It can also support a wide range of research and policy goals. The public has used EJScreen in many different locations and in many different ways.
->
->EPA is sharing EJScreen with the public:  
+The tool, when in existence, was intended to support research and policy goals. It was shared with the public to achieve the following: 
+
+
 > - to be more transparent about how we consider environmental justice in our work,  
 > - to assist our stakeholders in making informed decisions about pursuing environmental justice and,   
-> - to create a common starting point between the agency and the public when looking at issues related to environmental justice. 
+> - to create a common starting point between the agency and the public when looking at issues related to environmental justice.
+
 
 EJScreen provides on environmental and demographic information for the US at the Census [tract](https://en.wikipedia.org/wiki/Census_tract) and [block group](https://en.wikipedia.org/wiki/Census_block_group) levels. You will be working with data at the block group level that has been downloaded from the [EPA site](https://www.epa.gov/ejscreen/download-ejscreen-data). To understand the associated data columns, you will need to explore the following in the `data` folder:
 
@@ -125,18 +138,31 @@ Your first task is to explore historical redlining in Los Angeles and its legacy
 
 ### Description
 
-For this assignment, you must produce the following:
+For this assignment, you must complete the following:
 
-- [ ] a map of historical redlining neighborhoods, including:
+1. Create a map of historical redlining neighborhoods, including:
   - [ ] neighborhoods colored by HOLC grade
   - [ ] an appropriate base map
-- [ ] a table summarizing the percent of current census block groups within each HOLC grade (or none)
-- [ ] a set of figures summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables:
+  - [ ] a clear title and legend
+  
+  
+2.  Create a table summarizing: 
+  - [ ] the percentage of census block groups that fall within each HOLC grade
+  - [ ] Also include the percent of census black groups that don't fall within a HOLC grade
+  - [ ] **Hint:** The HOLC data contains the grades and the EJScreen data contains the census blocks, so you        will need to combine the data spatially before doing summary statistics. Once you combine and no longer need the geometries, you can use `st_drop_geometry()`. 
+  
+  
+3.  Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables or create separate plots):
   - [ ] % low income
   - [ ] percentile for Particulate Matter 2.5
   - [ ] percentile for low life expectancy
-- [ ] a brief paragraph reflecting on these results
-
+  - [ ] Use `ggplot` for your visualizations! You will first need to calculate mean of each variable grouped by HOLC grade. 
+  
+  
+  
+4.  Write a brief paragraph reflecting on these results
+  - [ ] Interpret the patterns you observe in your results 
+  - [ ] Discuss potential relationships between historical redlining grades and current                 environmental/socioeconomic conditions
 
 ## Part 2: Legacy of redlining in biodiversity observations
 
@@ -144,25 +170,45 @@ Your second task is to explore the legacy of historical redlining in Los Angeles
 
 ### Description
 
-For this assignment, you must produce the following based on observations from 2022:
+For this assignment, you must produce the following based on observations from 2021-2023:
 
-- [ ] a figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade
-- [ ] a brief paragraph explaining whether these results match the findings from Ellis-Soto et al. 2023
+1.  A figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade 
+
+    Create a visualizations that shows: 
+    - [ ] The percentage of bird observations within each HOLC grade
+    - [ ] Include an appropiate title, axis labels, and legend
+    - [ ] **Hints**: Ensure the bird observations and HOLC dataset have matching CRS', then perform a spatial join to assign each bird observations to a corresponding HOLC grade. 
+    
+2.  **Spolier alert!!** Our results don't match the findings from Ellis-Soto et al. 2023! Read the abstract provided in the description of this dataset. Why might we have obtained different results in our analysis? What did the paper consider that we did not? 
 
 ## Rubric (specifications)
 
 Assignments will be deemed "Satisfactory" based on the following criteria:
 
-- [ ] "Correct" answers are not sufficient. Analysis must demonstrate critical interrogation of each step by showing justification and verification of intermediate steps using the following:
+#### Data analysis
+- [ ] Code must produce expected output based on correct data manipulation
+- [ ] Spatial operations must be performed correctly with appropriate verification (e.g., CRS matching, appropriate join methods, checking results)
+- [ ] Multiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. "Correct" answers are not sufficient. Justification and verification of approach should be demonstrated using the following:
   - custom warning and error message (e.g. `warning()` and `stop()`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages))
-  - unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
   - informative comments ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
-- [ ] All maps and figures must include the following elements:
+  - **BONUS:** unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
+
+#### Plots, tables, and maps
+- [ ] All plots, tables, and maps must be clear, accurate, and effectively convey the intended information
+- [ ] All plots and maps must include the following elements:
   - an informative title
   - legends with legible titles, including units
   - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
-  - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
-  - for figures: axes with legible titles, including units
+  - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass), and an appropiate basemap included where necessary
+- All tables should be rendered with legible titles and styling (e.g. [`{gt}`](https://r-graph-gallery.com/package/gt.html))
+
+
+
+#### Written reflections
+
+- [ ] Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.
+
+#### Professional Output
 - [ ] The rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis
   - see examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
 
