@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.7.32">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-05-13">
+<meta name="dcterms.date" content="2025-10-05">
 
 <title>Week 2: Discussion Section</title>
 <style>
@@ -70,15 +70,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../images/favicon.png" rel="icon" type="image/png">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-cd4e4562af9062d9f200841793bf5c06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5b088bc1b061208832f78ccf2e33693d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-ee4c17f4ab7034be40864025011158b8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-a3e411f41c4ff336b0e6206611796094.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -119,8 +118,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
-    </a>
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">EDS 223</span>
     </a>
@@ -200,7 +197,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 13, 2025</p>
+        <p class="date">October 5, 2025</p>
       </div>
     </div>
     
@@ -216,9 +213,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">1. Learning Objectives</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">2. Get Started</a></li>
-  <li><a href="#your-task" id="toc-your-task" class="nav-link" data-scroll-target="#your-task">3. Your Task</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">1. Get Started</a></li>
+  <li><a href="#view-class-and-geometry-type" id="toc-view-class-and-geometry-type" class="nav-link" data-scroll-target="#view-class-and-geometry-type">2. View class and geometry type</a></li>
+  <li><a href="#select-a-macro-ecoregion-of-interest" id="toc-select-a-macro-ecoregion-of-interest" class="nav-link" data-scroll-target="#select-a-macro-ecoregion-of-interest">3. Select a macro ecoregion of interest</a></li>
+  <li><a href="#play-with-coordinate-reference-system-crs" id="toc-play-with-coordinate-reference-system-crs" class="nav-link" data-scroll-target="#play-with-coordinate-reference-system-crs">4. Play with coordinate reference system (CRS)</a></li>
+  <li><a href="#make-a-map" id="toc-make-a-map" class="nav-link" data-scroll-target="#make-a-map">5. Make a map</a></li>
   </ul>
 </nav>
     </div>
@@ -229,90 +228,292 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">1. Learning Objectives</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/colombia.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:55.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="gray-text center-text">
+<p>Minca, Santa Marta, Magdalena, Colombia</p>
+</div>
+<p>In this section, we’ll explore key functions inside the <code>sf</code> package using data from Colombia. Colombia is considered one of the world’s most “megadiverse” countries, hosting close to 10% of the planet’s biodiversity. Per square kilometer, there are more bird, amphibian, butterfly, and frog species in Colombia than anywhere else on Earth. Here, ill-planned road development poses a significant threat to habitat fragmentation, wildlife movement, and water flows. The Colombian government has developed a broad set of guidelines for sustainable road development, called the Lineamientos de Infraestructura Verde Vial (LIVV) or Green Road Infrastructure Guidelines (GRI). The GRI is mandatory for all national roads across Colombia.</p>
+<section id="learning-objectives" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="learning-objectives">Learning Objectives</h3>
 <ul>
-<li>Use <code>sf::st_read()</code> to read multiple vector data types</li>
-<li>Retreive the CRS of a vector object with <code>sf::st_crs()</code></li>
-<li>Transform CRS and match across all vector data types with <code>sf::st_transform()</code></li>
-<li>Perform <code>dplyr</code> attribute manipulations (e.g.&nbsp;<code>filter()</code>, <code>mutate()</code>, <code>select()</code>)</li>
+<li>Use <code>st_read()</code> to read multiple vector data types</li>
+<li>Retrieve the CRS of a vector object with <code>st_crs()</code></li>
+<li>Transform CRS and match across all vector data types with <code>st_transform()</code></li>
+<li>Perform <code>dplyr</code> attribute manipulations on <code>sf</code> data</li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>More map making in R
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>There are MANY different ways to make maps in R, all with different pros/cons. Check out this <a href="course-materials/resources/plotting.qmd">resource</a> for examples of what map making looks like in <code>ggplot2</code>, <code>leaflet</code>, and more!</p>
-</div>
-</div>
 </section>
 <section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">2. Get Started</h2>
+<h2 class="anchored" data-anchor-id="get-started">1. Get Started</h2>
 <ul>
-<li>Create an <code>.Rproj</code> as your version controlled project for Week 2</li>
-<li>Create a Quarto document inside your <code>.Rproj</code></li>
-<li>Download <a href="https://drive.google.com/drive/folders/1KahW7CG--XicV9TFBNmmo40ReV9q8c19?usp=sharing">this folder from Google Drive</a> and move it inside your <code>.Rproj</code></li>
-<li>Load all necessary packages</li>
+<li>Create a version-controlled R Project</li>
+<li>Add (at least) a subfolder to your R project: <code>data</code></li>
+<li>Create a Quarto document</li>
 </ul>
+<p>Let’s load all necessary packages:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="your-task" class="level2">
-<h2 class="anchored" data-anchor-id="your-task">3. Your Task</h2>
-<p>You will be wokring with the following datasets:</p>
+<p>You will be working with the following datasets:</p>
 <ul>
-<li><strong>Colombia’s Terrestrial Ecosystems</strong> (<a href="https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/">The Nature Conservancy/NatureServe</a>)</li>
-<li><strong>Colombia’s Roads</strong> (<a href="https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/">Esri</a>)</li>
-<li><strong>Bird Observations</strong> (<a href="https://doi.org/10.15472/iqnpse">DATAVES</a>)</li>
+<li>Colombia’s Terrestrial Ecosystems (<a href="https://databasin.org/datasets/e4ebf6df95094104a05c68b72a8b3e55/">The Nature Conservancy/NatureServe</a>)</li>
+<li>Colombia’s Roads (<a href="https://databasin.org/datasets/d383d26773fe4524b5a69e957f2befd6/">Esri</a>)</li>
+<li>Bird Observations (<a href="https://doi.org/10.15472/iqnpse">DATAVES</a>)</li>
 </ul>
-<p>Now, to meet this week’s learning objectives, your task:</p>
+<p>Next, let’s <a href="https://drive.google.com/drive/folders/1KahW7CG--XicV9TFBNmmo40ReV9q8c19?usp=sharing">download our data</a>. Unzip and move this to your version-controlled R Project’s <code>data</code> folder.</p>
 <ol type="1">
 <li>Read in the data for Colombia’s ecoregions, roads, and bird observations</li>
 </ol>
 <ul>
-<li>Use <code>st_read()</code> to read vector data (e.g., .shp, .gdb)</li>
-<li>Use <code>rename()</code> or <code>mutate()</code> to rename the columns <code>decimal_longitude</code> and <code>decimal_latitude</code> to <code>long</code> and <code>lat</code> in <code>aves</code> and <code>sf::st_as_sf()</code> to convert it into an sf object
-<ul>
-<li><strong>Hint</strong>: To convert a table into a vector object, you can use <code>st_as_sf()</code> but remember to check the <code>class()</code> of an object first!</li>
-</ul></li>
+<li>Use <code>rename()</code> to rename the columns <strong>decimal_longitude</strong> and <strong>decimal_latitude</strong> to <strong>long</strong> and <strong>lat</strong> in the bird observation dataset</li>
+<li>Use <code>st_as_sf()</code> to convert the bird observation dataset into an <code>sf</code> object</li>
 </ul>
-<ol start="2" type="1">
-<li>Check <code>class()</code> of all vector objects (including the converted <code>aves</code>) and use <code>sf::st_geometry_type()</code> to check the geometry type</li>
-<li>Use <code>filter()</code> to select a macro region of interest from <code>N1_MacroBi</code> in Colombia’s ecoregions dataset and save as a new vector data</li>
-</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>col <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week2-discussion"</span>, <span class="st">"Colombia"</span>, <span class="st">"Colombia.shp"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>roads <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week2-discussion"</span>, <span class="st">"RDLINE_colombia"</span>, <span class="st">"RDLINE_colombia.shp"</span>))</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>aves <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"week2-discussion"</span>, <span class="st">"dataves.csv"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">long =</span> decimal_longitude,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">lat =</span> decimal_latitude) <span class="sc">|&gt;</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"long"</span>, <span class="st">"lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="view-class-and-geometry-type" class="level2">
+<h2 class="anchored" data-anchor-id="view-class-and-geometry-type">2. View class and geometry type</h2>
 <ul>
-<li>Check <code>class()</code> of the new vector data</li>
-<li>Plot the new vector data using <code>tmap</code></li>
+<li>Check the <code>class()</code> of all vector objects (including the spatially-enabled bird observation dataset)</li>
+<li>Use <code>st_geometry_type()</code> to peak at the geometry type</li>
 </ul>
-<ol start="4" type="1">
-<li>Use <code>st_crs()</code> to retrieve CRS of all vector objects and assign a new CRS</li>
-</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View class of each object</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(col)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(roads)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(aves)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># View geometry type of each object</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">st_geometry_type</span>(col))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">st_geometry_type</span>(roads))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(<span class="fu">st_geometry_type</span>(aves))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="select-a-macro-ecoregion-of-interest" class="level2">
+<h2 class="anchored" data-anchor-id="select-a-macro-ecoregion-of-interest">3. Select a macro ecoregion of interest</h2>
 <ul>
-<li><strong>Bonus Challenge</strong>: Check units of your object with <code>st_crs()$units</code></li>
-<li>Check CRS of all vector objects with <code>st_crs()</code></li>
-<li><code>st_crs() &lt;- NA</code> is a brute force way to remove a CRS, instead:
+<li>Use <code>filter()</code> to select a macro region of interest from <strong>N1_MacroBi</strong> in Colombia’s ecoregions dataset</li>
+<li>Plot the subset using <code>tmap</code></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>col_andean <span class="ot">&lt;-</span> col <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set categorical "levels" in attribute N1_MacroBi (subregions of Colombia)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">N1_MacroBi =</span> <span class="fu">as.factor</span>(N1_MacroBi)) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Subset to Andean region of Colombia</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(N1_MacroBi <span class="sc">==</span> <span class="st">"Andean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(col_andean) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Andean Region of Colombia"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[plot mode] fit legend/component: Some legend items or map compoments do not
+fit well, and are therefore rescaled.
+ℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week2-discussion_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="play-with-coordinate-reference-system-crs" class="level2">
+<h2 class="anchored" data-anchor-id="play-with-coordinate-reference-system-crs">4. Play with coordinate reference system (CRS)</h2>
+<p>First, let’s use <code>st_crs()</code> to check the CRS and it’s units.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View CRS of each object</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(roads)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(aves)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># View units of each object CRS </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col)<span class="sc">$</span>units</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(roads)<span class="sc">$</span>units</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(aves)<span class="sc">$</span>units</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Say, you want to remove the CRS of an object, in order to “disable” its spatial features. Setting the CRS to <code>NA</code> with <code>st_crs() &lt;- NA</code> is a brute force way to remove a CRS and “corrupt” a spatial object. Let’s do it the right way!</p>
 <ul>
-<li>For the bird observations dataset, extract the longitude and latitude from the <code>geometry</code> column and use <code>sf::st_drop_geometry()</code></li>
+<li>Extract the longitude and latitude from the <code>geometry</code> column and use <code>st_drop_geometry()</code></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are several ways to extract the longitude and latitude from the <code>geometry</code> column.</p>
+<section id="use-map-to-unlistextract" class="level3">
+<h3 class="anchored" data-anchor-id="use-map-to-unlistextract">Use <code>map()</code> to unlist/extract</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aves_df_purrr <span class="ot">&lt;-</span> aves <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract lat &amp; long from geometry column</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map</span>(aves<span class="sc">$</span>geometry, <span class="dv">1</span>)), <span class="co"># longitude = first component (x)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">lat =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map</span>(aves<span class="sc">$</span>geometry, <span class="dv">2</span>))) <span class="sc">|&gt;</span> <span class="co"># latitude = second component (y)</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="co"># Remove geometry column now that it's redundant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="use-st_coordinates-to-extractassign" class="level3">
+<h3 class="anchored" data-anchor-id="use-st_coordinates-to-extractassign">Use <code>st_coordinates()</code> to extract/assign</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>aves_df_st_coords <span class="ot">&lt;-</span> aves <span class="sc">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">st_coordinates</span>(.)[,<span class="dv">1</span>], <span class="co"># Assign first matrix item to "lon"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">lat =</span> <span class="fu">st_coordinates</span>(.)[,<span class="dv">2</span>])  <span class="sc">%&gt;%</span> <span class="co"># Assign second matrix item to "lat"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="co"># Remove geometry column now that it's redundant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+</div>
+</div>
+<ul>
 <li>Convert <code>long</code> and <code>lat</code> into a geometry again with <code>st_as_sf()</code> to obtain a proper <code>sf</code> data frame</li>
-</ul></li>
 </ul>
-<ol start="5" type="1">
-<li>Let’s bring all vector data types together</li>
-</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<section id="convert-to-an-sf-object-with-st_as_sf" class="level3 callout-body-container callout-body">
+<h3 class="anchored" data-anchor-id="convert-to-an-sf-object-with-st_as_sf">Convert to an <code>sf</code> object with <code>st_as_sf()</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>aves_df_purrr <span class="ot">&lt;-</span> aves <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</div>
+</div>
+</section>
+<section id="make-a-map" class="level2">
+<h2 class="anchored" data-anchor-id="make-a-map">5. Make a map</h2>
 <ul>
 <li>Check that the CRS of the ecoregions and roads datasets match</li>
-<li>Transform CRS of the bird observations data using <code>sf::st_transform()</code> to match with the other datasets</li>
+<li>Transform CRS of the bird observations dataset using <code>st_transform()</code> to match with the other datasets</li>
 <li>Use <code>tmap</code> to plot the ecoregions, roads, and bird observations together</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boolen check if CRS match between 2 datasets</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col) <span class="sc">==</span> <span class="fu">st_crs</span>(roads)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform bird observation dataset into same CRS as other Colombia dataset</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>aves <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(aves, <span class="at">crs =</span> <span class="fu">st_crs</span>(col))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(col) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(roads) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>() <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aves) <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>() <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Colombia ecoregions, roads,</span><span class="sc">\n</span><span class="st">and bird observations"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -369,14 +570,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
