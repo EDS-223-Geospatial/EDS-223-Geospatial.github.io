@@ -4,7 +4,7 @@ subtitle: "Practice function making with rasters"
 author: "Alessandra Vidal Meza"
 date: last-modified
 execute: 
-  eval: true
+  eval: false
 format:
   html:
     toc: true
