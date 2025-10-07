@@ -2,9 +2,8 @@
 title: "Week 5: Discussion Section - Answer Key"
 subtitle: "Practice raster operations with vectors"
 author: "Alessandra Vidal Meza"
-date: last-modified
 execute: 
-  eval: true
+  eval: false
 format:
   html:
     toc: true

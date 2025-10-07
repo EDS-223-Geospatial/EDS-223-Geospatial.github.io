@@ -214,28 +214,28 @@
     "href": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#mask-clouds-and-shadows",
     "title": "Week 6: Discussion Section - Answer Key",
     "section": "Mask Clouds and Shadows",
-    "text": "Mask Clouds and Shadows\n\n# Set all cells with values greater than 0 to NA\npre_mask[pre_mask &gt; 0] &lt;- NA\n\n# Subset raster based on mask\npre_fire_rast &lt;- mask(pre_fire_rast, mask = pre_mask)\n\n# View raster\nplot(pre_fire_rast)\n\n\n\n\n\n\n\n\n\n# Set all cells with values greater than 0 to NA\npost_mask[post_mask &gt; 0] &lt;- NA\n\n# Subset raster based on mask\npost_fire_rast &lt;- mask(post_fire_rast, mask = post_mask)\n\n# View raster\nplot(post_fire_rast)"
+    "text": "Mask Clouds and Shadows\n\n# Set all cells with values greater than 0 to NA\npre_mask[pre_mask &gt; 0] &lt;- NA\n\n# Subset raster based on mask\npre_fire_rast &lt;- mask(pre_fire_rast, mask = pre_mask)\n\n# View raster\nplot(pre_fire_rast)\n\n\n# Set all cells with values greater than 0 to NA\npost_mask[post_mask &gt; 0] &lt;- NA\n\n# Subset raster based on mask\npost_fire_rast &lt;- mask(post_fire_rast, mask = post_mask)\n\n# View raster\nplot(post_fire_rast)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#plot-true-color-composite",
     "href": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#plot-true-color-composite",
     "title": "Week 6: Discussion Section - Answer Key",
     "section": "Plot True Color Composite",
-    "text": "Plot True Color Composite\n\nplotRGB(pre_fire_rast, r = 4, g = 3, b = 2, stretch = \"lin\", colNA = \"black\")\n\n\n\n\n\n\n\n\n\nplotRGB(post_fire_rast, r = 4, g = 3, b = 2, stretch = \"lin\", colNA = \"black\")"
+    "text": "Plot True Color Composite\n\nplotRGB(pre_fire_rast, r = 4, g = 3, b = 2, stretch = \"lin\", colNA = \"black\")\n\n\nplotRGB(post_fire_rast, r = 4, g = 3, b = 2, stretch = \"lin\", colNA = \"black\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#plot-false-color-composite",
     "href": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#plot-false-color-composite",
     "title": "Week 6: Discussion Section - Answer Key",
     "section": "Plot False Color Composite",
-    "text": "Plot False Color Composite\n\nplotRGB(pre_fire_rast, r = 7, g = 5, b = 3, stretch = \"lin\", colNA = \"black\")\n\n\n\n\n\n\n\n\n\nplotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = \"lin\", colNA = \"black\")"
+    "text": "Plot False Color Composite\n\nplotRGB(pre_fire_rast, r = 7, g = 5, b = 3, stretch = \"lin\", colNA = \"black\")\n\n\nplotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = \"lin\", colNA = \"black\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#calculate-nbr-and-dnbr",
     "href": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#calculate-nbr-and-dnbr",
     "title": "Week 6: Discussion Section - Answer Key",
     "section": "Calculate NBR and dNBR",
-    "text": "Calculate NBR and dNBR\n\npre_nbr_rast &lt;- terra::lapp(pre_fire_rast[[c(5, 7)]], fun = nbr_fun)\n\nplot(pre_nbr_rast, main = \"Cold Springs Pre-Fire NBR\", colNA = \"black\")\n\n\n\n\n\n\n\n\n\npost_nbr_rast &lt;- terra::lapp(post_fire_rast[[c(5, 7)]], fun = nbr_fun)\n\nplot(post_nbr_rast, main = \"Cold Springs Post-Fire NBR\", colNA = \"black\")"
+    "text": "Calculate NBR and dNBR\n\npre_nbr_rast &lt;- terra::lapp(pre_fire_rast[[c(5, 7)]], fun = nbr_fun)\n\nplot(pre_nbr_rast, main = \"Cold Springs Pre-Fire NBR\", colNA = \"black\")\n\n\npost_nbr_rast &lt;- terra::lapp(post_fire_rast[[c(5, 7)]], fun = nbr_fun)\n\nplot(post_nbr_rast, main = \"Cold Springs Post-Fire NBR\", colNA = \"black\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#calculate-and-plot-dnbr",
@@ -249,7 +249,7 @@
     "href": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html#reclassification",
     "title": "Week 6: Discussion Section - Answer Key",
     "section": "Reclassification",
-    "text": "Reclassification\n\n# Set categories for severity levels\ncategories &lt;- c(\"Enhanced Regrowth\", \"Unburned\", \"Low Severity\", \"Moderate Severity\", \"High Severity\")\n\n# Create reclassification matrix\nrcl &lt;- matrix(c(-Inf, -0.1, 1, # group 1 ranges for Enhanced Regrowth\n                -0.1, 0.1, 2, # group 2 ranges for Unburned\n                0.1, 0.27, 3, # group 3 ranges for Low Severity\n                0.27, 0.66, 4, # group 4 ranges for Moderity Severity\n                0.66, Inf, 5), # group 5 ranges for High Severity\n                ncol = 3, byrow = TRUE)\n\n# Use reclassification matrix to reclassify dNBR raster\nreclassified &lt;- classify(diff_nbr, rcl = rcl)\n\nreclassified[is.nan(reclassified)] &lt;- NA\n\n\ntm_shape(reclassified) +\n  tm_raster(style = \"cat\",\n            labels = c(categories, \"Missing\"),\n            palette = get_brewer_pal(\"YlOrRd\", n = 5, plot = FALSE),\n            title = \"Severity Level\", colorNA = \"black\")+\n  tm_layout(legend.outside = TRUE)\n\nThis function is deprecated; please use cols4all::c4a() instead\n\n\n\n\n\n── tmap v3 code detected ───────────────────────────────────────────────────────\n\n\n[v3-&gt;v4] `tm_raster()`: instead of `style = \"cat\"`, use col.scale =\n`tm_scale_categorical()`.\nℹ Migrate the argument(s) 'palette' (rename to 'values'), 'colorNA' (rename to\n  'value.na'), 'labels' to 'tm_scale_categorical(&lt;HERE&gt;)'\nFor small multiples, specify a 'tm_scale_' for each multiple, and put them in a\nlist: 'col'.scale = list(&lt;scale1&gt;, &lt;scale2&gt;, ...)'\n[v3-&gt;v4] `tm_raster()`: migrate the argument(s) related to the legend of the\nvisual variable `col` namely 'title' to 'col.legend = tm_legend(&lt;HERE&gt;)'\n\n\nWarning: labels do not have the same length as levels, so they are repeated"
+    "text": "Reclassification\n\n# Set categories for severity levels\ncategories &lt;- c(\"Enhanced Regrowth\", \"Unburned\", \"Low Severity\", \"Moderate Severity\", \"High Severity\")\n\n# Create reclassification matrix\nrcl &lt;- matrix(c(-Inf, -0.1, 1, # group 1 ranges for Enhanced Regrowth\n                -0.1, 0.1, 2, # group 2 ranges for Unburned\n                0.1, 0.27, 3, # group 3 ranges for Low Severity\n                0.27, 0.66, 4, # group 4 ranges for Moderity Severity\n                0.66, Inf, 5), # group 5 ranges for High Severity\n                ncol = 3, byrow = TRUE)\n\n# Use reclassification matrix to reclassify dNBR raster\nreclassified &lt;- classify(diff_nbr, rcl = rcl)\n\nreclassified[is.nan(reclassified)] &lt;- NA\n\n\ntm_shape(reclassified) +\n  tm_raster(style = \"cat\",\n            labels = c(categories, \"Missing\"),\n            palette = get_brewer_pal(\"YlOrRd\", n = 5, plot = FALSE),\n            title = \"Severity Level\", colorNA = \"black\")+\n  tm_layout(legend.outside = TRUE)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week3-discussion-answerKey.html",
@@ -326,35 +326,35 @@
     "href": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#plot-a-histogram-and-boxplot-of-dem-1",
     "title": "Week 4: Discussion Section - Answer Key",
     "section": "Plot a histogram and boxplot of dem",
-    "text": "Plot a histogram and boxplot of dem\n\nhist(dem,\n     main = \"Digital Elevation Model Raster Value Distribution\",\n     xlab = \"Value\")\n\n\n\n\n\n\n\nboxplot(dem,\n        main = \"Digital Elevation Model Raster Value Distribution\",\n        ylab = \"Value\")"
+    "text": "Plot a histogram and boxplot of dem\n\nhist(dem,\n     main = \"Digital Elevation Model Raster Value Distribution\",\n     xlab = \"Value\")\n\nboxplot(dem,\n        main = \"Digital Elevation Model Raster Value Distribution\",\n        ylab = \"Value\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#reclassify-elevation-and-find-mean",
     "href": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#reclassify-elevation-and-find-mean",
     "title": "Week 4: Discussion Section - Answer Key",
     "section": "Reclassify Elevation and Find Mean",
-    "text": "Reclassify Elevation and Find Mean\n\n# define a reclassification matrix\nrcl &lt;- matrix(c(-Inf, 300, 0, # values -Inf to 300 = 0\n                300, 500, 1,  # values 300 to 500 = 1\n                500, Inf, 2), # values 500 to Inf = 2\n              ncol = 3, byrow = TRUE)\n\n# apply the matrix to reclassify the raster, making all cells 0 or 1 or 2\ndem_rcl &lt;- terra::classify(dem, rcl = rcl)\n\n# assign labels to the numerical categories\nlevels(dem_rcl) &lt;- tibble::tibble(id = 0:2, \n                                  cats = c(\"low\", \"medium\", \"high\"))\n\n# calculate mean elevation for each category using original DEM values\nelevation_mean &lt;- terra::zonal(dem, dem_rcl, fun = \"mean\")\nelevation_mean\n\n    cats      dem\n1    low 274.3910\n2 medium 392.0486\n3   high 765.2197"
+    "text": "Reclassify Elevation and Find Mean\n\n# define a reclassification matrix\nrcl &lt;- matrix(c(-Inf, 300, 0, # values -Inf to 300 = 0\n                300, 500, 1,  # values 300 to 500 = 1\n                500, Inf, 2), # values 500 to Inf = 2\n              ncol = 3, byrow = TRUE)\n\n# apply the matrix to reclassify the raster, making all cells 0 or 1 or 2\ndem_rcl &lt;- terra::classify(dem, rcl = rcl)\n\n# assign labels to the numerical categories\nlevels(dem_rcl) &lt;- tibble::tibble(id = 0:2, \n                                  cats = c(\"low\", \"medium\", \"high\"))\n\n# calculate mean elevation for each category using original DEM values\nelevation_mean &lt;- terra::zonal(dem, dem_rcl, fun = \"mean\")\nelevation_mean"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi",
     "href": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi",
     "title": "Week 4: Discussion Section - Answer Key",
     "section": "Find Correlation Between NDWI and NDVI",
-    "text": "Find Correlation Between NDWI and NDVI\nDefine functions for calculating NDWI and NDVI\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir)/(green + nir)\n}\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red)/(nir + red)\n}\n\nApply the functions to the appropriate Landsat 8 bands. Landsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:\n\n\n\nBand\n\nColor\n\n\n\n\n1\nblue\n30 meter\n\n\n2\ngreen\n30 meter\n\n\n3\nred\n30 meter\n\n\n4\nnear-infrared\n30 meter\n\n\n\n\nndwi_rast &lt;- terra::lapp(landsat[[c(2, 4)]],\n                         fun = ndwi_fun)\nplot(ndwi_rast,\n     main = \"Zion National Park NDWI\")\n\n\n\n\n\n\n\nndvi_rast &lt;- terra::lapp(landsat[[c(4, 3)]],\n                         fun = ndvi_fun)\n\n# stack rasters\ncombine &lt;- c(ndvi_rast, ndwi_rast)\n\nplot(combine, main = c(\"NDVI\", \"NDWI\"))\n\n\n\n\n\n\n\n# calculate the correlation between raster layers \nterra::layerCor(combine, fun = cor)\n\n           [,1]       [,2]\n[1,]  1.0000000 -0.9132838\n[2,] -0.9132838  1.0000000"
+    "text": "Find Correlation Between NDWI and NDVI\nDefine functions for calculating NDWI and NDVI\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir)/(green + nir)\n}\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red)/(nir + red)\n}\n\nApply the functions to the appropriate Landsat 8 bands. Landsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:\n\n\n\nBand\n\nColor\n\n\n\n\n1\nblue\n30 meter\n\n\n2\ngreen\n30 meter\n\n\n3\nred\n30 meter\n\n\n4\nnear-infrared\n30 meter\n\n\n\n\nndwi_rast &lt;- terra::lapp(landsat[[c(2, 4)]],\n                         fun = ndwi_fun)\nplot(ndwi_rast,\n     main = \"Zion National Park NDWI\")\n\nndvi_rast &lt;- terra::lapp(landsat[[c(4, 3)]],\n                         fun = ndvi_fun)\n\n# stack rasters\ncombine &lt;- c(ndvi_rast, ndwi_rast)\n\nplot(combine, main = c(\"NDVI\", \"NDWI\"))\n\n# calculate the correlation between raster layers \nterra::layerCor(combine, fun = cor)"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-distances-across-all-peru-cells",
     "href": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-distances-across-all-peru-cells",
     "title": "Week 4: Discussion Section - Answer Key",
     "section": "Find Distances Across All peru Cells",
-    "text": "Find Distances Across All peru Cells\n\n# Aggregate by a factor of 20 to reduce resolution and create new raster\nperu_agg &lt;- terra::aggregate(rast(peru), fact = 20)\nplot(peru_agg)\n\n\n\n\n\n\n\n# Create mask of ocean (NA values)\nwater_mask &lt;- is.na(peru_agg) # returns TRUE value for NA\n# Set all FALSE values to NA\nwater_mask[water_mask == 0] &lt;- NA\nplot(water_mask)\n\n\n\n\n\n\n\n# Find distance from each cell to ocean/coastline (default is unit = \"m\")\ndistance_to_coast &lt;- terra::distance(water_mask)\n# Convert from meters to kilometers \ndistance_to_coast_km &lt;- distance_to_coast/1000\n\nplot(distance_to_coast_km, main = \"Distance to the coast (km)\")"
+    "text": "Find Distances Across All peru Cells\n\n# Aggregate by a factor of 20 to reduce resolution and create new raster\nperu_agg &lt;- terra::aggregate(rast(peru), fact = 20)\nplot(peru_agg)\n\n# Create mask of ocean (NA values)\nwater_mask &lt;- is.na(peru_agg) # returns TRUE value for NA\n# Set all FALSE values to NA\nwater_mask[water_mask == 0] &lt;- NA\nplot(water_mask)\n\n# Find distance from each cell to ocean/coastline (default is unit = \"m\")\ndistance_to_coast &lt;- terra::distance(water_mask)\n# Convert from meters to kilometers \ndistance_to_coast_km &lt;- distance_to_coast/1000\n\nplot(distance_to_coast_km, main = \"Distance to the coast (km)\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#change-resolution-of-srtm",
     "href": "course-materials/discussions/answer-keys/week4-discussion-answerKey.html#change-resolution-of-srtm",
     "title": "Week 4: Discussion Section - Answer Key",
     "section": "Change Resolution of srtm",
-    "text": "Change Resolution of srtm\n\nplot(srtm)\n\n\n\n\n\n\n\nrast_template &lt;- terra::rast(terra::ext(srtm), res = 0.01)\n\nsrtm_resampl1 &lt;- terra::resample(srtm, y = rast_template, method = \"bilinear\")\nsrtm_resampl2 &lt;- terra::resample(srtm, y = rast_template, method = \"near\")\nsrtm_resampl3 &lt;- terra::resample(srtm, y = rast_template, method = \"cubic\")\nsrtm_resampl4 &lt;- terra::resample(srtm, y = rast_template, method = \"cubicspline\")\nsrtm_resampl5 &lt;- terra::resample(srtm, y = rast_template, method = \"lanczos\")\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nlabs &lt;- c(\"Bilinear\", \"Near\", \"Cubic\", \"Cubic Spline\", \"Lanczos\")\nplot(srtm_resampl_all, main = labs)"
+    "text": "Change Resolution of srtm\n\nplot(srtm)\n\nrast_template &lt;- terra::rast(terra::ext(srtm), res = 0.01)\n\nsrtm_resampl1 &lt;- terra::resample(srtm, y = rast_template, method = \"bilinear\")\nsrtm_resampl2 &lt;- terra::resample(srtm, y = rast_template, method = \"near\")\nsrtm_resampl3 &lt;- terra::resample(srtm, y = rast_template, method = \"cubic\")\nsrtm_resampl4 &lt;- terra::resample(srtm, y = rast_template, method = \"cubicspline\")\nsrtm_resampl5 &lt;- terra::resample(srtm, y = rast_template, method = \"lanczos\")\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nlabs &lt;- c(\"Bilinear\", \"Near\", \"Cubic\", \"Cubic Spline\", \"Lanczos\")\nplot(srtm_resampl_all, main = labs)"
   },
   {
     "objectID": "course-materials/discussions/week8-discussion.html#background",
@@ -382,7 +382,7 @@
     "href": "course-materials/discussions/week1-discussion.html",
     "title": "Week 1: Discussion Section",
     "section": "",
-    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from the tmap book."
+    "text": "In this section, we’ll kick-off our mapmaking skills using the tmap package. Your task will be to make a map of Rapa Nui (Easter Island or Isla de Pascua). Rapa Nui is a volcanic island in Polynesia and territory of Chile. It is widely known for monumental statues called moai, but it is also a place of geoscientific inquiry. Several research programs about the island’s volcanic history, petrology, and human-environment interactions exist."
   },
   {
     "objectID": "course-materials/discussions/week1-discussion.html#learning-objectives",
@@ -395,8 +395,8 @@
     "objectID": "course-materials/discussions/week1-discussion.html#get-started",
     "href": "course-materials/discussions/week1-discussion.html#get-started",
     "title": "Week 1: Discussion Section",
-    "section": "2. Get Started",
-    "text": "2. Get Started\n\nOpen your forked version of this repository and navigate to your version controlled project for Week 1\nCreate a Quarto document\nLoad all necessary packages\nRead in the spatial objects for Easter Island (Rapa Nui/Isla de Pascua):\n\nei_points: file contains several points on the island\nei_elev: raster with elevation data\nei_borders: polygon with the island outline\nei_roads: lines contains a road network for the island\n\n\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(stars)\nlibrary(sf)\nlibrary(tmap)\n\n\nei_points &lt;- read_sf(here::here(\"data\", \"easter_island\", \"ei_points.gpkg\"))\nvolcanoes &lt;- subset(ei_points, type == \"volcano\")\nei_elev &lt;- read_stars(here::here(\"data\", \"easter_island\", \"ei_elev.tif\"))\nei_borders &lt;- read_sf(here::here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\nei_roads &lt;- read_sf(here::here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))"
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(stars)\nlibrary(tmap)\n\nNext, let’s download some data from Rapa Nui. Unzip and move this to your version-controlled R Project’s data folder.\n\nRead in the spatial objects for Rapa Nui:\n\nei_points: file contains several points on the island\n\nUse the pipe operator to filter() output for points representing volcanoes\n\nei_elev: raster with elevation data\nei_borders: polygon with the island outline\nei_roads: lines contains a road network for the island\n\n\n\nei_points &lt;- st_read(here(\"data\", \"easter_island\", \"ei_points.gpkg\")) |&gt; \n  filter(type == \"volcano\")\nei_elev &lt;- read_stars(here(\"data\", \"easter_island\", \"ei_elev.tif\"))\nei_borders &lt;- st_read(here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\nei_roads &lt;- st_read(here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))"
   },
   {
     "objectID": "course-materials/discussions/week1-discussion.html#your-task",
@@ -410,7 +410,7 @@
     "href": "course-materials/discussions/week4-discussion.html",
     "title": "Week 4: Discussion Section",
     "section": "",
-    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
+    "text": "Source Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
   },
   {
     "objectID": "course-materials/discussions/week4-discussion.html#get-started",
@@ -1327,7 +1327,7 @@
     "href": "course-materials/discussions/week2-discussion.html",
     "title": "Week 2: Discussion Section",
     "section": "",
-    "text": "Use sf::st_read() to read multiple vector data types\nRetreive the CRS of a vector object with sf::st_crs()\nTransform CRS and match across all vector data types with sf::st_transform()\nPerform dplyr attribute manipulations (e.g. filter(), mutate(), select())\n\n\n\n\n\n\n\nTipMore map making in R\n\n\n\nThere are MANY different ways to make maps in R, all with different pros/cons. Check out this resource for examples of what map making looks like in ggplot2, leaflet, and more!"
+    "text": "In this section, we’ll explore key functions inside the sf package using data from Colombia. Colombia is considered one of the world’s most “megadiverse” countries, hosting close to 10% of the planet’s biodiversity. Per square kilometer, there are more bird, amphibian, butterfly, and frog species in Colombia than anywhere else on Earth. Here, ill-planned road development poses a significant threat to habitat fragmentation, wildlife movement, and water flows. The Colombian government has developed a broad set of guidelines for sustainable road development, called the Lineamientos de Infraestructura Verde Vial (LIVV) or Green Road Infrastructure Guidelines (GRI). The GRI is mandatory for all national roads across Colombia."
   },
   {
     "objectID": "course-materials/discussions/week2-discussion.html#learning-objectives",
@@ -1340,8 +1340,8 @@
     "objectID": "course-materials/discussions/week2-discussion.html#get-started",
     "href": "course-materials/discussions/week2-discussion.html#get-started",
     "title": "Week 2: Discussion Section",
-    "section": "2. Get Started",
-    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 2\nCreate a Quarto document inside your .Rproj\nDownload this folder from Google Drive and move it inside your .Rproj\nLoad all necessary packages\n\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(tmap)"
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(tmap)\n\nYou will be working with the following datasets:\n\nColombia’s Terrestrial Ecosystems (The Nature Conservancy/NatureServe)\nColombia’s Roads (Esri)\nBird Observations (DATAVES)\n\nNext, let’s download our data. Unzip and move this to your version-controlled R Project’s data folder.\n\nRead in the data for Colombia’s ecoregions, roads, and bird observations\n\n\nUse rename() to rename the columns decimal_longitude and decimal_latitude to long and lat in the bird observation dataset\nUse st_as_sf() to convert the bird observation dataset into an sf object\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\n\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\n\naves &lt;- read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) |&gt; \n  as_tibble() |&gt; \n  rename(long = decimal_longitude,\n         lat = decimal_latitude) |&gt; \n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)"
   },
   {
     "objectID": "course-materials/discussions/week2-discussion.html#your-task",
@@ -1355,7 +1355,7 @@
     "href": "course-materials/discussions/week5-discussion.html",
     "title": "Week 5: Discussion Section",
     "section": "",
-    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
+    "text": "Source Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#learning-objectives",
@@ -1411,14 +1411,14 @@
     "href": "course-materials/discussions/week6-discussion.html",
     "title": "Week 6: Discussion Section",
     "section": "",
-    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from curriculum developed by Earth Lab and the Raster Analysis with terra book."
+    "text": "Source Materials\n\n\n\nThe following materials are modified from curriculum developed by Earth Lab and the Raster Analysis with terra book."
   },
   {
     "objectID": "course-materials/discussions/week6-discussion.html#background",
     "href": "course-materials/discussions/week6-discussion.html#background",
     "title": "Week 6: Discussion Section",
     "section": "1. Background",
-    "text": "1. Background\nIn Lab #6, you explored various band combinations and plotted false color images with tm_rgb() from {tmap}. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with plotRGB() from {terra}.\n\n\n\n\n\n\nTipMany Ways To Plot a False Color Image\n\n\n\n\n\nYou can plot false color composites with ggplot2 too! Check out this tutorial.\n\n\n\nThe plotRGB() function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.\nBut why would you want to normalize the colors in an image?\n\n\n\n\n\n\n\n\n\n\n\n“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”\n\nYou are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The fire occurred from July 10-14, 2016 and the Landsat images are from June 5, 2016 (pre-fire) and August 8, 2016 (post-fire). The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.\n\n\n\n\n\n\n\n\n\nBand\nWavelength range (nanometers)\nSpatial Resolution (m)\nSpectral Width (nm)\n\n\n\n\nBand 1 - Coastal aerosol\n430 - 450\n30\n2.0\n\n\nBand 2 - Blue\n450 - 510\n30\n6.0\n\n\nBand 3 - Green\n530 - 590\n30\n6.0\n\n\nBand 4 - Red\n640 - 670\n30\n0.03\n\n\nBand 5 - Near Infrared (NIR)\n850 - 880\n30\n3.0\n\n\nBand 6 - Short-Wave Infrared 1 (SWIR1)\n1570 - 1650\n30\n8.0\n\n\nBand 7 - Short-Wave Infrared 2 (SWIR2)\n2110 - 2290\n30\n18"
+    "text": "1. Background\nIn Lab #6, you explored various band combinations and plotted false color images with tm_rgb() from {tmap}. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with plotRGB() from {terra}.\n\n\n\n\n\n\nMany Ways To Plot a False Color Image\n\n\n\n\n\nYou can plot false color composites with ggplot2 too! Check out this tutorial.\n\n\n\nThe plotRGB() function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.\nBut why would you want to normalize the colors in an image?\n\n\n\n\n\n\n\n\n\n\n\n“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”\n\nYou are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The fire occurred from July 10-14, 2016 and the Landsat images are from June 5, 2016 (pre-fire) and August 8, 2016 (post-fire). The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.\n\n\n\n\n\n\n\n\n\nBand\nWavelength range (nanometers)\nSpatial Resolution (m)\nSpectral Width (nm)\n\n\n\n\nBand 1 - Coastal aerosol\n430 - 450\n30\n2.0\n\n\nBand 2 - Blue\n450 - 510\n30\n6.0\n\n\nBand 3 - Green\n530 - 590\n30\n6.0\n\n\nBand 4 - Red\n640 - 670\n30\n0.03\n\n\nBand 5 - Near Infrared (NIR)\n850 - 880\n30\n3.0\n\n\nBand 6 - Short-Wave Infrared 1 (SWIR1)\n1570 - 1650\n30\n8.0\n\n\nBand 7 - Short-Wave Infrared 2 (SWIR2)\n2110 - 2290\n30\n18"
   },
   {
     "objectID": "course-materials/discussions/week6-discussion.html#get-started",
@@ -1432,7 +1432,7 @@
     "href": "course-materials/discussions/week6-discussion.html#your-task",
     "title": "Week 6: Discussion Section",
     "section": "3. Your Task",
-    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nRename the bands of the pre_fire and post_fire rasters using names()\n\nNext, for each of the pre_fire and post_fire rasters…\n\nMask out clouds and shadows with the pre_mask and post_mask rasters\n\n\nHint: Set mask &gt; 0 to NA\n\n\n\n\n\n\n\nTipDealing with Clouds and Shadows\n\n\n\n\n\n“Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)” (Earth Lab)\n\n\n\n\nPlot a true color composite using plotRGB()\n\n\nMap the red band to the red channel, green to green, and blue to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nTipHow To Decide How To “Stretch” Raster Imagery?\n\n\n\n\n\nTo make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:\n\n# View histogram for each band\nhist(pre_fire_rast,\n     maxpixels = ncell(pre_fire_rast),\n     col = \"orange\")\n\n\n\n\n\nPlot two false color composite using plotRGB()\n\n\nMap the SWIR2 band to the red channel, NIR to green, and green to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nTipWhat is the SWIR, NIR, Red false color scheme?\n\n\n\n“Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image” (EOS Data Analytics)\n\n\n\nCalculate the normalized burn ratio (NBR)\n\n\nHint: Use lapp() like you previously did for NDVI and NDWI in Week 4\n\nLet’s bring it home!\n\nFind the difference NBR, where \\(dNBR = prefireNBR - postfireNBR\\)\nPlot the dnBR raster\n\n\nBonus Challenge: Use classify() to assign the severity levels below:\n\n\n\n\nSeverity Level\ndNBR Range\n\n\n\n\nEnhanced Regrowth\n&lt; -.1\n\n\nUnburned\n-.1 to +.1\n\n\nLow Severity\n+.1 to +.27\n\n\nModerate Severity\n+.27 to +.66\n\n\nHigh Severity\n&gt; .66"
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nRename the bands of the pre_fire and post_fire rasters using names()\n\nNext, for each of the pre_fire and post_fire rasters…\n\nMask out clouds and shadows with the pre_mask and post_mask rasters\n\n\nHint: Set mask &gt; 0 to NA\n\n\n\n\n\n\n\nDealing with Clouds and Shadows\n\n\n\n\n\n“Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)” (Earth Lab)\n\n\n\n\nPlot a true color composite using plotRGB()\n\n\nMap the red band to the red channel, green to green, and blue to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nHow To Decide How To “Stretch” Raster Imagery?\n\n\n\n\n\nTo make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:\n\n# View histogram for each band\nhist(pre_fire_rast,\n     maxpixels = ncell(pre_fire_rast),\n     col = \"orange\")\n\n\n\n\n\nPlot two false color composite using plotRGB()\n\n\nMap the SWIR2 band to the red channel, NIR to green, and green to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nWhat is the SWIR, NIR, Red false color scheme?\n\n\n\n“Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image” (EOS Data Analytics)\n\n\n\nCalculate the normalized burn ratio (NBR)\n\n\nHint: Use lapp() like you previously did for NDVI and NDWI in Week 4\n\nLet’s bring it home!\n\nFind the difference NBR, where \\(dNBR = prefireNBR - postfireNBR\\)\nPlot the dnBR raster\n\n\nBonus Challenge: Use classify() to assign the severity levels below:\n\n\n\n\nSeverity Level\ndNBR Range\n\n\n\n\nEnhanced Regrowth\n&lt; -.1\n\n\nUnburned\n-.1 to +.1\n\n\nLow Severity\n+.1 to +.27\n\n\nModerate Severity\n+.27 to +.66\n\n\nHigh Severity\n&gt; .66"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html",
@@ -1446,35 +1446,35 @@
     "href": "course-materials/discussions/week0-discussion.html#get-started",
     "title": "Week 0: Discussion Section",
     "section": "1. Get Started",
-    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) two subfolders to your R project: data and figs\n\nLet’s install and load all necessary packages:\n\npackages &lt;- c(\"here\", \"janitor\", \"tidyverse\", \"sf\", \"terra\", \"tmap\", \"spData\", \"spDataLarge\", \"geodata\", \"kableExtra\", \"viridisLite\")\ninstalled_packages &lt;- packages %in% rownames(installed.packages())\n\nif (any(installed_packages == FALSE)) {\n  install.packages(packages[!installed_packages])\n}\n\n\nlibrary(here)\nlibrary(janitor)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(kableExtra)\n\nNext, let’s download our GDW data subset to practice our data wrangling skills from EDS 221. Unzip and move this to your version-controlled R Project’s data folder."
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\n\nLet’s install and load all necessary packages:\n\npackages &lt;- c(\"here\", \"janitor\", \"tidyverse\", \"sf\", \"terra\", \"tmap\", \"spData\", \"spDataLarge\", \"geodata\", \"kableExtra\", \"viridisLite\")\ninstalled_packages &lt;- packages %in% rownames(installed.packages())\n\nif (any(installed_packages == FALSE)) {\n  install.packages(packages[!installed_packages])\n}\n\n\nlibrary(here)\nlibrary(janitor)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(kableExtra)\n\nNext, let’s download our GDW data subset to practice our data wrangling skills from EDS 221. Unzip and move this to your version-controlled R Project’s data folder."
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html#load-data",
     "href": "course-materials/discussions/week0-discussion.html#load-data",
     "title": "Week 0: Discussion Section",
     "section": "2. Load Data",
-    "text": "2. Load Data\n\nRead in the gdw.csv file as gdw_df (and point to the filepath with help of here())\nUse the |&gt; or %&gt;% operator to pipe your read_csv() output to clean_names()\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ngdw_df &lt;- read_csv(here(\"data\", \"gdw.csv\")) |&gt;\n  clean_names() # Convert variable names to lower snake case"
+    "text": "2. Load Data\n\nRead in the gdw.csv file as gdw_df (and point to the filepath with help of here())\nUse the |&gt; or %&gt;% operator to pipe your read_csv() output to clean_names()\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\ngdw_df &lt;- read_csv(here(\"data\", \"gdw.csv\")) |&gt;\n  clean_names() # Convert variable names to lower snake case"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html#data-exploration",
     "href": "course-materials/discussions/week0-discussion.html#data-exploration",
     "title": "Week 0: Discussion Section",
     "section": "3. Data Exploration",
-    "text": "3. Data Exploration\n\nShow the first and last 10 rows of gdw_df and use kable() to make nice HTML tables\nPrint the number of rows and number of columns in gdw_df\nPrint the column names in gdw_df\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nhead(gdw_df, n = 10) |&gt; \n  kable()\n\ntail(gdw_df, n = 10) |&gt; \n  kable()\n\n\ndim(gdw_df)\nnrow(gdw_df)\nncol(gdw_df)\n\n\nnames(gdw_df)"
+    "text": "3. Data Exploration\n\nShow the first and last 10 rows of gdw_df and use kable() to make nice HTML tables\nPrint the number of rows and number of columns in gdw_df\nPrint the column names in gdw_df\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nhead(gdw_df, n = 10) |&gt; \n  kable()\n\ntail(gdw_df, n = 10) |&gt; \n  kable()\n\n\ndim(gdw_df)\nnrow(gdw_df)\nncol(gdw_df)\n\n\nnames(gdw_df)"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html#index-summarize-subset-data",
     "href": "course-materials/discussions/week0-discussion.html#index-summarize-subset-data",
     "title": "Week 0: Discussion Section",
     "section": "4. Index, Summarize, Subset Data",
-    "text": "4. Index, Summarize, Subset Data\n\nUse indexing brackets to extract the gdw_df column containing country names as a vector and data frame\nUse group_by() and summarise() to find the number of dams by dam type in gdw_df\nMake a subset called sub_dam that only contains entries for dam_type == \"Dam\"\nRe-order gdw_df by ascending order of installation year\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ncountry_df &lt;- gdw_df[, \"country\"]\ncountry_vec &lt;- gdw_df[[\"country\"]]\n\n\ngdw_df |&gt; \n  group_by(dam_type) |&gt;\n  summarise(count = n()) |&gt;\n  ungroup()\n\n\nsub_dam &lt;- gdw_df |&gt;\n  filter(dam_type == \"Dam\")\n\n\ngdw_df &lt;- gdw_df |&gt;\n  arrange(year_dam)"
+    "text": "4. Index, Summarize, Subset Data\n\nUse indexing brackets to extract the gdw_df column containing country names as a vector and data frame\nUse group_by() and summarise() to find the number of dams by dam type in gdw_df\nMake a subset called sub_dam that only contains entries for dam_type == \"Dam\"\nRe-order gdw_df by ascending order of installation year\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\ncountry_df &lt;- gdw_df[, \"country\"]\ncountry_vec &lt;- gdw_df[[\"country\"]]\n\n\ngdw_df |&gt; \n  group_by(dam_type) |&gt;\n  summarise(count = n()) |&gt;\n  ungroup()\n\n\nsub_dam &lt;- gdw_df |&gt;\n  filter(dam_type == \"Dam\")\n\n\ngdw_df &lt;- gdw_df |&gt;\n  arrange(year_dam)"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html#data-visualization",
     "href": "course-materials/discussions/week0-discussion.html#data-visualization",
     "title": "Week 0: Discussion Section",
     "section": "5. Data Visualization",
-    "text": "5. Data Visualization\n\nMake a bar graph of average height of dam/barrier in meters (dam_hgt_m) by country\nMake a scatterplot of height of dam/barrier versus representative maximum storage capacity of reservoir in million cubic meters (cap_mcm)\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ngdw_df |&gt;\n  group_by(country) |&gt;\n  summarize(mean_dam_hgt_m = mean(dam_hgt_m, na.rm = TRUE)) |&gt;\n  ungroup() |&gt; \n  ggplot(aes(x = country, y = mean_dam_hgt_m)) +\n    geom_bar(stat = \"identity\") +\n    labs(x = \"Country\",\n         y = \"Average height of dam/barrier in meters\") +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))\n\n\n\n\n\n\n\n\n\nggplot(data = gdw_df,\n      aes(x = cap_mcm, y = dam_hgt_m)) +\n  geom_point() +\n  labs(x = \"Storage capacity of reservoir in million cubic meters\",\n       y = \"Height of dam/barrier in meters\") +\n  theme_minimal()"
+    "text": "5. Data Visualization\n\nMake a bar graph of average height of dam/barrier in meters (dam_hgt_m) by country\nMake a scatterplot of height of dam/barrier versus representative maximum storage capacity of reservoir in million cubic meters (cap_mcm)\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\ngdw_df |&gt;\n  group_by(country) |&gt;\n  summarize(mean_dam_hgt_m = mean(dam_hgt_m, na.rm = TRUE)) |&gt;\n  ungroup() |&gt; \n  ggplot(aes(x = country, y = mean_dam_hgt_m)) +\n    geom_bar(stat = \"identity\") +\n    labs(x = \"Country\",\n         y = \"Average height of dam/barrier in meters\") +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1))\n\n\n\n\n\n\n\n\n\nggplot(data = gdw_df,\n      aes(x = cap_mcm, y = dam_hgt_m)) +\n  geom_point() +\n  labs(x = \"Storage capacity of reservoir in million cubic meters\",\n       y = \"Height of dam/barrier in meters\") +\n  theme_minimal()"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html#looking-ahead",
@@ -1537,7 +1537,7 @@
     "href": "course-materials/discussions/answer-keys/week8-discussion-answerKey.html#create-generalizable-workflow",
     "title": "Week 8: Discussion Section - Answer Key",
     "section": "Create Generalizable Workflow",
-    "text": "Create Generalizable Workflow\n\nclimate_envelope &lt;- function(clim_rast, clim_var1, clim_var2, occurences, species_name){\n  \n  species_name &lt;- species_name %&gt;%\n    str_to_lower() %&gt;%\n    str_replace_all(\" \", \"_\")\n  \n  occurences_sf &lt;- occurences %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n  \n  occurences_bbox &lt;- st_bbox(occurences_sf)\n  \n  clim_crop &lt;- crop(clim_rast, occurences_bbox)\n  \n  clim_pts &lt;- as_tibble(extract(clim_crop, occurences_sf))\n  \n  random_pts &lt;- randomPoints(mask = raster(clim_rast[[clim_var1]]),\n                             n = nrow(occurences) * 2,\n                             ext = occurences_bbox)\n\n  clim_random_pts &lt;- as_tibble(extract(clim_crop, random_pts))\n  \n  map_1 &lt;- tm_shape(raster(clim_crop[[clim_var1]])) +\n    tm_raster(palette = \"Blues\") +\n    tm_shape(occurences_sf) +\n    tm_dots(col = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = c(\"left\", \"bottom\"),\n              legend.bg.color = \"white\")\n  \n  map_2 &lt;- tm_shape(raster(clim_crop[[clim_var2]])) +\n    tm_raster(palette = \"-RdYlBu\") +\n    tm_shape(occurences_sf) +\n    tm_dots(col = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = c(\"left\", \"bottom\"),\n              legend.bg.color = \"white\")\n  \n  plot_1 &lt;- ggplot(data = clim_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16, color = \"#3a5a40\") +\n    labs(title = \"Species Climate Niche\") +\n    theme_bw()\n  \n  plot_2 &lt;- ggplot(data = clim_random_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16) +\n    labs(y = element_blank(), \n         title = \"Background Climate\") +\n    theme_bw()\n  \n  assign(paste0(species_name, \"_map_1\"), map_1, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_map_2\"), map_2, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_plot_1\"), plot_1, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_plot_2\"), plot_2, envir = .GlobalEnv)\n  \n}\n\n\nclimate_envelope(clim_rast = bioclim_rast, clim_var1 = \"annualPrecip\", clim_var2 = \"annualMeanTemp\", occurences = tule_elk, species_name = \"Tule Elk\")\n\ntule_elk_map_1\n\n\n\n\n\n\n\ntule_elk_map_2\n\n\n\n\n\n\n\ntule_elk_plot_1\n\n\n\n\n\n\n\ntule_elk_plot_2"
+    "text": "Create Generalizable Workflow\n\nclimate_envelope &lt;- function(clim_rast, clim_var1, clim_var2, occurences, species_name){\n  \n  species_name &lt;- species_name %&gt;%\n    str_to_lower() %&gt;%\n    str_replace_all(\" \", \"_\")\n  \n  occurences_sf &lt;- occurences %&gt;%\n  rename(long = longitude,\n         lat = latitude) %&gt;%\n  drop_na(long) %&gt;%\n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n  \n  occurences_bbox &lt;- st_bbox(occurences_sf)\n  \n  clim_crop &lt;- crop(clim_rast, occurences_bbox)\n  \n  clim_pts &lt;- as_tibble(extract(clim_crop, occurences_sf))\n  \n  random_pts &lt;- randomPoints(mask = raster(clim_rast[[clim_var1]]),\n                             n = nrow(occurences) * 2,\n                             ext = occurences_bbox)\n\n  clim_random_pts &lt;- as_tibble(extract(clim_crop, random_pts))\n  \n  map_1 &lt;- tm_shape(raster(clim_crop[[clim_var1]])) +\n    tm_raster(palette = \"Blues\") +\n    tm_shape(occurences_sf) +\n    tm_dots(col = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = c(\"left\", \"bottom\"),\n              legend.bg.color = \"white\")\n  \n  map_2 &lt;- tm_shape(raster(clim_crop[[clim_var2]])) +\n    tm_raster(palette = \"-RdYlBu\") +\n    tm_shape(occurences_sf) +\n    tm_dots(col = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = c(\"left\", \"bottom\"),\n              legend.bg.color = \"white\")\n  \n  plot_1 &lt;- ggplot(data = clim_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16, color = \"#3a5a40\") +\n    labs(title = \"Species Climate Niche\") +\n    theme_bw()\n  \n  plot_2 &lt;- ggplot(data = clim_random_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16) +\n    labs(y = element_blank(), \n         title = \"Background Climate\") +\n    theme_bw()\n  \n  assign(paste0(species_name, \"_map_1\"), map_1, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_map_2\"), map_2, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_plot_1\"), plot_1, envir = .GlobalEnv)\n  assign(paste0(species_name, \"_plot_2\"), plot_2, envir = .GlobalEnv)\n  \n}\n\n\nclimate_envelope(clim_rast = bioclim_rast, clim_var1 = \"annualPrecip\", clim_var2 = \"annualMeanTemp\", occurences = tule_elk, species_name = \"Tule Elk\")\n\ntule_elk_map_1\ntule_elk_map_2\ntule_elk_plot_1\ntule_elk_plot_2"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html",
@@ -1572,14 +1572,14 @@
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#aggregate-and-resample-raster",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "Aggregate and Resample Raster",
-    "text": "Aggregate and Resample Raster\n\n# Reduce the resolution by combining 2 cells in each direction into larger cells\n# Sum the values of all cells for the resulting elevation value\nnz_raster_low &lt;- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\n# Convert the new raster's resolution back to the 3kmx3km resolution of original raster\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 6 x 6 km\", \"Resample 6 x 6 km\")\nplot(plots, main = labs)\n\n\n\n\n\n\n\nplot(nz_raster_low, main = \"Resample 3 x 3 km\")"
+    "text": "Aggregate and Resample Raster\n\n# Reduce the resolution by combining 2 cells in each direction into larger cells\n# Sum the values of all cells for the resulting elevation value\nnz_raster_low &lt;- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\n# Convert the new raster's resolution back to the 3kmx3km resolution of original raster\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 6 x 6 km\", \"Resample 6 x 6 km\")\nplot(plots, main = labs)\nplot(nz_raster_low, main = \"Resample 3 x 3 km\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#vectorize-raster",
     "href": "course-materials/discussions/answer-keys/week5-discussion-answerKey.html#vectorize-raster",
     "title": "Week 5: Discussion Section - Answer Key",
     "section": "Vectorize Raster",
-    "text": "Vectorize Raster\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
+    "text": "Vectorize Raster\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\nplot(grain_poly, main = \"Grain (Vector)\")\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week2-discussion-answerKey.html",
@@ -1726,7 +1726,7 @@
     "href": "course-materials/week2.html#assignment-reminders",
     "title": "Intro to spatial data models",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 2)\n10/09/2025\n10/09/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 2)\n10/09/2025\n10/09/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025"
   },
   {
     "objectID": "course-materials/week2.html#background-reading",
@@ -1811,5 +1811,61 @@
     "title": "Homework Assignment 2",
     "section": "Instructions",
     "text": "Instructions\n\nClone repository from GitHub Classrooms\nDownload data from here\nUnzip data and place in repository\nAdd the data to your gitignore!\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope\n\nMake sure code-fold is not set to True! Your pdf should contain all your code and outputs!\n\n\nYour repository should have the following structure:\n\nEDS223-HW2\n│   README.md\n│   HW2.qmd\n│   Rmd/Proj files    \n│\n└───.gitignore\n     └───data\n         └───ejscreen\n         └───gbif-birds-LA\n         └───mapping-inequality"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-a-single-object-map-with-tmap",
+    "href": "course-materials/discussions/week1-discussion.html#create-a-single-object-map-with-tmap",
+    "title": "Week 1: Discussion Section",
+    "section": "2. Create a single-object map with tmap",
+    "text": "2. Create a single-object map with tmap\n\nCreate a map of the outline Rapa Nui using tm_shape() + tm_borders()\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Add Easter Island vector in default gray\ntm_shape(ei_borders) +\n  tm_borders() +\n# Set general map layout options\n  tm_layout(main.title = \"Easter Island\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-tmap",
+    "href": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-tmap",
+    "title": "Week 1: Discussion Section",
+    "section": "3. Create a multiple-object map with tmap",
+    "text": "3. Create a multiple-object map with tmap\nExpand on your single-object map to create a map of Rapa Nui and…\n\n…denote the island’s borders and continuous elevation\n…denote the island’s volcanoes and roads\n…play with the color palette and essential map elements\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nei_map &lt;- tm_shape(ei_elev) +\n  tm_graticules() +\n  tm_raster(col.scale = tm_scale_continuous(values = \"-rd_yl_gn\"),\n            col.legend = tm_legend(\"Elevation (m asl)\")) +\n  tm_shape(ei_borders) + \n    tm_borders() +\n  tm_shape(ei_roads) +\n    tm_lines() +\n  tm_shape(ei_points) +\n    tm_symbols(shape = 24, \n               size = \"elevation\", \n               size.legend = tm_legend(\"Volcanoes (m asl)\")) +\n  tm_compass(position = c(\"right\", \"top\")) +\n  tm_scalebar() +\n  tm_title(\"Easter Island\")\n\nei_map"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-an-interactive-map-with-tmap",
+    "href": "course-materials/discussions/week1-discussion.html#create-an-interactive-map-with-tmap",
+    "title": "Week 1: Discussion Section",
+    "section": "4. Create an interactive map with tmap",
+    "text": "4. Create an interactive map with tmap\n\nSwitch from the default \"plot\" mode to \"view\"\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\ntmap_mode(\"view\") # Convert default static map to interactive map \n\nℹ tmap mode set to \"view\".\n\nei_map"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-ggplot2",
+    "href": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-ggplot2",
+    "title": "Week 1: Discussion Section",
+    "section": "5. Create a multiple-object map with ggplot2",
+    "text": "5. Create a multiple-object map with ggplot2\n\n\n\n\n\n\nMore map making in R\n\n\n\nThere are MANY different ways to make maps in R, all with different pros/cons. Check out this resource for examples of what map making looks like in ggplot2, leaflet, and more!\n\n\nAs a bonus challenge, reproduce your multiple-object map from earlier using ggplot2!\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# extract lat & long from geom column \nvolcanoes_point &lt;- ei_points %&gt;%\n  mutate(lon = unlist(map(ei_points$geom,1)), # longitude = first component (x)\n         lat = unlist(map(ei_points$geom,2))) # latitude = second component (y)\n\n\nggplot() +\n  # first add Easter Isand borders\n  geom_sf(data = ei_borders, color = \"#212529\") +\n  # add elevation raster\n  geom_stars(data = ei_elev) +\n  scale_fill_distiller(name = \"Elevation (m asl)\", # legend title with units\n                       palette = \"RdYlGn\",         # red-yellow-green palette (no need to reverse)\n                       na.value = \"lightblue\") +  # set NA color (background ocean)\n  # add road vector\n  geom_sf(data = ei_roads, color = \"#343a40\") +\n  # add volcano vector\n  geom_point(data = volcanoes_point, \n             aes(x = lon, y = lat, \n                 size = elevation), # point size depends on attribute value\n             shape = 17,            # triangle\n             color = \"#22577a\") +\n  scale_size_continuous(name = \"Volcanoes (m asl)\") +       # legend title with units\n  ggspatial::annotation_north_arrow(location = \"br\",        # bottom right\n                                    which_north = \"true\") + # point to north pole\n  ggspatial::annotation_scale(location = \"bl\",              # bottom left\n                              width_hint = 0.5) +           # proportion of map area the scalebar should occupy\n  labs(title = \"Easter Island\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#view-class-and-geometry-type",
+    "href": "course-materials/discussions/week2-discussion.html#view-class-and-geometry-type",
+    "title": "Week 2: Discussion Section",
+    "section": "2. View class and geometry type",
+    "text": "2. View class and geometry type\n\nCheck the class() of all vector objects (including the spatially-enabled bird observation dataset)\nUse st_geometry_type() to peak at the geometry type\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# View class of each object\nclass(col)\nclass(roads)\nclass(aves)\n\n# View geometry type of each object\nunique(st_geometry_type(col))\nunique(st_geometry_type(roads))\nunique(st_geometry_type(aves))"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#select-a-macro-ecoregion-of-interest",
+    "href": "course-materials/discussions/week2-discussion.html#select-a-macro-ecoregion-of-interest",
+    "title": "Week 2: Discussion Section",
+    "section": "3. Select a macro ecoregion of interest",
+    "text": "3. Select a macro ecoregion of interest\n\nUse filter() to select a macro region of interest from N1_MacroBi in Colombia’s ecoregions dataset\nPlot the subset using tmap\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\ncol_andean &lt;- col |&gt;\n  # Set categorical \"levels\" in attribute N1_MacroBi (subregions of Colombia)\n  mutate(N1_MacroBi = as.factor(N1_MacroBi)) |&gt;\n  # Subset to Andean region of Colombia\n  filter(N1_MacroBi == \"Andean\")\n\n\ntm_shape(col_andean) +\n  tm_polygons() +\n  tm_title(\"Andean Region of Colombia\")\n\n[plot mode] fit legend/component: Some legend items or map compoments do not\nfit well, and are therefore rescaled.\nℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling."
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#play-with-coordinate-reference-system-crs",
+    "href": "course-materials/discussions/week2-discussion.html#play-with-coordinate-reference-system-crs",
+    "title": "Week 2: Discussion Section",
+    "section": "4. Play with coordinate reference system (CRS)",
+    "text": "4. Play with coordinate reference system (CRS)\nFirst, let’s use st_crs() to check the CRS and it’s units.\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# View CRS of each object\nst_crs(col)\nst_crs(roads)\nst_crs(aves)\n\n# View units of each object CRS \nst_crs(col)$units\nst_crs(roads)$units\nst_crs(aves)$units\n\n\n\n\nSay, you want to remove the CRS of an object, in order to “disable” its spatial features. Setting the CRS to NA with st_crs() &lt;- NA is a brute force way to remove a CRS and “corrupt” a spatial object. Let’s do it the right way!\n\nExtract the longitude and latitude from the geometry column and use st_drop_geometry()\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nThere are several ways to extract the longitude and latitude from the geometry column.\n\nUse map() to unlist/extract\n\naves_df_purrr &lt;- aves |&gt;\n  # Extract lat & long from geometry column\n  mutate(lon = unlist(purrr::map(aves$geometry, 1)), # longitude = first component (x)\n         lat = unlist(purrr::map(aves$geometry, 2))) |&gt; # latitude = second component (y)\n  st_drop_geometry() # Remove geometry column now that it's redundant\n\n\n\nUse st_coordinates() to extract/assign\n\naves_df_st_coords &lt;- aves %&gt;%\n  dplyr::mutate(lon = st_coordinates(.)[,1], # Assign first matrix item to \"lon\"\n                lat = st_coordinates(.)[,2])  %&gt;% # Assign second matrix item to \"lat\"\n  st_drop_geometry() # Remove geometry column now that it's redundant\n\n\n\n\n\n\nConvert long and lat into a geometry again with st_as_sf() to obtain a proper sf data frame\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\nConvert to an sf object with st_as_sf()\n\naves_df_purrr &lt;- aves |&gt;\n  st_as_sf(coords = c(\"lon\", \"lat\"), crs = 4326)"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#make-a-map",
+    "href": "course-materials/discussions/week2-discussion.html#make-a-map",
+    "title": "Week 2: Discussion Section",
+    "section": "5. Make a map",
+    "text": "5. Make a map\n\nCheck that the CRS of the ecoregions and roads datasets match\nTransform CRS of the bird observations dataset using st_transform() to match with the other datasets\nUse tmap to plot the ecoregions, roads, and bird observations together\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Boolen check if CRS match between 2 datasets\nst_crs(col) == st_crs(roads)\n\n\n# Transform bird observation dataset into same CRS as other Colombia dataset\naves &lt;- st_transform(aves, crs = st_crs(col))\n\n\ntm_shape(col) +\n  tm_polygons() +\n  tm_shape(roads) +\n  tm_lines() +\n  tm_shape(aves) +\n  tm_dots() +\n  tm_title(\"Colombia ecoregions, roads,\\nand bird observations\")"
   }
 ]
