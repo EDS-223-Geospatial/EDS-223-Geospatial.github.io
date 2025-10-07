@@ -42,7 +42,7 @@ Links to surveys will become available as they are assigned.
 | Weekly Check-Ins                    | Date Assigned  | Date Due                   |
 |------------------------------|----------------|----------------------------|
 | [Week 1 Check-In](https://docs.google.com/forms/d/e/1FAIpQLSfShAdrydydZaDV7jtDiYHaV5NOVKHMTcycfhWV0UUJYPhWWQ/viewform?usp=sharing&ouid=114976243173632226566){target="_blank"}  | Thurs 10/02/2025 |Thurs 10/02/2025|
-| [Week 2 Check-In](){target="_blank"}  |Thurs 10/09/2025 | Thurs 10/09/2025|
+| [Week 2 Check-In](https://docs.google.com/forms/d/e/1FAIpQLSdCu0OliV71bQMbLykyVhjXLol4aX7ZtILTsqzd2i3Zt2J8Vg/viewform?usp=header){target="_blank"}  |Thurs 10/09/2025 | Thurs 10/09/2025|
 | [Week 3 Check-In](){target="_blank"}  | Thurs 10/16/2025 | Thurs 10/64/2025|
 | [Week 4 Check-In](){target="_blank"}  | Thurs 10/23/2025 | Thurs 10/23/2025|
 | [Week 5 Check-In](){target="_blank"}  | Thurs 10/30/2025 | Thurs 10/30/2025|
