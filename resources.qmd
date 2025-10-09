@@ -30,8 +30,10 @@ Artwork by [Allison Horst](https://allisonhorst.com/){target="_blank"}
 - [Geographic vs projected coordinate systems](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/){target="_blank"} (Esri)
 - [Coordinate Reference System and Spatial Projection](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/intro-to-coordinate-reference-systems/){target="_blank"} (Earth Lab, CU Boulder)
 - [Guide to map projections](https://www.axismaps.com/guide/map-projections){target="_blank"} (Axis Maps)
-- [Choosing a projection](https://www.e-education.psu.edu/geog486/node/677){target="_blank"} (Penn State)
-- [Discover coordinate systems](https://epsg.io/){target="_blank"}
+- [Choosing a projection](https://www.e-education.psu.edu/geog486/node/857){target="_blank"} (Penn State)
+- [A list of Coordinate Reference Systems](https://spatialreference.org/){target="_blank"} (Spatial Reference)
+- [Coordinate Systems Worldwide](https://epsg.io/){target="_blank"} (MapTiler Team)
+- [Exploring Projection Distortions](https://www.leventhalmap.org/digital-exhibitions/bending-lines/how-to-bend/projections/){target="_blank"} (Leventhal Map and Education Center)
 
 ## Mapmaking
 - [Plotting Geospatial Data in R: comparing across packages](course-materials/resources/plotting.qmd){target="_blank"}
