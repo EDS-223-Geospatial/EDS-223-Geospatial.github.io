@@ -83,7 +83,7 @@ aves <- st_read(here("course-materials", "data", "week3-discussion", "aves_obser
   st_transform("ESRI:102009")
 ```
 
-## 2. Find Bird Observations within PAs in Santa Barbara
+## 2. Find bird observations within PAs in Santa Barbara County
 
 - Find how many bird observations are within protected areas in Santa Barbara County and show how your output differs with a spatial subset versus a spatial join
   
@@ -197,7 +197,7 @@ goleta_PAs_join <- st_join(sb_protected_areas, goleta, st_is_within_distance, di
 ```
 :::
 
-## 3. Find Distance between Goleta and Dangermond Preserve
+## 3. Find distance between Goleta and Dangermond Preserve
 
 - Find the distance between your city of choice and a protected area of your choice, using the geometries' edges and the centroid
 
