@@ -124,12 +124,16 @@ There are many ways to spatially subset in R, so we will explore a few.
 As an example we'll work with the following two datasets from the `spData` package:
 
 - `nz`: polygons representing the [16 regions of New Zealand](https://en.wikipedia.org/wiki/Regions_of_New_Zealand)
-- `nz_height`: top 101 heighest points in New Zealand
+- `nz_height`: top 101 highest points in New Zealand
 
 We'll explore by trying to find all the high points in the region of Canterbury (shown in dark grey). 
 ```{r}
 #| echo: false
 
+# load nz data
+nz <- spData::nz
+
+# filter to the region of Canterbury
 canterbury <- nz %>%
   filter(Name == "Canterbury")
 ```
@@ -149,9 +153,6 @@ Like attribute subsetting, the command `x[y, ]` (equivalent to `nz_height[canter
 Specifically, objects used for spatial subsetting in this way must have the class `sf` or `sfc`: both `nz` and `nz_height` are geographic vector data frames and have the class `s`f, and the result of the operation returns another `sf` object representing the features in the target `nz_height` object that intersect with (in this case high points that are located within) the Canterbury region.
 
 ```{r}
-# first filter to the region of Canterbury
-canterbury <- nz %>%
-  filter(Name == "Canterbury")
 
 # subset nz_heights to just the features that intersect Canterbury
 c_height1 <- nz_height[canterbury, ]
@@ -438,7 +439,7 @@ aggregating_zones <- spData::aggregating_zones
 
 tm_shape(incongruent) +
   tm_polygons(fill = "lightblue",
-              border.col = "blue") +
+              col = "blue") +
   tm_shape(aggregating_zones) +
   tm_borders(col = "red")
   
