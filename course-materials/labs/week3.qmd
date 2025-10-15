@@ -217,7 +217,7 @@ map2 <- tm_shape(nz) +
   tm_polygons() +
   tm_shape(canterbury) +
   tm_fill(fill = "darkgrey") +
-  tm_shape(c_height1) +
+  tm_shape(c_height2) +
   tm_dots(fill = "red") +
   tm_title(text = "st_filter()")+ 
   tm_layout(meta.margins = c(.2, 0, 0, 0))
@@ -714,6 +714,8 @@ p <- st_sample(x = box, size = 100) %>% # randomly sample the bounding box
 
 # find intersection of x and y
 x_and_y <- st_intersection(x, y)
+x_and_y <- st_make_valid(x_and_y)
+
 
 # filter points
 # first approach: bracket subsetting
