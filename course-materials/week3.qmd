@@ -33,7 +33,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| Check-In             | [Check-In (week 3)](https://forms.gle/sk7RrZeaCNjLVkru5){target="_blank"}              | 10/16/2025    | 10/16/2025 |
+| Check-In             | [Check-In (week 3)](https://docs.google.com/forms/d/e/1FAIpQLScJ_TcH0PqOcFUtUY9CGiznjW2CgZEximTKMOCrq7LDwTVblA/viewform?usp=header){target="_blank"}              | 10/16/2025    | 10/16/2025 |
 | HW              | [Homework Assignment #2](../assignments/HW2.qmd){target="_blank"} | 10/07/2025    | 10/18/2025 |
 
 
