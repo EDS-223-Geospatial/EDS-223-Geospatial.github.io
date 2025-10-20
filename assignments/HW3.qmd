@@ -28,7 +28,7 @@ knitr::include_graphics("images/texas.jpg")
 
 You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.
 
-The assignment **must be submitted through GitHub Classrooms**. Each student receives one "free pass" for not submitting assignments via specified channels, after which you will receive a "Not Yet" mark.
+The assignment **must be submitted through Gradescope**. 
 
 **Read each part of the assignment carefully**, and use the check boxes to ensure you've addressed all elements of the assignment!
 
@@ -45,28 +45,32 @@ This assignment will reinforce key concepts in geospatial analysis by practicing
 
 ## Instructions
 
-1. Clone repository from GitHub Classrooms
+
+1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
 2. Download data from [here](https://drive.google.com/file/d/1bTk62xwOzBqWmmT791SbYbHxnCdjmBtw/view?usp=drive_link)
 3. Unzip data and place in repository
-4. Edit Quarto document with responses
-5. Push final edits before deadline
+4. Add the data to your `gitignore`! Run `git add .gitignore` to avoid attempting to push any large data to your repo. 
+5. Create a Quarto document with responses
+6. Take a screenshot of your README and add it to the beginning of your qmd. 
+7. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+      - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
+8. Once you have fully completed this assignment(including revising and resubmitting), make sure to delete the image of the README from your .qmd file. The image of your README is solely being used for grading purposes. 
 
 Your repository should have the following structure:
 
 ```{md}
 EDS223-HW3
-│   README.md
-│   Rmd/Proj files    
-│
-└───data
-    │   gis_osm_buildings_a_free_1.gpkg
-    │   gis_osm_roads_free_1.gpkg
-    │
-    └───ACS_2019_5YR_TRACT_48_TEXAS.gdb
-    |   │   census tract gdb files
-    |
-    └───VNP46A1
-    |   │   VIIRS data files
+└───README.md
+└───Rmd/Proj files    
+└─── texas_blackout.qmd # Name your qmd file a title that is representative of your analysis!
+└───.gitignore
+    └───data
+        └───gis_osm_buildings_a_free_1.gpkg
+        └───gis_osm_roads_free_1.gpkg
+        └───ACS_2019_5YR_TRACT_48_TEXAS.gdb
+            └───census tract gdb files
+        └───VNP46A1
+            └───VIIRS data files
 ```
 
 ## Background
@@ -87,7 +91,7 @@ For this assignment, you must produce the following:
 
 - [ ] a set of maps comparing night light intensities before and after the first to storms
 - [ ] a map of the homes in in Houston that lost power
-- [ ]  an estimate of the number of homes in Houston that lost power 
+- [ ] an estimate of the number of homes in Houston that lost power 
 - [ ] a map of the census tracts in Houston that lost power
 - [ ] a plot comparing the distributions of median household income for census tracts that did and did not experience blackouts
 - [ ]  a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study
@@ -236,10 +240,10 @@ Assignments will be deemed "Satisfactory" based on the following criteria:
   - all packages are loaded together at the top of the document
   - all unnecessary/distracting [warnings and messages are suppressed](https://quarto.org/docs/computations/execution-options.html)
   - include informative code comments when appropriate ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
-  - [folding code](https://quarto.org/docs/output-formats/html-code.html#folding-code) or sourcing separate scripts when appropriate to direct reader's attention
   - succinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation
   - complete and detailed data citations
   - all defined variables are used in analysis (no variables are defined that are not used)
+- [ ] Your GitHub repository is clean and well organized. It should contain a README that follows the [MEDS README guidelines](https://ucsb-meds.github.io/README-guidelines/). 
 
 :::{.callout-tip icon=true}
 # Guide to professional output
