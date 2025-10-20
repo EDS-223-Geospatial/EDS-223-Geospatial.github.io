@@ -49,13 +49,14 @@ knitr::include_graphics("images/zion.jpg")
 First, let's install the `{geoData}` package which we'll use later in the lab to get access to example datasets.
 ```{r}
 #| eval: false
-install.packages("geoData")
+install.packages("geodata")
 ```
 
 Now let's load all the necessary packages. R has several packages for handling raster data. In this lab, we'll use the `{terra}` package. 
 
 ```{r}
 #| message: false
+#| warning: false
 library(terra) # raster handling
 library(tidyverse)
 library(tmap) # map making
@@ -128,6 +129,8 @@ tm_shape(landsat) +
 We can subset layers using either the layer number or name:
 
 ```{r}
+names(landsat)
+
 landsat3 <- subset(landsat, 3)
 landsat4 <- subset(landsat, "landsat_4")
 ```
@@ -425,7 +428,7 @@ tmap_arrange(map1, map2, nrow = 1)
 For more efficient processing, we can use a set of map algebra functions:
 
 - `app()` applies a function to each cell of a raster to summarize the values of multiple layers into one layer
-- `tapp()` is an extension of `app()` that allows us to apply on operation on a subset of layers
+- `tapp()` is an extension of `app()` that allows us to apply an operation on a subset of layers
 - `lapp()` allows us to apply a function to each cell using layers as arguments
 
 We can use the `lapp()`function to compute the Normalized Difference Vegetation Index (NDVI). (More on this later in the quarter!) Let's calculate NDVI for Zion National Park using multispectral satellite data.
@@ -516,7 +519,7 @@ What should we expect to observe in the output for this spatial filtering exampl
 ### Zonal Operations
 Similar to focal operations, zonal operations apply an aggregation function to multiple cells. However, instead of applying operations to neighbors, zonal operations aggregate based on "zones". Zones can are defined using a categorical raster and do not necessarily have to be neighbors
 
-For example, we could find the average elevation for within the elevations zones we created.
+For example, we could find the average elevation within the elevations zones we created.
 
 ```{r}
 
@@ -564,7 +567,7 @@ origin(zion_elevation)
 Raster datasets can also differ in their resolution. To match resolutions we can decrease (or coarsen) the resolution by aggregating or increase (or sharpen) the resolution by disaggregating.
 
 #### Aggregating
-When decreasing the resolution of rasters, we are effectively combining multiple celss into a single cell. Let's start by coarsening the resolution of the Zion elevation data by a factor of 5, by taking the mean value of cells.
+When decreasing the resolution of rasters, we are effectively combining multiple cells into a single cell. Let's start by coarsening the resolution of the Zion elevation data by a factor of 5, by taking the mean value of cells.
 
 ```{r}
 zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
@@ -672,7 +675,6 @@ knitr::include_graphics("images/raster-resampling.png")
 In most cases, the target raster would be an object you are already working with, but here we define a target raster.
 
 ```{r include=TRUE}
-# CODE NOT WORKING
 target_rast <- rast(xmin = -113.2, xmax = -112.9,
                    ymin = 37.14, ymax = 37.5,
                    nrow = 450, ncol = 460, 
