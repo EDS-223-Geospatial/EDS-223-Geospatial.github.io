@@ -89,8 +89,8 @@ To investigate potential socioeconomic factors that influenced recovery, you wil
 
 For this assignment, you must produce the following:
 
-- [ ] a set of maps comparing night light intensities before and after the first to storms
-- [ ] a map of the homes in in Houston that lost power
+- [ ] a set of maps comparing night light intensities before and after the first two storms
+- [ ] a map of the homes in Houston that lost power
 - [ ] an estimate of the number of homes in Houston that lost power 
 - [ ] a map of the census tracts in Houston that lost power
 - [ ] a plot comparing the distributions of median household income for census tracts that did and did not experience blackouts
