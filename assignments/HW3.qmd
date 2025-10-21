@@ -46,7 +46,7 @@ This assignment will reinforce key concepts in geospatial analysis by practicing
 ## Instructions
 
 
-1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
+1. Create a new GitHub repository. Give your repository a descriptive title that reflects your analysis (not "`EDS223-HW3`"). Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/). 
 2. Download data from [here](https://drive.google.com/file/d/1bTk62xwOzBqWmmT791SbYbHxnCdjmBtw/view?usp=drive_link)
 3. Unzip data and place in repository
 4. Add the data to your `gitignore`! Run `git add .gitignore` to avoid attempting to push any large data to your repo. 
