@@ -21,8 +21,8 @@ knitr::include_graphics("images/week4-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to raster data](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present){target="_blank"}                  |
 | {{< fa download title="download" >}} Lab materials to download                  | [Basics of raster operations with `terra`](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week4){target="_blank"} |
-| {{< fa key title="key" >}} Lab Solution                 | [Basics of raster operations with `terra`](labs/week4.qmd)        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster manipulations](discussions/week4-discussion.qmd) ([Answer Key](discussions/answer-keys/week4-discussion-answerKey.qmd)) |
+| {{< fa key title="key" >}} Lab solution                 | [Basics of raster operations with `terra`](labs/week4.qmd)        |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster manipulations](discussions/week4-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
