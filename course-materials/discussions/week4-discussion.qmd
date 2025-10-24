@@ -1,10 +1,11 @@
 ---
 title: "Week 4: Discussion Section"
 subtitle: "Practice raster manipulations"
-author: "Allie Caughmam"
+author: "Allie Caughmam & Alessandra Vidal Meza"
 date: last-modified
 execute: 
-  eval: false
+  message: false
+  warning: false
 format:
   html:
     toc: true
@@ -17,16 +18,17 @@ The following materials are modified from *Geocomputation with R* by Robin Lovel
 
 ## 1. Get Started
 
+- Create a version-controlled R Project
+- Add (at least) a subfolder to your R project: `data`
+- Create a Quarto document
+
 ::: {.callout-warning}
 If you don't have `spDataLarge` installed, make sure to run:
 <br>
 `install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')`
 :::
 
-- Create an `.Rproj` as your version controlled project for Week 4
-- Create a Quarto document inside your `.Rproj`
-- Download [this data folder from Google Drive](https://drive.google.com/file/d/1TXCgDbeZqTfxMCKP8vK2fyNT3stGrJaf/view) and move it inside your `.Rproj`
-- Load all necessary packages and read spatial objects
+Let's load all necessary packages:
 
 ```{r}
 library(tidyverse)
@@ -37,28 +39,67 @@ library(stars)
 library(terra)
 ```
 
+You will be working with the following datasets:
+
+- Digital elevation model (DEM) of Mt. Mongón, Perú, obtained from `spDataLarge` 
+- Landsat image of Zion National Park, obtained from `spDataLarge` 
+- SRTM elevation of Zion National Park, obtained from `spDataLarge`
+
+<!--Next, let's [download our data](https://drive.google.com/file/d/1TXCgDbeZqTfxMCKP8vK2fyNT3stGrJaf/view). Unzip and move this to your version-controlled R Project's `data` folder.--->
+
 ```{r}
 dem <- terra::rast(system.file("raster/dem.tif", package = "spDataLarge"))
 landsat <- terra::rast(system.file("raster/landsat.tif", package = "spDataLarge"))
 srtm <- terra::rast(system.file("raster/srtm.tif", package = "spDataLarge"))
-peru <- stars::read_stars(here::here("week4-discussion", "PER_elv.tif"))
-peru <- rast(peru)
 ```
 
-## 2. Your Task
+## 2. Explore elevation at Mt. Mongón, Perú
 
-Now, to meet this week's learning objectives, your task:
+- Make a boxplot and histogram of elevation at Mt. Mongón, Perú
 
-1. Plot a histogram and boxplot of `dem`
-2. Reclassify `dem` and compute the mean for the three classes:
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+hist(dem,
+     main = "Digital Elevation Model Distribution",
+     xlab = "Value")
+
+boxplot(dem,
+        main = "Digital Elevation Model Distribution",
+        ylab = "Value")
+```
+:::
+
+- Reclassify `dem` and compute the mean for the three classes:
   - Low, where elevation is less than 300
   - Medium
   - High, where elevation is greater than 500
-3. Calculate the Normalized Difference Vegetation Index (NDVI) and Normalized Difference Water Index (NDWI) of `landsat` and find a correlation between NDVI and NDWI
-  - **Note**: $NDVI = (NIR - red)/(NIR + red)$
-  - **Note**: $NDWI = (green - NIR)/(green + NIR)$
-  
-Apply the functions to the appropriate [Landsat 8 bands](https://www.usgs.gov/landsat-missions/landsat-8). Landsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+# Define a reclassification matrix
+rcl <- matrix(c(-Inf, 300, 0, # values -Inf to 300 = 0
+                300, 500, 1,  # values 300 to 500 = 1
+                500, Inf, 2), # values 500 to Inf = 2
+              ncol = 3, byrow = TRUE)
+
+# Apply the matrix to reclassify the raster, making all cells 0 or 1 or 2
+dem_rcl <- terra::classify(dem, rcl = rcl)
+
+# Assign labels to the numerical categories
+levels(dem_rcl) <- tibble::tibble(id = 0:2, 
+                                  cats = c("low", "medium", "high"))
+
+# Calculate mean elevation for each category using original DEM values
+elevation_mean <- terra::zonal(dem, dem_rcl, fun = "mean")
+elevation_mean
+```
+:::
+
+## 3. Explore NDVI and NDWI at Zion National Park
+
+[Landsat 8 bands](https://www.usgs.gov/landsat-missions/landsat-8) 2-5 correspond to bands 1-4 for this raster. Bands are as follows:
 
 | Band | | Color | Resolution |
 | ---- | ----- | ---------- |
@@ -67,12 +108,139 @@ Apply the functions to the appropriate [Landsat 8 bands](https://www.usgs.gov/la
 | 3 | red | 30 meter |
 | 4 | near-infrared | 30 meter |
 
+::: {.callout-note icon=true}
+# Apply a scale factor and offset for all grid cells 
 
-4. Find the distance across all cells in `peru` to its nearest coastline
+> Landsat Level-2 products are written as scaled integers to allow us to convert the data from floating point to integer for delivery.  In most cases these are written to a 16-bit integer, which saves disk space and provides faster download times. Each floating point pixel has an offset applied and then multiplied by a gain to bring the value into the 16-bit integer (or unsigned integer) range. These values are referred to as scaled integers. To allow the user to get the data back to its original floating point value, a scale factor and offset are provided for each band. 
+
+| Science product | Scale factor | Offset |
+| ---- | ----- | ---------- |
+| Surface reflectance | 0.0000275 | -0.2 |
+:::
+
+First, correct the scale across all grid cells and then apply the following functions at each grid cell, in the image: 
+
+<!--$$\text{Digital Number (DN)} * \text{scale_factor} + \text{offset}$$-->
+
+$$\text{NDWI} = \frac{\text{(green - NIR)}}{\text{(green + NIR)}}$$
+$$\text{NDVI} = \frac{\text{(NIR - red)}}{\text{(NIR + red)}}$$
+
+- Calculate the Normalized Difference Vegetation Index (NDVI) at Zion National Park
+- Calculate the Normalized Difference Water Index (NDWI) at Zion National Park
+- Find a correlation between NDVI and NDWI at Zion National Park
+  - **Hint**: Explore the `terra` package to find a function that can help achieve this!
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+scale_factor <- 0.0001
+offset <- 0
+
+scale_function <- function(x) {
+  x * scale_factor + offset
+}
+
+landsat_scaled <- terra::app(landsat, fun = scale_function)
+```
+:::
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+ndwi_fun <- function(green, nir){
+    (green - nir)/(green + nir)
+}
+
+ndvi_fun <- function(nir, red){
+  (nir - red)/(nir + red)
+}
+```
+:::
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+ndwi_rast <- terra::lapp(landsat_scaled[[c(2, 4)]],
+                         fun = ndwi_fun)
+
+ndvi_rast <- terra::lapp(landsat_scaled[[c(4, 3)]],
+                         fun = ndvi_fun)
+```
+
+```{r}
+plot(ndwi_rast,
+     main = "Zion National Park NDWI")
+
+plot(ndvi_rast,
+     main = "Zion National Park NDVI")
+```
+
+```{r}
+combine <- c(ndvi_rast, ndwi_rast) # Stack rasters
+
+plot(combine, main = c("NDVI", "NDWI")) # Plot
+```
+
+```{r}
+# Calculate correlation between raster layers 
+terra::layerCor(combine, fun = cor)
+```
+:::
+
+## 4. Change resolution of elevation at Zion National Park
+
+- Use all the methods available to change the resolution of elevation at Zion National Park to 0.01 by 0.01 degrees
+  - **Note**: The `srtm` raster has a resolution of 0.00083 by 0.00083 degrees
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+plot(srtm)
+```
+
+```{r}
+rast_template <- terra::rast(terra::ext(srtm), res = 0.01) # Create empty template
+```
+
+```{r}
+srtm_resampl1 <- terra::resample(srtm, y = rast_template, method = "bilinear")
+srtm_resampl2 <- terra::resample(srtm, y = rast_template, method = "near")
+srtm_resampl3 <- terra::resample(srtm, y = rast_template, method = "cubic")
+srtm_resampl4 <- terra::resample(srtm, y = rast_template, method = "cubicspline")
+srtm_resampl5 <- terra::resample(srtm, y = rast_template, method = "lanczos")
+```
+
+```{r}
+srtm_resampl_all <- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)
+labs <- c("Bilinear", "Near", "Cubic", "Cubic Spline", "Lanczos")
+
+plot(srtm_resampl_all, main = labs)
+```
+:::
+
+<!-- ## 4. Distance to coastline
+
+Find the distance across all cells in `peru` to its nearest coastline
   - **Hint**: Use `terra::distance()` to find geographic distance for all cells
   - **Note**: `terra::distance()` will calculate distance for all cells that are `NA` to the nearest cell that are not `NA`
-  - Weigh the distance raster with `peru` and visualize the difference between the raster created using the Euclidean distance (E7) and the raster weighted by elevation
-    - Every 100 altitudinal meters should increase the distance to the coast by 10 km
-5. Change the resolution of `srtm` to 0.01 by 0.01 degrees
-  - Use all of the method available in the `terra` package
-  - **Note**: The `srtm` raster has a resolution of 0.00083 x 0.00083 degrees
+
+```{r}
+#| eval: false
+# Aggregate by a factor of 20 to reduce resolution and create new raster
+peru_agg <- terra::aggregate(rast(peru), fact = 20)
+plot(peru_agg)
+
+# Create mask of ocean (NA values)
+water_mask <- is.na(peru_agg) # returns TRUE value for NA
+# Set all FALSE values to NA
+water_mask[water_mask == 0] <- NA
+plot(water_mask)
+
+# Find distance from each cell to ocean/coastline (default is unit = "m")
+distance_to_coast <- terra::distance(water_mask)
+# Convert from meters to kilometers 
+distance_to_coast_km <- distance_to_coast/1000
+
+plot(distance_to_coast_km, main = "Distance to the coast (km)")
+```
+-->
