@@ -24,7 +24,6 @@ In this assignment you'll reflect on your progress in the course so far. Reread 
 
 ### Learning plan
 - [ ] Looking back at your plan for achieving your learning goals, have your strategies been effective?
-- [ ] Have you discussed your plans with your classmates?
 - [ ] Looking forward, will you adopt new strategies? If so, what will they be?
 - [ ] If you've needed help, how have you sought it out? If you haven't sought out help, why not?
 
@@ -35,17 +34,11 @@ In this assignment you'll reflect on your progress in the course so far. Reread 
 
 
 ## Rubric (specifications)
-To receive a "Satisfactory" score, you must adhere to the following:
+To receive 2 tokens, you must adhere to the following:
 
-- [ ] Submit your response [here](https://forms.gle/covQ8bqAXtAMF7Mk9) by 11:59 PM on the due date. Extensions can be requested by [redeeming tokens](https://forms.gle/kSx5Fh9ve98U1tQA9).
+- [ ] Submit your response on Gradescope. 
 - [ ] Your response must include answers to each question listed in the Description section.
-- [ ] You should aim to answer each question in 2-4 sentences.
 - [ ] Your responses must demonstrate genuine reflection. Obviously low effort responses will receive a "Not Yet". 
 
-:::{.callout-tip icon=true}
-## Tips for a "Satisfactory"
 
-By clicking the boxes above, you can keep track of which items you've completed! I suggest drafting your response in a word document before copy/pasting into the submission form.
-
-:::
 
