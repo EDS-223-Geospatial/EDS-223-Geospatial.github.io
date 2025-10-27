@@ -20,7 +20,7 @@ knitr::include_graphics("images/week5-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Vector and raster interactions](labs/week5.qmd)        |
+| {{< fa key title="key" >}} Lab Solution                 | [Vector and raster interactions](labs/week5.qmd)        |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster operations with vectors](discussions/week5-discussion.qmd) ([Answer Key](discussions/answer-keys/week5-discussion-answerKey.qmd)) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
@@ -32,8 +32,10 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| Check-In             | [Check-In (week 5)](https://forms.gle/uey6mQc2CyUUAc6k7){target="_blank"}                         | 10/30/2025    | 10/30/2025 |
+| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/28/2025    | 11/01/2025 |
+| Check-In             | [Check-In (week 5)](){target="_blank"}                         | 10/30/2025    | 10/30/2025 |
 | HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"}            | 10/21/2025    | 11/08/2025 |
+
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
