@@ -25,14 +25,14 @@
     "href": "course-materials/week5.html#class-materials",
     "title": "Intro to remote sensing & electromagnetism",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of electromagnetic radiation\n\n\n Lab materials to download\nVector and raster interactions\n\n\n Lab Solution\nVector and raster interactions\n\n\n Discussion\nPractice raster operations with vectors (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of electromagnetic radiation\n\n\n Lab materials to download\nVector and raster interactions\n\n\n Lab solution\nVector and raster interactions\n\n\n Discussion\nPractice raster operations with vectors"
   },
   {
     "objectID": "course-materials/week5.html#assignment-reminders",
     "href": "course-materials/week5.html#assignment-reminders",
     "title": "Intro to remote sensing & electromagnetism",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nSelf Reflection #2\n10/28/2025\n11/01/2025\n\n\nCheck-In\nCheck-In (week 5)\n10/30/2025\n10/30/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/08/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nSelf Reflection #2\n10/28/2025\n11/01/2025\n\n\nCheck-In\nCheck-In (week 5)\n10/30/2025\n10/30/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/08/2025"
   },
   {
     "objectID": "course-materials/week5.html#background-reading",
@@ -46,14 +46,14 @@
     "href": "course-materials/week6.html#class-materials",
     "title": "Remote sensing data collection",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nResolutions: spatial, temporal, spectral, radiometric\n\n\n Lab\nVector and raster interactions cont.; False color images\n\n\n Discussion\nWorking with false color images (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nResolutions: spatial, temporal, spectral, radiometric\n\n\n Lab\nVector and raster interactions cont.; False color images\n\n\n Lab solution\n\n\n\n Discussion\nWorking with false color images"
   },
   {
     "objectID": "course-materials/week6.html#assignment-reminders",
     "href": "course-materials/week6.html#assignment-reminders",
     "title": "Remote sensing data collection",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/08/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/08/2025"
   },
   {
     "objectID": "course-materials/week6.html#background-reading",
@@ -144,7 +144,7 @@
     "href": "course-materials/week1.html#assignment-reminders",
     "title": "Intro to EDS 223 and map making",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 1)\n10/02/2025\n10/02/2025\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025\n\n\nHW\nHomework Assignment #1\n09/30/2025\n10/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 1)\n10/02/2025\n10/02/2025\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025\n\n\nHW\nHomework Assignment #1\n09/30/2025\n10/06/2025"
   },
   {
     "objectID": "course-materials/week1.html#background-reading",
@@ -186,14 +186,14 @@
     "href": "course-materials/week9.html#class-materials",
     "title": "Land Cover Classification",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with decision trees\n\n\n No Discussion Section"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Lab\nLandcover classification with decision trees\n\n\n Lab solution\n\n\n\n Discussion"
   },
   {
     "objectID": "course-materials/week9.html#assignment-reminders",
     "href": "course-materials/week9.html#assignment-reminders",
     "title": "Land Cover Classification",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html",
@@ -417,7 +417,7 @@
     "href": "course-materials/discussions/week4-discussion.html#get-started",
     "title": "Week 4: Discussion Section",
     "section": "1. Get Started",
-    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you don’t have spDataLarge installed, make sure to run:  install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')\n\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(sf)\nlibrary(stars)\nlibrary(terra)\n\nYou will be working with the following datasets:\n\nDigital elevation model (DEM) of Mt. Mongón, Perú, obtained from spDataLarge\nLandsat image of Zion National Park, obtained from spDataLarge\nSRTM elevation of Zion National Park, obtained from spDataLarge\n\n\n\ndem &lt;- terra::rast(system.file(\"raster/dem.tif\", package = \"spDataLarge\"))\nlandsat &lt;- terra::rast(system.file(\"raster/landsat.tif\", package = \"spDataLarge\"))\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))"
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nCreate a Quarto document\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you don’t have spDataLarge installed, make sure to run:  install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')\n\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(sf)\nlibrary(stars)\nlibrary(terra)\n\nYou will be working with the following datasets:\n\nDigital elevation model (DEM) of Mt. Mongón, Perú, obtained from spDataLarge\nLandsat image of Zion National Park, obtained from spDataLarge\nSRTM elevation of Zion National Park, obtained from spDataLarge\n\n\n\ndem &lt;- terra::rast(system.file(\"raster/dem.tif\", package = \"spDataLarge\"))\nlandsat &lt;- terra::rast(system.file(\"raster/landsat.tif\", package = \"spDataLarge\"))\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))"
   },
   {
     "objectID": "course-materials/discussions/week4-discussion.html#your-task",
@@ -893,14 +893,14 @@
     "href": "assignments.html",
     "title": "Assignments",
     "section": "",
-    "text": "ImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
   },
   {
     "objectID": "assignments.html#calendar",
     "href": "assignments.html#calendar",
     "title": "Assignments",
     "section": "",
-    "text": "ImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
   },
   {
     "objectID": "assignments.html#assignments",
@@ -1368,15 +1368,15 @@
     "objectID": "course-materials/discussions/week5-discussion.html#get-started",
     "href": "course-materials/discussions/week5-discussion.html#get-started",
     "title": "Week 5: Discussion Section",
-    "section": "2. Get Started",
-    "text": "2. Get Started\n\nCreate an .Rproj as your version controlled project for Week 5\nCreate a Quarto document inside your .Rproj\nLoad all necessary packages and read spatial objects\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\n\n\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\n\nYou will be working with the following datasets: - High points in New Zealand, obtained from spData - Artificial grain dataset (with three classes: clay, silt, and sand), obtained from spData\n\nnz_height &lt;- nz_height\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
   },
   {
     "objectID": "course-materials/discussions/week5-discussion.html#your-task",
     "href": "course-materials/discussions/week5-discussion.html#your-task",
     "title": "Week 5: Discussion Section",
     "section": "3. Your Task",
-    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nSubset points higher than 3100 meters in nz_height (from spData) and create a template raster with rast(), where the resolution is 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster that counts the highest points in New Zealand/Aotearoa\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter to only keep squares that represent clay"
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nSubset points higher than 3100 meters in nz_height (from spData) and create a template raster with rast(), where the resolution is 3 km x 3 km for the extent of the subset dataset\n\n\nCount numbers of the highest points in each grid cell\nFind the maximum elevation in each grid cell\n\n\nWith the previous raster, complete the following:\n\n\nAggregate the raster that counts the highest points in New Zealand/Aotearoa\nReduce its geographic resolution by half, such that cells are 6 x 6 km\nPlot the result\nResample back to the original resolution of 3 km x 3 km\n\n\nPolygonize grain and filter to only keep squares that represent clay\n\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\nlibrary(spDataLarge)\n\n\n# Load raster data representing grain sizes with the three classes clay, silt and sand\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
   },
   {
     "objectID": "course-materials/discussions/week3-discussion.html",
@@ -1628,14 +1628,14 @@
     "href": "course-materials/week8.html#class-materials",
     "title": "Multispectral Remote Sensing Analysis",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nMultispectral RS Analysis\n\n\n Lab\nNDVI and phenology\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nMultispectral RS Analysis\n\n\n Lab\nNDVI and phenology\n\n\n Lab solution\n\n\n\n Discussion\nPractice function making with rasters"
   },
   {
     "objectID": "course-materials/week8.html#assignment-reminders",
     "href": "course-materials/week8.html#assignment-reminders",
     "title": "Multispectral Remote Sensing Analysis",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 8)\n11/20/2025\n11/20/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 8)\n11/20/2025\n11/20/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week8.html#background-reading",
@@ -1747,14 +1747,14 @@
     "href": "course-materials/week7.html#class-materials",
     "title": "Remote sensing of vegetation",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\nNo Lab this week!\n\n\n\n Discussion\nPractice function making with rasters (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\nNo Lab this week!\n\n\n\n Lab solution\n\n\n\n Discussion\nPractice function making with rasters"
   },
   {
     "objectID": "course-materials/week7.html#assignment-reminders",
     "href": "course-materials/week7.html#assignment-reminders",
     "title": "Remote sensing of vegetation",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week4.html#class-materials",
@@ -1782,14 +1782,14 @@
     "href": "course-materials/week10.html#class-materials",
     "title": "Intro to active remote sensing",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Discussion\nPractice gridding and spatial interpolation (Answer Key)"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Lab solution\n\n\n\n Discussion\nPractice gridding and spatial interpolation"
   },
   {
     "objectID": "course-materials/week10.html#assignment-reminders",
     "href": "course-materials/week10.html#assignment-reminders",
     "title": "Intro to active remote sensing",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 10)\n12/04/2025\n12/04/2025\n\n\nSR\nEnd-of-course reflection (SR#3)\n12/02/2025\n12/06/2023\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 10)\n12/04/2025\n12/04/2025\n\n\nSR\nEnd-of-course reflection (SR#3)\n12/02/2025\n12/06/2023\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week10.html#background-reading",
@@ -2055,7 +2055,7 @@
     "href": "course-materials/discussions/week4-discussion.html#explore-ndvi-and-ndwi-at-zion-national-park",
     "title": "Week 4: Discussion Section",
     "section": "3. Explore NDVI and NDWI at Zion National Park",
-    "text": "3. Explore NDVI and NDWI at Zion National Park\nLandsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:\n\n\n\nBand\n\nColor\n\n\n\n\n1\nblue\n30 meter\n\n\n2\ngreen\n30 meter\n\n\n3\nred\n30 meter\n\n\n4\nnear-infrared\n30 meter\n\n\n\n\n\n\n\n\n\nApply a scale factor and offset for all grid cells\n\n\n\n\nLandsat Level-2 products are written as scaled integers to allow us to convert the data from floating point to integer for delivery. In most cases these are written to a 16-bit integer, which saves disk space and provides faster download times. Each floating point pixel has an offset applied and then multiplied by a gain to bring the value into the 16-bit integer (or unsigned integer) range. These values are referred to as scaled integers. To allow the user to get the data back to its original floating point value, a scale factor and offset are provided for each band.\n\n\n\n\nScience product\nScale factor\nOffset\n\n\n\n\nSurface reflectance\n0.0000275\n-0.2\n\n\n\n\n\nFirst, correct the scale across all grid cells and then apply the following functions at each grid cell, in the image:\n\n\\[\\text{NDWI} = \\frac{\\text{(green - NIR)}}{\\text{(green + NIR)}}\\] \\[\\text{NDVI} = \\frac{\\text{(NIR - red)}}{\\text{(NIR + red)}}\\]\n\nCalculate the Normalized Difference Vegetation Index (NDVI) at Zion National Park\nCalculate the Normalized Difference Water Index (NDWI) at Zion National Park\nFind a correlation between NDVI and NDWI at Zion National Park\n\nHint: Explore the terra package to find a function that can help achieve this!\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nscale_factor &lt;- 0.0001\noffset &lt;- 0\n\nscale_function &lt;- function(x) {\n  x * scale_factor + offset\n}\n\nlandsat_scaled &lt;- terra::app(landsat, fun = scale_function)\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir)/(green + nir)\n}\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red)/(nir + red)\n}\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nndwi_rast &lt;- terra::lapp(landsat_scaled[[c(2, 4)]],\n                         fun = ndwi_fun)\n\nndvi_rast &lt;- terra::lapp(landsat_scaled[[c(4, 3)]],\n                         fun = ndvi_fun)\n\n\nplot(ndwi_rast,\n     main = \"Zion National Park NDWI\")\n\n\n\n\n\n\n\nplot(ndvi_rast,\n     main = \"Zion National Park NDVI\")\n\n\n\n\n\n\n\n\n\ncombine &lt;- c(ndvi_rast, ndwi_rast) # Stack rasters\n\nplot(combine, main = c(\"NDVI\", \"NDWI\")) # Plot\n\n\n\n\n\n\n\n\n\n# Calculate correlation between raster layers \nterra::layerCor(combine, fun = cor)\n\n           [,1]       [,2]\n[1,]  1.0000000 -0.9132838\n[2,] -0.9132838  1.0000000"
+    "text": "3. Explore NDVI and NDWI at Zion National Park\nLandsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:\n\n\n\nBand\n\nColor\n\n\n\n\n1\nblue\n30 meter\n\n\n2\ngreen\n30 meter\n\n\n3\nred\n30 meter\n\n\n4\nnear-infrared\n30 meter\n\n\n\n\n\n\n\n\n\nApply a scale factor and offset for all grid cells\n\n\n\n\nLandsat Level-2 products are written as scaled integers to allow us to convert the data from floating point to integer for delivery. In most cases these are written to a 16-bit integer, which saves disk space and provides faster download times. Each floating point pixel has an offset applied and then multiplied by a gain to bring the value into the 16-bit integer (or unsigned integer) range. These values are referred to as scaled integers. To allow the user to get the data back to its original floating point value, a scale factor and offset are provided for each band.\n\n\n\n\nScience product\nScale factor\nOffset\n\n\n\n\nSurface reflectance\n0.0000275\n-0.2\n\n\n\n\n\nFirst, correct the scale across all grid cells and then apply the following functions at each grid cell, in the image:\n\n\\[\\text{NDWI} = \\frac{\\text{(green - NIR)}}{\\text{(green + NIR)}}\\] \\[\\text{NDVI} = \\frac{\\text{(NIR - red)}}{\\text{(NIR + red)}}\\]\n\nCalculate the Normalized Difference Vegetation Index (NDVI) at Zion National Park\nCalculate the Normalized Difference Water Index (NDWI) at Zion National Park\nFind a correlation between NDVI and NDWI at Zion National Park\n\nHint: Explore the terra package to find a function that can help achieve this!\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nscale_factor &lt;- 0.0000275\noffset &lt;- 0.2\n\nscale_function &lt;- function(x) {\n  x * scale_factor + offset\n}\n\nlandsat_scaled &lt;- terra::app(landsat, fun = scale_function)\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir)/(green + nir)\n}\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red)/(nir + red)\n}\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nndwi_rast &lt;- terra::lapp(landsat_scaled[[c(2, 4)]],\n                         fun = ndwi_fun)\n\nndvi_rast &lt;- terra::lapp(landsat_scaled[[c(4, 3)]],\n                         fun = ndvi_fun)\n\n\nplot(ndwi_rast,\n     main = \"Zion National Park NDWI\")\n\n\n\n\n\n\n\nplot(ndvi_rast,\n     main = \"Zion National Park NDVI\")\n\n\n\n\n\n\n\n\n\ncombine &lt;- c(ndvi_rast, ndwi_rast) # Stack rasters\n\nplot(combine, main = c(\"NDVI\", \"NDWI\")) # Plot\n\n\n\n\n\n\n\n\n\n# Calculate correlation between raster layers \nterra::layerCor(combine, fun = cor)\n\n           [,1]       [,2]\n[1,]  1.0000000 -0.9062336\n[2,] -0.9062336  1.0000000"
   },
   {
     "objectID": "course-materials/discussions/week4-discussion.html#change-resolution-of-elevation-at-zion-national-park",
@@ -2091,5 +2091,54 @@
     "title": "Week 5: Lab",
     "section": "3. Raster vectorization",
     "text": "3. Raster vectorization\nThere are several ways to convert raster data into vector. The most common, and straightforward, is converting raster grid cells into polygons. For more examples, check out Geocomputation with R.\nWe could simply convert all grid cells into polygons, but it may be more helpful to create polygons based on some condition\n\n\n\n\n\n\nTipTip for HW3\n\n\n\nThe following example is relevant to homework assignment 3!\n\n\nIn this example, we’ll select grid cells higher than 2000 meters by masking the elevation raster. We’ll then convert these grid cells into polygons using the terra::as.polygons() function and turn this into a sf object.\n\nelevation_mask &lt;- elevation_final\n\n# Set all elevation values below 2000 to NA\nelevation_mask[elevation_mask &lt; 2000] &lt;- NA\n\n\n#Convert high elevation (above 2000) pixels into polygon shapes and then transform into a simple feature \nelevation_mask_poly &lt;- as.polygons(elevation_mask) %&gt;% \n  st_as_sf()\n\n\n\nCode\nmap1 &lt;- tm_shape(elevation_mask) +\n  tm_raster() +\n  tm_title( text = \"masked raster\")+ \n  tm_layout(legend.position = c(\"left\", \"bottom\"))\n\nmap2 &lt;- tm_shape(elevation_mask_poly) +\n  tm_polygons() +\n  tm_title(text = \"vectorized raster\")\n\ntmap_arrange(map1, map2, nrow = 1)\n\n\n\n\n\n\n\n\n\n\nRayshader\nRayshader is an R package that creates beautiful 2D and 3D maps from elevation data. It uses various shading techniques to make terrain look realistic, including:\nLambertian shading - simulates direct sunlight on slopes Ambient occlusion - adds shadows in valleys and crevices Hypsometric tinting - colors based on elevation (greens for low, browns/whites for high) Texture shading - emphasizes ridges and drainage patterns Sphere shading - adds natural ambient lighting effects\nThese techniques can be layered together to create stunning, professional-quality terrain maps in just a few lines of code.\n\nRoad trip! We are headed northeast to Bryce Canyon National Park!We will use the rayshader package, as well as osmdatato visualize the hoodoos of Bryce Canyon in 3D.\n\n#install.packages(\"rayshader\")\n#install.packages(\"magick\")\n#install.packages(\"osmdata\")\nlibrary(rayshader)\nlibrary(magick)\n\nLinking to ImageMagick 6.9.13.29\nEnabled features: cairo, fontconfig, freetype, heic, lcms, pango, raw, rsvg, webp\nDisabled features: fftw, ghostscript, x11\n\nlibrary(osmdata)\n\nData (c) OpenStreetMap contributors, ODbL 1.0. https://www.openstreetmap.org/copyright\n\n\n\nbryce = raster(\"course-materials/data/week5/Bryce_Canyon.tif\")\n\n# Transform the spatial data structure extracted by raster into a regular R matrix\nbryce_mat = raster_to_matrix(bryce)\n\n# Reduce size by 1/4 for plotting purposes\nbryce_small = resize_matrix(bryce_mat,0.25)\n\n\n\nBuilding Basemaps with Rayshader\n\nbryce_small %&gt;% \n  #map colors to elevation values\n  height_shade() %&gt;%  # Default is dark to light gradient - not intuitive! \n  plot_map() # plot map \n\n\nbryce_small %&gt;% \n  height_shade() %&gt;% \n  \n  # Add desert-colored ambient lighting overlay at 50% transparency\n  # zscale controls vertical exaggeration, colorintensity makes colors more vibrant\n  add_overlay(sphere_shade(bryce_small, texture = \"desert\", \n                           zscale=4, colorintensity = 5), alphalayer=0.5) %&gt;%\n  \n  # Add hillshade shadow ( Lambertian (cosine) shading) \n  # Second parameter (0) controls shadow intensity - 0 means full strength\n  add_shadow(lamb_shade(bryce_small,zscale=6), 0) %&gt;%\n  \n  # better defines ridges and drainage networks, which aren’t well-captured by Lambertian shading.\n  add_shadow(ambient_shade(bryce_small), 0) %&gt;%\n  \n  # Add texture shading (emphasizes ridges and drainage patterns)\n  # 0.1 means apply at 10% intensity for subtle effect\n  add_shadow(texture_shade(bryce_small,detail=8/10,contrast=9,brightness = 11), 0.1) %&gt;%\n  plot_map()\n\nNotes: texture_shade: - detail : - Controls the scale/fineness of texture features to emphasize - Lower values (0.1-0.3): Shows only major ridges and valleys (coarse features) - Higher values (0.7-1.0): Shows fine details like small gullies and ripples\n-contrast: - Controls how dramatic the light/dark differences are - Lower values (1-3): Subtle, soft texture shading - Higher values (9-20): Sharp, dramatic contrast between ridges and valleys\nbrightness: - Controls the overall lightness of the texture layer - Lower values (1-5): Darker overall - Higher values (10-20): Brighter overall, prevents over-darkening\n\n# Define UTM bounding box coordinates for our area of interest ( for our OSM)\nutm_bbox &lt;- c(xmin = 396367.4, xmax = 397975.2, \n              ymin = 4163747.9, ymax = 4165291.0)\n\n\n# Create extent object from bounding box coordinates\nextent_zoomed = extent(utm_bbox[1], utm_bbox[2], utm_bbox[3], utm_bbox[4])\n\n# Crop the full Bryce raster to just our area of interest\nbryce_zoom = crop(bryce, extent_zoomed)\n\n# Convert the cropped raster to a matrix for rayshader\nbryce_zoom_mat = raster_to_matrix(bryce_zoom)\n\n# Build the base map with multiple shading layers\nbase_map = bryce_zoom_mat %&gt;% \n  height_shade() %&gt;%\n  add_overlay(sphere_shade(bryce_zoom_mat, texture = \"desert\", colorintensity = 5), alphalayer=0.5) %&gt;%\n  add_shadow(lamb_shade(bryce_zoom_mat), 0) %&gt;%\n  add_shadow(ambient_shade(bryce_zoom_mat),0) %&gt;% \n  add_shadow(texture_shade(bryce_zoom_mat,detail=8/10,contrast=9,brightness = 11), 0.1)\n\nplot_map(base_map)\n\n\n\nUsing OSM to add features to our base map\n\nosm_bbox = c(-112.174228, 37.614998, -112.156230,37.629084)\n\n# Query OpenStreetMap for all \"highway\" features (roads, paths, trails)\nbryce_highway = opq(osm_bbox) %&gt;% \n  add_osm_feature(\"highway\") %&gt;% # specify the feature we want to find\n  osmdata_sf() # convert object to sf\nbryce_highway\n\nNote: opq = overpassquery - What it does: Creates a query to the OpenStreetMap (OSM) Overpass API to download map data for a specific geographic area. - The Overpass API is: A service that lets you search and download specific features from OpenStreetMap’s database (like roads, trails, buildings, waterways, etc.)\n\n# Transform OSM data to match the coordinate system of our Bryce raster\nbryce_lines = st_transform(bryce_highway$osm_lines, crs=crs(bryce))\n\ntm_shape(bryce_lines) +\n  tm_lines(col = \"black\") +\n  tm_title(text = \"Open Street Map `highway` attribute in Bryce Canyon National Park\")\n\n\n# be a bit more specific with our lines - separate into trails, footpaths, and roads\nbryce_trails = bryce_lines %&gt;% \n  filter(highway %in% c(\"path\",\"bridleway\"))\n\nbryce_footpaths = bryce_lines %&gt;% \n  filter(highway %in% c(\"footway\"))\n\nbryce_roads = bryce_lines %&gt;% \n  filter(highway %in% c(\"unclassified\", \"secondary\", \"tertiary\", \"residential\", \"service\"))\n\n\n# Create a combined trails layer with different styles for each type\n\n#generate_line_overlay() takes spatial line data (from OpenStreetMap) and converts it into a raster image overlay that can be added to your rayshader map\n\n\ntrails_layer = generate_line_overlay(bryce_footpaths,extent = extent_zoomed,\n                                    linewidth = 10, color=\"black\", \n                                    heightmap = bryce_zoom_mat) %&gt;% # size and resolution to make the overlay image so it matches your terrain perfectly\n  add_overlay(generate_line_overlay(bryce_footpaths,extent = extent_zoomed,\n                                    linewidth = 6, color=\"white\",\n                                    heightmap = bryce_zoom_mat)) %&gt;%\n  add_overlay(generate_line_overlay(bryce_trails,extent = extent_zoomed,\n                                    linewidth = 3, color=\"black\", lty=3, offset = c(2,-2),\n                                    heightmap = bryce_zoom_mat)) %&gt;%\n  add_overlay(generate_line_overlay(bryce_trails,extent = extent_zoomed,\n                                    linewidth = 3, color=\"white\", lty=3,\n                                    heightmap = bryce_zoom_mat)) %&gt;%\n  add_overlay(generate_line_overlay(bryce_roads,extent = extent_zoomed,\n                                    linewidth = 8, color=\"grey30\",\n                                    heightmap = bryce_zoom_mat)) \n\nNote: : generate_line_overlay produces first layer, and then we are adding on top so we use add_overlay\n\n# add water lines \nbryce_water_lines = opq(osm_bbox) %&gt;% \n  add_osm_feature(\"waterway\") %&gt;% \n  osmdata_sf() \n\n\ntm_shape(bryce_water_lines$osm_lines) +\n  tm_lines(col = \"blue\") +\n  tm_title(text = \"Open Street Map `waterway` attribute in Bryce Canyon National Park\")\n\n\n#transform streams to have same crs as bryce\nbryce_streams = st_transform(bryce_water_lines$osm_lines,crs=crs(bryce)) \n\n#create stream layer\nstream_layer = generate_line_overlay(bryce_streams,extent = extent_zoomed,\n                                    linewidth = 4, color=\"skyblue2\", \n                                    heightmap = bryce_zoom_mat)\n\n\nbryce_tourism = opq(osm_bbox) %&gt;% \n  add_osm_feature(\"tourism\") %&gt;% \n  osmdata_sf() \n\nbryce_tourism_points = st_transform(bryce_tourism$osm_points,crs=crs(bryce))\n\nbryce_attractions = bryce_tourism_points %&gt;% \n  filter(tourism == \"attraction\")\n\n\nattraction_layer = generate_label_overlay(bryce_attractions, extent = extent_zoomed,\n                                     text_size = 2, point_size = 2, color = \"white\", \n                                     halo_color = \"black\",\n                                     halo_expand = 10, #how thick the halo is\n                                     halo_blur = 20, # how blurry or soft the halo is \n                                     halo_alpha = 0.8, # transparency of halo\n                                     heightmap = bryce_zoom_mat,\n                                     data_label_column = \"name\") # # Which column from bryce_attractions to use as labels\n\n\n\nCreate National Park Map\n\nbase_map %&gt;% \n  add_overlay(stream_layer, alphalayer = 0.8) %&gt;% \n  add_overlay(trails_layer) %&gt;%\n  add_overlay(attraction_layer) %&gt;% \n  plot_map(title_text = \"Bryce Canyon National Park, Utah\",\n           title_bar_color = \"lightgray\", title_bar_alpha = 1)\n\n\n\nCreating a 3D plot of Bryce Canyon’s streams and trails\n\nbase_map %&gt;% \n  add_overlay(stream_layer, alphalayer = 0.8) %&gt;% \n  add_overlay(trails_layer) %&gt;%\n  # Specify window size\n  plot_3d(bryce_zoom_mat, windowsize=c(1200,800))\n# Set camera angle: theta= horizontal rotation, phi=vertical rotation ( birds eye = 0), zoom=distance, fov=field of view ( narrow view = 30, normal = 60, wide = 90)\nrender_camera(theta=240,  phi=30, zoom=0.3,  fov=60)\n\n# take a snapshot of the current view\nrender_snapshot()"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#subset-points-in-new-zealandaotearoa",
+    "href": "course-materials/discussions/week5-discussion.html#subset-points-in-new-zealandaotearoa",
+    "title": "Week 5: Discussion Section",
+    "section": "Subset Points in New Zealand/Aotearoa",
+    "text": "Subset Points in New Zealand/Aotearoa\n\n# Subset New Zealand elevation points to &gt; 3100 meters\nnz_height3100 &lt;- nz_height %&gt;% \n  dplyr::filter(elevation &gt; 3100)\n\n# Create template: define the extent, resolution, and CRS based on nz_height3100\nnz_template &lt;- rast(terra::ext(nz_height3100), \n                    resolution = 3000, \n                    crs = terra::crs(nz_height3100))"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#count-points-in-each-grid-cell",
+    "href": "course-materials/discussions/week5-discussion.html#count-points-in-each-grid-cell",
+    "title": "Week 5: Discussion Section",
+    "section": "Count Points in Each Grid Cell",
+    "text": "Count Points in Each Grid Cell\n\n# Convert vector points to raster data\n# Function \"length\" returns a count of the elevation points per cell\nnz_raster &lt;- rasterize(nz_height3100, nz_template, field = \"elevation\", fun = \"length\")\n\nplot(nz_raster, main = \"Number of Elevation Points &gt; 3100 in Each Grid Cell\")\nplot(st_geometry(nz_height3100), add = TRUE)"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#find-maximum-elevation-in-each-grid-cell",
+    "href": "course-materials/discussions/week5-discussion.html#find-maximum-elevation-in-each-grid-cell",
+    "title": "Week 5: Discussion Section",
+    "section": "Find Maximum Elevation in Each Grid Cell",
+    "text": "Find Maximum Elevation in Each Grid Cell\n\n# function \"max\" returns maximum elevation value per cell\nnz_raster2 &lt;- rasterize(nz_height3100, nz_template, field = \"elevation\", fun = max)\n\nplot(nz_raster2, main = \"Maximum Elevation in Each Grid Cell \")\nplot(st_geometry(nz_height3100), add = TRUE)"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#aggregate-and-resample-raster",
+    "href": "course-materials/discussions/week5-discussion.html#aggregate-and-resample-raster",
+    "title": "Week 5: Discussion Section",
+    "section": "Aggregate and Resample Raster",
+    "text": "Aggregate and Resample Raster\n\n# Reduce the resolution by combining 2 cells in each direction into larger cells\n# Sum the values of all cells for the resulting elevation value\nnz_raster_low &lt;- aggregate(nz_raster, fact = 2, fun = sum, na.rm = TRUE)\n\n# Convert the new raster's resolution back to the 3kmx3km resolution of original raster\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 6 x 6 km\", \"Resample 6 x 6 km\")\nplot(plots, main = labs)\n\n\n\n\n\n\n\nplot(nz_raster_low, main = \"Resample 3 x 3 km\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#vectorize-raster",
+    "href": "course-materials/discussions/week5-discussion.html#vectorize-raster",
+    "title": "Week 5: Discussion Section",
+    "section": "Vectorize Raster",
+    "text": "Vectorize Raster\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#high-elevation-points-in-new-zealandaotearoa",
+    "href": "course-materials/discussions/week5-discussion.html#high-elevation-points-in-new-zealandaotearoa",
+    "title": "Week 5: Discussion Section",
+    "section": "3. High elevation points in New Zealand/Aotearoa",
+    "text": "3. High elevation points in New Zealand/Aotearoa\n\nSubset points higher than 3100 meters in nz_height\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nnz_height3100 &lt;- nz_height |&gt;  \n  dplyr::filter(elevation &gt; 3100) # rows where column elevation &gt; 3100 meters\n\n\n\n\n\nCreate a template raster with rast(), where the resolution is 3 km x 3 km, with the same extent and CRS as the previous subset\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nnz_template &lt;- rast(terra::ext(nz_height3100), # Set extent based on nz_height3100\n                    resolution = 3000, \n                    crs = terra::crs(nz_height3100)) # Set CRS based on nz_height3100\n\n\n\n\n\nCount numbers of the highest points in each grid cell\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nnz_raster &lt;- rasterize(nz_height3100, nz_template, # Convert vector points to raster data\n                       fun = \"length\") # \"length\" returns a count per cell\n\n\nplot(nz_raster, main = \"Number of elevation points &gt; 3100 in each grid cell\")\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nFind the maximum elevation in each grid cell\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nnz_raster2 &lt;- rasterize(nz_height3100, nz_template, # Convert vector points to raster data\n                        fun = max) # \"max\" returns maximum elevation value per cell\n\n\nplot(nz_raster2, main = \"Maximum elevation in each grid cell \")\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nWith the raster template, complete the following:\n\n\nAggregate raster that counts the highest points in New Zealand/Aotearoa, to reduce its geographic resolution by half\nResample back to the original resolution\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nnz_raster_low &lt;- aggregate(nz_raster, \n                           fact = 2, # Reduce resolution by combining 2 cells in each direction into larger cells\n                           fun = sum, na.rm = TRUE) # Sum values of all cells for resulting elevation value\n\n\n# Convert resolution back to original 3kmx3km resolution\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 3 x 3 km\", \"Resample 3 x 3 km\")\nplot(plots, main = labs)\n\n\n\n\n\n\n\n\n\nplot(nz_raster_low, main = \"Resample 6 x 6 km\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#vectorize-grain-raster",
+    "href": "course-materials/discussions/week5-discussion.html#vectorize-grain-raster",
+    "title": "Week 5: Discussion Section",
+    "section": "4. Vectorize grain raster",
+    "text": "4. Vectorize grain raster\n\nPolygonize grain and filter to only keep squares that represent clay\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
   }
 ]

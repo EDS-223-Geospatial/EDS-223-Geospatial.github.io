@@ -19,7 +19,6 @@ The following materials are modified from *Geocomputation with R* by Robin Lovel
 ## 1. Get Started
 
 - Create a version-controlled R Project
-- Add (at least) a subfolder to your R project: `data`
 - Create a Quarto document
 
 ::: {.callout-warning}
@@ -133,8 +132,8 @@ $$\text{NDVI} = \frac{\text{(NIR - red)}}{\text{(NIR + red)}}$$
 ::: {.callout-tip collapse="true" icon=true}
 ## Solution
 ```{r}
-scale_factor <- 0.0001
-offset <- 0
+scale_factor <- 0.0000275
+offset <- 0.2
 
 scale_function <- function(x) {
   x * scale_factor + offset

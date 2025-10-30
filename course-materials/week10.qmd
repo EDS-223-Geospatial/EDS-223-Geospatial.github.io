@@ -21,7 +21,8 @@ knitr::include_graphics("images/week10-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of active remote sensing: LiDAR and RADAR](https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Validating LiDAR tree height estimates](labs/week10.qmd)       |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice gridding and spatial interpolation](discussions/_week10-discussion.qmd) ([Answer Key](discussions/answer-keys/_week10-discussion-answerKey.qmd)) |
+| {{< fa key title="key" >}} Lab solution                 | |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice gridding and spatial interpolation](discussions/_week10-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

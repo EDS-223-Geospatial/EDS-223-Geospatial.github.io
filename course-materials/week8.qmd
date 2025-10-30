@@ -22,7 +22,8 @@ knitr::include_graphics("images/week8-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Multispectral RS Analysis](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [NDVI and phenology](labs/week8.qmd)       |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week8-discussion.qmd) ([Answer Key](discussions/answer-keys/week8-discussion-answerKey.qmd)) |
+| {{< fa key title="key" >}} Lab solution                 | |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week8-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

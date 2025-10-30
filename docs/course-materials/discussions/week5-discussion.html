@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-09-25">
+<meta name="dcterms.date" content="2025-10-30">
 
 <title>Week 5: Discussion Section</title>
 <style>
@@ -161,6 +161,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week4.html">
  <span class="dropdown-text">week 4</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week5.html">
+ <span class="dropdown-text">week 5</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -209,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 25, 2025</p>
+        <p class="date">October 30, 2025</p>
       </div>
     </div>
     
@@ -225,9 +229,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives">1. Learning Objectives</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">2. Get Started</a></li>
-  <li><a href="#your-task" id="toc-your-task" class="nav-link" data-scroll-target="#your-task">3. Your Task</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">1. Get Started</a></li>
+  <li><a href="#high-elevation-points-in-new-zealandaotearoa" id="toc-high-elevation-points-in-new-zealandaotearoa" class="nav-link" data-scroll-target="#high-elevation-points-in-new-zealandaotearoa">3. High elevation points in New Zealand/Aotearoa</a></li>
+  <li><a href="#vectorize-grain-raster" id="toc-vectorize-grain-raster" class="nav-link" data-scroll-target="#vectorize-grain-raster">4. Vectorize grain raster</a></li>
   </ul>
 </nav>
     </div>
@@ -251,54 +255,253 @@ Source Materials
 <p>The following materials are modified from <em>Geocomputation with R</em> by Robin Lovelace.</p>
 </div>
 </div>
-<section id="learning-objectives" class="level2">
-<h2 class="anchored" data-anchor-id="learning-objectives">1. Learning Objectives</h2>
+<section id="learning-objectives" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="learning-objectives">Learning Objectives</h3>
 <ul>
 <li>Use <code>terra</code> functions <code>aggregate()</code> and <code>resample()</code> to create a new raster</li>
-<li>Use <code>terra</code> functions <code>as.polygons()</code> to convert a raster to a vector of polygons</li>
+<li>Use <code>terra</code> functions <code>as.polygons()</code> to convert a raster to polygons (vector)</li>
 </ul>
 </section>
 <section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">2. Get Started</h2>
+<h2 class="anchored" data-anchor-id="get-started">1. Get Started</h2>
 <ul>
-<li>Create an <code>.Rproj</code> as your version controlled project for Week 5</li>
-<li>Create a Quarto document inside your <code>.Rproj</code></li>
-<li>Load all necessary packages and read spatial objects</li>
+<li>Create a version-controlled R Project</li>
+<li>Create a Quarto document</li>
 </ul>
+<p>Let’s load all necessary packages:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spData)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spDataLarge)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spData)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>You will be working with the following datasets: - High points in New Zealand, obtained from <code>spData</code> - Artificial grain dataset (with three classes: clay, silt, and sand), obtained from <code>spData</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load raster data representing grain sizes with the three classes clay, silt and sand</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>nz_height <span class="ot">&lt;-</span> nz_height</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>grain <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(<span class="fu">system.file</span>(<span class="st">"raster/grain.tif"</span>, <span class="at">package =</span> <span class="st">"spData"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="your-task" class="level2">
-<h2 class="anchored" data-anchor-id="your-task">3. Your Task</h2>
-<p>Now, to meet this week’s learning objectives, your task:</p>
+<section id="high-elevation-points-in-new-zealandaotearoa" class="level2">
+<h2 class="anchored" data-anchor-id="high-elevation-points-in-new-zealandaotearoa">3. High elevation points in New Zealand/Aotearoa</h2>
 <ol type="1">
-<li>Subset points higher than 3100 meters in <code>nz_height</code> (from <code>spData</code>) and create a template raster with <code>rast()</code>, where the resolution is 3 km x 3 km for the extent of the subset dataset</li>
+<li>Subset points higher than 3100 meters in <code>nz_height</code></li>
 </ol>
-<ul>
-<li>Count numbers of the highest points in each grid cell</li>
-<li>Find the maximum elevation in each grid cell</li>
-</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nz_height3100 <span class="ot">&lt;-</span> nz_height <span class="sc">|&gt;</span>  </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(elevation <span class="sc">&gt;</span> <span class="dv">3100</span>) <span class="co"># rows where column elevation &gt; 3100 meters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 <ol start="2" type="1">
-<li>With the previous raster, complete the following:</li>
+<li>Create a template raster with <code>rast()</code>, where the resolution is 3 km x 3 km, with the same extent and CRS as the previous subset</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nz_template <span class="ot">&lt;-</span> <span class="fu">rast</span>(terra<span class="sc">::</span><span class="fu">ext</span>(nz_height3100), <span class="co"># Set extent based on nz_height3100</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">resolution =</span> <span class="dv">3000</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">crs =</span> terra<span class="sc">::</span><span class="fu">crs</span>(nz_height3100)) <span class="co"># Set CRS based on nz_height3100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<ol start="3" type="1">
+<li>Count numbers of the highest points in each grid cell</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nz_raster <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(nz_height3100, nz_template, <span class="co"># Convert vector points to raster data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">fun =</span> <span class="st">"length"</span>) <span class="co"># "length" returns a count per cell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster, <span class="at">main =</span> <span class="st">"Number of elevation points &gt; 3100 in each grid cell"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(nz_height3100), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="4" type="1">
+<li>Find the maximum elevation in each grid cell</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>nz_raster2 <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(nz_height3100, nz_template, <span class="co"># Convert vector points to raster data</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fun =</span> max) <span class="co"># "max" returns maximum elevation value per cell</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster2, <span class="at">main =</span> <span class="st">"Maximum elevation in each grid cell "</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">st_geometry</span>(nz_height3100), <span class="at">add =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol start="5" type="1">
+<li>With the raster template, complete the following:</li>
 </ol>
 <ul>
-<li>Aggregate the raster that counts the highest points in New Zealand/Aotearoa</li>
-<li>Reduce its geographic resolution by half, such that cells are 6 x 6 km</li>
-<li>Plot the result</li>
-<li>Resample back to the original resolution of 3 km x 3 km</li>
+<li>Aggregate raster that counts the highest points in New Zealand/Aotearoa, to reduce its geographic resolution by half</li>
+<li>Resample back to the original resolution</li>
 </ul>
-<ol start="3" type="1">
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nz_raster_low <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(nz_raster, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fact =</span> <span class="dv">2</span>, <span class="co"># Reduce resolution by combining 2 cells in each direction into larger cells</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fun =</span> sum, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="co"># Sum values of all cells for resulting elevation value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert resolution back to original 3kmx3km resolution</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>nz_resample <span class="ot">&lt;-</span> <span class="fu">resample</span>(nz_raster_low, nz_raster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plots <span class="ot">&lt;-</span> <span class="fu">c</span>(nz_raster, nz_resample)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>labs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Original 3 x 3 km"</span>, <span class="st">"Resample 3 x 3 km"</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(plots, <span class="at">main =</span> labs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nz_raster_low, <span class="at">main =</span> <span class="st">"Resample 6 x 6 km"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="vectorize-grain-raster" class="level2">
+<h2 class="anchored" data-anchor-id="vectorize-grain-raster">4. Vectorize grain raster</h2>
+<ol start="6" type="1">
 <li>Polygonize <code>grain</code> and filter to only keep squares that represent clay</li>
 </ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert raster data to polygon vector data</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>grain_poly <span class="ot">&lt;-</span> <span class="fu">as.polygons</span>(grain) <span class="sc">%&gt;%</span> </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>()</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(grain, <span class="at">main =</span> <span class="st">"Grain (Raster)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(grain_poly, <span class="at">main =</span> <span class="st">"Grain (Vector)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subset polygons to only clay</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>clay <span class="ot">&lt;-</span> grain_poly <span class="sc">%&gt;%</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(grain <span class="sc">==</span> <span class="st">"clay"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(clay, <span class="at">main =</span> <span class="st">"Clay"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week5-discussion_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
