@@ -15,16 +15,17 @@ format:
 The following materials are modified from *Geocomputation with R* by Robin Lovelace.
 :::
 
-## 1. Learning Objectives
+### Learning Objectives {.unnumbered .unlisted}
 
 - Use `terra` functions `aggregate()` and `resample()` to create a new raster
-- Use `terra` functions `as.polygons()` to convert a raster to a vector of polygons
+- Use `terra` functions `as.polygons()` to convert a raster to polygons (vector)
 
-## 2. Get Started
+## 1. Get Started
 
-- Create an `.Rproj` as your version controlled project for Week 5
-- Create a Quarto document inside your `.Rproj`
-- Load all necessary packages and read spatial objects
+- Create a version-controlled R Project
+- Create a Quarto document
+
+Let's load all necessary packages:
 
 ```{r}
 #| message: false
@@ -34,24 +35,117 @@ library(tidyverse)
 library(sf)
 library(terra)
 library(spData)
-library(spDataLarge)
 ```
 
+You will be working with the following datasets:
+- High points in New Zealand, obtained from `spData`
+- Artificial grain dataset (with three classes: clay, silt, and sand), obtained from `spData` 
+
 ```{r}
-# Load raster data representing grain sizes with the three classes clay, silt and sand
+nz_height <- nz_height
 grain <- terra::rast(system.file("raster/grain.tif", package = "spData"))
 ```
 
-## 3. Your Task
+## 3. High elevation points in New Zealand/Aotearoa
 
-Now, to meet this week's learning objectives, your task:
+1. Subset points higher than 3100 meters in `nz_height`
 
-1. Subset points higher than 3100 meters in `nz_height` (from `spData`) and create a template raster with `rast()`, where the resolution is 3 km x 3 km for the extent of the subset dataset
-  - Count numbers of the highest points in each grid cell
-  - Find the maximum elevation in each grid cell
-2. With the previous raster, complete the following:
-  - Aggregate the raster that counts the highest points in New Zealand/Aotearoa
-  - Reduce its geographic resolution by half, such that cells are 6 x 6 km
-  - Plot the result
-  - Resample back to the original resolution of 3 km x 3 km
-3. Polygonize `grain` and filter to only keep squares that represent clay
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+nz_height3100 <- nz_height |>  
+  dplyr::filter(elevation > 3100) # rows where column elevation > 3100 meters
+```
+:::
+
+2. Create a template raster with `rast()`, where the resolution is 3 km x 3 km, with the same extent and CRS as the previous subset
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+nz_template <- rast(terra::ext(nz_height3100), # Set extent based on nz_height3100
+                    resolution = 3000, 
+                    crs = terra::crs(nz_height3100)) # Set CRS based on nz_height3100
+```
+:::
+
+3. Count numbers of the highest points in each grid cell
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+nz_raster <- rasterize(nz_height3100, nz_template, # Convert vector points to raster data
+                       fun = "length") # "length" returns a count per cell
+```
+
+```{r}
+plot(nz_raster, main = "Number of elevation points > 3100 in each grid cell")
+plot(st_geometry(nz_height3100), add = TRUE)
+```
+:::
+
+4. Find the maximum elevation in each grid cell
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+nz_raster2 <- rasterize(nz_height3100, nz_template, # Convert vector points to raster data
+                        fun = max) # "max" returns maximum elevation value per cell
+```
+
+```{r}
+plot(nz_raster2, main = "Maximum elevation in each grid cell ")
+plot(st_geometry(nz_height3100), add = TRUE)
+```
+:::
+
+5. With the raster template, complete the following:
+  - Aggregate raster that counts the highest points in New Zealand/Aotearoa, to reduce its geographic resolution by half
+  - Resample back to the original resolution
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+nz_raster_low <- aggregate(nz_raster, 
+                           fact = 2, # Reduce resolution by combining 2 cells in each direction into larger cells
+                           fun = sum, na.rm = TRUE) # Sum values of all cells for resulting elevation value
+```
+
+```{r}
+# Convert resolution back to original 3kmx3km resolution
+nz_resample <- resample(nz_raster_low, nz_raster)
+```
+
+```{r}
+plots <- c(nz_raster, nz_resample)
+labs <- c("Original 3 x 3 km", "Resample 3 x 3 km")
+plot(plots, main = labs)
+```
+
+```{r}
+plot(nz_raster_low, main = "Resample 6 x 6 km")
+```
+:::
+
+## 4. Vectorize grain raster
+
+6. Polygonize `grain` and filter to only keep squares that represent clay
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+# Convert raster data to polygon vector data
+grain_poly <- as.polygons(grain) %>% 
+  st_as_sf()
+
+plot(grain, main = "Grain (Raster)")
+
+plot(grain_poly, main = "Grain (Vector)")
+
+# Subset polygons to only clay
+clay <- grain_poly %>% 
+  dplyr::filter(grain == "clay")
+
+plot(clay, main = "Clay")
+```
+:::

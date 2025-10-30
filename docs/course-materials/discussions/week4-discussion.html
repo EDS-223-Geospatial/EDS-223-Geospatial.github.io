@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Allie Caughmam &amp; Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-10-24">
+<meta name="dcterms.date" content="2025-10-30">
 
 <title>Week 4: Discussion Section</title>
 <style>
@@ -190,6 +190,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../../course-materials/week4.html">
  <span class="dropdown-text">week 4</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week5.html">
+ <span class="dropdown-text">week 5</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -238,7 +242,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 24, 2025</p>
+        <p class="date">October 30, 2025</p>
       </div>
     </div>
     
@@ -285,7 +289,6 @@ Source Materials
 <h2 class="anchored" data-anchor-id="get-started">1. Get Started</h2>
 <ul>
 <li>Create a version-controlled R Project</li>
-<li>Add (at least) a subfolder to your R project: <code>data</code></li>
 <li>Create a Quarto document</li>
 </ul>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
@@ -502,8 +505,8 @@ Solution
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>scale_factor <span class="ot">&lt;-</span> <span class="fl">0.0001</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>offset <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>scale_factor <span class="ot">&lt;-</span> <span class="fl">0.0000275</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>offset <span class="ot">&lt;-</span> <span class="fl">0.2</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>scale_function <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">*</span> scale_factor <span class="sc">+</span> offset</span>
@@ -594,8 +597,8 @@ Solution
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">layerCor</span>(combine, <span class="at">fun =</span> cor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           [,1]       [,2]
-[1,]  1.0000000 -0.9132838
-[2,] -0.9132838  1.0000000</code></pre>
+[1,]  1.0000000 -0.9062336
+[2,] -0.9062336  1.0000000</code></pre>
 </div>
 </div>
 </div>
