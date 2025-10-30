@@ -1,17 +1,17 @@
 ---
 title: "Week 5: Lab"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
-author: "Ruth Oliver"
+author: "Ruth Oliver & Annie Adams"
 date: last-modified
 execute: 
   eval: true
+  dir: project
 format:
   html:
     toc: true
 editor_options: 
   chunk_output_type: console
 ---
-
 ```{r}
 #| eval: true
 #| echo: false
@@ -217,5 +217,247 @@ map2 <- tm_shape(elevation_mask_poly) +
   tm_title(text = "vectorized raster")
 
 tmap_arrange(map1, map2, nrow = 1)
+```
+
+
+
+
+### Rayshader 
+
+[Rayshader](https://www.rayshader.com/) is an R package that creates beautiful 2D and 3D maps from elevation data. It uses various shading techniques to make terrain look realistic, including:
+
+- Lambertian shading - simulates direct sunlight on slopes
+- Ambient occlusion - adds shadows in valleys and crevices
+- Hypsometric tinting - colors based on elevation (greens for low, browns/whites for high)
+- Texture shading - emphasizes ridges and drainage patterns
+- Sphere shading - adds natural ambient lighting effects
+
+These techniques can be layered together to create stunning, professional-quality terrain maps in just a few lines of code.
+
+
+#### Road trip! We are headed northeast to Bryce Canyon National Park!We will use the `rayshader` package, as well as `osmdata`to visualize the hoodoos of Bryce Canyon in 3D. 
+
+
+```{r}
+#| message: false
+#install.packages("rayshader")
+#install.packages("magick")
+#install.packages("osmdata")
+library(rayshader)
+library(magick)
+library(osmdata)
+library(raster)
+```
+
+
+ We’ll use elevation data from Bryce Canyon in Utah (courtesy of Tom Patterson via shadedrelief.com). Download the Bryce Canyon tif from this [link](https://zenodo.org/records/4323586#.X9lWYS9h0Z8). Store this `Bryce_Canyon.tif` file in your `data` folder, and be sure to add it to your `.gitignore`!!
+
+```{r}
+#| eval: false
+bryce = raster("data/Bryce_Canyon.tif")
+
+bryce_mat = raster_to_matrix(bryce)
+
+bryce_small = resize_matrix(bryce_mat,0.25)
+```
+
+
+
+```{r}
+#| echo: false
+#| eval: false
+bryce = raster(file.path(getwd(), "course-materials/data/week5/Bryce_Canyon.tif"))
+
+bryce_mat = raster_to_matrix(bryce)
+
+bryce_small = resize_matrix(bryce_mat,0.25)
+```
+
+#### Building Basemaps with Rayshader
+
+```{r}
+#| eval: false
+bryce_small %>% 
+  height_shade() %>%  
+  plot_map() 
+```
+
+```{r}
+#| eval: false
+bryce_small %>% 
+  height_shade() %>% 
+  
+  add_overlay(sphere_shade(bryce_small, texture = "desert", 
+                           zscale=4, colorintensity = 5), alphalayer=0.5) %>%
+  
+
+  add_shadow(lamb_shade(bryce_small,zscale=6), 0) %>%
+  
+
+  add_shadow(ambient_shade(bryce_small), 0) %>%
+  
+
+  add_shadow(texture_shade(bryce_small,detail=8/10,contrast=9,brightness = 11), 0.1) %>%
+  plot_map()
+```
+
+
+
+```{r}
+#| eval: false
+utm_bbox <- c(xmin = 396367.4, xmax = 397975.2, 
+              ymin = 4163747.9, ymax = 4165291.0)
+```
+
+
+```{r}
+#| eval: false
+extent_zoomed = extent(utm_bbox[1], utm_bbox[2], utm_bbox[3], utm_bbox[4])
+
+bryce_zoom = crop(bryce, extent_zoomed)
+
+bryce_zoom_mat = raster_to_matrix(bryce_zoom)
+
+base_map = bryce_zoom_mat %>% 
+  height_shade() %>%
+  add_overlay(sphere_shade(bryce_zoom_mat, texture = "desert", colorintensity = 5), alphalayer=0.5) %>%
+  add_shadow(lamb_shade(bryce_zoom_mat), 0) %>%
+  add_shadow(ambient_shade(bryce_zoom_mat),0) %>% 
+  add_shadow(texture_shade(bryce_zoom_mat,detail=8/10,contrast=9,brightness = 11), 0.1)
+
+plot_map(base_map)
+```
+
+#### Using OSM to add features to our base map
+
+```{r}
+#| eval: false
+osm_bbox = c(-112.174228, 37.614998, -112.156230,37.629084)
+
+bryce_highway = opq(osm_bbox) %>% 
+  add_osm_feature("highway") %>%
+  osmdata_sf() 
+bryce_highway
+```
+
+
+
+```{r}
+#| eval: false
+bryce_lines = st_transform(bryce_highway$osm_lines, crs=crs(bryce))
+
+tm_shape(bryce_lines) +
+  tm_lines(col = "black") +
+  tm_title(text = "Open Street Map `highway` attribute in Bryce Canyon National Park")
+```
+
+
+
+```{r}
+#| eval: false
+bryce_trails = bryce_lines %>% 
+  filter(highway %in% c("path","bridleway"))
+
+bryce_footpaths = bryce_lines %>% 
+  filter(highway %in% c("footway"))
+
+bryce_roads = bryce_lines %>% 
+  filter(highway %in% c("unclassified", "secondary", "tertiary", "residential", "service"))
+```
+
+
+```{r}
+#| eval: false
+trails_layer = generate_line_overlay(bryce_footpaths,extent = extent_zoomed,
+                                    linewidth = 10, color="black", 
+                                    heightmap = bryce_zoom_mat) %>% 
+  add_overlay(generate_line_overlay(bryce_footpaths,extent = extent_zoomed,
+                                    linewidth = 6, color="white",
+                                    heightmap = bryce_zoom_mat)) %>%
+  add_overlay(generate_line_overlay(bryce_trails,extent = extent_zoomed,
+                                    linewidth = 3, color="black", lty=3, offset = c(2,-2),
+                                    heightmap = bryce_zoom_mat)) %>%
+  add_overlay(generate_line_overlay(bryce_trails,extent = extent_zoomed,
+                                    linewidth = 3, color="white", lty=3,
+                                    heightmap = bryce_zoom_mat)) %>%
+  add_overlay(generate_line_overlay(bryce_roads,extent = extent_zoomed,
+                                    linewidth = 8, color="grey30",
+                                    heightmap = bryce_zoom_mat)) 
+```
+
+
+```{r}
+#| eval: false
+bryce_water_lines = opq(osm_bbox) %>% 
+  add_osm_feature("waterway") %>% 
+  osmdata_sf() 
+
+
+tm_shape(bryce_water_lines$osm_lines) +
+  tm_lines(col = "blue") +
+  tm_title(text = "Open Street Map `waterway` attribute in Bryce Canyon National Park")
+```
+
+
+```{r}
+#| eval: false
+bryce_streams = st_transform(bryce_water_lines$osm_lines,crs=crs(bryce)) 
+
+stream_layer = generate_line_overlay(bryce_streams,extent = extent_zoomed,
+                                    linewidth = 4, color="skyblue2", 
+                                    heightmap = bryce_zoom_mat)
+
+```
+
+
+```{r}
+#| eval: false
+bryce_tourism = opq(osm_bbox) %>% 
+  add_osm_feature("tourism") %>% 
+  osmdata_sf() 
+
+bryce_tourism_points = st_transform(bryce_tourism$osm_points,crs=crs(bryce))
+
+bryce_attractions = bryce_tourism_points %>% 
+  filter(tourism == "attraction")
+
+
+attraction_layer = generate_label_overlay(bryce_attractions, extent = extent_zoomed,
+                                     text_size = 2, point_size = 2, color = "white", 
+                                     halo_color = "black",
+                                     halo_expand = 10, 
+                                     halo_blur = 20, 
+                                     halo_alpha = 0.8,
+                                     heightmap = bryce_zoom_mat,
+                                     data_label_column = "name")
+
+```
+
+
+#### Create National Park Map 
+```{r}
+#| eval: false
+
+base_map %>% 
+  add_overlay(stream_layer, alphalayer = 0.8) %>% 
+  add_overlay(trails_layer) %>%
+  add_overlay(attraction_layer) %>% 
+  plot_map(title_text = "Bryce Canyon National Park, Utah",
+           title_bar_color = "lightgray", title_bar_alpha = 1)
+```
+
+
+
+#### Creating a 3D plot of Bryce Canyon's streams and trails
+
+```{r}
+#| eval: false
+base_map %>% 
+  add_overlay(stream_layer, alphalayer = 0.8) %>% 
+  add_overlay(trails_layer) %>%
+  
+plot_3d(bryce_zoom_mat, windowsize=c(1200,800))
+render_camera(theta=240,  phi=30, zoom=0.3,  fov=60)
+render_snapshot()
 ```
 

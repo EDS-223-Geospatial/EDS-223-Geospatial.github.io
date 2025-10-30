@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Ruth Oliver">
-<meta name="dcterms.date" content="2025-05-19">
+<meta name="author" content="Ruth Oliver &amp; Annie Adams">
+<meta name="dcterms.date" content="2025-10-29">
 
 <title>Week 5: Lab</title>
 <style>
@@ -152,6 +152,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week1.html">
  <span class="dropdown-text">week 1</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week2.html">
+ <span class="dropdown-text">week 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week3.html">
+ <span class="dropdown-text">week 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week4.html">
+ <span class="dropdown-text">week 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week5.html">
+ <span class="dropdown-text">week 5</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -193,14 +209,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Ruth Oliver </p>
+               <p>Ruth Oliver &amp; Annie Adams </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">May 19, 2025</p>
+        <p class="date">October 29, 2025</p>
       </div>
     </div>
     
@@ -218,7 +234,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">1. Set up</a></li>
   <li><a href="#raster-cropping" id="toc-raster-cropping" class="nav-link" data-scroll-target="#raster-cropping">2. Raster cropping</a></li>
-  <li><a href="#raster-vectorization" id="toc-raster-vectorization" class="nav-link" data-scroll-target="#raster-vectorization">3. Raster vectorization</a></li>
+  <li><a href="#raster-vectorization" id="toc-raster-vectorization" class="nav-link" data-scroll-target="#raster-vectorization">3. Raster vectorization</a>
+  <ul class="collapse">
+  <li><a href="#rayshader" id="toc-rayshader" class="nav-link" data-scroll-target="#rayshader">Rayshader</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -453,8 +472,190 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<section id="rayshader" class="level3">
+<h3 class="anchored" data-anchor-id="rayshader">Rayshader</h3>
+<p><a href="https://www.rayshader.com/">Rayshader</a> is an R package that creates beautiful 2D and 3D maps from elevation data. It uses various shading techniques to make terrain look realistic, including:</p>
+<ul>
+<li>Lambertian shading - simulates direct sunlight on slopes</li>
+<li>Ambient occlusion - adds shadows in valleys and crevices</li>
+<li>Hypsometric tinting - colors based on elevation (greens for low, browns/whites for high)</li>
+<li>Texture shading - emphasizes ridges and drainage patterns</li>
+<li>Sphere shading - adds natural ambient lighting effects</li>
+</ul>
+<p>These techniques can be layered together to create stunning, professional-quality terrain maps in just a few lines of code.</p>
+<section id="road-trip-we-are-headed-northeast-to-bryce-canyon-national-parkwe-will-use-the-rayshader-package-as-well-as-osmdatato-visualize-the-hoodoos-of-bryce-canyon-in-3d." class="level4">
+<h4 class="anchored" data-anchor-id="road-trip-we-are-headed-northeast-to-bryce-canyon-national-parkwe-will-use-the-rayshader-package-as-well-as-osmdatato-visualize-the-hoodoos-of-bryce-canyon-in-3d.">Road trip! We are headed northeast to Bryce Canyon National Park!We will use the <code>rayshader</code> package, as well as <code>osmdata</code>to visualize the hoodoos of Bryce Canyon in 3D.</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("rayshader")</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("magick")</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("osmdata")</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rayshader)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magick)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(osmdata)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(raster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We’ll use elevation data from Bryce Canyon in Utah (courtesy of Tom Patterson via shadedrelief.com). Download the Bryce Canyon tif from this <a href="https://zenodo.org/records/4323586#.X9lWYS9h0Z8">link</a>. Store this <code>Bryce_Canyon.tif</code> file in your <code>data</code> folder, and be sure to add it to your <code>.gitignore</code>!!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bryce <span class="ot">=</span> <span class="fu">raster</span>(<span class="st">"data/Bryce_Canyon.tif"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>bryce_mat <span class="ot">=</span> <span class="fu">raster_to_matrix</span>(bryce)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>bryce_small <span class="ot">=</span> <span class="fu">resize_matrix</span>(bryce_mat,<span class="fl">0.25</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="building-basemaps-with-rayshader" class="level4">
+<h4 class="anchored" data-anchor-id="building-basemaps-with-rayshader">Building Basemaps with Rayshader</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>bryce_small <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">height_shade</span>() <span class="sc">%&gt;%</span>  </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_map</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bryce_small <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">height_shade</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(<span class="fu">sphere_shade</span>(bryce_small, <span class="at">texture =</span> <span class="st">"desert"</span>, </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">zscale=</span><span class="dv">4</span>, <span class="at">colorintensity =</span> <span class="dv">5</span>), <span class="at">alphalayer=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_shadow</span>(<span class="fu">lamb_shade</span>(bryce_small,<span class="at">zscale=</span><span class="dv">6</span>), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_shadow</span>(<span class="fu">ambient_shade</span>(bryce_small), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_shadow</span>(<span class="fu">texture_shade</span>(bryce_small,<span class="at">detail=</span><span class="dv">8</span><span class="sc">/</span><span class="dv">10</span>,<span class="at">contrast=</span><span class="dv">9</span>,<span class="at">brightness =</span> <span class="dv">11</span>), <span class="fl">0.1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_map</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>utm_bbox <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">xmin =</span> <span class="fl">396367.4</span>, <span class="at">xmax =</span> <span class="fl">397975.2</span>, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">ymin =</span> <span class="fl">4163747.9</span>, <span class="at">ymax =</span> <span class="fl">4165291.0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>extent_zoomed <span class="ot">=</span> <span class="fu">extent</span>(utm_bbox[<span class="dv">1</span>], utm_bbox[<span class="dv">2</span>], utm_bbox[<span class="dv">3</span>], utm_bbox[<span class="dv">4</span>])</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>bryce_zoom <span class="ot">=</span> <span class="fu">crop</span>(bryce, extent_zoomed)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>bryce_zoom_mat <span class="ot">=</span> <span class="fu">raster_to_matrix</span>(bryce_zoom)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>base_map <span class="ot">=</span> bryce_zoom_mat <span class="sc">%&gt;%</span> </span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">height_shade</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(<span class="fu">sphere_shade</span>(bryce_zoom_mat, <span class="at">texture =</span> <span class="st">"desert"</span>, <span class="at">colorintensity =</span> <span class="dv">5</span>), <span class="at">alphalayer=</span><span class="fl">0.5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_shadow</span>(<span class="fu">lamb_shade</span>(bryce_zoom_mat), <span class="dv">0</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_shadow</span>(<span class="fu">ambient_shade</span>(bryce_zoom_mat),<span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_shadow</span>(<span class="fu">texture_shade</span>(bryce_zoom_mat,<span class="at">detail=</span><span class="dv">8</span><span class="sc">/</span><span class="dv">10</span>,<span class="at">contrast=</span><span class="dv">9</span>,<span class="at">brightness =</span> <span class="dv">11</span>), <span class="fl">0.1</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_map</span>(base_map)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="using-osm-to-add-features-to-our-base-map" class="level4">
+<h4 class="anchored" data-anchor-id="using-osm-to-add-features-to-our-base-map">Using OSM to add features to our base map</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>osm_bbox <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">112.174228</span>, <span class="fl">37.614998</span>, <span class="sc">-</span><span class="fl">112.156230</span>,<span class="fl">37.629084</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>bryce_highway <span class="ot">=</span> <span class="fu">opq</span>(osm_bbox) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="st">"highway"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>() </span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>bryce_highway</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>bryce_lines <span class="ot">=</span> <span class="fu">st_transform</span>(bryce_highway<span class="sc">$</span>osm_lines, <span class="at">crs=</span><span class="fu">crs</span>(bryce))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(bryce_lines) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Open Street Map `highway` attribute in Bryce Canyon National Park"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>bryce_trails <span class="ot">=</span> bryce_lines <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"path"</span>,<span class="st">"bridleway"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>bryce_footpaths <span class="ot">=</span> bryce_lines <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"footway"</span>))</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>bryce_roads <span class="ot">=</span> bryce_lines <span class="sc">%&gt;%</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(highway <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"unclassified"</span>, <span class="st">"secondary"</span>, <span class="st">"tertiary"</span>, <span class="st">"residential"</span>, <span class="st">"service"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>trails_layer <span class="ot">=</span> <span class="fu">generate_line_overlay</span>(bryce_footpaths,<span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">linewidth =</span> <span class="dv">10</span>, <span class="at">color=</span><span class="st">"black"</span>, </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">heightmap =</span> bryce_zoom_mat) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(<span class="fu">generate_line_overlay</span>(bryce_footpaths,<span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">linewidth =</span> <span class="dv">6</span>, <span class="at">color=</span><span class="st">"white"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">heightmap =</span> bryce_zoom_mat)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(<span class="fu">generate_line_overlay</span>(bryce_trails,<span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">linewidth =</span> <span class="dv">3</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">lty=</span><span class="dv">3</span>, <span class="at">offset =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="sc">-</span><span class="dv">2</span>),</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">heightmap =</span> bryce_zoom_mat)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(<span class="fu">generate_line_overlay</span>(bryce_trails,<span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">linewidth =</span> <span class="dv">3</span>, <span class="at">color=</span><span class="st">"white"</span>, <span class="at">lty=</span><span class="dv">3</span>,</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">heightmap =</span> bryce_zoom_mat)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(<span class="fu">generate_line_overlay</span>(bryce_roads,<span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">linewidth =</span> <span class="dv">8</span>, <span class="at">color=</span><span class="st">"grey30"</span>,</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">heightmap =</span> bryce_zoom_mat)) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>bryce_water_lines <span class="ot">=</span> <span class="fu">opq</span>(osm_bbox) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="st">"waterway"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>() </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(bryce_water_lines<span class="sc">$</span>osm_lines) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>(<span class="at">col =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Open Street Map `waterway` attribute in Bryce Canyon National Park"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>bryce_streams <span class="ot">=</span> <span class="fu">st_transform</span>(bryce_water_lines<span class="sc">$</span>osm_lines,<span class="at">crs=</span><span class="fu">crs</span>(bryce)) </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>stream_layer <span class="ot">=</span> <span class="fu">generate_line_overlay</span>(bryce_streams,<span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">linewidth =</span> <span class="dv">4</span>, <span class="at">color=</span><span class="st">"skyblue2"</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">heightmap =</span> bryce_zoom_mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>bryce_tourism <span class="ot">=</span> <span class="fu">opq</span>(osm_bbox) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_osm_feature</span>(<span class="st">"tourism"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">osmdata_sf</span>() </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>bryce_tourism_points <span class="ot">=</span> <span class="fu">st_transform</span>(bryce_tourism<span class="sc">$</span>osm_points,<span class="at">crs=</span><span class="fu">crs</span>(bryce))</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>bryce_attractions <span class="ot">=</span> bryce_tourism_points <span class="sc">%&gt;%</span> </span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tourism <span class="sc">==</span> <span class="st">"attraction"</span>)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>attraction_layer <span class="ot">=</span> <span class="fu">generate_label_overlay</span>(bryce_attractions, <span class="at">extent =</span> extent_zoomed,</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">text_size =</span> <span class="dv">2</span>, <span class="at">point_size =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"white"</span>, </span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">halo_color =</span> <span class="st">"black"</span>,</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">halo_expand =</span> <span class="dv">10</span>, </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">halo_blur =</span> <span class="dv">20</span>, </span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">halo_alpha =</span> <span class="fl">0.8</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">heightmap =</span> bryce_zoom_mat,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">data_label_column =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="create-national-park-map" class="level4">
+<h4 class="anchored" data-anchor-id="create-national-park-map">Create National Park Map</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>base_map <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(stream_layer, <span class="at">alphalayer =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(trails_layer) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(attraction_layer) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot_map</span>(<span class="at">title_text =</span> <span class="st">"Bryce Canyon National Park, Utah"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">title_bar_color =</span> <span class="st">"lightgray"</span>, <span class="at">title_bar_alpha =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="creating-a-3d-plot-of-bryce-canyons-streams-and-trails" class="level4">
+<h4 class="anchored" data-anchor-id="creating-a-3d-plot-of-bryce-canyons-streams-and-trails">Creating a 3D plot of Bryce Canyon’s streams and trails</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>base_map <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(stream_layer, <span class="at">alphalayer =</span> <span class="fl">0.8</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_overlay</span>(trails_layer) <span class="sc">%&gt;%</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_3d</span>(bryce_zoom_mat, <span class="at">windowsize=</span><span class="fu">c</span>(<span class="dv">1200</span>,<span class="dv">800</span>))</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">render_camera</span>(<span class="at">theta=</span><span class="dv">240</span>,  <span class="at">phi=</span><span class="dv">30</span>, <span class="at">zoom=</span><span class="fl">0.3</span>,  <span class="at">fov=</span><span class="dv">60</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="fu">render_snapshot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
