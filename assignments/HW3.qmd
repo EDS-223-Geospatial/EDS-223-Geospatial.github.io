@@ -234,7 +234,7 @@ Assignments will be deemed "Satisfactory" based on the following criteria:
 
 
 #### Professional output
-- [ ] Quarto document must be rendered to `html`
+- [ ] Quarto document must be rendered to `pdf`
 - [ ] The rendered output must include the following elements:
   - document header with title, name, and date (ideally the date rendered)
   - all packages are loaded together at the top of the document
