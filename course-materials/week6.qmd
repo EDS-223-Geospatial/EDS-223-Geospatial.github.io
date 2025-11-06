@@ -21,7 +21,7 @@ knitr::include_graphics("images/week6-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Resolutions: spatial, temporal, spectral, radiometric](https://docs.google.com/presentation/d/1WPl_WN0_JqjscQIfsiKkYKLqispPcWEJqOdf1gFbPuA/present){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Vector and raster interactions cont.; False color images](labs/week6.qmd)        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Vector and raster interactions cont.; False color images](){target="_blank"} |
+| {{< fa download title="download" >}} Lab materials to download                  | [Vector and raster interactions cont.; False color images](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week6){target="_blank"} |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Working with false color images](discussions/week6-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
@@ -33,7 +33,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| Check-In             | [Check-In (week 6)](https://forms.gle/nTf1iao32byVN7ZUA){target="_blank"}              | 11/06/2025    | 11/06/2025 |
+| Check-In             | [Check-In (week 6)](https://docs.google.com/forms/d/e/1FAIpQLScn6TUZYvrPr-W4lLrmwI1ITOKEOfb7WZ3vgEqfENsnHUZqyA/viewform?usp=publish-editor){target="_blank"}              | 11/06/2025    | 11/06/2025 |
 | HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"} | 10/21/2025    | 11/08/2025 |
 
 
