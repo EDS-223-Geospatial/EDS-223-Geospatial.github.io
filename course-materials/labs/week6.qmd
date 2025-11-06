@@ -348,11 +348,12 @@ We can explore various band combinations, but there are a few common false color
   - Water absorbs all three wavelengths, so appears black
   - Water and wet soil stand out and therefore helpful for monitoring floods
 
+
 ```{r}
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(L7) +
-  tm_rgb(col = tm_vars(c(1,2,3), multivariate = TRUE)) +
+  tm_rgb(col = tm_vars(c(3,2,1), multivariate = TRUE)) +
   tm_title(text = "true color")
 
 map2 <- tm_shape(L7) +
