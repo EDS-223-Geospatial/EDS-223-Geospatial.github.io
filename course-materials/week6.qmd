@@ -34,7 +34,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
 | Check-In             | [Check-In (week 6)](https://docs.google.com/forms/d/e/1FAIpQLScn6TUZYvrPr-W4lLrmwI1ITOKEOfb7WZ3vgEqfENsnHUZqyA/viewform?usp=publish-editor){target="_blank"}              | 11/06/2025    | 11/06/2025 |
-| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"} | 10/21/2025    | 11/08/2025 |
+| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"} | 10/21/2025    | 11/10/2025 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading

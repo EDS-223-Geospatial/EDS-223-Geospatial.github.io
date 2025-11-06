@@ -35,7 +35,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 |-----------------|-------------------------------------------------|---------------|------------|
 | Check-In             | [Check-In (week 10)](https://forms.gle/99wrYNRxvVGL3gKj6){target="_blank"}               | 12/04/2025    | 12/04/2025 |
 | SR              | [End-of-course reflection (SR#3)](../assignments/SR3.qmd){target="_blank"} | 12/02/2025    | 12/06/2023 |
-| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/11/2025    | 12/06/2025 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/13/2025    | 12/06/2025 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading

@@ -53,7 +53,7 @@
     "href": "course-materials/week6.html#assignment-reminders",
     "title": "Remote sensing data collection",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/08/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/10/2025"
   },
   {
     "objectID": "course-materials/week6.html#background-reading",
@@ -193,7 +193,7 @@
     "href": "course-materials/week9.html#assignment-reminders",
     "title": "Land Cover Classification",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/discussions/answer-keys/week6-discussion-answerKey.html",
@@ -907,7 +907,7 @@
     "href": "assignments.html#assignments",
     "title": "Assignments",
     "section": "Assignments",
-    "text": "Assignments\n\n\n\n\n\n\nImportant\n\n\n\nEarning “Satisfactory”/ “Almost”/ “Not Yet” marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.\n\n\nLinks to assignments will become available as they are assigned.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025\n\n\nHW\nHomework Assignment #1\n09/30/2025\n10/06/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/08/2025\n\n\nSR\nMid Quarter Self Reflection (SR#2)\n10/28/2025\n11/01/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignments\n\n\n\n\n\n\nImportant\n\n\n\nEarning “Satisfactory”/ “Almost”/ “Not Yet” marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.\n\n\nLinks to assignments will become available as they are assigned.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/30/2025\n10/04/2025\n\n\nHW\nHomework Assignment #1\n09/30/2025\n10/06/2025\n\n\nHW\nHomework Assignment #2\n10/07/2025\n10/18/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/10/2025\n\n\nSR\nMid Quarter Self Reflection (SR#2)\n10/28/2025\n11/01/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "assignments.html#weekly-check-ins",
@@ -1411,14 +1411,14 @@
     "href": "course-materials/discussions/week6-discussion.html",
     "title": "Week 6: Discussion Section",
     "section": "",
-    "text": "Source Materials\n\n\n\nThe following materials are modified from curriculum developed by Earth Lab and the Raster Analysis with terra book."
+    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from curriculum developed by Earth Lab and the Raster Analysis with terra book."
   },
   {
     "objectID": "course-materials/discussions/week6-discussion.html#background",
     "href": "course-materials/discussions/week6-discussion.html#background",
     "title": "Week 6: Discussion Section",
     "section": "1. Background",
-    "text": "1. Background\nIn Lab #6, you explored various band combinations and plotted false color images with tm_rgb() from {tmap}. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with plotRGB() from {terra}.\n\n\n\n\n\n\nMany Ways To Plot a False Color Image\n\n\n\n\n\nYou can plot false color composites with ggplot2 too! Check out this tutorial.\n\n\n\nThe plotRGB() function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.\nBut why would you want to normalize the colors in an image?\n\n\n\n\n\n\n\n\n\n\n\n“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”\n\nYou are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The fire occurred from July 10-14, 2016 and the Landsat images are from June 5, 2016 (pre-fire) and August 8, 2016 (post-fire). The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.\n\n\n\n\n\n\n\n\n\nBand\nWavelength range (nanometers)\nSpatial Resolution (m)\nSpectral Width (nm)\n\n\n\n\nBand 1 - Coastal aerosol\n430 - 450\n30\n2.0\n\n\nBand 2 - Blue\n450 - 510\n30\n6.0\n\n\nBand 3 - Green\n530 - 590\n30\n6.0\n\n\nBand 4 - Red\n640 - 670\n30\n0.03\n\n\nBand 5 - Near Infrared (NIR)\n850 - 880\n30\n3.0\n\n\nBand 6 - Short-Wave Infrared 1 (SWIR1)\n1570 - 1650\n30\n8.0\n\n\nBand 7 - Short-Wave Infrared 2 (SWIR2)\n2110 - 2290\n30\n18"
+    "text": "1. Background\nIn Lab #6, you explored various band combinations and plotted false color images with tm_rgb() from {tmap}. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with plotRGB() from {terra}.\n\n\n\n\n\n\nTipMany Ways To Plot a False Color Image\n\n\n\n\n\nYou can plot false color composites with ggplot2 too! Check out this tutorial.\n\n\n\nThe plotRGB() function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.\nBut why would you want to normalize the colors in an image?\n\n\n\n\n\n\n\n\n\n\n\n“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”\n\nYou are provided Landsat data for the site of the Cold Springs fire that occurred near Nederland, CO. The fire occurred from July 10-14, 2016 and the Landsat images are from June 5, 2016 (pre-fire) and August 8, 2016 (post-fire). The multispectral bands, wavelength range, and associated spatial resolution of the first 7 bands in the Landsat 8 sensor are listed below.\n\n\n\n\n\n\n\n\n\nBand\nWavelength range (nanometers)\nSpatial Resolution (m)\nSpectral Width (nm)\n\n\n\n\nBand 1 - Coastal aerosol\n430 - 450\n30\n2.0\n\n\nBand 2 - Blue\n450 - 510\n30\n6.0\n\n\nBand 3 - Green\n530 - 590\n30\n6.0\n\n\nBand 4 - Red\n640 - 670\n30\n0.03\n\n\nBand 5 - Near Infrared (NIR)\n850 - 880\n30\n3.0\n\n\nBand 6 - Short-Wave Infrared 1 (SWIR1)\n1570 - 1650\n30\n8.0\n\n\nBand 7 - Short-Wave Infrared 2 (SWIR2)\n2110 - 2290\n30\n18"
   },
   {
     "objectID": "course-materials/discussions/week6-discussion.html#get-started",
@@ -1432,7 +1432,7 @@
     "href": "course-materials/discussions/week6-discussion.html#your-task",
     "title": "Week 6: Discussion Section",
     "section": "3. Your Task",
-    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nRename the bands of the pre_fire and post_fire rasters using names()\n\nNext, for each of the pre_fire and post_fire rasters…\n\nMask out clouds and shadows with the pre_mask and post_mask rasters\n\n\nHint: Set mask &gt; 0 to NA\n\n\n\n\n\n\n\nDealing with Clouds and Shadows\n\n\n\n\n\n“Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)” (Earth Lab)\n\n\n\n\nPlot a true color composite using plotRGB()\n\n\nMap the red band to the red channel, green to green, and blue to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nHow To Decide How To “Stretch” Raster Imagery?\n\n\n\n\n\nTo make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:\n\n# View histogram for each band\nhist(pre_fire_rast,\n     maxpixels = ncell(pre_fire_rast),\n     col = \"orange\")\n\n\n\n\n\nPlot two false color composite using plotRGB()\n\n\nMap the SWIR2 band to the red channel, NIR to green, and green to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nWhat is the SWIR, NIR, Red false color scheme?\n\n\n\n“Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image” (EOS Data Analytics)\n\n\n\nCalculate the normalized burn ratio (NBR)\n\n\nHint: Use lapp() like you previously did for NDVI and NDWI in Week 4\n\nLet’s bring it home!\n\nFind the difference NBR, where \\(dNBR = prefireNBR - postfireNBR\\)\nPlot the dnBR raster\n\n\nBonus Challenge: Use classify() to assign the severity levels below:\n\n\n\n\nSeverity Level\ndNBR Range\n\n\n\n\nEnhanced Regrowth\n&lt; -.1\n\n\nUnburned\n-.1 to +.1\n\n\nLow Severity\n+.1 to +.27\n\n\nModerate Severity\n+.27 to +.66\n\n\nHigh Severity\n&gt; .66"
+    "text": "3. Your Task\nNow, to meet this week’s learning objectives, your task:\n\nRename the bands of the pre_fire and post_fire rasters using names()\n\nNext, for each of the pre_fire and post_fire rasters…\n\nMask out clouds and shadows with the pre_mask and post_mask rasters\n\n\nHint: Set mask &gt; 0 to NA\n\n\n\n\n\n\n\nTipDealing with Clouds and Shadows\n\n\n\n\n\n“Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)” (Earth Lab)\n\n\n\n\nPlot a true color composite using plotRGB()\n\n\nMap the red band to the red channel, green to green, and blue to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nTipHow To Decide How To “Stretch” Raster Imagery?\n\n\n\n\n\nTo make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:\n\n# View histogram for each band\nhist(pre_fire_rast,\n     maxpixels = ncell(pre_fire_rast),\n     col = \"orange\")\n\n\n\n\n\nPlot two false color composite using plotRGB()\n\n\nMap the SWIR2 band to the red channel, NIR to green, and green to blue\nApply a linear stretch “lin” or histogram equalization “hist”\n\n\n\n\n\n\n\nTipWhat is the SWIR, NIR, Red false color scheme?\n\n\n\n“Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image” (EOS Data Analytics)\n\n\n\nCalculate the normalized burn ratio (NBR)\n\n\nHint: Use lapp() like you previously did for NDVI and NDWI in Week 4\n\nLet’s bring it home!\n\nFind the difference NBR, where \\(dNBR = prefireNBR - postfireNBR\\)\nPlot the dnBR raster\n\n\nBonus Challenge: Use classify() to assign the severity levels below:\n\n\n\n\nSeverity Level\ndNBR Range\n\n\n\n\nEnhanced Regrowth\n&lt; -.1\n\n\nUnburned\n-.1 to +.1\n\n\nLow Severity\n+.1 to +.27\n\n\nModerate Severity\n+.27 to +.66\n\n\nHigh Severity\n&gt; .66"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html",
@@ -1635,7 +1635,7 @@
     "href": "course-materials/week8.html#assignment-reminders",
     "title": "Multispectral Remote Sensing Analysis",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 8)\n11/20/2025\n11/20/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 8)\n11/20/2025\n11/20/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week8.html#background-reading",
@@ -1754,7 +1754,7 @@
     "href": "course-materials/week7.html#assignment-reminders",
     "title": "Remote sensing of vegetation",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/11/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week4.html#class-materials",
@@ -1789,7 +1789,7 @@
     "href": "course-materials/week10.html#assignment-reminders",
     "title": "Intro to active remote sensing",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 10)\n12/04/2025\n12/04/2025\n\n\nSR\nEnd-of-course reflection (SR#3)\n12/02/2025\n12/06/2023\n\n\nPR\nPortfolio Repository\n11/11/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 10)\n12/04/2025\n12/04/2025\n\n\nSR\nEnd-of-course reflection (SR#3)\n12/02/2025\n12/06/2023\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week10.html#background-reading",
@@ -2140,5 +2140,33 @@
     "title": "Week 5: Discussion Section",
     "section": "4. Vectorize grain raster",
     "text": "4. Vectorize grain raster\n\nPolygonize grain and filter to only keep squares that represent clay\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
+  },
+  {
+    "objectID": "assignments.html#class-materials",
+    "href": "assignments.html#class-materials",
+    "title": "Remote sensing data collection",
+    "section": " Class Materials",
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nResolutions: spatial, temporal, spectral, radiometric\n\n\n Lab\nVector and raster interactions cont.; False color images\n\n\n Lab materials to download\nVector and raster interactions cont.; False color images\n\n\n Discussion\nWorking with false color images"
+  },
+  {
+    "objectID": "assignments.html#assignment-reminders",
+    "href": "assignments.html#assignment-reminders",
+    "title": "Remote sensing data collection",
+    "section": " Assignment Reminders",
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/10/2025"
+  },
+  {
+    "objectID": "assignments.html#background-reading",
+    "href": "assignments.html#background-reading",
+    "title": "Remote sensing data collection",
+    "section": " Background Reading",
+    "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 1\nRemote Sensing of the Environment, Chapter 2\nHow to Interpret a False-Color Satellite Image"
+  },
+  {
+    "objectID": "assignments.html#additional-resources",
+    "href": "assignments.html#additional-resources",
+    "title": "Remote sensing data collection",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nHow raster functions map to stars functions\nSpatiotemporal raster data handling with stars\nA comparison of terra and stars packages"
   }
 ]
