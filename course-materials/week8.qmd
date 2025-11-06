@@ -35,8 +35,8 @@ All assignments are **due at 11:59 PM** on the date listed.
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
 | Check-In             | [Check-In (week 8)](https://forms.gle/TRj7vNBDEQmLFR9b8){target="_blank"}              | 11/20/2025    | 11/20/2025 |
-| HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/11/2025    | 11/26/2025 |
-| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/11/2025    | 12/06/2025 |
+| HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/13/2025    | 11/26/2025 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/13/2025    | 12/06/2025 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
