@@ -259,29 +259,30 @@ ch_raster3 <- rasterize(cycle_hire_osm_projected, template_raster,
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(cycle_hire_osm_projected) +
-  tm_symbols(fill  = "capacity") +
-  tm_title(text = "original points")+ 
-    tm_layout(meta.margins = c(.2, 0, 0, 0), 
-              legend.position = c("right", "bottom")  )
+  tm_symbols(fill  = "capacity",
+             fill.legend= tm_legend(
+            position = tm_pos_out("right", "center"))) +
+  tm_title(text = "original points") 
+
 
 map2 <- tm_shape(ch_raster1) +
-  tm_raster(col.legend= tm_legend("presence")) +
-  tm_title(text = "presence/absence")+ 
-    tm_layout(meta.margins = c(.2, 0, 0, 0), 
-              legend.position = c("right", "bottom")  ) 
+  tm_raster(col.legend= tm_legend("presence",
+                                   orientation = "landscape",
+            position = tm_pos_out("right", "center"))) +
+  tm_title(text = "presence/absence")
+
 
 map3 <- tm_shape(ch_raster2) +
-  tm_raster(col.legend= tm_legend("Hire points (n)")) +
-  tm_title(text = "count of points")+ 
-    tm_layout(meta.margins = c(.2, 0, 0, 0), 
-              legend.position = c("right", "bottom"))
+  tm_raster(col.legend= tm_legend("Hire points (n)", 
+,
+            position = tm_pos_out("right", "center"))) +
+  tm_title(text = "count of points")
 map4 <- tm_shape(ch_raster3) +
-  tm_raster(col.legend= tm_legend("Capacity (n bikes)")) +
-  tm_title(text = "sum of capacity")+ 
-    tm_layout(meta.margins = c(.2, 0, 0, 0), 
-              legend.position = c("right", "bottom"))
+  tm_raster(col.legend= tm_legend("Capacity (n bikes)",
+            position = tm_pos_out("right", "center"))) +
+  tm_title(text = "sum of capacity")
 
-tmap_arrange(map1, map2, map3, map4, nrow = 2)
+tmap_arrange(map1,  map2, map3, map4, nrow = 2,  outer.margins = 0.05 )
 ```
 
 
@@ -346,25 +347,75 @@ We can explore various band combinations, but there are a few common false color
 - Shortwave infrared (red channel), near infrared (green channel), green (blue channel):
   - Water absorbs all three wavelengths, so appears black
   - Water and wet soil stand out and therefore helpful for monitoring floods
-  
+
 ```{r}
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(L7) +
-  tm_rgb(r = 1, g = 2, b = 3) +
-  tm_title(text = "true color")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_rgb(col = tm_vars(c(1,2,3), multivariate = TRUE)) +
+  tm_title(text = "true color")
 
 map2 <- tm_shape(L7) +
-  tm_rgb(r = 4, g = 3, b = 2) +
-  tm_title(text = "NIR, red, green")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_rgb(col = tm_vars(c(4,3,2),  multivariate = TRUE)) +
+  tm_title(text = "NIR, red, green")
 
 map3 <- tm_shape(L7) +
-  tm_rgb(r = 5, g = 4, b = 2) +
-  tm_title(text = "SWIR, NIR, green")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_rgb(col = tm_vars(c(5,4,2),  multivariate = TRUE)) +
+  tm_title(text = "SWIR, NIR, green")
 
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
+
+We can also create create rasters of NDVI (Normalized difference vegetation index) and NDWI (Normalized difference water index). 
+```{r}
+#| code-fold: true
+#| message: false
+# define NDVI as the normalized difference between NIR and red bands
+ndvi_fun <- function(nir, red){
+  (nir - red) / (nir + red)
+}
+
+# apply NDVI function to Landsat bands 3 & 4
+ndvi_rast <- lapp(L7[[c(4, 3)]], fun = ndvi_fun)
+
+names(ndvi_rast) <- "NDVI"
+
+# Visualize NDVI
+ndvi_map <- tm_shape(ndvi_rast) +
+  tm_raster(
+    col.scale = tm_scale_continuous(
+      values = "brewer.rd_yl_gn"
+    ),
+    col.legend = tm_legend(title = "NDVI", 
+                           orientation = "portrait")
+  ) +
+  tm_title(text = "NDVI")
+
+tmap_arrange(map1, map2, ndvi_map)
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+# define NDWI as the normalized difference between green and nir bands
+ndwi_fun <- function(green, nir){
+  (green - nir) / (green + nir)
+}
+
+# apply NDWI function to Landsat bands 3 & 4
+ndwi_rast <- lapp(L7[[c(2, 4)]], fun = ndwi_fun)
+names(ndwi_rast) <- "NDWI"
+
+map_ndwi <- tm_shape(ndwi_rast) +
+  tm_raster(
+    col.scale = tm_scale_continuous(values = "brewer.blues"),
+    col.legend = tm_legend(title = "NDWI", 
+                           orientation = "portrait")
+  ) +
+  tm_title(text = "NDWI")
+
+
+tmap_arrange(map1, map3, map_ndwi)
+```
+
 
