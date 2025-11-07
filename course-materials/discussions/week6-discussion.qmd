@@ -3,27 +3,26 @@ title: "Week 6: Discussion Section"
 subtitle: "Working with false color images"
 author: "Alessandra Vidal Meza"
 date: last-modified
-execute: 
-  eval: false
+execute:
+  message: false
+  warning: false
 format:
   html:
     toc: true
 ---
 
 ::: {.callout-note icon=true}
-# Source Materials
+## Source Materials
 The following materials are modified from curriculum developed by [Earth Lab](https://www.earthdatascience.org/courses/earth-analytics/multispectral-remote-sensing-data/naip-imagery-raster-stacks-in-r/#multispectral-imagery-in-r) and the [Raster Analysis with `terra`](https://www.wvview.org/os_sa/15b_Raster_Analysis_terra.html#image-analysis) book.
 :::
 
-## 1. Background
-
-In [Lab #6](https://eds-223-geospatial.github.io/course-materials/labs/week6.html), you explored various band combinations and plotted false color images with `tm_rgb()` from `{tmap}`. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with `plotRGB()` from `{terra}`.
-
-:::{.callout-tip icon=true collapse=true}
-# Many Ways To Plot a False Color Image
+:::{.callout-tip icon=true}
+## Many ways to plot a false color image
 
 You can plot false color composites with `ggplot2` too! Check out [this tutorial](https://shekeine.github.io/visualization/2014/09/27/sfcc_rgb_in_R).
 :::
+
+In [Lab #6](https://eds-223-geospatial.github.io/course-materials/labs/week6.html), you explored various band combinations and plotted false color images with `tm_rgb()` from `{tmap}`. False color images allow you to visually highlight specific features in an image that may otherwise not be readily discernible. To add to your toolbelt, you will now be plotting false color images with `plotRGB()` from `{terra}`.
 
 The `plotRGB()` function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.
 
@@ -49,20 +48,29 @@ You are provided Landsat data for the site of the Cold Springs fire that occurre
 | Band 6 - Short-Wave Infrared  1 (SWIR1) | 1570 - 1650 | 30 | 8.0  |
 | Band 7 - Short-Wave Infrared  2 (SWIR2) | 2110 - 2290 | 30 | 18 |
 
-## 2. Get Started
+<br>
 
-- Create an `.Rproj` as your version controlled project for Week 6
-- Create a Quarto document inside your `.Rproj`
-- Download [this data folder from Google Drive](https://drive.google.com/file/d/1cgSB6xU6OKK1uMWoiPy_nVIHUrRVJAil/view) and move it inside your `.Rproj`
-- Load all necessary packages, read spatial objects, and define `nbr_fun` function
+## 1. Get Started
+
+- Create a version-controlled R Project
+- Add (at least) a subfolder to your R project: `data`
+- Create a Quarto document
+
+Let's load all necessary packages:
 
 ```{r}
 library(tidyverse)
 library(sf)
 library(terra)
+library(tmap)
+library(tmaptools)
 ```
 
+Next, let's [download our data](https://drive.google.com/file/d/1cgSB6xU6OKK1uMWoiPy_nVIHUrRVJAil/view). Unzip and move this to your version-controlled R Project's `data` folder. 
+
 ```{r}
+#| eval: false
+
 # Set directory for folder
 pre_fire_dir <- here::here("data", "LC80340322016189-SC20170128091153")
 
@@ -78,6 +86,8 @@ pre_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC8034
 ```
 
 ```{r}
+#| eval: false
+
 # Set directory for folder
 post_fire_dir <- here::here("data", "LC80340322016205-SC20170127160728")
 
@@ -93,33 +103,98 @@ post_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC803
 ```
 
 ```{r}
+#| include: false
+
+# Set directory for folder
+pre_fire_dir <- here::here("course-materials", "data", "LC80340322016189-SC20170128091153")
+
+# Create a list of all images that have the extension .tif and contain the word band
+pre_fire_bands <- list.files(pre_fire_dir,
+                             pattern = glob2rx("*band*.tif$"),
+                             full.names = TRUE)
+# Create a raster stack
+pre_fire_rast <- rast(pre_fire_bands)
+
+# Read mask raster
+pre_mask <- rast(here::here("course-materials", "data",  "LC80340322016189-SC20170128091153", "LC80340322016189LGN00_cfmask_crop.tif"))
+```
+
+```{r}
+#| include: false
+
+# Set directory for folder
+post_fire_dir <- here::here("course-materials", "data",  "LC80340322016205-SC20170127160728")
+
+# Create a list of all images that have the extension .tif and contain the word band
+post_fire_bands <- list.files(post_fire_dir,
+                             pattern = glob2rx("*band*.tif$"),
+                             full.names = TRUE)
+# Create a raster stack
+post_fire_rast <- rast(post_fire_bands)
+
+# Read mask raster
+post_mask <- rast(here::here("course-materials", "data",  "LC80340322016205-SC20170127160728", "LC80340322016205LGN00_cfmask_crop.tif"))
+```
+
+And define the `nbr_fun` function to calculate the normalized burn ratio (NBR):
+
+```{r}
 nbr_fun <- function(nir, swir2){
     (nir - swir2)/(nir + swir2)
 }
 ```
 
-## 3. Your Task
+## 2. Rename and mask the bands 
 
-Now, to meet this week's learning objectives, your task:
-
-1. Rename the bands of the `pre_fire` and `post_fire` rasters using `names()`
-
-Next, for each of the `pre_fire` and `post_fire` rasters...
-
-2. Mask out clouds and shadows with the `pre_mask` and `post_mask` rasters
-  - **Hint**: Set `mask > 0` to `NA`
-  
-:::{.callout-tip icon=true collapse=true}
-# Dealing with Clouds and Shadows
+:::{.callout-note icon=true collapse=true}
+## Dealing with clouds and shadows
 "Extreme cloud cover and shadows can make the data in those areas, un-usable given reflectance values are either washed out (too bright - as the clouds scatter all light back to the sensor) or are too dark (shadows which represent blocked or absorbed light)" ([Earth Lab](https://www.earthdatascience.org/courses/earth-analytics/multispectral-remote-sensing-modis/intro-spectral-data-r/))
 :::
 
-3. Plot a true color composite using `plotRGB()` 
+- Rename the bands of the `pre_fire` and `post_fire` rasters using `names()`
+
+- Mask out clouds and shadows of the `pre_mask` and `post_mask` rasters (i.e., set `mask > 0` to `NA`)
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+# Rename bands
+bands <- c("Aerosol", "Blue", "Green", "Red", "NIR", "SWIR1", "SWIR2")
+names(pre_fire_rast) <- bands
+names(post_fire_rast) <- bands
+```
+
+```{r}
+# Set all cells with values greater than 0 to NA
+pre_mask[pre_mask > 0] <- NA
+
+# Subset raster based on mask
+pre_fire_rast <- mask(pre_fire_rast, mask = pre_mask)
+
+# View raster
+plot(pre_fire_rast)
+```
+
+```{r}
+# Set all cells with values greater than 0 to NA
+post_mask[post_mask > 0] <- NA
+
+# Subset raster based on mask
+post_fire_rast <- mask(post_fire_rast, mask = post_mask)
+
+# View raster
+plot(post_fire_rast)
+```
+:::
+
+## 3. Plot true and false color composites
+
+- Plot a true color composite using `plotRGB()`
   - Map the red band to the red channel, green to green, and blue to blue
   - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
 
-:::{.callout-tip icon=true collapse=true}
-# How To Decide How To “Stretch” Raster Imagery?
+:::{.callout-note icon=true collapse="true"}
+## How to decide how to stretch a raster image?
 To make an informed choice about whether to apply a linear stretch or histogram equalization, check the distribution of reflectance values of the bands in each raster:
 
 ```{r}
@@ -130,24 +205,79 @@ hist(pre_fire_rast,
 ```
 :::  
 
-4. Plot two false color composite using `plotRGB()`
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+plotRGB(pre_fire_rast, r = 4, g = 3, b = 2, stretch = "lin", colNA = "black")
+```
+
+```{r}
+plotRGB(post_fire_rast, r = 4, g = 3, b = 2, stretch = "lin", colNA = "black")
+```
+:::
+
+- Plot two false color composite using `plotRGB()`
   - Map the SWIR2 band to the red channel, NIR to green, and green to blue
   - Apply a linear stretch `“lin”` or histogram equalization `“hist”`
 
-:::{.callout-tip icon=true}
-# What is the SWIR, NIR, Red false color scheme?
+:::{.callout-note icon=true}
+## What is the SWIR, NIR, Red false color scheme?
 
 "Combining SWIR, NIR, and Red bands highlights the presence of vegetation, clear-cut areas and bare soils, active fires, and smoke; in a false color image" ([EOS Data Analytics](https://eos.com/make-an-analysis/false-color/))
 :::
 
-5. Calculate the normalized burn ratio (NBR)
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+plotRGB(pre_fire_rast, r = 7, g = 5, b = 3, stretch = "lin", colNA = "black")
+```
+
+```{r}
+plotRGB(post_fire_rast, r = 7, g = 5, b = 3, stretch = "lin", colNA = "black")
+```
+:::
+
+## 4. Calculate the normalized burn ratio (NBR)
+
+- Calculate the normalized burn ratio (NBR)
   - **Hint**: Use `lapp()` like you previously did for NDVI and NDWI in [Week 4](https://eds-223-geospatial.github.io/course-materials/discussions/answer-keys/week4-discussion-answerKey.html#find-correlation-between-ndwi-and-ndvi)
 
-Let's bring it home!
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+pre_nbr_rast <- terra::lapp(pre_fire_rast[[c(5, 7)]], fun = nbr_fun)
 
-6. Find the difference NBR, where $dNBR = prefireNBR - postfireNBR$
-7. Plot the `dnBR` raster
-  - **Bonus Challenge**: Use `classify()` to assign the severity levels below:
+plot(pre_nbr_rast, main = "Cold Springs Pre-Fire NBR", colNA = "black")
+```
+
+```{r}
+post_nbr_rast <- terra::lapp(post_fire_rast[[c(5, 7)]], fun = nbr_fun)
+
+plot(post_nbr_rast, main = "Cold Springs Post-Fire NBR", colNA = "black")
+```
+:::
+
+## 6. Calculate and plot difference NBR
+
+- Find the difference NBR, where $\text{d}NBR = \text{prefire}NBR- \text{postfire}NBR$
+- Plot the `dnBR` raster
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+diff_nbr <- pre_nbr_rast - post_nbr_rast
+
+tm_shape(diff_nbr) +
+  tm_raster(style = "equal", n = 6, 
+            palette = get_brewer_pal("YlOrRd", n = 6, plot = FALSE),
+            title = "Difference NBR (dNBR)", colorNA = "black") +
+  tm_layout(legend.outside = TRUE)
+```
+:::
+
+## 5. **Bonus challenge**: Classify severeity levels of burn
+
+- Use `classify()` to assign the severity levels below:
   
 | Severity Level | dNBR Range |
 |-------------------------------------|------------------|
@@ -156,3 +286,33 @@ Let's bring it home!
 | Low Severity     | +.1 to +.27 |
 | Moderate Severity  | +.27 to +.66 |
 | High Severity     | > .66 |
+
+::: {.callout-tip collapse="true" icon=true}
+## Solution
+```{r}
+# Set categories for severity levels
+categories <- c("Enhanced Regrowth", "Unburned", "Low Severity", "Moderate Severity", "High Severity")
+
+# Create reclassification matrix
+rcl <- matrix(c(-Inf, -0.1, 1, # group 1 ranges for Enhanced Regrowth
+                -0.1, 0.1, 2, # group 2 ranges for Unburned
+                0.1, 0.27, 3, # group 3 ranges for Low Severity
+                0.27, 0.66, 4, # group 4 ranges for Moderity Severity
+                0.66, Inf, 5), # group 5 ranges for High Severity
+                ncol = 3, byrow = TRUE)
+
+# Use reclassification matrix to reclassify dNBR raster
+reclassified <- classify(diff_nbr, rcl = rcl)
+
+reclassified[is.nan(reclassified)] <- NA
+```
+
+```{r}
+tm_shape(reclassified) +
+  tm_raster(style = "cat",
+            labels = c(categories, "Missing"),
+            palette = get_brewer_pal("YlOrRd", n = 5, plot = FALSE),
+            title = "Severity Level", colorNA = "black")+
+  tm_layout(legend.outside = TRUE)
+```
+:::
