@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ruth Oliver">
-<meta name="dcterms.date" content="2025-10-06">
+<meta name="dcterms.date" content="2025-11-10">
 
 <title>Homework Assignment 4</title>
 <style>
@@ -168,6 +168,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../course-materials/week5.html">
  <span class="dropdown-text">week 5</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../course-materials/week6.html">
+ <span class="dropdown-text">week 6</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -216,7 +220,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 6, 2025</p>
+        <p class="date">November 10, 2025</p>
       </div>
     </div>
     
@@ -301,28 +305,33 @@ Important
 <section id="instructions" class="level2">
 <h2 class="anchored" data-anchor-id="instructions">Instructions</h2>
 <ol type="1">
-<li><a href="https://classroom.github.com/a/M7SH_7jN">Clone repository from GitHub Classrooms</a></li>
+<li>Create a new GitHub repository. Give your repository a descriptive title that reflects your analysis (not “<code>EDS223-HW4</code>”). Be sure to include a README that follows these <a href="https://ucsb-meds.github.io/README-guidelines/">guidelines</a>.</li>
 <li>Download data from <a href="https://drive.google.com/file/d/1u-iwnPDbe6ZK7wSFVMI-PpCKaRQ3RVmg/view?usp=sharing">here</a></li>
 <li>Unzip data and place in repository</li>
-<li>Update <code>.gitignore</code> to ignore <code>data</code> folder</li>
-<li>Edit Quarto document with responses</li>
-<li>Push final edits before deadline</li>
+<li>Add the data to your <code>gitignore</code>! Run <code>git add .gitignore</code> to avoid attempting to push any large data to your repo.</li>
+<li>Create a Quarto document with responses</li>
+<li>Take a screenshot of your README and add it to the beginning of your qmd.</li>
+<li>Render your quarto document as a pdf and submit on <a href="https://www.gradescope.com/courses/1133964">Gradescope</a>
+<ul class="task-list">
+<li><label><input type="checkbox">Make sure code-fold is <strong>not</strong> set to <code>True</code>! Your pdf should contain all your code and outputs!</label></li>
+</ul></li>
+<li>Once you have fully completed this assignment (including revising and resubmitting), make sure to delete the image of the README from your .qmd file. The image of your README is solely being used for grading purposes.</li>
 </ol>
 <p>Your repository should have the following structure:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>EDS223-HW3</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>│   README.md</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>│   qmd/Rmd/Proj files</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>   .gitignore</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>│</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>└───data</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    │   wc_regions_clean.shp</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    │   depth.tif</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    │   average_annual_sst_2008.tif</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    │   average_annual_sst_2009.tif</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    │   average_annual_sst_2010.tif</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    │   average_annual_sst_2011.tif</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    │   average_annual_sst_2012.tif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>└─── README.md</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>└─── qmd/Rmd/Proj files</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>└─── aquaculture_analysis.qmd # Name your file a title that is representative of your analysis!</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>   .gitignore</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    └───data</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        └─── wc_regions_clean.shp</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>        └─── depth.tif</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        └─── average_annual_sst_2008.tif</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        └─── average_annual_sst_2009.tif</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        └─── average_annual_sst_2010.tif</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        └─── average_annual_sst_2011.tif</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        └─── average_annual_sst_2012.tif</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="background" class="level2">
@@ -471,7 +480,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The SST and depth rasters should now identify the suitability of locations as <code>0</code> or <code>1</code>. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiple the values of the cells, using the <code>lapp()</code> function.</p>
+<p>The SST and depth rasters should now identify the suitability of locations as <code>0</code> or <code>1</code>. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiply the values of the cells, using the <code>lapp()</code> function.</p>
 </div>
 </div>
 </section>
@@ -528,7 +537,7 @@ Tip
 <section id="professional-output" class="level4">
 <h4 class="anchored" data-anchor-id="professional-output">Professional output</h4>
 <ul class="task-list">
-<li><label><input type="checkbox">Quarto document must be rendered to <code>html</code></label></li>
+<li><label><input type="checkbox">Quarto document must be rendered to <code>pdf</code></label></li>
 <li><label><input type="checkbox">The rendered output must include the following elements:</label>
 <ul>
 <li>document header with title, name, and date (ideally the date rendered)</li>

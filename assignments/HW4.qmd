@@ -45,29 +45,33 @@ This assignment will reinforce key concepts in geospatial analysis by practicing
 
 ## Instructions
 
-1. [Clone repository from GitHub Classrooms](https://classroom.github.com/a/M7SH_7jN)
+
+1. Create a new GitHub repository. Give your repository a descriptive title that reflects your analysis (not "`EDS223-HW4`"). Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/). 
 2. Download data from [here](https://drive.google.com/file/d/1u-iwnPDbe6ZK7wSFVMI-PpCKaRQ3RVmg/view?usp=sharing)
 3. Unzip data and place in repository
-4. Update `.gitignore` to ignore `data` folder
-5. Edit Quarto document with responses
-6. Push final edits before deadline
+4. Add the data to your `gitignore`! Run `git add .gitignore` to avoid attempting to push any large data to your repo. 
+5. Create a Quarto document with responses
+6. Take a screenshot of your README and add it to the beginning of your qmd. 
+7. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+      - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
+8. Once you have fully completed this assignment (including revising and resubmitting), make sure to delete the image of the README from your .qmd file. The image of your README is solely being used for grading purposes. 
 
 Your repository should have the following structure:
 
 ```{md}
 EDS223-HW3
-│   README.md
-│   qmd/Rmd/Proj files
+└─── README.md
+└─── qmd/Rmd/Proj files
+└─── aquaculture_analysis.qmd # Name your file a title that is representative of your analysis!
 |   .gitignore
-│
-└───data
-    │   wc_regions_clean.shp
-    │   depth.tif
-    │   average_annual_sst_2008.tif
-    │   average_annual_sst_2009.tif
-    │   average_annual_sst_2010.tif
-    │   average_annual_sst_2011.tif
-    │   average_annual_sst_2012.tif
+    └───data
+        └─── wc_regions_clean.shp
+        └─── depth.tif
+        └─── average_annual_sst_2008.tif
+        └─── average_annual_sst_2009.tif
+        └─── average_annual_sst_2010.tif
+        └─── average_annual_sst_2011.tif
+        └─── average_annual_sst_2012.tif
 ```
 
 
@@ -171,7 +175,7 @@ To find suitable locations for marine aquaculture, we'll need to find locations 
 :::{.callout-tip icon=true}
 # Tip: finding suitable locations
 
-The SST and depth rasters should now identify the suitability of locations as `0` or `1`. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiple the values of the cells, using the `lapp()` function.
+The SST and depth rasters should now identify the suitability of locations as `0` or `1`. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiply the values of the cells, using the `lapp()` function.
 
 :::
 
@@ -224,7 +228,7 @@ Assignments will be deemed "Satisfactory" based on the following criteria:
 
 
 #### Professional output
-- [ ] Quarto document must be rendered to `html`
+- [ ] Quarto document must be rendered to `pdf`
 - [ ] The rendered output must include the following elements:
   - document header with title, name, and date (ideally the date rendered)
   - all packages are loaded together at the top of the document
