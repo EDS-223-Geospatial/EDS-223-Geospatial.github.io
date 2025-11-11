@@ -1052,30 +1052,30 @@
   {
     "objectID": "assignments/PR.html#assignment-overview",
     "href": "assignments/PR.html#assignment-overview",
-    "title": "Data Science Portfolio",
+    "title": "Geospatial Analysis blog post",
     "section": "Assignment overview",
-    "text": "Assignment overview\nThe purpose of this assignment is to create an online portfolio to showcase your spatial data science skills.\nTo do so, please:\n\nCreate two presentation-worthy GitHub repositories based on assignments 2-4 or labs 8 & 9\n\n\n\n\n\n\n\nTipTip\n\n\n\nPick the assignments or labs that highlight the skills you are most interested in showcasing to potential employers."
+    "text": "Assignment overview\nThe purpose of this assignment is to create a blogpost on your personal website that showcases your spatial data science skills.\nTo do so, please:\n\nCreate a blog post based on Assignment 3 or 4.\n\n\n\n\n\n\n\nTipTip\n\n\n\nPick the assignment that highlight the skills you are most interested in showcasing to potential employers."
   },
   {
     "objectID": "assignments/PR.html#guidance-for-creating-repositories",
     "href": "assignments/PR.html#guidance-for-creating-repositories",
-    "title": "Data Science Portfolio",
+    "title": "Geospatial Analysis blog post",
     "section": "Guidance for creating repositories",
-    "text": "Guidance for creating repositories\nThe goal of creating new repositories is to transform your existing repositories from homework assignments or labs into organized and well-documented projects that showcase an environmental data science workflow. The audience for a repository is a potential collaborator(s) or employer(s) who wants to understand your workflow. Therefore, it is appropriate intermediate outputs in addition to final results as well as custom print statements and warning messages to check results.\nEach repository should have:\n\nA brief, but informative name (e.g. “assignment-2” is not acceptable)\nA clear and organized structure\n\nShould include folders for data and scripts, where appropriate\n\nA README\n\nContents should follow the guidance from EDS 296\nAdd a section articulating the skills that you are using in this repo. The idea is to make it easy for potential employers to understand your skills\n\nA .gitignore\n\nThis should include any files that you don’t want git to track (i.e. files that you don’t want pushed to GitHub)\n\nYour revised homework assignment, as a rendered Quarto document (both .qmd and .html files). Include the following updates:\n\nGive it a brief, but informative file name (e.g. hw2.qmd is not acceptable)\nDouble check that all contents meet the standard of professional output\nAny other updates you want to make! Including updating the theme\n\n\n\n\n\n\n\n\nWarningChanging repository ownership\n\n\n\nYour homework submissions are technically owned by our GitHub Classroom organization. To have them appear on your GitHub profile (and be visible to others), you need to create a new repository directly from your GitHub account and copy your code over."
+    "text": "Guidance for creating repositories\nThe goal of creating a blog post is practice communicating your work in a different format. The audience of a blog post is more general than that of the repository, therefore you may be more selective in which code and output you display. In this case you are building a narrative around your work as opposed to demonstrating how it works, so you may want to only display intermediate and final results as opposed to results of self-checks and not output code.\nThe blog post should include the following: - The assignment is a starting place - You should use the background provided in the assignment as a starting place, but update the text and provide additional information and at least one additional reference. The style is up to you, but it should incorporate the following elements clearly: - [ ] A problem statement or question that your analysis will address - [ ]Background on why this issue is important - [ ] Explanation of the data sources, analyses, and results - [ ]Clear, consistently formatted figures - I.e. informative axis labels/legends, visually appealing and consistent colors and fonts - [ ] Discussion of conclusions, including any potential caveats or future directions - [ ]Posted on your personal website - [Resource on how to post a blog to your website by Sam Shanny Csik] (https://samanthacsik.github.io/posts/2022-10-24-quarto-blogs/)"
   },
   {
     "objectID": "assignments/PR.html#rubric",
     "href": "assignments/PR.html#rubric",
-    "title": "Data Science Portfolio",
+    "title": "Geospatial Analysis blog post",
     "section": "Rubric",
-    "text": "Rubric\nTo receive a “Satisfactory”, both repositories must include the elements described above."
+    "text": "Rubric\nTo receive a “Satisfactory”, the blog post must include the elements described above in the Blogpost Requirements section."
   },
   {
     "objectID": "assignments/PR.html#submitting-assignment",
     "href": "assignments/PR.html#submitting-assignment",
-    "title": "Data Science Portfolio",
+    "title": "Geospatial Analysis blog post",
     "section": "Submitting assignment",
-    "text": "Submitting assignment\nPlease submit your PR to this Google Form."
+    "text": "Submitting assignment\nOnce you have completed your blog post, submit the link to your blog post on this google form.\n\n\n\nTask\nDue Date\n\n\n\n\nBlog post submission\n12/06\n\n\nBlog post feedback released\n12/10\n\n\nBlog post resubmission\n12/12\n\n\n\nBoth a submission and a revised submission addressing all the feedback from the first revision will be needed to receive a Satisfactory. An assignment without a resubmission will not get a Satisfactory, resulting in the highest possible letter grade for the course being a C."
   },
   {
     "objectID": "course-materials/labs/week8.html#data",
@@ -2203,5 +2203,40 @@
     "title": "Week 6: Discussion Section",
     "section": "5. Bonus challenge: Classify severeity levels of burn",
     "text": "5. Bonus challenge: Classify severeity levels of burn\n\nUse classify() to assign the severity levels below:\n\n\n\n\nSeverity Level\ndNBR Range\n\n\n\n\nEnhanced Regrowth\n&lt; -.1\n\n\nUnburned\n-.1 to +.1\n\n\nLow Severity\n+.1 to +.27\n\n\nModerate Severity\n+.27 to +.66\n\n\nHigh Severity\n&gt; .66\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Set categories for severity levels\ncategories &lt;- c(\"Enhanced Regrowth\", \"Unburned\", \"Low Severity\", \"Moderate Severity\", \"High Severity\")\n\n# Create reclassification matrix\nrcl &lt;- matrix(c(-Inf, -0.1, 1, # group 1 ranges for Enhanced Regrowth\n                -0.1, 0.1, 2, # group 2 ranges for Unburned\n                0.1, 0.27, 3, # group 3 ranges for Low Severity\n                0.27, 0.66, 4, # group 4 ranges for Moderity Severity\n                0.66, Inf, 5), # group 5 ranges for High Severity\n                ncol = 3, byrow = TRUE)\n\n# Use reclassification matrix to reclassify dNBR raster\nreclassified &lt;- classify(diff_nbr, rcl = rcl)\n\nreclassified[is.nan(reclassified)] &lt;- NA\n\n\ntm_shape(reclassified) +\n  tm_raster(style = \"cat\",\n            labels = c(categories, \"Missing\"),\n            palette = get_brewer_pal(\"YlOrRd\", n = 5, plot = FALSE),\n            title = \"Severity Level\", colorNA = \"black\")+\n  tm_layout(legend.outside = TRUE)"
+  },
+  {
+    "objectID": "assignments/PR.html#guidance-for-creating-your-blog-post",
+    "href": "assignments/PR.html#guidance-for-creating-your-blog-post",
+    "title": "Geospatial Analysis blog post",
+    "section": "Guidance for creating your blog post",
+    "text": "Guidance for creating your blog post\nThe goal of creating a blog post is practice communicating your work in a different format. The audience of a blog post is more general than that of the repository, therefore you may be more selective in which code and output you display. In this case you are building a narrative around your work as opposed to demonstrating how it works, so you may want to only display intermediate and final results as opposed to results of self-checks and not output code.\nThe original assignment is a starting place. You should use the background provided in the assignment as a starting place, but update the text and provide additional information and at least one additional reference."
+  },
+  {
+    "objectID": "assignments/PR.html#submitting-assignment-1",
+    "href": "assignments/PR.html#submitting-assignment-1",
+    "title": "Geospatial Analysis blog post",
+    "section": "Submitting assignment",
+    "text": "Submitting assignment\nPlease submit your PR to this Google Form."
+  },
+  {
+    "objectID": "assignments/PR.html#blog-post-requirements",
+    "href": "assignments/PR.html#blog-post-requirements",
+    "title": "Geospatial Analysis blog post",
+    "section": "Blog Post Requirements",
+    "text": "Blog Post Requirements\nThe style is up to you, but it should incorporate the following elements clearly:\n\nA problem statement or question that your analysis will address\nBackground on why this issue is important\n[ ]\nExplanation of the data sources, analyses, and results\nClear, consistently formatted figures - I.e. informative axis labels/legends, visually appealing and consistent colors and fonts\nDiscussion of conclusions, including any potential caveats or future directions\nPosted on your personal website\n\nResource on how to post a blog to your website by Sam Shanny Csik\nCheck out this example from a MEDS alumn"
+  },
+  {
+    "objectID": "assignments/PR.html#requirements",
+    "href": "assignments/PR.html#requirements",
+    "title": "Geospatial Analysis blog post",
+    "section": "Blog Post Requirements",
+    "text": "Blog Post Requirements\nThe style is up to you, but it should incorporate the following elements clearly:\n\nA problem statement or question that your analysis will address\nBackground on why this issue is important\n[ ]\nExplanation of the data sources, analyses, and results\nClear, consistently formatted figures - I.e. informative axis labels/legends, visually appealing and consistent colors and fonts\nDiscussion of conclusions, including any potential caveats or future directions\nPosted on your personal website\n\nResource on how to post a blog to your website by Sam Shanny Csik\nCheck out this example from a MEDS alumn"
+  },
+  {
+    "objectID": "assignments/PR.html#requirements-section",
+    "href": "assignments/PR.html#requirements-section",
+    "title": "Geospatial Analysis blog post",
+    "section": "Blog Post Requirements",
+    "text": "Blog Post Requirements\nThe style is up to you, but it should incorporate the following elements clearly:\n\nA problem statement or question that your analysis will address\nBackground on why this issue is important (involving an additional reference)\nExplanation of the data sources, analyses, and results\nClear, consistently formatted figures - I.e. informative axis labels/legends, visually appealing and consistent colors and fonts\nDiscussion of conclusions, including any potential caveats or future directions\nPosted on your personal website\n\nResource on how to post a blog to your website by Sam Shanny Csik\nCheck out this example from a MEDS alumn"
   }
 ]
