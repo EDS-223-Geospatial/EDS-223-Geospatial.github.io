@@ -1,5 +1,5 @@
 ---
-title: "Remote sensing of vegetation"
+title: "Land Cover Classification"
 subtitle: "Week 7"
 ---
 
@@ -8,7 +8,7 @@ subtitle: "Week 7"
 #| echo: false
 #| out-width: "80%"
 #| fig-align: "center"
-knitr::include_graphics("images/week7-image.png")
+knitr::include_graphics("images/week9-image.png")
 ```
 
 ::: {.gray-text .center-text}
@@ -19,9 +19,8 @@ knitr::include_graphics("images/week7-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Spectral properties of vegetation (leaf, canopy, and landscape)](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present){target="_blank"}                  |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
 | {{< fa laptop-code title="A laptop with on-screen code" >}}No Lab this week!
-| {{< fa key title="key" >}} Lab solution                 | |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week8-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
@@ -33,7 +32,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| Check-In             | [Check-In (week 7)](https://forms.gle/TRj7vNBDEQmLFR9b8){target="_blank"}              | 11/13/2025    | 11/13/2025 |
+| Check-In             | [Check-In (week 7)](https://forms.gle/ECGVS9uHBTTHekGfA){target="_blank"}              | 11/13/2025    | 11/13/2025 |
 | HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/13/2025    | 11/26/2025 |
 | PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/13/2025    | 12/06/2025 |
 
