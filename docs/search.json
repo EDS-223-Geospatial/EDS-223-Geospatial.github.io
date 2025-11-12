@@ -1628,7 +1628,7 @@
     "href": "course-materials/week8.html#class-materials",
     "title": "Multispectral Remote Sensing Analysis",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nMultispectral RS Analysis\n\n\n Lab\nNDVI and phenology\n\n\n Lab solution\n\n\n\n Discussion\nPractice function making with rasters"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\n Discussion\nPractice function making with rasters"
   },
   {
     "objectID": "course-materials/week8.html#assignment-reminders",
@@ -1745,14 +1745,14 @@
   {
     "objectID": "course-materials/week7.html#class-materials",
     "href": "course-materials/week7.html#class-materials",
-    "title": "Remote sensing of vegetation",
+    "title": "Land Cover Classification",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nSpectral properties of vegetation (leaf, canopy, and landscape)\n\n\nNo Lab this week!\n\n\n\n Lab solution\n\n\n\n Discussion\nPractice function making with rasters"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\nNo Lab this week!\n\n\n\n Discussion\nPractice function making with rasters"
   },
   {
     "objectID": "course-materials/week7.html#assignment-reminders",
     "href": "course-materials/week7.html#assignment-reminders",
-    "title": "Remote sensing of vegetation",
+    "title": "Land Cover Classification",
     "section": " Assignment Reminders",
     "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
