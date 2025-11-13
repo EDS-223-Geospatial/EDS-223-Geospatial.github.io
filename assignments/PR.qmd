@@ -12,14 +12,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-knitr::include_graphics("images/github.png")
-```
-
 
 ## Assignment overview
 
