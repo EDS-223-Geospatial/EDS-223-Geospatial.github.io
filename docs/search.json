@@ -725,7 +725,7 @@
     "href": "index.html#teaching-team",
     "title": "Geospatial Analysis & Remote Sensing",
     "section": "Teaching Team",
-    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nAnnie Adams\nEmail: aradams@ucsb.edu\nStudent Hours: Thursday 11 am - 12 pm @ BH 3418\nLearn more: annieradams.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nAlessandra Vidal Meza\nEmail: avidalmeza@ucsb.edu\nStudent Hours: Tuesday 3 pm - 4 pm @ BH 1001\nLearn more: avidalmeza.com"
+    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nAnnie Adams\nEmail: aradams@ucsb.edu\nStudent Hours: Thursday 11 am - 12 pm @ BH 3418\nLearn more: annieradams.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nAlessandra Vidal Meza\nEmail: avidalmeza@ucsb.edu\nStudent Hours: Monday 3 pm - 4 pm @ BH 1001\nLearn more: avidalmeza.com"
   },
   {
     "objectID": "index.html#acknowledgements",
@@ -1747,14 +1747,14 @@
     "href": "course-materials/week7.html#class-materials",
     "title": "Land Cover Classification",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\nNo Lab this week!\n\n\n\n Discussion\nPractice function making with rasters"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nImage classifiction: unsupervised and supervised approaches\n\n\nNo lab this week!\n\n\n\n Discussion\nPractice function making with rasters"
   },
   {
     "objectID": "course-materials/week7.html#assignment-reminders",
     "href": "course-materials/week7.html#assignment-reminders",
     "title": "Land Cover Classification",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week4.html#class-materials",
@@ -2245,5 +2245,61 @@
     "title": "Geospatial Analysis blog post",
     "section": "",
     "text": "The purpose of this assignment is to create a blogpost on your personal website that showcases your spatial data science skills.\nTo do so, please:\n\nCreate a blog post based on Assignment 3 or 4.\n\n\n\n\n\n\n\nTipTip\n\n\n\nPick the assignment that highlight the skills you are most interested in showcasing to potential employers."
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html",
+    "href": "course-materials/discussions/week7-discussion.html",
+    "title": "Week 7: Discussion Section",
+    "section": "",
+    "text": "Climate envelope models map where a species currently lives based on its climate conditions, then project where those conditions will exist under future climate scenarios. The key concern is whether suitable climate conditions will still exist anywhere or if a species’ climate envelope will shrink entirely. This threat is particularly acute for endemic species that are restricted to narrow geographic ranges.\nTwo California examples illustrate different vulnerabilities:\nThese simple species distribution models help identify the climate space each species occupies and the risk of losing it as climate conditions shift.This week, you will practice function making with rasters and create a generalizable workflow to determine the current climate envelope of the two species."
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#get-started",
+    "href": "course-materials/discussions/week7-discussion.html#get-started",
+    "title": "Week 7: Discussion Section",
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(tmap)\nlibrary(patchwork)\n\nYou will be working with the following datasets:\n\niNaturalist Research-grade Observations (via rinat)\nWorldClim version 2.1 data (via geodata)\n\nNext, let’s download our data. Unzip and move this to your version-controlled R Project’s data folder.\n\nmagpie &lt;- read_csv(here::here(\"data\", \"magpie_obvs.csv\"))\ntule_elk &lt;- read_csv(here::here(\"data\", \"tule_elk_obvs.csv\"))\n\nbioclim_dir &lt;- here::here(\"data\", \"climate\", \"wc2.1_2.5m\")\nbioclim &lt;- list.files(bioclim_dir, pattern = glob2rx(\"*.tif$\"), full.names = TRUE)\nbioclim_sort &lt;- bioclim[\n  # Sort filepaths based on numeric suffix\n  order(\n    # Extract numeric suffix of filenames and convert to numeric\n    as.numeric(gsub(\".*_(\\\\d+)\\\\.tif$\", \"\\\\1\", bioclim))\n    )\n  ]\nbioclim_rast &lt;- rast(bioclim_sort)"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#name-raster-layers",
+    "href": "course-materials/discussions/week7-discussion.html#name-raster-layers",
+    "title": "Week 7: Discussion Section",
+    "section": "2. Name raster layers",
+    "text": "2. Name raster layers\n\nUpdate the bioclim_rast layer names to match the Bioclimatic variables using names()\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nvariables &lt;- c(\"annualMeanTemp\", \"meanDiurnalRange\", \"isothermality\", \"tempSeasonality\", \"maxTempWarmMonth\", \"maxTempColdMonth\", \"tempAnnualRange\", \"meanTempWetQ\", \"meanTempDryQ\", \"meanTempWarmQ\", \"meanTempColdQ\", \"annualPrecip\", \"precipWetMonth\", \"precipDryMonth\", \"precipSeasonality\", \"precipWetQ\", \"precipDryQ\", \"precipWarmQ\", \"precipColdQ\")\nnames(bioclim_rast) &lt;- variables"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#find-geographic-extent-of-species-occurrence-and-crop-raster",
+    "href": "course-materials/discussions/week7-discussion.html#find-geographic-extent-of-species-occurrence-and-crop-raster",
+    "title": "Week 7: Discussion Section",
+    "section": "3. Find geographic extent of species occurrence and crop raster",
+    "text": "3. Find geographic extent of species occurrence and crop raster\n\nUse st_as_sf to convert and find the geographic extent of species occurrence data magpie using st_bbox()\nCrop bioclim_rast to match the extent of species occurrence data magpie\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nmagpie_sf &lt;- magpie |&gt; \n  rename(long = longitude,\n         lat = latitude) |&gt; \n  drop_na(long, lat) |&gt; \n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n# Obtain geographic extent/bounding box of species occurrences\nmagpie_bbox &lt;- st_bbox(magpie_sf)\n\n# Crop raster to match geographic extent of species occurrences\nbioclim_crop &lt;- crop(bioclim_rast, magpie_bbox)"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#extract-points-from-species-occurrence",
+    "href": "course-materials/discussions/week7-discussion.html#extract-points-from-species-occurrence",
+    "title": "Week 7: Discussion Section",
+    "section": "4. Extract points from species occurrence",
+    "text": "4. Extract points from species occurrence\n\nExtract points from the cropped bioclim_rast for each occurrence in magpie\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Extract points from raster for all species occurrences\nbioClim_pts &lt;- as_tibble(terra::extract(bioclim_crop, magpie_sf))"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#create-background-values-and-extract-points",
+    "href": "course-materials/discussions/week7-discussion.html#create-background-values-and-extract-points",
+    "title": "Week 7: Discussion Section",
+    "section": "5. Create background values and extract points",
+    "text": "5. Create background values and extract points\n\nCreate “background values” by generating random sample points from the cropped bioclim_rast\nExtract points from cropped bioclim_rast for the background values\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n# Generate random sample points from raster\nrandom_pts &lt;- spatSample(bioclim_crop[[\"annualMeanTemp\"]],\n                         na.rm = TRUE, # Random sample non-NA cells\n                         size = (nrow(magpie) * 2), # Sample size\n                         as.points = TRUE) |&gt; # Return SpatVector\n  st_as_sf()\n\n# Extract points from raster for background values\nbioClim_random_pts &lt;- as_tibble(terra::extract(bioclim_crop, random_pts))"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#plot-species-climate-niche",
+    "href": "course-materials/discussions/week7-discussion.html#plot-species-climate-niche",
+    "title": "Week 7: Discussion Section",
+    "section": "6. Plot species climate niche",
+    "text": "6. Plot species climate niche\n\nPlot species climate niche and background climate (temperature vs. precipitation)\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nmap_1 &lt;- tm_shape(bioclim_crop[[\"annualPrecip\"]]) +\n  tm_raster(col.scale = tm_scale_continuous(values = \"Blues\"), \n            col.legend = tm_legend(title = \"Annual precipitation\")) +\n  tm_shape(magpie_sf) +\n  tm_dots(fill = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n            legend.orientation = \"landscape\",\n            legend.bg.color = \"white\")\n\nmap_2 &lt;- tm_shape(bioclim_crop[[\"annualMeanTemp\"]]) +\n  tm_raster(col.scale = tm_scale_continuous(values = \"-RdYlBu\"), \n            col.legend = tm_legend(title = \"Annual mean temperature\")) +\n  tm_shape(magpie_sf) +\n  tm_dots(fill = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n            legend.orientation = \"landscape\",\n            legend.bg.color = \"white\")\n\ntmap_arrange(map_1, map_2)\n\n\n\n\n\n\n\n\n\nplot_1 &lt;- ggplot(data = bioClim_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16, color = \"#3a5a40\") +\n  labs(x = \"Annual precipitation\",\n       y = \"Annual mean temperature\", \n       title = \"Species climate niche\") +\n  theme_bw()\n\nplot_2 &lt;- ggplot(data = bioClim_random_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16) +\n  labs(x = \"Annual precipitation\",\n       y = element_blank(), \n       title = \"Background climate\") +\n  theme_bw()\n\nplot_1 + plot_2"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#create-generalizable-workflow-and-apply",
+    "href": "course-materials/discussions/week7-discussion.html#create-generalizable-workflow-and-apply",
+    "title": "Week 7: Discussion Section",
+    "section": "7. Create generalizable workflow and apply",
+    "text": "7. Create generalizable workflow and apply\n\nModify previous steps into a generalizable workflow for other species occurrence data\nTry your new function with species occurrence data tule_elk\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\nclimate_envelope &lt;- function(clim_rast, clim_var1, clim_var2, occurences, species_name){\n  \n  species_name_lower &lt;- species_name |&gt; \n    str_to_lower() |&gt; \n    str_replace_all(\" \", \"_\")\n  \n  occurences_sf &lt;- occurences |&gt; \n    rename(long = longitude,\n           lat = latitude) |&gt; \n    drop_na(long) |&gt; \n    st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n  \n  occurences_bbox &lt;- st_bbox(occurences_sf)\n  \n  clim_crop &lt;- crop(clim_rast, occurences_bbox)\n  \n  clim_pts &lt;- as_tibble(extract(clim_crop, occurences_sf))\n  \n  random_pts &lt;- spatSample(clim_rast[[clim_var1]],\n                           na.rm = TRUE,\n                           size = (nrow(occurences) * 2),\n                           as.points = TRUE) |&gt;\n    st_as_sf()\n\n  clim_random_pts &lt;- as_tibble(terra::extract(clim_crop, random_pts))\n  \n  map_1 &lt;- tm_shape(clim_crop[[clim_var1]]) +\n    tm_raster(col.scale = tm_scale_continuous(values = \"Blues\")) +\n    tm_shape(occurences_sf) +\n    tm_dots(fill = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n              legend.orientation = \"landscape\",\n              legend.bg.color = \"white\")\n\n  map_2 &lt;- tm_shape(clim_crop[[clim_var2]]) +\n    tm_raster(col.scale = tm_scale_continuous(values = \"-RdYlBu\")) +\n    tm_shape(occurences_sf) +\n    tm_dots(fill = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n              legend.orientation = \"landscape\",\n              legend.bg.color = \"white\")\n  \n  plot_1 &lt;- ggplot(data = clim_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16, color = \"#3a5a40\") +\n    labs(title = paste(\"Species climate niche of\", str_to_sentence(species_name))) +\n    theme_bw()\n  \n  plot_2 &lt;- ggplot(data = clim_random_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16) +\n    labs(y = element_blank(), \n         title = paste(\"Background climate of\", str_to_sentence(species_name))) +\n    theme_bw()\n  \n  assign(paste0(species_name_lower, \"_map_1\"), map_1, envir = .GlobalEnv)\n  assign(paste0(species_name_lower, \"_map_2\"), map_2, envir = .GlobalEnv)\n  assign(paste0(species_name_lower, \"_plot_1\"), plot_1, envir = .GlobalEnv)\n  assign(paste0(species_name_lower, \"_plot_2\"), plot_2, envir = .GlobalEnv)\n  \n}\n\n\nclimate_envelope(clim_rast = bioclim_rast,\n                 clim_var1 = \"annualPrecip\",\n                 clim_var2 = \"annualMeanTemp\",\n                 occurences = tule_elk, \n                 species_name = \"Tule Elk\")\n\ntule_elk_map_1\n\n\n\n\n\n\n\ntule_elk_map_2\n\n\n\n\n\n\n\ntule_elk_plot_1\n\n\n\n\n\n\n\ntule_elk_plot_2"
   }
 ]
