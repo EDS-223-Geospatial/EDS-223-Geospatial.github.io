@@ -20,8 +20,8 @@ knitr::include_graphics("images/week9-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}}No Lab this week!
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week8-discussion.qmd) |
+| {{< fa laptop-code title="A laptop with on-screen code" >}}No lab this week!
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week7-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
