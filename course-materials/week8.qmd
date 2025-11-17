@@ -1,5 +1,5 @@
 ---
-title: "Landcover Classification + Active Remote Sensing"
+title: "Landcover Classification & Active Remote Sensing"
 subtitle: "Week 8"
 ---
 
@@ -21,8 +21,8 @@ knitr::include_graphics("images/week10-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of active remote sensing: LiDAR and RADAR](){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification](labs/week9.qmd)        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week8){target="_blank"} |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification](labs/week8.qmd)        |
+| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week8){target="_blank"} |
 | {{< fa comments title="two speech bubbles" >}} Discussion             | []() |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
@@ -38,7 +38,3 @@ All assignments are **due at 11:59 PM** on the date listed.
 | HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/13/2025    | 11/26/2025 |
 | PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/13/2025    | 12/06/2025 |
 
-
-## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
-
-- [Remote Sensing of the Environment, Chapter 10](/readings/Jensen-chapter10.pdf){target="_blank"}

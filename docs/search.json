@@ -53,7 +53,7 @@
     "href": "course-materials/week6.html#assignment-reminders",
     "title": "Remote sensing data collection",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/10/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 6)\n11/06/2025\n11/06/2025\n\n\nHW\nHomework Assignment #3\n10/21/2025\n11/10/2025"
   },
   {
     "objectID": "course-materials/week6.html#background-reading",
@@ -1081,15 +1081,15 @@
     "objectID": "course-materials/labs/week8.html#data",
     "href": "course-materials/labs/week8.html#data",
     "title": "Week 8: Lab",
-    "section": "1. Data",
-    "text": "1. Data\nMulti-spectral remote sensing data:\n\nLandsat’s Operational Land Imager (OLI)\n8 pre-processed scenes\n\nLevel 2 surface reflectance products\nErroneous values set to NA\nScale factor set to 100\nBands 2-7\nDates in file name\n\nScenes from the following dates:\n\n2018-06-12\n2018-08-15\n2018-10-18\n2018-11-03\n2019-01-22\n2019-02-23\n2019-04-12\n2019-07-01\n\n\nLocations of representative vegetation communities:\n\nPolygons representing sites\n\nstudy_site: character string with plant type"
+    "section": "Data",
+    "text": "Data\n\nLandsat 5 Thematic Mapper\n\nLandsat 5\n1 scene from September 25, 2007\nBands: 1, 2, 3, 4, 5, 7\nCollection 2 surface reflectance product\n\nData files:\n\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B1.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B2.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B3.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B4.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B5.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B7.tif\n\n\n\nStudy area\nPolygon representing southern Santa Barbara county\nData file: SB_county_south.shp\n\n\nTraining data\nPolygons representing sites with training data - type: character string with land cover type\nData file: trainingdata.shp"
   },
   {
     "objectID": "course-materials/labs/week8.html#set-up",
     "href": "course-materials/labs/week8.html#set-up",
     "title": "Week 8: Lab",
     "section": "1. Set up",
-    "text": "1. Set up\nLet’s load all necessary packages:\n\nlibrary(terra)\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(here)\nlibrary(tmap)"
+    "text": "1. Set up\nTo train our classification algorithm and plot the results, we’ll use the rpart and rpart.plot packages.\n\ninstall.packages(\"rpart\")\ninstall.packages(\"rpart.plot\")\n\nLet’s load all necessary packages:\n\nlibrary(sf) # vector data\nlibrary(terra) # raster data\nlibrary(here) # file path management\nlibrary(tidyverse)\nlibrary(rpart) # recursive partitioning and regression trees\nlibrary(rpart.plot) # plotting for rpart\nlibrary(tmap) # map making"
   },
   {
     "objectID": "course-materials/labs/week8.html#create-function-to-compute-ndvi",
@@ -1138,7 +1138,7 @@
     "href": "course-materials/labs/week8.html#plot-results",
     "title": "Week 8: Lab",
     "section": "3. Plot results",
-    "text": "3. Plot results\nLet’s plot the results!\n\n\nCode\nggplot(sites_clean,\n       aes(x = date, y = NDVI,\n           group = veg_type, col = veg_type)) +\n  scale_color_manual(values = c(\"#EAAC8B\", \"#315C2B\",\"#9EA93F\")) +\n  geom_line() +\n  geom_point() +\n  theme_minimal() +\n  labs(x = \"\", y = \"Normalized Difference Vegetation Index (NDVI)\", col = \"Vegetation type\",\n       title = \"Seasonal cycles of vegetation productivity\") \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipCritical thinking\n\n\n\nWhat do we notice in the seasonal cycle in NDVI across vegetation communities?\n\nchaparral: NDVI stays relatively constant throughout the year\nforest: NDVI is lowest in the winter and highest in the summer\ngrassland: NDVI is highest in the winter and lowest in the summer\n\nDoes this match our expectations?"
+    "text": "3. Plot results\nNow we can plot the results and check out our land cover map!\n\n\nCode\n# plot results\ndt_plot &lt;- tm_shape(SB_classification_dt) +\n  tm_raster(\n    col.scale = tm_scale(\n      values = c(\"#8DB580\", \"#F2DDA4\", \"#7E8987\", \"#6A8EAE\"),\n      labels = c(\"green vegetation\", \"soil/dead grass\", \"urban\", \"water\")\n    ),\n    col.legend = tm_legend(\"Landcover type\")\n  ) +\n  tm_title(text = \"Decision Tree Landcover Classification\") + \n  tm_layout( legend.position = c(\"left\", \"bottom\"))\n\ndt_plot"
   },
   {
     "objectID": "course-materials/labs/week1.html",
@@ -1626,14 +1626,14 @@
   {
     "objectID": "course-materials/week8.html#class-materials",
     "href": "course-materials/week8.html#class-materials",
-    "title": "Landcover Classification + Active Remote Sensing",
+    "title": "Landcover Classification & Active Remote Sensing",
     "section": " Class Materials",
     "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nLandcover classification\n\n\n Lab materials to download\nLandcover Classification\n\n\n Discussion"
   },
   {
     "objectID": "course-materials/week8.html#assignment-reminders",
     "href": "course-materials/week8.html#assignment-reminders",
-    "title": "Landcover Classification + Active Remote Sensing",
+    "title": "Landcover Classification & Active Remote Sensing",
     "section": " Assignment Reminders",
     "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 8)\n11/20/2025\n11/20/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
@@ -1754,7 +1754,7 @@
     "href": "course-materials/week7.html#assignment-reminders",
     "title": "Land Cover Classification",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 7)\n11/13/2025\n11/13/2025\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week4.html#class-materials",
@@ -2350,5 +2350,159 @@
     "title": "Week 9: Lab",
     "section": "5. Plot Results",
     "text": "5. Plot Results\nNow we can plot the results and check out our land cover map!\n\n# plot results\n\nkmeans_plot &lt;- tm_shape(SB_classification_kmeans) +\n  tm_raster(\n    col.scale = tm_scale(\n      values = c(\"#F2DDA4\",\"#7E8987\",  \"#8DB580\",\"#6A8EAE\"),\n      labels = c(\"soil/dead grass\", \"urban\", \"green vegetation\", \"water\")\n    ),\n    col.legend = tm_legend(\"Landcover type\")\n  ) +\n  tm_title(text = \"K- Means Landcover Classification\") + \n  tm_layout(legend.position = c(\"left\", \"bottom\"))\n\nkmeans_plot"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html",
+    "href": "course-materials/labs/week8.html",
+    "title": "Week 8: Lab",
+    "section": "",
+    "text": "Unsplash"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#load-landsat-data",
+    "href": "course-materials/labs/week8.html#load-landsat-data",
+    "title": "Week 8: Lab",
+    "section": "2. Load Landsat data",
+    "text": "2. Load Landsat data\nLet’s create a raster stack. Each file name ends with the band number (e.g. B1.tif).\n\nNotice that we are missing a file for band 6\nBand 6 corresponds to thermal data, which we will not be working with for this lab\n\nTo create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the terra::rast() function. We’ll then update the names of the layers to match the spectral bands and plot a true color image to see what we’re working with.\n\n# list files for each band, including the full file path\nfilelist &lt;- list.files(here::here(\"data\", \"landsat-data\"), full.names = TRUE)\n\n# read in and store as a raster stack\nlandsat &lt;- rast(filelist)\n\n# update layer names to match band\nnames(landsat) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\n\n# plot true color image\nplotRGB(landsat, r = 3, g = 2, b = 1, stretch = \"lin\")"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#load-study-area",
+    "href": "course-materials/labs/week8.html#load-study-area",
+    "title": "Week 8: Lab",
+    "section": "3. Load study area",
+    "text": "3. Load study area\nWe want to constrain our analysis to the southern portion of the county where we have training data, so we’ll read in a file that defines the area we would like to study.\n\n# read in shapefile for southern portion of SB county\nSB_county_south &lt;- st_read(here::here(\"data\", \"SB_county_south.shp\")) %&gt;%\n      st_transform(SB_county_south, crs = crs(landsat))\n\n\n\nCode\ntm_shape(SB_county_south) +\n  tm_borders()"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#crop-and-mask-landsat-data-to-study-area",
+    "href": "course-materials/labs/week8.html#crop-and-mask-landsat-data-to-study-area",
+    "title": "Week 8: Lab",
+    "section": "4. Crop and mask Landsat data to study area",
+    "text": "4. Crop and mask Landsat data to study area\nNow, we can crop and mask the Landsat data to our study area.\n\nWhy? This reduces the amount of data we’ll be working with and therefore saves computational time\nBonus: We can also remove any objects we’re no longer working with to save space\n\n\n# crop Landsat scene to the extent of the SB county shapefile\nlandsat_cropped &lt;- crop(landsat, SB_county_south)\n\n# mask the raster to southern portion of SB county\nlandsat_masked &lt;- mask(landsat_cropped, SB_county_south)\n\n# remove unnecessary object from environment\nrm(landsat, SB_county_south, landsat_cropped)\n\nplotRGB(landsat_masked, r = 3, g = 2, b = 1, stretch = \"lin\")"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#convert-landsat-values-to-reflectance",
+    "href": "course-materials/labs/week8.html#convert-landsat-values-to-reflectance",
+    "title": "Week 8: Lab",
+    "section": "5. Convert Landsat values to reflectance",
+    "text": "5. Convert Landsat values to reflectance\nNow we need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any scaling factors to convert to reflectance.\nIn this case, we are working with Landsat Collection 2.\n\nThe valid range of pixel values for this collection goes from 7,273 to 43,636…\n\nwith a multiplicative scale factor of 0.0000275\nwith an additive scale factor of -0.2\n\n\nLet’s reclassify any erroneous values as NA and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-100%!\n\n# reclassify erroneous values as NA\nrcl &lt;- matrix(c(-Inf, 7273, NA,\n                 43636, Inf, NA), ncol = 3, byrow = TRUE)\n\nlandsat &lt;- classify(landsat_masked, rcl = rcl)\n\n# adjust values based on scaling factor\nlandsat &lt;- (landsat * 0.0000275 - 0.2) * 100\n\n# check values are 0 - 100\nsummary(landsat)\n\n      blue            green             red              NIR        \n Min.   : 1.106   Min.   : 0.743   Min.   : 0.004   Min.   : 0.232  \n 1st Qu.: 2.490   1st Qu.: 2.173   1st Qu.: 1.084   1st Qu.: 0.749  \n Median : 3.064   Median : 4.588   Median : 4.447   Median :14.394  \n Mean   : 3.833   Mean   : 5.017   Mean   : 4.920   Mean   :11.515  \n 3rd Qu.: 4.626   3rd Qu.: 6.758   3rd Qu.: 7.404   3rd Qu.:19.341  \n Max.   :39.425   Max.   :53.321   Max.   :56.684   Max.   :57.080  \n NA's   :39856    NA's   :39855    NA's   :39855    NA's   :39856   \n     SWIR1            SWIR2       \n Min.   : 0.097   Min.   : 0.199  \n 1st Qu.: 0.410   1st Qu.: 0.600  \n Median :13.432   Median : 8.155  \n Mean   :11.877   Mean   : 8.516  \n 3rd Qu.:18.695   3rd Qu.:13.066  \n Max.   :49.132   Max.   :48.068  \n NA's   :42892    NA's   :46809"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#training-classifier",
+    "href": "course-materials/labs/week8.html#training-classifier",
+    "title": "Week 8: Lab",
+    "section": "1. Training classifier",
+    "text": "1. Training classifier\nLet’s begin by extracting reflectance values for training data!\nWe will load the shapefile identifying locations within our study area as containing one of our 4 land cover types.\n\n# read in and transform training data\ntraining_data &lt;- st_read(here::here( \"data\", \"trainingdata.shp\")) %&gt;%\n  st_transform(., crs = crs(landsat))\n\nNow, we can extract the spectral reflectance values at each site to create a data frame that relates land cover types to their spectral reflectance.\n\n# extract reflectance values at training sites\ntraining_data_values &lt;- terra::extract(landsat, training_data, df = TRUE)\n\n# convert training data to data frame\ntraining_data_attributes &lt;- training_data %&gt;%\n  st_drop_geometry()\n\n# join training data attributes and extracted reflectance values\nSB_training_data &lt;- left_join(training_data_values, training_data_attributes,\n                              by = c(\"ID\" = \"id\")) %&gt;%\n                    mutate(type = as.factor(type)) # convert landcover type to factor\n\nNext, let’s train the decision tree classifier!\nTo train our decision tree, we first need to establish our model formula (i.e. what our response and predictor variables are).\n\nThe rpart() function implements the CART algorithm\nThe rpart() function needs to know the model formula and training data you would like to use\nBecause we are performing a classification, we set method = \"class\"\nWe also set na.action = na.omit to remove any pixels with NAs from the analysis.\n\n\n# establish model formula\nSB_formula &lt;- type ~ red + green + blue + NIR + SWIR1 + SWIR2\n\n# train decision tree\nSB_decision_tree &lt;- rpart(formula = SB_formula,\n                          data = SB_training_data,\n                          method = \"class\",\n                          na.action = na.omit)\n\nTo understand how our decision tree will classify pixels, we can plot the results!\n\n\n\n\n\n\nTipInterpreting decision trees\n\n\n\nNote: The decision tree is comprised of a hierarchy of binary decisions. Each decision rule has 2 outcomes based on a conditional statement pertaining to values in each spectral band.\n\n\n\n\nCode\n# plot decision tree\nprp(SB_decision_tree)"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#classify-image",
+    "href": "course-materials/labs/week8.html#classify-image",
+    "title": "Week 8: Lab",
+    "section": "2. Classify image",
+    "text": "2. Classify image\nNow that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.\nThe terra package includes a predict() function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The predict() function will return a raster layer with integer values. These integer values correspond to the factor levels in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data.\n\n# classify image based on decision tree\nSB_classification_dt &lt;- terra::predict(landsat, SB_decision_tree, type = \"class\", na.rm = TRUE)\n\n# inspect level to understand the order of classes in prediction\nlevels(SB_training_data$type)\n\n[1] \"green_vegetation\" \"soil_dead_grass\"  \"urban\"            \"water\""
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#convert-raster-data-to-a-dataframe-and-scale",
+    "href": "course-materials/labs/week8.html#convert-raster-data-to-a-dataframe-and-scale",
+    "title": "Week 8: Lab",
+    "section": "1. Convert raster data to a dataframe and scale",
+    "text": "1. Convert raster data to a dataframe and scale\nThe first step is to prepare our data for k-means clustering. Unlike the decision tree which can work directly with raster objects, k-means requires our data to be in a dataframe format. We’ll extract the spectral band values for each pixel and then scale them. Scaling is critical for k-means because the algorithm measures distances between pixels - if one band has much larger values than another, it would dominate the clustering. Scaling puts all bands on the same scale so each contributes equally.\n\n# Convert raster to dataframe\nlandsat_df &lt;- as.data.frame(landsat, xy = TRUE, na.rm = TRUE)\n\n# Extract spectral bands for clustering\nspectral_data &lt;- landsat_df[, c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")]\n\n# Scale the data\nspectral_data_scaled &lt;- scale(spectral_data)"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#classify-using-k-means-algorithm",
+    "href": "course-materials/labs/week8.html#classify-using-k-means-algorithm",
+    "title": "Week 8: Lab",
+    "section": "2. Classify using K means algorithm",
+    "text": "2. Classify using K means algorithm\nNow we’re ready to run the k-means algorithm! We specify centers = 4 because we want to find 4 groups (matching our 4 landcover types). The nstart = 25 parameter tells the algorithm to try 25 different random starting positions and pick the best result - this helps avoid getting stuck in a poor solution. K-means works by iteratively grouping pixels with similar spectral signatures together until it finds stable clusters.\nUnlike the decision tree, k-means has no idea what “water” or “green vegetation” looks like - it’s just finding natural groupings in the spectral data!\n\n# Perform k-means with k=4\nkmeans_result &lt;- kmeans(spectral_data_scaled, centers = 4, nstart = 25)\n\nWarning: Quick-TRANSfer stage steps exceeded maximum (= 39946450)\n\n# Add cluster assignments to dataframe\nlandsat_df$cluster &lt;- kmeans_result$cluster"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#convert-data-back-to-raster-and-add-cluster-assignments-to-dataframe.",
+    "href": "course-materials/labs/week8.html#convert-data-back-to-raster-and-add-cluster-assignments-to-dataframe.",
+    "title": "Week 8: Lab",
+    "section": "3. Convert data back to raster and add cluster assignments to dataframe.",
+    "text": "3. Convert data back to raster and add cluster assignments to dataframe.\nThe k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We’ll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.\n\n# Set seed for reproducibility\nset.seed(223)\n\n# Perform k-means with k=4\nkmeans_result &lt;- kmeans(spectral_data_scaled, centers = 4, nstart = 25)\n\n# Add cluster assignments to dataframe\nlandsat_df$cluster &lt;- kmeans_result$cluster\n\n# Convert back to raster\nSB_classification_kmeans &lt;- rast(landsat[[1]])\nvalues(SB_classification_kmeans) &lt;- NA\ncells &lt;- cellFromXY(SB_classification_kmeans, landsat_df[, c(\"x\", \"y\")])\nvalues(SB_classification_kmeans)[cells] &lt;- landsat_df$cluster"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#figure-out-what-our-clusters-represent",
+    "href": "course-materials/labs/week8.html#figure-out-what-our-clusters-represent",
+    "title": "Week 8: Lab",
+    "section": "4. Figure out what our clusters represent!",
+    "text": "4. Figure out what our clusters represent!\nHere’s where unsupervised classification gets interesting - we have 4 clusters, but we don’t know which is which! The algorithm just labeled them 1, 2, 3, and 4. We need to examine the spectral characteristics of each cluster to determine what landcover type each represents.\nWe’ll calculate the mean reflectance values for each band within each cluster. By looking at these patterns, we can identify clusters:\n\nHigh NIR, low red → likely green vegetation (healthy plants reflect NIR strongly)\nLow NIR, high blue → likely water (water absorbs NIR)\nHigh values across all bands → likely soil/dead grass (high overall reflectance)\nModerate values → likely urban areas\n\n\n\nCode\n# Look at cluster characteristics to determine landcover type\nlandsat_df %&gt;%\n  group_by(cluster) %&gt;%\n  summarise(\n    blue = mean(blue),\n    green = mean(green),\n    red = mean(red),\n    NIR = mean(NIR),\n    SWIR1 = mean(SWIR1),\n    SWIR2 = mean(SWIR2),\n    n_pixels = n()\n  ) %&gt;%\n  arrange(cluster) %&gt;% \n  knitr::kable(digits = 2, \n               caption = \"Mean Spectral Values by Cluster\")\n\n\n\nMean Spectral Values by Cluster\n\n\ncluster\nblue\ngreen\nred\nNIR\nSWIR1\nSWIR2\nn_pixels\n\n\n\n\n1\n8.61\n12.18\n14.28\n21.46\n29.20\n22.33\n68205\n\n\n2\n5.67\n8.24\n9.24\n20.10\n22.01\n15.47\n182886\n\n\n3\n3.36\n5.04\n5.09\n17.69\n14.71\n8.65\n297407\n\n\n4\n2.51\n2.27\n1.14\n1.04\n0.51\n0.48\n250431\n\n\n\n\n\nCode\n# Set category labels\n\nlevels(SB_classification_kmeans) &lt;- data.frame(\n  ID = 1:4,\n  landcover = c(\"soil/dead grass\", \"urban\", \"green vegetation\", \"water\")\n)"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#plot-results-1",
+    "href": "course-materials/labs/week8.html#plot-results-1",
+    "title": "Week 8: Lab",
+    "section": "5. Plot Results",
+    "text": "5. Plot Results\nNow we can plot the results and check out our land cover map!\n\n\nCode\n# plot results\nkmeans_plot &lt;- tm_shape(SB_classification_kmeans) +\n  tm_raster(\n    col.scale = tm_scale(\n      values = c(\"#F2DDA4\",\"#7E8987\",  \"#8DB580\",\"#6A8EAE\"),\n      labels = c(\"soil/dead grass\", \"urban\", \"green vegetation\", \"water\")\n    ),\n    col.legend = tm_legend(\"Landcover type\")\n  ) +\n  tm_title(text = \"K- Means Landcover Classification\") + \n  tm_layout(legend.position = c(\"left\", \"bottom\"))\n\nkmeans_plot"
+  },
+  {
+    "objectID": "course-materials/labs/week8.html#compare-our-decision-tree-and-kmeans-algorithm-classification",
+    "href": "course-materials/labs/week8.html#compare-our-decision-tree-and-kmeans-algorithm-classification",
+    "title": "Week 8: Lab",
+    "section": "6. Compare our decision tree and kmeans algorithm classification",
+    "text": "6. Compare our decision tree and kmeans algorithm classification\nNow let’s compare our two approaches side-by-side! The decision tree used labeled training data to learn classification rules, while k-means found natural groupings without any training.\n\ntmap_arrange(dt_plot, kmeans_plot, nrow = 1)"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#data",
+    "href": "course-materials/labs/vegetation.html#data",
+    "title": "Week 8: Lab",
+    "section": "1. Data",
+    "text": "1. Data\nMulti-spectral remote sensing data:\n\nLandsat’s Operational Land Imager (OLI)\n8 pre-processed scenes\n\nLevel 2 surface reflectance products\nErroneous values set to NA\nScale factor set to 100\nBands 2-7\nDates in file name\n\nScenes from the following dates:\n\n2018-06-12\n2018-08-15\n2018-10-18\n2018-11-03\n2019-01-22\n2019-02-23\n2019-04-12\n2019-07-01\n\n\nLocations of representative vegetation communities:\n\nPolygons representing sites\n\nstudy_site: character string with plant type"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#set-up",
+    "href": "course-materials/labs/vegetation.html#set-up",
+    "title": "Week 8: Lab",
+    "section": "1. Set up",
+    "text": "1. Set up\nLet’s load all necessary packages:\n\nlibrary(terra)\nlibrary(sf)\nlibrary(tidyverse)\nlibrary(here)\nlibrary(tmap)"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#create-function-to-compute-ndvi",
+    "href": "course-materials/labs/vegetation.html#create-function-to-compute-ndvi",
+    "title": "Week 8: Lab",
+    "section": "2. Create function to compute NDVI",
+    "text": "2. Create function to compute NDVI\nLet’s start by defining a function to compute the Normalized Difference Vegetation Index (NDVI). NDVI computes the difference in reflectance between the near infrared (NIR) and red bands, normalized by their sum.\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red) / (nir + red)\n}"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#compute-ndvi-for-a-single-scene",
+    "href": "course-materials/labs/vegetation.html#compute-ndvi-for-a-single-scene",
+    "title": "Week 8: Lab",
+    "section": "3. Compute NDVI for a single scene",
+    "text": "3. Compute NDVI for a single scene\nWe have 8 scenes collected by Landsat’s OLI sensor on 8 different days throughout the year.\nLet’s start by loading in the first scene collected on June 12, 2018:\n\nlandsat_20180612 &lt;- rast(here(\"data\", \"landsat_20180612.tif\"))\n\nLet’s update the names of the layers to match the spectral bands they correspond to:\n\nnames(landsat_20180612) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\n\nNow we can apply the NDVI function we created to compute NDVI for this scene using the lapp() function.\n\nThe lapp() function applies a function to each cell using layers as arguments.\nTherefore, we need to tell lapp() which layers (or bands) to pass into the function.\n\nThe NIR band is the 4th layer and the red band is the 3rd layer in our raster. In this case, because we defined the NIR band as the first argument and the red band as the second argument in our function, we tell lapp() to use the 4th layer first and 3rd layer second.\n\nndvi_20180612 &lt;- lapp(landsat_20180612[[c(4, 3)]], fun = ndvi_fun)\n\n\n\nCode\ntm_shape(ndvi_20180612) +\n  tm_raster(col.legend  = tm_legend(\"NDVI\")) +\n  tm_layout(legend.outside.position = \"right\")"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#compute-ndvi-for-all-scences",
+    "href": "course-materials/labs/vegetation.html#compute-ndvi-for-all-scences",
+    "title": "Week 8: Lab",
+    "section": "1. Compute NDVI for all scences",
+    "text": "1. Compute NDVI for all scences\nNow we want to repeat the same operations for all 8 scenes. Below is a possible solution (where we repeat each line for each scene), but it’s pretty clunky.\nLet’s load each layer:\n\nlandsat_20180612 &lt;-rast(here( \"data\", \"landsat_20180612.tif\"))\nlandsat_20180815 &lt;- rast(here(\"data\", \"landsat_20180815.tif\"))\nlandsat_20181018 &lt;- rast(here(\"data\", \"landsat_20181018.tif\"))\nlandsat_20181103 &lt;- rast(here(\"data\", \"landsat_20181103.tif\"))\nlandsat_20190122 &lt;- rast(here(\"data\", \"landsat_20190122.tif\"))\nlandsat_20190223 &lt;- rast(here(\"data\", \"landsat_20190223.tif\"))\nlandsat_20190412 &lt;- rast(here(\"data\", \"landsat_20190412.tif\"))\nlandsat_20190701 &lt;- rast(here(\"data\", \"landsat_20190701.tif\"))\n\nAnd rename each layer:\n\nnames(landsat_20180612) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20180815) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20181018) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20181103) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20190122) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20190223) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20190412) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\nnames(landsat_20190701) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\n\nNext, compute NDVI for each layer:\n\nndvi_20180612 &lt;- lapp(landsat_20180612[[c(4, 3)]], fun = ndvi_fun)\nndvi_20180815 &lt;- lapp(landsat_20180815[[c(4, 3)]], fun = ndvi_fun)\nndvi_20181018 &lt;- lapp(landsat_20181018[[c(4, 3)]], fun = ndvi_fun)\nndvi_20181103 &lt;- lapp(landsat_20181103[[c(4, 3)]], fun = ndvi_fun)\nndvi_20190122 &lt;- lapp(landsat_20190122[[c(4, 3)]], fun = ndvi_fun)\nndvi_20190223 &lt;- lapp(landsat_20190223[[c(4, 3)]], fun = ndvi_fun)\nndvi_20190412 &lt;- lapp(landsat_20190412[[c(4, 3)]], fun = ndvi_fun)\nndvi_20190701 &lt;- lapp(landsat_20190701[[c(4, 3)]], fun = ndvi_fun)\n\nLet’s combine NDVI layers into a single raster stack.\n\nall_ndvi &lt;- c(ndvi_20180612, \n              ndvi_20180815, \n              ndvi_20181018, \n              ndvi_20181103, \n              ndvi_20190122, \n              ndvi_20190223, \n              ndvi_20190412, \n              ndvi_20190701)\n\nNow, update the names of each layer to match the date of each image:\n\nnames(all_ndvi) &lt;- c(\"2018-06-12\", \n                     \"2018-08-15\", \n                     \"2018-10-18\", \n                     \"2018-11-03\", \n                     \"2019-01-22\", \n                     \"2019-02-23\", \n                     \"2019-04-12\", \n                     \"2019-07-01\")"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#compute-ndvi-for-all-scenes",
+    "href": "course-materials/labs/vegetation.html#compute-ndvi-for-all-scenes",
+    "title": "Week 8: Lab",
+    "section": "1. Compute NDVI for all scenes",
+    "text": "1. Compute NDVI for all scenes\nThe first attempt was pretty clunky and required a lot of copy/pasting. Because we’re performing the same operations over and over again, this is a good opportunity to generalize our workflow into a function!\n\n\n\n\n\n\nTipWhen should I create a function?\n\n\n\nThere are lots and lots of reasons to create a function! The biggest clue that you should consider creating one is if you have several lines of code duplicated.\n\n\nLet’s start over and see how we could do this more efficiently.\nWe’ll clear our environment and redefine our function for NDVI:\n\nrm(list = ls())  \nndvi_fun &lt;- function(nir, red){\n  (nir - red) / (nir + red)\n}\n\nNext, let’s first sketch out what operations we want to perform so we can figure out what our function needs.\n\n\n\n\n\n\nWarningDon’t run this code!\n\n\n\nBefore diving into the detailed nuances of your function, it’s helpful to start by outlining the major steps you want your function to perform using pseudo-code.\n\n\n\n# NOTE: this code is not meant to run! \n# we're just outlining the function we want to create\n\ncreate_ndvi_layer &lt;- function(){\n  # step 1: read scene\n  landsat &lt;- rast(file)\n  # step 2: rename layer\n  names(landsat) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\n  # step 3: compute NDVI\n  ndvi &lt;- lapp(landsat[[c(4, 3)]], fun = ndvi_fun)\n  return(ndvi)\n}\n\n# What do we notice as what we need to pass into our function?\n\n\n\n\n\n\n\nTipTurning pseudo-code into real code\n\n\n\nNow that we’ve written out the pseudo-code, we need to ask ourselves what argument(s) we would need to pass into our function to set off the process.\nIn this case, the first operation needs a file name to read in. So, we now we need to figure out a way to come up with a set of file names to iterate through.\n\n\nWe want a list of the scenes so that we can tell our function to compute NDVI for each. To do that we look in our data folder for the relevant file. To do so, we want to do the following:\n\nAsk for the names of all the files in the data folder\nSet the pattern option to return the names that end in .tif (the file extension for the Landsat scenes)\nSet the full.names option returns the full file path for each scene\n\n\nfiles &lt;- list.files(\n  here(\"data\"), pattern = \"*.tif\", \n  full.names = TRUE)\n\nNow let’s update our function to work with list of file names we created:\n\nPass function a number that will correspond to the index in the list of file names\n\n\ncreate_ndvi_layer &lt;- function(i){\n  landsat &lt;- rast(files[i])\n  names(landsat) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\n  ndvi &lt;- lapp(landsat[[c(4, 3)]], fun = ndvi_fun)\n  return(ndvi)\n}\n\nLet’s test our function by asking it to read in the first file:\n\ntest &lt;- create_ndvi_layer(1)\n\nNow we can use our function to create a NDVI layer for each scene and stack them into a single rasterstack. And then update layer names to match date:\n\nall_ndvi &lt;- c(create_ndvi_layer(1), \n              create_ndvi_layer(2), \n              create_ndvi_layer(3), \n              create_ndvi_layer(4), \n              create_ndvi_layer(5), \n              create_ndvi_layer(6), \n              create_ndvi_layer(7), \n              create_ndvi_layer(8))\n\nnames(all_ndvi) &lt;- c(\"2018-06-12\", \n                    \"2018-08-15\", \n                    \"2018-10-18\", \n                    \"2018-11-03\", \n                    \"2019-01-22\", \n                    \"2019-02-23\", \n                    \"2019-04-12\", \n                    \"2019-07-01\")\n\n\n\n\n\n\n\nTipCritical thinking\n\n\n\nIs there a way to improve this last step even further? Wrap it into a for loop? Could we pull the date strings directly from the file names?"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#get-data-on-vegetation-communities",
+    "href": "course-materials/labs/vegetation.html#get-data-on-vegetation-communities",
+    "title": "Week 8: Lab",
+    "section": "1. Get data on vegetation communities",
+    "text": "1. Get data on vegetation communities\nFirst, we’ll read in a shapefile of study sites:\n\n\nCode\ntm_shape(all_ndvi[[1]]) +\n  tm_raster() +\n  tm_shape(sites) +\n  tm_polygons() +\n  tm_layout(legend.show = FALSE)"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#extract-ndvi-at-study-sites",
+    "href": "course-materials/labs/vegetation.html#extract-ndvi-at-study-sites",
+    "title": "Week 8: Lab",
+    "section": "2. Extract NDVI at study sites",
+    "text": "2. Extract NDVI at study sites\nNow we want to find the average NDVI within each study site. The output of terra::extract() is a data.frame with rows that match the study site data set, so we bind the results to the original data set.\n\nsites_ndvi &lt;- terra::extract(all_ndvi, sites, fun = \"mean\")\n\nsites_annotated &lt;- cbind(sites, sites_ndvi)\n\nWe’re done! Except our data is very untidy… Let’s tidy it up!\n\nConvert to data frame\nTurn from wide to long format\nTurn layer names into date format\nCombine study sites by vegetation type\nSummarize results within vegetation types\n\n\nsites_clean &lt;- sites_annotated %&gt;%\n  # initial cleaning\n  st_drop_geometry() %&gt;% # drop geometry\n  select(-ID) %&gt;% # remove ID generated by terra::extract()\n  # reformat data frame\n  pivot_longer(!study_site) %&gt;% # reshape data frame\n  rename(\"NDVI\" = value) %&gt;% # assign \"value\" to NDVI\n  # create date attribute\n  mutate(\"year\" = str_sub(name, 2, 5), # pull out elements of date\n         \"month\" = str_sub(name, 7, 8),\n         \"day\" = str_sub(name, -2, -1)) %&gt;%\n  unite(\"date\", 4:6, sep = \"-\") %&gt;% # combine date elements\n  mutate(\"date\" = lubridate::as_date(date)) %&gt;%\n  # rename combine study sites by vegetation type\n  mutate(\"veg_type\" = case_when(study_site == \"forest1\" ~ \"forest\",\n                                study_site == \"forest2\" ~ \"forest\",\n                                study_site == \"forest3\" ~ \"forest\",\n                                study_site == \"grassland\" ~ \"grassland\",\n                                study_site == \"chaparral\" ~ \"chaparral\")) %&gt;%\n  # summarize results by vegetation type\n  group_by(veg_type, date) %&gt;%\n  summarize(\"NDVI\" = mean(NDVI, na.rm = TRUE))"
+  },
+  {
+    "objectID": "course-materials/labs/vegetation.html#plot-results",
+    "href": "course-materials/labs/vegetation.html#plot-results",
+    "title": "Week 8: Lab",
+    "section": "3. Plot results",
+    "text": "3. Plot results\nLet’s plot the results!\n\n\nCode\nggplot(sites_clean,\n       aes(x = date, y = NDVI,\n           group = veg_type, col = veg_type)) +\n  scale_color_manual(values = c(\"#EAAC8B\", \"#315C2B\",\"#9EA93F\")) +\n  geom_line() +\n  geom_point() +\n  theme_minimal() +\n  labs(x = \"\", y = \"Normalized Difference Vegetation Index (NDVI)\", col = \"Vegetation type\",\n       title = \"Seasonal cycles of vegetation productivity\") \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipCritical thinking\n\n\n\nWhat do we notice in the seasonal cycle in NDVI across vegetation communities?\n\nchaparral: NDVI stays relatively constant throughout the year\nforest: NDVI is lowest in the winter and highest in the summer\ngrassland: NDVI is highest in the winter and lowest in the summer\n\nDoes this match our expectations?"
   }
 ]
