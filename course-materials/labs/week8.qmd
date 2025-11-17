@@ -13,17 +13,10 @@ editor_options:
 ---
 
 
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-knitr::include_graphics("images/santa-clara-river.jpg")
-```
-
 ::: {.gray-text .center-text}
-[The Nature Conservancy](https://www.nature.org/en-us/get-involved/how-to-help/places-we-protect/the-nature-conservancy-in-california-santa-clara-river-california-con/){target="_blank"}
+[Unsplash](hhttps://unsplash.com/photos/a-pier-in-the-middle-of-a-body-of-water-JpSaot2H1M0){target="_blank"}
 :::
+
 
 ::: {.callout-note icon=true}
 # Source Materials
@@ -31,446 +24,461 @@ The following materials are based on materials developed by [Dr. Chris Kibler](h
 :::
 
 # Background
-Phenology is the timing of life history events. Important phenological events for plants involve the growth of leaves, flowering, and senescence (death of leaves). Plants species adapt the timing of these events to local climate conditions to ensure successful reproduction. Subsequently, animal species often adapt their phenology to take advantage of food availability. As the climate shifts this synchronization is being thrown out of whack. Shifts in phenology are therefore a common yardstick of understanding how and if ecosystems are adjusting to climate change.
+Monitoring the distribution and change in land cover types can help us understand the impacts of phenomena like climate change, natural disasters, deforestation, and urbanization. Determining land cover types over large areas is a major application of remote sensing because we are able to distinguish different materials based on their spectral reflectance. 
 
-Plant species may employ the following phenological strategies:
+Classifying remotely sensed imagery into land cover classes enables us to understand the distribution and change in land cover types over large areas. 
 
-- **Winter deciduous**: lose leaves in the winter, grow new leaves in the spring
-- **Drought deciduous**: lose leaves in the summer when water is limited
-- **Evergreen**: maintain leaves year-round
+There are many approaches for performing land cover classification:
+
+- **Supervised** approaches use training data labeled by the user
+- **Unsupervised** approaches use algorithms to create groups which are identified by the user afterward
 
 
 # Task
-In this lab we are analyzing plant phenology near the Santa Clara River which flows from Santa Clarita to Ventura. We will investigate the phenology of the following plant communities:
+In this lab, we are using a form of supervised classification -- a decision tree classifier. 
 
-- **Riparian forests**: grow along the river, dominated by winter deciduous cottonwood and willow trees
-- **Grasslands**: grow in openspaces, dominated by drought deciduous grasses
-- **Chaparral shrublands**: grow in more arid habitats, dominated by evergreen shrubs
+[Decision trees](https://medium.com/@ml.at.berkeley/machine-learning-crash-course-part-5-decision-trees-and-ensemble-models-dcc5a36af8cd) classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data. 
 
-To investigate the phenology of these plant communities we will use a time series of Landsat imagery and polygons identifying the locations of study sites within each plant community.
+In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: 
 
-Our primary goal is to compare seasonal patterns across vegetation communities. To do so, we will:
+- green vegetation 
+- dry grass or soil 
+- urban 
+- water
 
-- Convert spectral reflectance into a measure of vegetation productivity (NDVI)
-- Calculate NDVI throughout the year
-- Summarize NDVI values within vegetation communities
-- Visualize changes in NDVI within vegetation communities
+To do so, we will need to:
 
-:::{.callout-note icon=true}
-# Getting started
-To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week8){target="_blank"} to access all necessary data.
-:::
+- Load and process Landsat scene
+- Crop and mask Landsat data to study area
+- Extract spectral data at training sites
+- Train and apply decision tree classifier
+- Plot results
 
-## 1. Data
 
-**Multi-spectral remote sensing data:**
 
-- [Landsat's Operational Land Imager (OLI)](https://landsat.gsfc.nasa.gov/satellites/landsat-8/spacecraft-instruments/operational-land-imager/)
-- 8 pre-processed scenes
-    - Level 2 surface reflectance products
-    - Erroneous values set to NA
-    - Scale factor set to 100
-    - Bands 2-7
-    - Dates in file name
-- Scenes from the following dates:
-  - 2018-06-12
-  - 2018-08-15
-  - 2018-10-18
-  - 2018-11-03
-  - 2019-01-22
-  - 2019-02-23
-  - 2019-04-12
-  - 2019-07-01
+##  Data
 
-**Locations of representative vegetation communities:**
+### Landsat 5 Thematic Mapper
 
-- Polygons representing sites
-  - **study_site:** character string with plant type
+- [Landsat 5](https://www.usgs.gov/landsat-missions/landsat-5)
+-  1 scene from September 25, 2007
+- Bands: 1, 2, 3, 4, 5, 7
+- Collection 2 surface reflectance product
 
-# Workflow
+**Data files:** 
+
+- `landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B1.tif`
+- `landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B2.tif`
+- `landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B3.tif`
+- `landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B4.tif`
+- `landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B5.tif`
+- `landsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B7.tif`
+
+### Study area 
+
+Polygon representing southern Santa Barbara county
+
+**Data file:** `SB_county_south.shp`
+
+### Training data
+
+Polygons representing sites with training data
+  - *type*: character string with land cover type
+  
+**Data file:** `trainingdata.shp`
+
+# Data Pre Processing
+
 ## 1. Set up
+
+To train our classification algorithm and plot the results, we'll use the `rpart` and `rpart.plot` packages.
+
+```{r}
+#| eval: false
+install.packages("rpart")
+install.packages("rpart.plot")
+```
+
 
 Let's load all necessary packages:
 
-```{r load}
+```{r}
 #| warning: false
 #| message: false
-library(terra)
-library(sf)
+library(sf) # vector data
+library(terra) # raster data
+library(here) # file path management
 library(tidyverse)
-library(here)
-library(tmap)
+library(rpart) # recursive partitioning and regression trees
+library(rpart.plot) # plotting for rpart
+library(tmap) # map making
 ```
 
-## 2. Create function to compute NDVI
+## 2. Load Landsat data
+Let's create a raster stack. Each file name ends with the band number (e.g. `B1.tif`). 
 
-Let's start by defining a function to compute the Normalized Difference Vegetation Index (**NDVI**). NDVI computes the difference in reflectance between the **near infrared (NIR)** and **red** bands, normalized by their sum. 
+- Notice that we are missing a file for band 6
+- Band 6 corresponds to thermal data, which we will not be working with for this lab
 
-```{r ndvi-function}
-ndvi_fun <- function(nir, red){
-  (nir - red) / (nir + red)
-}
-```
-
-## 3. Compute NDVI for a single scene
-We have 8 scenes collected by Landsat's OLI sensor on 8 different days throughout the year.
-
-Let's start by loading in the first scene collected on June 12, 2018:
-
-```{r }
-#| echo: false
-landsat_20180612 <- rast(here("course-materials", "data", "week8", "landsat_20180612.tif"))
-```
-
-```{r }
-#| eval: false
-landsat_20180612 <- rast(here("data", "landsat_20180612.tif"))
-```
-
-Let's update the names of the layers to match the spectral bands they correspond to:
-```{r}
-names(landsat_20180612) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-```
-
-Now we can apply the NDVI function we created to compute NDVI for this scene using the `lapp()` function. 
-
-- The `lapp()` function applies a function to each cell using layers as arguments.
-- Therefore, we need to tell `lapp()` which layers (or bands) to pass into the function. 
-
-The NIR band is the 4th layer and the red band is the 3rd layer in our raster. In this case, because we defined the NIR band as the first argument and the red band as the second argument in our function, we tell `lapp()` to use the 4th layer first and 3rd layer second. 
-
-```{r}
-ndvi_20180612 <- lapp(landsat_20180612[[c(4, 3)]], fun = ndvi_fun)
-```
-
-```{r}
-#| code-fold: true
-#| message: false
-tm_shape(ndvi_20180612) +
-  tm_raster(col.legend  = tm_legend("NDVI")) +
-  tm_layout(legend.outside.position = "right")
-```
-
-# Approach #1
-We'll explore the following two approaches to this workflow:
-
-- 1. repeat the previous operations for each scene by copy/pasting code
-- 2. create a function to perform the same set of operations to each scene
-
-:::{.callout-tip icon=true}
-# Tip for HW #4
-In Homework Assignment #4, you'll be asked to generalize you're workflow into a function that can be used to run analysis on multiple species. In this lab, we'll see how to translate code into a generalized function.
-:::
-
-## 1. Compute NDVI for all scences
-
-Now we want to repeat the same operations for all 8 scenes. Below is a possible solution (where we repeat each line for each scene), but it's pretty clunky.
-
-Let's load each layer:
+To create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the `terra::rast()` function. We'll then update the names of the layers to match the spectral bands and plot a true color image to see what we're working with.
 
 ```{r}
 #| eval: false
-landsat_20180612 <-rast(here( "data", "landsat_20180612.tif"))
-landsat_20180815 <- rast(here("data", "landsat_20180815.tif"))
-landsat_20181018 <- rast(here("data", "landsat_20181018.tif"))
-landsat_20181103 <- rast(here("data", "landsat_20181103.tif"))
-landsat_20190122 <- rast(here("data", "landsat_20190122.tif"))
-landsat_20190223 <- rast(here("data", "landsat_20190223.tif"))
-landsat_20190412 <- rast(here("data", "landsat_20190412.tif"))
-landsat_20190701 <- rast(here("data", "landsat_20190701.tif"))
-```
+# list files for each band, including the full file path
+filelist <- list.files(here::here("data", "landsat-data"), full.names = TRUE)
 
+# read in and store as a raster stack
+landsat <- rast(filelist)
+
+# update layer names to match band
+names(landsat) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
+
+# plot true color image
+plotRGB(landsat, r = 3, g = 2, b = 1, stretch = "lin")
+```
 
 
 ```{r}
 #| echo: false
+# list files for each band, including the full file path
+filelist <- list.files(here::here("course-materials","data", "week9", "landsat-data"), full.names = TRUE)
 
-landsat_20180612 <-rast(here("course-materials", "data", "week8", "landsat_20180612.tif"))
-landsat_20180815 <- rast(here("course-materials", "data", "week8", "landsat_20180815.tif"))
-landsat_20181018 <- rast(here("course-materials", "data", "week8", "landsat_20181018.tif"))
-landsat_20181103 <- rast(here("course-materials", "data", "week8", "landsat_20181103.tif"))
-landsat_20190122 <- rast(here("course-materials", "data", "week8", "landsat_20190122.tif"))
-landsat_20190223 <- rast(here("course-materials", "data", "week8", "landsat_20190223.tif"))
-landsat_20190412 <- rast(here("course-materials", "data", "week8", "landsat_20190412.tif"))
-landsat_20190701 <- rast(here("course-materials", "data", "week8", "landsat_20190701.tif"))
+# read in and store as a raster stack
+landsat <- rast(filelist)
+
+# update layer names to match band
+names(landsat) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
+
+# plot true color image
+plotRGB(landsat, r = 3, g = 2, b = 1, stretch = "lin")
 ```
 
-And rename each layer:
 
-```{r names}
-names(landsat_20180612) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20180815) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20181018) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20181103) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20190122) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20190223) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20190412) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-names(landsat_20190701) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-```
-
-Next, compute NDVI for each layer:
-
-```{r compute ndvi}
-ndvi_20180612 <- lapp(landsat_20180612[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20180815 <- lapp(landsat_20180815[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20181018 <- lapp(landsat_20181018[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20181103 <- lapp(landsat_20181103[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20190122 <- lapp(landsat_20190122[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20190223 <- lapp(landsat_20190223[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20190412 <- lapp(landsat_20190412[[c(4, 3)]], fun = ndvi_fun)
-ndvi_20190701 <- lapp(landsat_20190701[[c(4, 3)]], fun = ndvi_fun)
-```
-
-Let's combine NDVI layers into a single raster stack.
-
-```{r combine ndvi}
-all_ndvi <- c(ndvi_20180612, 
-              ndvi_20180815, 
-              ndvi_20181018, 
-              ndvi_20181103, 
-              ndvi_20190122, 
-              ndvi_20190223, 
-              ndvi_20190412, 
-              ndvi_20190701)
-```
-
-Now, update the names of each layer to match the date of each image: 
-
-```{r all_ndvi names}
-names(all_ndvi) <- c("2018-06-12", 
-                     "2018-08-15", 
-                     "2018-10-18", 
-                     "2018-11-03", 
-                     "2019-01-22", 
-                     "2019-02-23", 
-                     "2019-04-12", 
-                     "2019-07-01")
-```
-
-# Approach #2
-## 1. Compute NDVI for all scenes
-
-The first attempt was pretty clunky and required a lot of copy/pasting. Because we're performing the same operations over and over again, this is a good opportunity to generalize our workflow into a function!
-
-:::{.callout-tip icon=true}
-# When should I create a function?
-There are lots and lots of reasons to create a function! The biggest clue that you should consider creating one is if you have several lines of code duplicated.
-:::
-
-Let's start over and see how we could do this more efficiently.
-
-We'll clear our environment and redefine our function for NDVI:
-
-```{r}
-rm(list = ls())  
-ndvi_fun <- function(nir, red){
-  (nir - red) / (nir + red)
-}
-```
-
-Next, let's first sketch out what operations we want to perform so we can figure out what our function needs.
-
-:::{.callout-warning icon=true}
-# Don't run this code!
-
-Before diving into the detailed nuances of your function, it's helpful to start by outlining the major steps you want your function to perform using pseudo-code.
-
-:::
-
-```{r outline}
-#| eval: false
-
-# NOTE: this code is not meant to run! 
-# we're just outlining the function we want to create
-
-create_ndvi_layer <- function(){
-  # step 1: read scene
-  landsat <- rast(file)
-  # step 2: rename layer
-  names(landsat) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-  # step 3: compute NDVI
-  ndvi <- lapp(landsat[[c(4, 3)]], fun = ndvi_fun)
-  return(ndvi)
-}
-
-# What do we notice as what we need to pass into our function?
-
-```
-
-:::{.callout-tip icon=true}
-# Turning pseudo-code into real code
-Now that we've written out the pseudo-code, we need to ask ourselves what argument(s) we would need to pass into our function to set off the process.
-
-In this case, the first operation needs a file name to read in. So, we now we need to figure out a way to come up with a set of file names to iterate through.
-:::
-
-We want a list of the scenes so that we can tell our function to compute NDVI for each. To do that we look in our data folder for the relevant file. To do so, we want to do the following:
-
-- Ask for the names of all the files in the `data` folder
-- Set the `pattern` option to return the names that end in `.tif` (the file extension for the Landsat scenes)
-- Set the `full.names` option returns the full file path for each scene
-
-
-```{r}
-#| echo: false
-#| message: false
-files <- list.files(
-  here("course-materials", "data", "week8"), pattern = "*.tif", 
-  full.names = TRUE)
-```
+## 3. Load study area
+We want to constrain our analysis to the southern portion of the county where we have training data, so we'll read in a file that defines the area we would like to study.
 
 ```{r}
 #| eval: false
-files <- list.files(
-  here("data"), pattern = "*.tif", 
-  full.names = TRUE)
+# read in shapefile for southern portion of SB county
+SB_county_south <- st_read(here::here("data", "SB_county_south.shp")) %>%
+      st_transform(SB_county_south, crs = crs(landsat))
 ```
-
-Now let's update our function to work with list of file names we created:
-
-- Pass function a number that will correspond to the index in the list of file names
-
-```{r update function}
-create_ndvi_layer <- function(i){
-  landsat <- rast(files[i])
-  names(landsat) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
-  ndvi <- lapp(landsat[[c(4, 3)]], fun = ndvi_fun)
-  return(ndvi)
-}
-```
-
-Let's test our function by asking it to read in the first file:
-
-```{r}
-test <- create_ndvi_layer(1)
-```
-
-Now we can use our function to create a NDVI layer for each scene and stack them into a single rasterstack. And then update layer names to match date:
-
-```{r run function}
-all_ndvi <- c(create_ndvi_layer(1), 
-              create_ndvi_layer(2), 
-              create_ndvi_layer(3), 
-              create_ndvi_layer(4), 
-              create_ndvi_layer(5), 
-              create_ndvi_layer(6), 
-              create_ndvi_layer(7), 
-              create_ndvi_layer(8))
-
-names(all_ndvi) <- c("2018-06-12", 
-                    "2018-08-15", 
-                    "2018-10-18", 
-                    "2018-11-03", 
-                    "2019-01-22", 
-                    "2019-02-23", 
-                    "2019-04-12", 
-                    "2019-07-01")
-```
-
-:::{.callout-tip icon=true}
-# Critical thinking
-Is there a way to improve this last step even further? Wrap it into a `for` loop? Could we pull the date strings directly from the file names?
-:::
-
-# Compare NDVI Across Vegetation Communities
-
-Now that we have computed NDVI for each of our scenes (days) we want to compare changes in NDVI values across different vegetation communities.
-
-## 1. Get data on vegetation communities
-
-First, we'll read in a shapefile of study sites:
 
 ```{r}
 #| echo: false
-#| warning: false
-#| message: false
-#| output: false
-sites <- st_read(here("course-materials", "data","week8","study_sites.shp"))
+#| output: false  
+# read in shapefile for southern portion of SB county
+SB_county_south <- st_read(here::here( "course-materials","data", "week9", "SB_county_south.shp")) %>%
+      st_transform(SB_county_south, crs = crs(landsat))
 ```
-
-
-
-```{r }
-#| code-fold: true
-#| warning: false
-#| message: false
-
-tm_shape(all_ndvi[[1]]) +
-  tm_raster() +
-  tm_shape(sites) +
-  tm_polygons() +
-  tm_layout(legend.show = FALSE)
-```
-
-## 2. Extract NDVI at study sites
-
-Now we want to find the average NDVI within each study site. The output of `terra::extract()` is a `data.frame` with rows that match the study site data set, so we bind the results to the original data set. 
-
-```{r }
-sites_ndvi <- terra::extract(all_ndvi, sites, fun = "mean")
-
-sites_annotated <- cbind(sites, sites_ndvi)
-```
-
-We're done! Except our data is very untidy... Let's tidy it up!
-
-- Convert to data frame
-- Turn from wide to long format
-- Turn layer names into date format
-- Combine study sites by vegetation type
-- Summarize results within vegetation types
 
 ```{r}
-#| message: false
-#| warning: false
-sites_clean <- sites_annotated %>%
-  # initial cleaning
-  st_drop_geometry() %>% # drop geometry
-  select(-ID) %>% # remove ID generated by terra::extract()
-  # reformat data frame
-  pivot_longer(!study_site) %>% # reshape data frame
-  rename("NDVI" = value) %>% # assign "value" to NDVI
-  # create date attribute
-  mutate("year" = str_sub(name, 2, 5), # pull out elements of date
-         "month" = str_sub(name, 7, 8),
-         "day" = str_sub(name, -2, -1)) %>%
-  unite("date", 4:6, sep = "-") %>% # combine date elements
-  mutate("date" = lubridate::as_date(date)) %>%
-  # rename combine study sites by vegetation type
-  mutate("veg_type" = case_when(study_site == "forest1" ~ "forest",
-                                study_site == "forest2" ~ "forest",
-                                study_site == "forest3" ~ "forest",
-                                study_site == "grassland" ~ "grassland",
-                                study_site == "chaparral" ~ "chaparral")) %>%
-  # summarize results by vegetation type
-  group_by(veg_type, date) %>%
-  summarize("NDVI" = mean(NDVI, na.rm = TRUE))
+#| code-fold: true  
+tm_shape(SB_county_south) +
+  tm_borders()
+```
+
+
+## 4. Crop and mask Landsat data to study area
+Now, we can crop and mask the Landsat data to our study area. 
+
+- **Why**? This reduces the amount of data we'll be working with and therefore saves computational time
+- **Bonus**: We can also remove any objects we're no longer working with to save space 
+
+```{r include=TRUE}
+# crop Landsat scene to the extent of the SB county shapefile
+landsat_cropped <- crop(landsat, SB_county_south)
+
+# mask the raster to southern portion of SB county
+landsat_masked <- mask(landsat_cropped, SB_county_south)
+
+# remove unnecessary object from environment
+rm(landsat, SB_county_south, landsat_cropped)
+
+plotRGB(landsat_masked, r = 3, g = 2, b = 1, stretch = "lin")
+
+```
+
+## 5. Convert Landsat values to reflectance
+Now we need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any [scaling factors](https://www.usgs.gov/faqs/how-do-i-use-scale-factor-landsat-level-2-science-products#:~:text=Landsat%20Collection%202%20surface%20temperature,the%20scale%20factor%20is%20applied.) to convert to reflectance.
+
+In this case, we are working with [Landsat Collection 2](https://www.usgs.gov/landsat-missions/landsat-collection-2).
+
+- The valid range of pixel values for this collection goes from 7,273 to 43,636...
+  - with a multiplicative scale factor of 0.0000275
+  - with an additive scale factor of -0.2
+  
+Let's reclassify any erroneous values as `NA` and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-100%!
+
+```{r include=TRUE, warning=FALSE}
+# reclassify erroneous values as NA
+rcl <- matrix(c(-Inf, 7273, NA,
+                 43636, Inf, NA), ncol = 3, byrow = TRUE)
+
+landsat <- classify(landsat_masked, rcl = rcl)
+
+# adjust values based on scaling factor
+landsat <- (landsat * 0.0000275 - 0.2) * 100
+
+# check values are 0 - 100
+summary(landsat)
+```
+
+
+# Supervised Classification
+
+
+
+## 1. Training classifier
+
+Let's begin by extracting reflectance values for training data!
+
+We will load the shapefile identifying locations within our study area as containing one of our 4 land cover types.
+
+```{r}
+#| eval: false
+# read in and transform training data
+training_data <- st_read(here::here( "data", "trainingdata.shp")) %>%
+  st_transform(., crs = crs(landsat))
+```
+
+```{r}
+#| echo: false
+#| output: false  
+# read in and transform training data
+training_data <- st_read(here::here("course-materials", "data", "week9", "trainingdata.shp")) %>%
+  st_transform(., crs = crs(landsat))
+```
+
+Now, we can extract the spectral reflectance values at each site to create a data frame that relates land cover types to their spectral reflectance.
+
+```{r}
+# extract reflectance values at training sites
+training_data_values <- terra::extract(landsat, training_data, df = TRUE)
+
+# convert training data to data frame
+training_data_attributes <- training_data %>%
+  st_drop_geometry()
+
+# join training data attributes and extracted reflectance values
+SB_training_data <- left_join(training_data_values, training_data_attributes,
+                              by = c("ID" = "id")) %>%
+                    mutate(type = as.factor(type)) # convert landcover type to factor
+```
+
+Next, let's train the decision tree classifier!
+
+To train our decision tree, we first need to establish our model formula (i.e. what our response and predictor variables are). 
+
+- The `rpart()` function implements the [CART algorithm](https://medium.com/geekculture/decision-trees-with-cart-algorithm-7e179acee8ff)
+- The `rpart()` function needs to know the model formula and training data you would like to use
+- Because we are performing a classification, we set `method = "class"`
+- We also set `na.action = na.omit` to remove any pixels with `NA`s from the analysis.
+
+
+```{r include=TRUE}
+# establish model formula
+SB_formula <- type ~ red + green + blue + NIR + SWIR1 + SWIR2
+
+# train decision tree
+SB_decision_tree <- rpart(formula = SB_formula,
+                          data = SB_training_data,
+                          method = "class",
+                          na.action = na.omit)
+```
+
+To understand how our decision tree will classify pixels, we can plot the results! 
+
+:::{.callout-tip icon=true}
+# Interpreting decision trees
+**Note:** The decision tree is comprised of a hierarchy of binary decisions. Each decision rule has 2 outcomes based on a conditional statement pertaining to values in each spectral band. 
+:::
+
+```{r}
+#| code-fold: true  
+# plot decision tree
+prp(SB_decision_tree)
+```
+
+## 2. Classify image
+Now that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.
+
+The `terra` package includes a `predict()` function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The `predict()` function will return a raster layer with integer values. These integer values correspond to the *factor levels* in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data. 
+
+```{r}
+# classify image based on decision tree
+SB_classification_dt <- terra::predict(landsat, SB_decision_tree, type = "class", na.rm = TRUE)
+
+# inspect level to understand the order of classes in prediction
+levels(SB_training_data$type)
 ```
 
 ## 3. Plot results
-
-Let's plot the results!
+Now we can plot the results and check out our land cover map!
 
 ```{r}
+#| warning: false
+#| message: false
 #| code-fold: true
-ggplot(sites_clean,
-       aes(x = date, y = NDVI,
-           group = veg_type, col = veg_type)) +
-  scale_color_manual(values = c("#EAAC8B", "#315C2B","#9EA93F")) +
-  geom_line() +
-  geom_point() +
-  theme_minimal() +
-  labs(x = "", y = "Normalized Difference Vegetation Index (NDVI)", col = "Vegetation type",
-       title = "Seasonal cycles of vegetation productivity") 
+# plot results
+dt_plot <- tm_shape(SB_classification_dt) +
+  tm_raster(
+    col.scale = tm_scale(
+      values = c("#8DB580", "#F2DDA4", "#7E8987", "#6A8EAE"),
+      labels = c("green vegetation", "soil/dead grass", "urban", "water")
+    ),
+    col.legend = tm_legend("Landcover type")
+  ) +
+  tm_title(text = "Decision Tree Landcover Classification") + 
+  tm_layout( legend.position = c("left", "bottom"))
+
+dt_plot
+
 ```
 
-:::{.callout-tip icon=true}
-# Critical thinking
-What do we notice in the seasonal cycle in NDVI across vegetation communities?
 
-- **chaparral:** NDVI stays relatively constant throughout the year
-- **forest:** NDVI is *lowest* in the winter and *highest* in the summer
-- **grassland:** NDVI is *highest* in the winter and *lowest* in the summer
+# Unsupervised 
 
-Does this match our expectations?
-:::
+There are many approaches for performing land cover classification! We just saw an example of a supervised classification - decision trees! To build the decision tree, we provided training data that was labeled by the user. But remember, our data might not always be labeled! We will see this scenario through now with a k means algorithm, where we provided unlabeled data that the algorithm will put into groups for us. At the end, we must figure out which group is which landcover type. 
+
+We already processed our landsat data by cropping/masking to our area of interest and converting the values to reflectance. Now it's time to jump into the classifying! 
+
+
+
+## 1. Convert raster data to a dataframe and scale
+
+The first step is to prepare our data for k-means clustering. Unlike the decision tree which can work directly with raster objects, k-means requires our data to be in a dataframe format. We'll extract the spectral band values for each pixel and then **scale** them. Scaling is critical for k-means because the algorithm measures distances between pixels - if one band has much larger values than another, it would dominate the clustering. Scaling puts all bands on the same scale so each contributes equally.
+
+```{r}
+
+# Convert raster to dataframe
+landsat_df <- as.data.frame(landsat, xy = TRUE, na.rm = TRUE)
+
+# Extract spectral bands for clustering
+spectral_data <- landsat_df[, c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")]
+
+# Scale the data
+spectral_data_scaled <- scale(spectral_data)
+```
+
+
+## 2. Classify using K means algorithm
+
+Now we're ready to run the k-means algorithm! We specify `centers = 4` because we want to find 4 groups (matching our 4 landcover types). The `nstart = 25` parameter tells the algorithm to try 25 different random starting positions and pick the best result - this helps avoid getting stuck in a poor solution. K-means works by iteratively grouping pixels with similar spectral signatures together until it finds stable clusters.
+
+Unlike the decision tree, **k-means has no idea what "water" or "green vegetation" looks like** - it's just finding natural groupings in the spectral data!
+
+
+```{r}
+# Perform k-means with k=4
+kmeans_result <- kmeans(spectral_data_scaled, centers = 4, nstart = 25)
+
+# Add cluster assignments to dataframe
+landsat_df$cluster <- kmeans_result$cluster
+```
+
+
+## 3. Convert data back to raster and add cluster assignments to dataframe. 
+
+The k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We'll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.
+
+```{r}
+# Set seed for reproducibility
+set.seed(223)
+
+# Perform k-means with k=4
+kmeans_result <- kmeans(spectral_data_scaled, centers = 4, nstart = 25)
+
+# Add cluster assignments to dataframe
+landsat_df$cluster <- kmeans_result$cluster
+
+# Convert back to raster
+SB_classification_kmeans <- rast(landsat[[1]])
+values(SB_classification_kmeans) <- NA
+cells <- cellFromXY(SB_classification_kmeans, landsat_df[, c("x", "y")])
+values(SB_classification_kmeans)[cells] <- landsat_df$cluster
+
+
+```
+
+
+## 4. Figure out what our clusters represent! 
+
+Here's where unsupervised classification gets interesting - **we have 4 clusters, but we don't know which is which!** The algorithm just labeled them 1, 2, 3, and 4. We need to examine the spectral characteristics of each cluster to determine what landcover type each represents.
+
+We'll calculate the mean reflectance values for each band within each cluster. By looking at these patterns, we can identify clusters:
+
+- **High NIR, low red** → likely green vegetation (healthy plants reflect NIR strongly)
+- **Low NIR, high blue** → likely water (water absorbs NIR)
+- **High values across all bands** → likely soil/dead grass (high overall reflectance)
+- **Moderate values** → likely urban areas
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Look at cluster characteristics to determine landcover type
+landsat_df %>%
+  group_by(cluster) %>%
+  summarise(
+    blue = mean(blue),
+    green = mean(green),
+    red = mean(red),
+    NIR = mean(NIR),
+    SWIR1 = mean(SWIR1),
+    SWIR2 = mean(SWIR2),
+    n_pixels = n()
+  ) %>%
+  arrange(cluster) %>% 
+  knitr::kable(digits = 2, 
+               caption = "Mean Spectral Values by Cluster")
+
+
+# Set category labels
+
+levels(SB_classification_kmeans) <- data.frame(
+  ID = 1:4,
+  landcover = c("soil/dead grass", "urban", "green vegetation", "water")
+)
+
+
+
+```
+
+## 5. Plot Results 
+
+Now we can plot the results and check out our land cover map!
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+
+# plot results
+kmeans_plot <- tm_shape(SB_classification_kmeans) +
+  tm_raster(
+    col.scale = tm_scale(
+      values = c("#F2DDA4","#7E8987",  "#8DB580","#6A8EAE"),
+      labels = c("soil/dead grass", "urban", "green vegetation", "water")
+    ),
+    col.legend = tm_legend("Landcover type")
+  ) +
+  tm_title(text = "K- Means Landcover Classification") + 
+  tm_layout(legend.position = c("left", "bottom"))
+
+kmeans_plot
+```
+
+## 6. Compare our decision tree and kmeans algorithm classification
+
+Now let's compare our two approaches side-by-side! The decision tree used labeled training data to learn classification rules, while k-means found natural groupings without any training. 
+
+
+```{r}
+#| warning: false
+#| message: false
+tmap_arrange(dt_plot, kmeans_plot, nrow = 1)
+```
+
