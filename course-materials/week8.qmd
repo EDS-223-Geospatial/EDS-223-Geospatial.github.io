@@ -1,5 +1,5 @@
 ---
-title: "Multispectral Remote Sensing Analysis"
+title: "Landcover Classification + Active Remote Sensing"
 subtitle: "Week 8"
 ---
 
@@ -8,7 +8,7 @@ subtitle: "Week 8"
 #| echo: false
 #| out-width: "80%"
 #| fig-align: "center"
-knitr::include_graphics("images/week8-image.png")
+knitr::include_graphics("images/week10-image.png")
 ```
 
 
@@ -20,8 +20,10 @@ knitr::include_graphics("images/week8-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week8-discussion.qmd) |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of active remote sensing: LiDAR and RADAR](){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification](labs/week9.qmd)        |
+| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week8){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion             | []() |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

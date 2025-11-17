@@ -12,13 +12,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r}
-#| eval: true
-#| echo: false
-#| out-width: "80%"
-#| fig-align: "center"
-knitr::include_graphics("images/santa-barbara.jpg")
-```
 
 ::: {.gray-text .center-text}
 [Unsplash](hhttps://unsplash.com/photos/a-pier-in-the-middle-of-a-body-of-water-JpSaot2H1M0){target="_blank"}
@@ -61,12 +54,9 @@ To do so, we will need to:
 - Train and apply decision tree classifier
 - Plot results
 
-:::{.callout-note icon=true}
-# Getting started
-To get started, fork and clone [this repository](https://github.com/EDS-223-Geospatial/eds223-week9){target="_blank"} to access all necessary data.
-:::
 
-## 1. Data
+
+##  Data
 
 ### Landsat 5 Thematic Mapper
 
@@ -97,7 +87,7 @@ Polygons representing sites with training data
   
 **Data file:** `trainingdata.shp`
 
-# Workflow
+# Data Pre Processing
 
 ## 1. Set up
 
@@ -235,7 +225,11 @@ summary(landsat)
 ```
 
 
-## 6. Training classifier
+# Supervised Classification
+
+
+
+## 1. Training classifier
 
 Let's begin by extracting reflectance values for training data!
 
@@ -306,20 +300,20 @@ To understand how our decision tree will classify pixels, we can plot the result
 prp(SB_decision_tree)
 ```
 
-## 7. Classify image
+## 2. Classify image
 Now that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.
 
 The `terra` package includes a `predict()` function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The `predict()` function will return a raster layer with integer values. These integer values correspond to the *factor levels* in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data. 
 
 ```{r}
 # classify image based on decision tree
-SB_classification <- terra::predict(landsat, SB_decision_tree, type = "class", na.rm = TRUE)
+SB_classification_dt <- terra::predict(landsat, SB_decision_tree, type = "class", na.rm = TRUE)
 
 # inspect level to understand the order of classes in prediction
 levels(SB_training_data$type)
 ```
 
-## 8. Plot results
+## 3. Plot results
 Now we can plot the results and check out our land cover map!
 
 ```{r}
@@ -327,7 +321,7 @@ Now we can plot the results and check out our land cover map!
 #| message: false
 #| code-fold: true
 # plot results
-tm_shape(SB_classification) +
+dt_plot <- tm_shape(SB_classification_dt) +
   tm_raster(
     col.scale = tm_scale(
       values = c("#8DB580", "#F2DDA4", "#7E8987", "#6A8EAE"),
@@ -335,12 +329,156 @@ tm_shape(SB_classification) +
     ),
     col.legend = tm_legend("Landcover type")
   ) +
-  tm_title(text = "Santa Barbara Landcover") + 
+  tm_title(text = "Decision Tree Landcover Classification") + 
   tm_layout( legend.position = c("left", "bottom"))
+
+dt_plot
 
 ```
 
-:::{.callout-tip icon=true}
-# Critical thinking
-Do these results make sense?
-:::
+
+# Unsupervised 
+
+There are many approaches for performing land cover classification! We just saw an example of a supervised classification - decision trees! To build the decision tree, we provided training data that was labeled by the user. But remember, our data might not always be labeled! We will see this scenario through now with a k means algorithm, where we provided unlabeled data that the algorithm will put into groups for us. At the end, we must figure out which group is which landcover type. 
+
+We already processed our landsat data by cropping/masking to our area of interest and converting the values to reflectance. Now it's time to jump into the classifying! 
+
+
+
+## 1. Convert raster data to a dataframe and scale
+
+The first step is to prepare our data for k-means clustering. Unlike the decision tree which can work directly with raster objects, k-means requires our data to be in a dataframe format. We'll extract the spectral band values for each pixel and then **scale** them. Scaling is critical for k-means because the algorithm measures distances between pixels - if one band has much larger values than another, it would dominate the clustering. Scaling puts all bands on the same scale so each contributes equally.
+
+```{r}
+
+# Convert raster to dataframe
+landsat_df <- as.data.frame(landsat, xy = TRUE, na.rm = TRUE)
+
+# Extract spectral bands for clustering
+spectral_data <- landsat_df[, c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")]
+
+# Scale the data
+spectral_data_scaled <- scale(spectral_data)
+```
+
+
+## 2. Classify using K means algorithm
+
+Now we're ready to run the k-means algorithm! We specify `centers = 4` because we want to find 4 groups (matching our 4 landcover types). The `nstart = 25` parameter tells the algorithm to try 25 different random starting positions and pick the best result - this helps avoid getting stuck in a poor solution. K-means works by iteratively grouping pixels with similar spectral signatures together until it finds stable clusters.
+
+Unlike the decision tree, **k-means has no idea what "water" or "green vegetation" looks like** - it's just finding natural groupings in the spectral data!
+
+
+```{r}
+# Perform k-means with k=4
+kmeans_result <- kmeans(spectral_data_scaled, centers = 4, nstart = 25)
+
+# Add cluster assignments to dataframe
+landsat_df$cluster <- kmeans_result$cluster
+```
+
+
+## 3. Convert data back to raster and add cluster assignments to dataframe. 
+
+The k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We'll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.
+
+```{r}
+# Set seed for reproducibility
+set.seed(223)
+
+# Perform k-means with k=4
+kmeans_result <- kmeans(spectral_data_scaled, centers = 4, nstart = 25)
+
+# Add cluster assignments to dataframe
+landsat_df$cluster <- kmeans_result$cluster
+
+# Convert back to raster
+SB_classification_kmeans <- rast(landsat[[1]])
+values(SB_classification_kmeans) <- NA
+cells <- cellFromXY(SB_classification_kmeans, landsat_df[, c("x", "y")])
+values(SB_classification_kmeans)[cells] <- landsat_df$cluster
+
+
+```
+
+
+## 4. Figure out what our clusters represent! 
+
+Here's where unsupervised classification gets interesting - **we have 4 clusters, but we don't know which is which!** The algorithm just labeled them 1, 2, 3, and 4. We need to examine the spectral characteristics of each cluster to determine what landcover type each represents.
+
+We'll calculate the mean reflectance values for each band within each cluster. By looking at these patterns, we can identify clusters:
+
+- **High NIR, low red** → likely green vegetation (healthy plants reflect NIR strongly)
+- **Low NIR, high blue** → likely water (water absorbs NIR)
+- **High values across all bands** → likely soil/dead grass (high overall reflectance)
+- **Moderate values** → likely urban areas
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+# Look at cluster characteristics to determine landcover type
+landsat_df %>%
+  group_by(cluster) %>%
+  summarise(
+    blue = mean(blue),
+    green = mean(green),
+    red = mean(red),
+    NIR = mean(NIR),
+    SWIR1 = mean(SWIR1),
+    SWIR2 = mean(SWIR2),
+    n_pixels = n()
+  ) %>%
+  arrange(cluster) %>% 
+  knitr::kable(digits = 2, 
+               caption = "Mean Spectral Values by Cluster")
+
+
+# Set category labels
+
+levels(SB_classification_kmeans) <- data.frame(
+  ID = 1:4,
+  landcover = c("soil/dead grass", "urban", "green vegetation", "water")
+)
+
+
+
+```
+
+## 5. Plot Results 
+
+Now we can plot the results and check out our land cover map!
+
+```{r}
+#| warning: false
+#| message: false
+#| code-fold: true
+
+
+# plot results
+kmeans_plot <- tm_shape(SB_classification_kmeans) +
+  tm_raster(
+    col.scale = tm_scale(
+      values = c("#F2DDA4","#7E8987",  "#8DB580","#6A8EAE"),
+      labels = c("soil/dead grass", "urban", "green vegetation", "water")
+    ),
+    col.legend = tm_legend("Landcover type")
+  ) +
+  tm_title(text = "K- Means Landcover Classification") + 
+  tm_layout(legend.position = c("left", "bottom"))
+
+kmeans_plot
+```
+
+## 6. Compare our decision tree and kmeans algorithm classification
+
+Now let's compare our two approaches side-by-side! The decision tree used labeled training data to learn classification rules, while k-means found natural groupings without any training. 
+
+
+```{r}
+#| warning: false
+#| message: false
+tmap_arrange(dt_plot, kmeans_plot, nrow = 1)
+```
+
