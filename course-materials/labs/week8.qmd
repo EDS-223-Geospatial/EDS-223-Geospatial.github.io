@@ -208,6 +208,8 @@ In this case, we are working with [Landsat Collection 2](https://www.usgs.gov/la
   - with a multiplicative scale factor of 0.0000275
   - with an additive scale factor of -0.2
   
+Find other scale factors and additive offsets for Landsat Level-2 science products [here](https://www.usgs.gov/faqs/how-do-i-use-a-scale-factor-landsat-level-2-science-products)!
+  
 Let's reclassify any erroneous values as `NA` and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-100%!
 
 ```{r include=TRUE, warning=FALSE}
@@ -370,19 +372,6 @@ Unlike the decision tree, **k-means has no idea what "water" or "green vegetatio
 
 
 ```{r}
-# Perform k-means with k=4
-kmeans_result <- kmeans(spectral_data_scaled, centers = 4, nstart = 25)
-
-# Add cluster assignments to dataframe
-landsat_df$cluster <- kmeans_result$cluster
-```
-
-
-## 3. Convert data back to raster and add cluster assignments to dataframe. 
-
-The k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We'll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.
-
-```{r}
 # Set seed for reproducibility
 set.seed(223)
 
@@ -391,7 +380,14 @@ kmeans_result <- kmeans(spectral_data_scaled, centers = 4, nstart = 25)
 
 # Add cluster assignments to dataframe
 landsat_df$cluster <- kmeans_result$cluster
+```
 
+
+## 3. Convert data back to raster and add cluster assignments to dataframe.  
+
+The k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We'll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.
+
+```{r}
 # Convert back to raster
 SB_classification_kmeans <- rast(landsat[[1]])
 values(SB_classification_kmeans) <- NA
