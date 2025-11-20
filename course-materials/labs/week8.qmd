@@ -223,8 +223,8 @@ Let's reclassify any erroneous values as `NA` and update the values for each pix
 
 ```{r include=TRUE, warning=FALSE}
 # reclassify erroneous values as NA
-rcl <- matrix(c(-Inf, 7273, NA,
-                 43636, Inf, NA), ncol = 3, byrow = TRUE)
+rcl <- matrix(c(-Inf, 7272, NA, 
+                 43637, Inf, NA), ncol = 3, byrow = TRUE)
 
 landsat <- classify(landsat_masked, rcl = rcl)
 
@@ -266,6 +266,7 @@ Now, we can extract the spectral reflectance values at each site to create a dat
 ```{r}
 # extract reflectance values at training sites
 training_data_values <- terra::extract(landsat, training_data, df = TRUE)
+
 
 # convert training data to data frame
 training_data_attributes <- training_data %>%
