@@ -26,14 +26,14 @@ Jack and Laura Dangermond Preserve near Lompoc, CA
 In this section, we'll explore key vector operations inside the `sf` package using data from California. California is considered a key global biodiversity hotspot. It is home to an exceptional variety of species and ecosystems as well as high endemism. Its mix of elevation, from the highest to the lowest points in the continental U.S., and its location, near both the ocean and mountains, make it geodiverse and so biologically special. As a result, California has one of the most extensive and advanced systems of protected areas in the U.S. It currently conserves more than 25% of its land. At large, area-based conservation is complex and implementation of conservation sites has been a way for governments to displace Indigenous peoples and local communities.
 
 
-### Learning Objectives {.unnumbered .unlisted}
+### Learning objectives {.unnumbered .unlisted}
 
 - Explore topological relationships with `sf` functions
 - Explore distance relationships with `sf` functions
 - Learn about spatial and distance-based joins
 - Practice writing error/warning messages and unit tests to diagnose outputs
 
-## 1. Get Started
+## 1. Get started
 
 - Create a version-controlled R Project
 - Add (at least) a subfolder to your R project: `data`
