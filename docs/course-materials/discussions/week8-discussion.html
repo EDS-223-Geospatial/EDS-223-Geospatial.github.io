@@ -6,8 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-09-25">
+<meta name="author" content="Ruth Oliver &amp; Alessandra Vidal Meza">
+<meta name="dcterms.date" content="2025-11-21">
 
 <title>Week 8: Discussion Section</title>
 <style>
@@ -173,6 +173,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week7.html">
  <span class="dropdown-text">week 7</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week8.html">
+ <span class="dropdown-text">week 8</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -204,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
       <h1 class="title">Week 8: Discussion Section</h1>
-            <p class="subtitle lead">Practice function making with rasters</p>
+            <p class="subtitle lead">Generalizable functions</p>
                       </div>
   </div>
     
@@ -214,14 +218,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Alessandra Vidal Meza </p>
+               <p>Ruth Oliver &amp; Alessandra Vidal Meza </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 25, 2025</p>
+        <p class="date">November 21, 2025</p>
       </div>
     </div>
     
@@ -237,9 +241,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">1. Background</a></li>
-  <li><a href="#get-started" id="toc-get-started" class="nav-link" data-scroll-target="#get-started">2. Get Started</a></li>
-  <li><a href="#your-task" id="toc-your-task" class="nav-link" data-scroll-target="#your-task">3. Your Task</a></li>
+  <li><a href="#get-started" id="toc-get-started" class="nav-link active" data-scroll-target="#get-started">1. Get started</a>
+  <ul class="collapse">
+  <li><a href="#create-function-to-compute-ndvi" id="toc-create-function-to-compute-ndvi" class="nav-link" data-scroll-target="#create-function-to-compute-ndvi">Create function to compute NDVI</a></li>
+  <li><a href="#compute-ndvi-for-all-scences" id="toc-compute-ndvi-for-all-scences" class="nav-link" data-scroll-target="#compute-ndvi-for-all-scences">Compute NDVI for all scences</a></li>
+  </ul></li>
+  <li><a href="#create-function-to-compute-ndvi-1" id="toc-create-function-to-compute-ndvi-1" class="nav-link" data-scroll-target="#create-function-to-compute-ndvi-1">2. Create function to compute NDVI</a></li>
+  <li><a href="#write-pseudo-code" id="toc-write-pseudo-code" class="nav-link" data-scroll-target="#write-pseudo-code">3. Write pseudo code</a></li>
+  <li><a href="#obtain-list-of-landsat-scenes-for-ndvi-function" id="toc-obtain-list-of-landsat-scenes-for-ndvi-function" class="nav-link" data-scroll-target="#obtain-list-of-landsat-scenes-for-ndvi-function">4. Obtain list of Landsat scenes for NDVI function</a></li>
+  <li><a href="#update-function-to-compute-ndvi-with-list" id="toc-update-function-to-compute-ndvi-with-list" class="nav-link" data-scroll-target="#update-function-to-compute-ndvi-with-list">5. Update function to compute NDVI with list</a></li>
+  <li><a href="#compute-ndvi-for-each-scene-and-create-raster-stack" id="toc-compute-ndvi-for-each-scene-and-create-raster-stack" class="nav-link" data-scroll-target="#compute-ndvi-for-each-scene-and-create-raster-stack">6. Compute NDVI for each scene and create raster stack</a></li>
+  <li><a href="#compare-ndvi-across-vegetation-communities" id="toc-compare-ndvi-across-vegetation-communities" class="nav-link" data-scroll-target="#compare-ndvi-across-vegetation-communities">7. Compare NDVI across vegetation communities</a></li>
+  <li><a href="#tidy-data-frame" id="toc-tidy-data-frame" class="nav-link" data-scroll-target="#tidy-data-frame">8. Tidy data frame</a></li>
   </ul>
 </nav>
     </div>
@@ -254,13 +267,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/tule_elk.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+<p><img src="images/santa-clara-river.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="gray-text center-text">
-<p>Photo by <a href="https://unsplash.com/@hariprasad000?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Hari Nandakumar</a> on <a href="https://unsplash.com/photos/herd-of-deer-on-brown-grass-field-during-daytime-ocQSj25qFJk?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a></p>
+<p>Santa Clara River — <a href="https://www.nature.org/en-us/get-involved/how-to-help/places-we-protect/the-nature-conservancy-in-california-santa-clara-river-california-con/" target="_blank">The Nature Conservancy</a></p>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -272,76 +285,502 @@ Source Materials
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The following materials are modified from <a href="https://github.com/leanderegg/EEMB_508/tree/main">Leander Anderegg’s niche modeling exercise</a>.</p>
+<p>The following materials are based on materials developed by <a href="https://www.geog.ucsb.edu/people/researchers/christopher-kibler" target="_blank">Dr.&nbsp;Chris Kibler</a> for the UCSB Geography Department.</p>
 </div>
 </div>
-<section id="background" class="level2">
-<h2 class="anchored" data-anchor-id="background">1. Background</h2>
-<p>This week, you will practice function making with rasters and create a generalizable workflow to determine the climate envelope (or the climate where a species currently lives) of two endemic species to California:</p>
+<p>Phenology is the timing of life history events. Important phenological events for plants involve the growth of leaves, flowering, and senescence (death of leaves). Plants species adapt the timing of these events to local climate conditions to ensure successful reproduction. Subsequently, animal species often adapt their phenology to take advantage of food availability. As the climate shifts this synchronization is being thrown out of whack. Shifts in phenology are therefore a common yardstick of understanding how and if ecosystems are adjusting to climate change.</p>
+<p>Plant species may employ the following phenological strategies:</p>
 <ul>
-<li>Tule elk (<em>Cervus canadensis nannodes</em>)</li>
-<li>Yellow-billed magpie (<em>Pica nutalli</em>)</li>
+<li><strong>Winter deciduous</strong>: lose leaves in the winter, grow new leaves in the spring</li>
+<li><strong>Drought deciduous</strong>: lose leaves in the summer when water is limited</li>
+<li><strong>Evergreen</strong>: maintain leaves year-round</li>
+</ul>
+<section id="learning-objectives" class="level3 unnumbered unlisted">
+<h3 class="unnumbered unlisted anchored" data-anchor-id="learning-objectives">Learning objectives</h3>
+<p>In this lab we are analyzing plant phenology near the Santa Clara River which flows from Santa Clarita to Ventura. We will investigate the phenology of the following plant communities:</p>
+<ul>
+<li><strong>Riparian forests</strong>: grow along the river, dominated by winter deciduous cottonwood and willow trees</li>
+<li><strong>Grasslands</strong>: grow in openspaces, dominated by drought deciduous grasses</li>
+<li><strong>Chaparral shrublands</strong>: grow in more arid habitats, dominated by evergreen shrubs</li>
+</ul>
+<p>To investigate the phenology of these plant communities we will use a time series of Landsat imagery and polygons identifying the locations of study sites within each plant community.</p>
+<p>Our primary goal is to compare seasonal patterns across vegetation communities. To do so, we will:</p>
+<ul>
+<li>Convert spectral reflectance into a measure of vegetation productivity (NDVI)</li>
+<li>Calculate NDVI throughout the year</li>
+<li>Summarize NDVI values within vegetation communities</li>
+<li>Visualize changes in NDVI within vegetation communities</li>
 </ul>
 </section>
 <section id="get-started" class="level2">
-<h2 class="anchored" data-anchor-id="get-started">2. Get Started</h2>
+<h2 class="anchored" data-anchor-id="get-started">1. Get started</h2>
 <ul>
-<li>Create an <code>.Rproj</code> as your version controlled project for Week 8</li>
-<li>Create a Quarto document inside your project</li>
-<li>Download <a href="https://drive.google.com/file/d/1kcIQdG1c8Y01DCiI--h3a2MTaDsxfqQ2/view">this data folder from Google Drive</a> and move it inside your project</li>
-<li>Load all necessary packages and read spatial objects</li>
+<li>Create a version-controlled R Project</li>
+<li>Add (at least) a subfolder to your R project: <code>data</code></li>
+<li>Create a Quarto document</li>
 </ul>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<p>Let’s load all necessary packages:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You will be working with the following datasets:</p>
+<p><strong>Multi-spectral remote sensing data:</strong> <a href="https://landsat.gsfc.nasa.gov/satellites/landsat-8/spacecraft-instruments/operational-land-imager/">Landsat’s Operational Land Imager (OLI)</a></p>
+<ul>
+<li>8 pre-processed scenes
+<ul>
+<li>Level 2 surface reflectance products</li>
+<li>Erroneous values set to NA</li>
+<li>Scale factor set to 100</li>
+<li>Bands 2-7</li>
+<li>Dates in file name</li>
+</ul></li>
+<li>Scenes from the following dates:
+<ul>
+<li>2018-06-12</li>
+<li>2018-08-15</li>
+<li>2018-10-18</li>
+<li>2018-11-03</li>
+<li>2019-01-22</li>
+<li>2019-02-23</li>
+<li>2019-04-12</li>
+<li>2019-07-01</li>
+</ul></li>
+</ul>
+<p><strong>Locations of representative vegetation communities:</strong> Polygons representing sites</p>
+<ul>
+<li><strong>study_site:</strong> character string with plant type</li>
+</ul>
+<p>Next, let’s <a href="https://drive.google.com/file/d/1szZrpzrWPSFnjE6U6nX8Zg3rRjeofXv9/view">download our data</a>. Unzip and move this to your version-controlled R Project’s <code>data</code> folder.</p>
+<section id="create-function-to-compute-ndvi" class="level3">
+<h3 class="anchored" data-anchor-id="create-function-to-compute-ndvi">Create function to compute NDVI</h3>
+<p>Let’s start by defining a function to compute the Normalized Difference Vegetation Index (<strong>NDVI</strong>). NDVI computes the difference in reflectance between the <strong>near infrared (NIR)</strong> and <strong>red</strong> bands, normalized by their sum.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red) <span class="sc">/</span> (nir <span class="sc">+</span> red)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Warning
+Compute NDVI for a single scene
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>If you don’t have <code>dismo</code> installed, make sure to run: <br></p>
+<p>We have 8 scenes collected by Landsat’s OLI sensor on 8 different days throughout the year.</p>
+<p>Let’s start by loading in the first scene collected on June 12, 2018:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"dismo"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>landsat_20180612 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20180612.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Let’s update the names of the layers to match the spectral bands they correspond to:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180612) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Now we can apply the NDVI function we created to compute NDVI for this scene using the <code>lapp()</code> function.</p>
+<ul>
+<li>The <code>lapp()</code> function applies a function to each cell using layers as arguments.</li>
+<li>Therefore, we need to tell <code>lapp()</code> which layers (or bands) to pass into the function.</li>
+</ul>
+<p>The NIR band is the 4th layer and the red band is the 3rd layer in our raster. In this case, because we defined the NIR band as the first argument and the red band as the second argument in our function, we tell <code>lapp()</code> to use the 4th layer first and 3rd layer second.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ndvi_20180612 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180612[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dismo)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ndvi_20180612) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend  =</span> <span class="fu">tm_legend</span>(<span class="st">"NDVI"</span>)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.outside.position =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week8-discussion_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>magpie <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"magpie_obvs.csv"</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>tule_elk <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"tule_elk_obvs.csv"</span>))</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>bioclim_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"climate"</span>, <span class="st">"wc2.1_2.5m"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>bioclim <span class="ot">&lt;-</span> <span class="fu">list.files</span>(bioclim_dir, <span class="at">pattern =</span> <span class="fu">glob2rx</span>(<span class="st">"*.tif$"</span>), <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>bioclim_sort <span class="ot">&lt;-</span> bioclim[</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Sort filepaths based on numeric suffix</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">order</span>(</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract numeric suffix of filenames and convert to numeric</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.numeric</span>(<span class="fu">gsub</span>(<span class="st">".*_(</span><span class="sc">\\</span><span class="st">d+)</span><span class="sc">\\</span><span class="st">.tif$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1"</span>, bioclim)))]</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>bioclim_rast <span class="ot">&lt;-</span> <span class="fu">rast</span>(bioclim_sort)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="your-task" class="level2">
-<h2 class="anchored" data-anchor-id="your-task">3. Your Task</h2>
-<p>Now, to meet this week’s learning objectives, your task:</p>
-<ol type="1">
-<li>Update the <code>bioclim_rast</code> layer names to match the <a href="https://www.worldclim.org/data/bioclim.html">Bioclimatic variables</a> using <code>names()</code></li>
-<li>Use <code>st_as_sf</code> to convert and find the geographic extent of species occurrence data <code>magpie</code> using <code>st_bbox()</code></li>
-<li>Crop <code>bioclim_rast</code> to match the extent of species occurrence data <code>magpie</code></li>
-<li>Extract points from the cropped <code>bioclim_rast</code> for each occurrence in <code>magpie</code></li>
-<li>Create “background values” by using <code>dismo::randomPoints()</code> to generate random sample points from the cropped <code>bioclim_rast</code></li>
-<li>Extract points from <code>bioclim_rast</code> for each random sample point generated in Step #5</li>
-<li>Plot species climate niche and background climate (temperature vs.&nbsp;precipitation)</li>
-<li>Modify steps 2-7 into a generalizable workflow for other species occurrence data</li>
-<li>Try your new function with species occurrence data <code>tule_elk</code></li>
-</ol>
+<section id="compute-ndvi-for-all-scences" class="level3">
+<h3 class="anchored" data-anchor-id="compute-ndvi-for-all-scences">Compute NDVI for all scences</h3>
+<p>Now we want to repeat the same operations for all 8 scenes. Below is a solution (where we repeat each line for each scene), but it’s pretty clunky.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>landsat_20180612 <span class="ot">&lt;-</span><span class="fu">rast</span>(<span class="fu">here</span>( <span class="st">"data"</span>, <span class="st">"landsat_20180612.tif"</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>landsat_20180815 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20180815.tif"</span>))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>landsat_20181018 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20181018.tif"</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>landsat_20181103 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20181103.tif"</span>))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>landsat_20190122 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190122.tif"</span>))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>landsat_20190223 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190223.tif"</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>landsat_20190412 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190412.tif"</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>landsat_20190701 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190701.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>And rename each layer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180612) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180815) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20181018) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20181103) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190122) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190223) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190412) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190701) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, compute NDVI for each layer:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ndvi_20180612 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180612[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ndvi_20180815 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180815[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ndvi_20181018 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20181018[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ndvi_20181103 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20181103[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ndvi_20190122 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190122[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ndvi_20190223 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190223[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ndvi_20190412 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190412[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ndvi_20190701 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190701[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s combine NDVI layers into a single raster stack.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>all_ndvi <span class="ot">&lt;-</span> <span class="fu">c</span>(ndvi_20180612, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>              ndvi_20180815, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              ndvi_20181018, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              ndvi_20181103, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              ndvi_20190122, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              ndvi_20190223, </span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>              ndvi_20190412, </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>              ndvi_20190701)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, update the names of each layer to match the date of each image:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_ndvi) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018-06-12"</span>, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2018-08-15"</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2018-10-18"</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2018-11-03"</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-01-22"</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-02-23"</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-04-12"</span>, </span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-07-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first attempt was pretty clunky and required a lot of copy/pasting. Because we’re performing the same operations over and over again, this is a good opportunity to generalize our workflow into a function!</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+When should I create a function?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are lots and lots of reasons to create a function! The biggest clue that you should consider creating one is if you have several lines of code duplicated.</p>
+</div>
+</div>
+<p><strong>If you’ve been following along, let’s clear our environment <code>rm(list = ls()</code>and redefine our function for NDVI!</strong></p>
+</section>
+</section>
+<section id="create-function-to-compute-ndvi-1" class="level2">
+<h2 class="anchored" data-anchor-id="create-function-to-compute-ndvi-1">2. Create function to compute NDVI</h2>
+<p>Let’s define a function for NDVI, which computes the difference in reflectance between the <strong>near infrared (NIR)</strong> and <strong>red</strong> bands, normalized by their sum.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red) <span class="sc">/</span> (nir <span class="sc">+</span> red)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="write-pseudo-code" class="level2">
+<h2 class="anchored" data-anchor-id="write-pseudo-code">3. Write pseudo code</h2>
+<p>Let’s first sketch out what operations we want to perform so we can figure out what our function needs. Before diving into the detailed nuances of your function, it’s helpful to start by outlining the major steps you want your function to perform using pseudo-code.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: this code is not meant to run! </span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We're just outlining the function we want to create</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>create_ndvi_layer <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># step 1: read scene</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  landsat <span class="ot">&lt;-</span> <span class="fu">rast</span>(file)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># step 2: rename layer</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(landsat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># step 3: compute NDVI</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  ndvi <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ndvi)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># What do we notice as what we need to pass into our function?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>Now that we’ve written out the pseudo-code, we need to ask ourselves what argument(s) we would need to pass into our function to set off the process. In this case, the first operation needs a file name to read in. So, we now we need to figure out a way to come up with a set of file names to iterate through.</p>
+</section>
+<section id="obtain-list-of-landsat-scenes-for-ndvi-function" class="level2">
+<h2 class="anchored" data-anchor-id="obtain-list-of-landsat-scenes-for-ndvi-function">4. Obtain list of Landsat scenes for NDVI function</h2>
+<p>We want a list of the scenes so that we can tell our function to compute NDVI for each. To do that we look in our data folder for the relevant file. To do so, we want to do the following:</p>
+<ul>
+<li>Ask for the names of all the files in the <code>data</code> folder</li>
+<li>Set the <code>pattern</code> option to return the names that end in <code>.tif</code> (the file extension for the Landsat scenes)</li>
+<li>Set the <code>full.names</code> option returns the full file path for each scene</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">"data"</span>), <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">*.tif$"</span>,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="update-function-to-compute-ndvi-with-list" class="level2">
+<h2 class="anchored" data-anchor-id="update-function-to-compute-ndvi-with-list">5. Update function to compute NDVI with list</h2>
+<p>Now let’s update our function to work with list of file names we created:</p>
+<ul>
+<li>Pass function a number that will correspond to the index in the list of file names</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>create_ndvi_layer <span class="ot">&lt;-</span> <span class="cf">function</span>(i){</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  landsat <span class="ot">&lt;-</span> <span class="fu">rast</span>(files[i])</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(landsat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  ndvi <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ndvi)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s test our function by asking it to read in the first file:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">create_ndvi_layer</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="compute-ndvi-for-each-scene-and-create-raster-stack" class="level2">
+<h2 class="anchored" data-anchor-id="compute-ndvi-for-each-scene-and-create-raster-stack">6. Compute NDVI for each scene and create raster stack</h2>
+<p>Now we can use our function to create a NDVI layer for each scene and stack them into a single raster stack. And then update layer names to match date:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Is there a way to improve this last step even further? Wrap it into a <code>for</code> loop? Could we pull the date strings directly from the file names?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>all_ndvi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">create_ndvi_layer</span>(<span class="dv">1</span>), </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">2</span>), </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">3</span>), </span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">4</span>), </span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">5</span>), </span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">6</span>), </span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">7</span>), </span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">8</span>))</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_ndvi) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018-06-12"</span>, </span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2018-08-15"</span>, </span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2018-10-18"</span>, </span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2018-11-03"</span>, </span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-01-22"</span>, </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-02-23"</span>, </span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-04-12"</span>, </span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-07-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="compare-ndvi-across-vegetation-communities" class="level2">
+<h2 class="anchored" data-anchor-id="compare-ndvi-across-vegetation-communities">7. Compare NDVI across vegetation communities</h2>
+<p>Now that we have computed NDVI for each of our scenes (days) we want to compare changes in NDVI values across different vegetation communities.</p>
+<ul>
+<li>Read shapefile of study sites to obtain data on vegetation communities</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"study_sites.shp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(all_ndvi[[<span class="dv">1</span>]]) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(sites) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.show =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week8-discussion_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Apply zonal statistics to obtain mean NDVI at study sites</li>
+</ul>
+<p>Now we want to find the average NDVI within each study site. The output of <code>terra::zonal()</code> is a <code>data.frame</code> with rows that match the study site data set, so we bind the results to the original data set.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>veg_zones <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(sites, all_ndvi, <span class="at">field =</span> <span class="st">"study_site"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sites_ndvi <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">zonal</span>(all_ndvi, veg_zones, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>sites_annotated <span class="ot">&lt;-</span> <span class="fu">cbind</span>(sites, sites_ndvi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sites_ndvi <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(all_ndvi, sites, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sites_annotated <span class="ot">&lt;-</span> <span class="fu">cbind</span>(sites, sites_ndvi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tidy-data-frame" class="level2">
+<h2 class="anchored" data-anchor-id="tidy-data-frame">8. Tidy data frame</h2>
+<p>We’re done! Except our data is very untidy… Let’s tidy it up!</p>
+<ul>
+<li>Convert to data frame</li>
+<li>Turn from wide to long format</li>
+<li>Turn layer names into date format</li>
+<li>Combine study sites by vegetation type</li>
+<li>Summarize results within vegetation types</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Solution
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sites_clean <span class="ot">&lt;-</span> sites_annotated <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># initial cleaning</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="co"># drop geometry</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">|&gt;</span> <span class="co"># remove ID generated by terra::extract()</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># reformat data frame</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">!</span>study_site) <span class="sc">|&gt;</span>  <span class="co"># reshape data frame</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="st">"NDVI"</span> <span class="ot">=</span> value) <span class="sc">|&gt;</span>  <span class="co"># assign "value" to NDVI</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># create date attribute</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"year"</span> <span class="ot">=</span> <span class="fu">str_sub</span>(name, <span class="dv">2</span>, <span class="dv">5</span>), <span class="co"># pull out elements of date</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>         <span class="st">"month"</span> <span class="ot">=</span> <span class="fu">str_sub</span>(name, <span class="dv">7</span>, <span class="dv">8</span>),</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>         <span class="st">"day"</span> <span class="ot">=</span> <span class="fu">str_sub</span>(name, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unite</span>(<span class="st">"date"</span>, <span class="dv">4</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">sep =</span> <span class="st">"-"</span>) <span class="sc">|&gt;</span>  <span class="co"># combine date elements</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"date"</span> <span class="ot">=</span> lubridate<span class="sc">::</span><span class="fu">as_date</span>(date)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rename combine study sites by vegetation type</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="st">"veg_type"</span> <span class="ot">=</span> <span class="fu">case_when</span>(study_site <span class="sc">==</span> <span class="st">"forest1"</span> <span class="sc">~</span> <span class="st">"forest"</span>,</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>                                study_site <span class="sc">==</span> <span class="st">"forest2"</span> <span class="sc">~</span> <span class="st">"forest"</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>                                study_site <span class="sc">==</span> <span class="st">"forest3"</span> <span class="sc">~</span> <span class="st">"forest"</span>,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>                                study_site <span class="sc">==</span> <span class="st">"grassland"</span> <span class="sc">~</span> <span class="st">"grassland"</span>,</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>                                study_site <span class="sc">==</span> <span class="st">"chaparral"</span> <span class="sc">~</span> <span class="st">"chaparral"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># summarize results by vegetation type</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(veg_type, date) <span class="sc">|&gt;</span> </span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">"NDVI"</span> <span class="ot">=</span> <span class="fu">mean</span>(NDVI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s plot the results!</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sites_clean,</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> NDVI,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">group =</span> veg_type, <span class="at">col =</span> veg_type)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#EAAC8B"</span>, <span class="st">"#315C2B"</span>,<span class="st">"#9EA93F"</span>)) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Normalized Difference Vegetation Index (NDVI)"</span>, <span class="at">col =</span> <span class="st">"Vegetation type"</span>,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Seasonal cycles of vegetation productivity"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week8-discussion_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What do we notice in the seasonal cycle in NDVI across vegetation communities?</p>
+<ul>
+<li><strong>chaparral:</strong> NDVI stays relatively constant throughout the year</li>
+<li><strong>forest:</strong> NDVI is <em>lowest</em> in the winter and <em>highest</em> in the summer</li>
+<li><strong>grassland:</strong> NDVI is <em>highest</em> in the winter and <em>lowest</em> in the summer</li>
+</ul>
+<p>Does this match our expectations?</p>
+</div>
+</div>
+</div>
 
 
 </section>
