@@ -206,3 +206,186 @@ We've now compared Lidar estimates of tree height to on-the-ground measurements!
 # Interpreting results
 It looks like the Lidar estimates tend to underestimate tree height for shorter trees and overestimates tree height for taller trees. Or maybe human observers underestimate the height of tall trees because they're challenging to measure? Or maybe the digital terrain model misjudged the elevation of the ground? There could be many reasons that the answers don't line up! It's then up to the researcher to figure out if the mismatch is important for their problem.
 :::
+
+
+
+
+
+
+
+### Test
+
+
+```{r}
+dtm_pre <- rast(here::here("course-materials", "data", "week10", "Eaton", "dtm_eaton_alignedNK_1m_PREFIRE.tif"))
+dsm_pre <- rast(here::here("course-materials", "data", "week10", "Eaton", "dsm_eaton_alignedNK_1m_PREFIRE.tif"))
+  
+  
+dtm_post <- rast(here::here("course-materials", "data", "week10", "Eaton", "dtm_eaton_epsg32611_geoid12b_1m_POSTFIRE.tif"))
+dsm_post <- rast(here::here("course-materials", "data", "week10", "Eaton", "dsm_eaton_epsg32611_geoid12b_1m_POSTFIRE.tif"))
+```
+
+
+```{r}
+damage <- st_read(here::here("course-materials", "data", "week10", "Eaton", "06061784-f911-4d0e-aca5-0768ac66aac5.gdb")) %>% st_transform(crs = crs(dsm_post))
+
+crs(damage) == crs(dsm_post)
+```
+
+```{r}
+# Ground surface change (bare earth)
+diff_dtm <- dtm_post - dtm_pre
+
+# Surface change (buildings + vegetation)
+diff_dsm <- dsm_post - dsm_pre
+
+names(diff_dtm) <- "DTM_change"
+names(diff_dsm) <- "DSM_change"
+```
+
+
+
+
+```{r}
+# Clip extreme values for better visualization
+diff_dsm_clipped <- clamp(diff_dsm, lower = -15, upper = 10)
+
+# Create fire damage color palette
+fire_palette <- c("#8B0000", "#FF4500", "#FF6347", "#FFFFFF", 
+                  "#87CEEB", "#4169E1", "#00008B")
+
+# DSM difference map
+tm_dsm <- tm_shape(diff_dsm_clipped) +
+  tm_raster(
+    col = "DSM_change",
+    palette = fire_palette,
+    breaks = c(-15, -10, -5, -2, 0, 2, 5, 10),
+    midpoint = 0,
+    title = "Elevation\nChange (m)",
+    style = "cont"
+  ) +
+  tm_title(text = "Eaton Fire: DSM Elevation Change (2025 - 2016")+
+  tm_credits("Red = elevation loss (destroyed buildings/vegetation) | Blue = elevation gain\nData: OpenTopography",
+             position = c("left", "bottom"),
+             size = 0.6)
+
+
+```
+
+
+
+```{r}
+library(rayshader)
+
+# Match extents
+dtm_post <- crop(dtm_post, ext(diff_dsm))
+dtm_post <- resample(dtm_post, diff_dsm, method = "bilinear")
+
+# DOWNSAMPLE to reduce memory (aggregate by factor of 5 = 5m resolution)
+diff_dsm_small <- aggregate(diff_dsm, fact = 5, fun = "mean")
+dtm_post_small <- aggregate(dtm_post, fact = 5, fun = "mean")
+
+# Convert to matrices
+elev_mat <- raster_to_matrix(dtm_post_small)
+diff_mat <- raster_to_matrix(diff_dsm_small)
+
+# Create overlay colors
+overlay <- height_shade(
+  diff_mat,
+  texture = colorRampPalette(c("#8B0000", "#FF6347", "#FFFFFF", "#4169E1", "#00008B"))(256)
+)
+
+# Create 3D plot
+elev_mat %>%
+  sphere_shade(texture = "bw") %>%
+  add_overlay(overlay, alphalayer = 0.7) %>%
+  plot_3d(
+    elev_mat,
+    zscale = 10,
+    theta = 45,
+    phi = 30,
+    zoom = 0.6,
+    windowsize = c(1200, 800)
+  )
+
+```
+
+
+
+```{r}
+# Pick single block of homes in Altadena
+neighborhood <-  ext(394486.57, 395167.24, 3784596.32, 3784987.29)  # Adjust coordinates
+
+
+# Crop
+diff_crop <- crop(diff_dsm, neighborhood)
+dtm_crop <- crop(dtm_post, neighborhood)
+dtm_crop <- resample(dtm_crop, diff_crop, method = "bilinear")
+
+# Convert to matrices
+elev_mat <- raster_to_matrix(dtm_crop)
+diff_mat <- raster_to_matrix(diff_crop)
+
+# Color overlay
+overlay <- height_shade(
+  diff_mat,
+  texture = colorRampPalette(c("#8B0000", "#FF6347", "#FFFFFF", 
+                               "#87CEEB", "#00008B"))(256),
+  range = c(-20, 20)
+)
+
+# Create map with strong hillshade
+elev_mat %>%
+  sphere_shade(texture = "bw", sunangle = 315) %>%
+  add_overlay(overlay, alphalayer = 0.7) %>%
+  add_shadow(ray_shade(elev_mat, zscale = 1), 0.5) %>% 
+  plot_map()
+```
+
+
+#### Damage Analysis
+
+```{r}
+diff_dsm_study <- crop(diff_dsm, neighborhood)
+
+```
+
+
+
+```{r}
+damage_buffers <- st_buffer(damage, dist = 25)
+
+lidar_min <- terra::extract(diff_dsm, vect(damage_buffers), fun = min, na.rm = TRUE)
+lidar_mean <- terra::extract(diff_dsm, vect(damage_buffers), fun = mean, na.rm = TRUE)
+
+```
+
+
+```{r}
+damage_analysis <- damage_buffers %>%
+  mutate(
+    lidar_min_change = lidar_min[[2]],
+    lidar_mean_change = lidar_mean[[2]],
+    elevation_loss = abs(lidar_min_change)
+  )
+
+```
+
+```{r}
+ggplot(damage_analysis %>% st_drop_geometry() %>%
+       filter(!is.na(ROOFCONSTRUCTION)),
+       aes(x = reorder(ROOFCONSTRUCTION, elevation_loss, FUN = median),
+           y = elevation_loss)) +
+  geom_boxplot(fill = 'orange', alpha = 0.7) +
+  coord_flip() +
+  labs(title = 'Roof Construction vs Destruction Severity',
+       x = 'Roof Type', y = 'Elevation Loss (m)') +
+  theme_minimal()
+
+
+
+
+```
+
+
+

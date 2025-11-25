@@ -1,0 +1,276 @@
+---
+title: "Week 9: Lab"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Annie Adams"
+date: last-modified
+execute: 
+  eval: true
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## TO DO : Add Image
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "95%"
+#| fig-align: "center"
+knitr::include_graphics("images/sjer.jpg")
+```
+
+
+# Background 
+
+The Eaton Fire ignited on January 7, 2025, in the foothills above Altadena, California, quickly becoming one of the most destructive wildfires in Los Angeles County history. Fueled by extreme Santa Ana winds and drought-stressed vegetation, the fire rapidly descended into residential neighborhoods, destroying thousands of structures and fundamentally altering the landscape.
+
+# Task 
+
+
+:::{.callout-note icon=true}
+# Getting started
+To get started, download the data from [this folder](https://drive.google.com/drive/folders/1dO-61cqzIgxiEtL1iXgUOCNEwg7GRkQp){target="_blank"} to access all necessary data.
+:::
+
+
+## Data 
+
+#### LiDAR data
+
+- digital surface models (DSM) represent the elevation of the top of all objects
+- digital terrain model (DTM) represent the elevation of the ground (or terrain)
+- Pre-fire: Collected in 2016
+- Post-fire: Collected in January 2025 
+
+**Data files:**
+
+- `dtm_eaton_epsg32611_geoid12b_1m_POSTFIRE.tif`
+- `dtm_eaton_alignedNK_1m_PREFIRE.tif`
+- `dsm_eaton_epsg32611_geoid12b_1m_POSTFIRE.tif`
+- `dsm_eaton_alignedNK_1m_PREFIRE.tif`
+
+
+## Building Damage Assessments data
+
+- Vector polygons representing building footprints
+- Attributes include roof construction type, assessed damage level, address
+
+**Data file:** `06061784-f911-4d0e-aca5-0768ac66aac5.gdb`
+
+# Workflow
+
+## 1. Set up
+
+Let's load all necessary packages:
+
+```{r}
+#| warning: false
+#| message: false
+library(terra)
+library(sf)
+library(tidyverse)
+library(tmap)
+library(here)
+library(rayshader)
+```
+
+
+
+## 2. Load LiDAR data and Damage assesment geodatabse
+
+
+```{r}
+dtm_pre <- rast(here::here("course-materials", "data", "week10", "Eaton", "dtm_eaton_alignedNK_1m_PREFIRE.tif"))
+dsm_pre <- rast(here::here("course-materials", "data", "week10", "Eaton", "dsm_eaton_alignedNK_1m_PREFIRE.tif"))
+  
+  
+dtm_post <- rast(here::here("course-materials", "data", "week10", "Eaton", "dtm_eaton_epsg32611_geoid12b_1m_POSTFIRE.tif"))
+dsm_post <- rast(here::here("course-materials", "data", "week10", "Eaton", "dsm_eaton_epsg32611_geoid12b_1m_POSTFIRE.tif"))
+```
+
+
+```{r}
+damage <- st_read(here::here("course-materials", "data", "week10", "Eaton", "06061784-f911-4d0e-aca5-0768ac66aac5.gdb")) %>% st_transform(crs = crs(dsm_post))
+
+```
+
+
+```{r}
+eaton_perimeter <- st_read(here::here("course-materials", "data", "week10", "Eaton","Eaton_Perimeter_20250121", "Eaton_Perimeter_20250121.shp"))%>% st_transform(crs = crs(dsm_post))
+```
+
+
+```{r}
+# Check if all four rasters have matching coordinate reference systems
+if (crs(dtm_pre) == crs(dsm_pre) & 
+    crs(dsm_pre) == crs(dtm_post) & 
+    crs(dtm_post) == crs(dsm_post)& 
+    crs(dtm_post) == crs(damage)) {
+  print("All coordinate reference systems match!")
+} else {
+  warning("Coordinate reference systems do not match!")
+}
+```
+
+
+## 3. Calculate Elevation Change
+
+Now we'll calculate the difference between pre- and post-fire elevations. A negative change indicates elevation loss (destroyed buildings/vegetation), while positive change indicates elevation gain.
+
+```{r}
+# Ground surface change (bare earth)
+diff_dtm <- dtm_post - dtm_pre
+
+# Surface change (buildings + vegetation)
+diff_dsm <- dsm_post - dsm_pre
+
+names(diff_dtm) <- "DTM_change"
+names(diff_dsm) <- "DSM_change"
+```
+
+## 4.  Visualizing Elevation Change
+
+Let's create a map showing where elevation changed most dramatically. Red colors will indicate elevation loss,  while blue indicates elevation gain.
+
+
+```{r}
+# Clip extreme values for better visualization
+diff_dsm_clipped <- clamp(diff_dsm, lower = -15, upper = 10)
+
+# Create fire damage color palette
+fire_palette <- c("#8B0000", "#FF4500", "#FF6347", "#FFFFFF", 
+                  "#87CEEB", "#4169E1", "#00008B")
+
+# DSM difference map
+tm_dsm <- tm_shape(diff_dsm_clipped) +
+  tm_raster(
+    col = "DSM_change",
+    palette = fire_palette,
+    breaks = c(-15, -10, -5, -2, 0, 2, 5, 10),
+    midpoint = 0,
+    title = "Elevation\nChange (m)",
+  ) +
+  tm_title(text = "Eaton Fire: DSM Elevation Change (2025 - 2016")+
+  tm_credits("Red = elevation loss (destroyed buildings/vegetation) | Blue = elevation gain\nData: OpenTopography",
+             position = c("left", "bottom"),
+             size = 0.6)
+
+tm_dsm
+```
+
+
+
+```{r}
+
+quantiles <- global(diff_dsm, fun = quantile, 
+                   probs = c(0.005, 0.995), na.rm = TRUE)
+
+diff_dsm_clipped <- clamp(diff_dsm, 
+                          lower = quantiles[1,1], 
+                          upper =quantiles[1,2] )
+
+
+breaks <- c(seq(quantiles[1,1], 0, length.out = 4),
+            seq(0, quantiles[1,2], length.out = 4)[-1])
+
+# Create fire damage color palette
+fire_palette <- c("#8B0000", "#FF4500", "#FF6347", "#FFFFFF", 
+                  "#87CEEB", "#4169E1", "#00008B")
+
+# DSM difference map
+tm_dsm <- tm_shape(diff_dsm_clipped) +
+  tm_raster(
+    col.scale = tm_scale_intervals(
+      values = fire_palette,
+      breaks = round(breaks),
+      midpoint = 0
+    ),
+    col.legend = tm_legend(
+      title = "Elevation\nChange (m)"
+    )
+  ) +
+  tm_lines(eaton_perimeter)+ 
+  tm_title("Eaton Fire: DSM Elevation Change (2025 - 2016)") +
+  tm_credits("Red = elevation loss (destroyed buildings/vegetation) | Blue = elevation gain\nData: OpenTopography",
+             position = c("left", "bottom"))
+
+tm_dsm
+```
+
+We will zoom in to a particular block of Altadena Homes to assess their damage and run some analyses with our elevation data. The bounding box below uses coordinates from this Altadena neighborhood:
+
+![](images/altadena_neighborhood.png)
+
+Let's start with creating our bounding box and cropping our raster's to its extent. 
+
+```{r}
+# Pick single block of homes in Altadena
+neighborhood <-  ext(394486.57, 395167.24, 3784596.32, 3784987.29)  
+
+
+# Crop
+diff_crop <- crop(diff_dsm, neighborhood)
+dtm_crop <- crop(dtm_post, neighborhood)
+dtm_crop <- resample(dtm_crop, diff_crop, method = "bilinear")
+
+# Convert to matrices
+elev_mat <- raster_to_matrix(dtm_crop)
+diff_mat <- raster_to_matrix(diff_crop)
+
+# Color overlay
+overlay <- height_shade(
+  diff_mat,
+  texture = colorRampPalette(c("#8B0000", "#FF6347", "#FFFFFF", 
+                               "#87CEEB", "#00008B"))(256),
+  range = c(-20, 20)
+)
+
+# Create map with strong hillshade
+elev_mat %>%
+  sphere_shade(texture = "bw", sunangle = 315) %>%
+  add_overlay(overlay, alphalayer = 0.7) %>%
+  add_shadow(ray_shade(elev_mat, zscale = 1), 0.5) %>% 
+  plot_map()
+```
+
+
+## 6. Damage assesment in a specific Altadena Neighborhood
+
+
+```{r}
+damage_buffers <- st_buffer(damage, dist = 25)
+
+lidar_min <- terra::extract(diff_dsm, vect(damage_buffers), fun = min, na.rm = TRUE)
+lidar_mean <- terra::extract(diff_dsm, vect(damage_buffers), fun = mean, na.rm = TRUE)
+
+```
+
+
+```{r}
+damage_analysis <- damage_buffers %>%
+  mutate(
+    lidar_min_change = lidar_min[[2]],
+    lidar_mean_change = lidar_mean[[2]],
+    elevation_loss = abs(lidar_min_change)
+  )
+
+```
+
+```{r}
+ggplot(damage_analysis %>% st_drop_geometry() %>%
+       filter(!is.na(ROOFCONSTRUCTION)),
+       aes(x = reorder(ROOFCONSTRUCTION, elevation_loss, FUN = median),
+           y = elevation_loss)) +
+  geom_boxplot(fill = 'orange', alpha = 0.7) +
+  coord_flip() +
+  labs(title = 'Roof Construction vs Destruction Severity',
+       x = 'Roof Type', y = 'Elevation Loss (m)') +
+  theme_minimal()
+
+
+
+
+```
+
