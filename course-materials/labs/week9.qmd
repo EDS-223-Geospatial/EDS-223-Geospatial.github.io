@@ -136,85 +136,66 @@ Let's create a map showing where elevation changed most dramatically. Red colors
 
 
 ```{r}
-# Clip extreme values for better visualization
-diff_dsm_clipped <- clamp(diff_dsm, lower = -15, upper = 10)
-
-# Create fire damage color palette
-fire_palette <- c("#8B0000", "#FF4500", "#FF6347", "#FFFFFF", 
-                  "#87CEEB", "#4169E1", "#00008B")
-
-# DSM difference map
-tm_dsm <- tm_shape(diff_dsm_clipped) +
-  tm_raster(
-    col = "DSM_change",
-    palette = fire_palette,
-    breaks = c(-15, -10, -5, -2, 0, 2, 5, 10),
-    midpoint = 0,
-    title = "Elevation\nChange (m)",
-  ) +
-  tm_title(text = "Eaton Fire: DSM Elevation Change (2025 - 2016")+
-  tm_credits("Red = elevation loss (destroyed buildings/vegetation) | Blue = elevation gain\nData: OpenTopography",
-             position = c("left", "bottom"),
-             size = 0.6)
-
-tm_dsm
-```
-
-
-
-```{r}
-
-quantiles <- global(diff_dsm, fun = quantile, 
+diff_dsm_crop <- crop(diff_dsm, eaton_perimeter)
+quantiles <- global(diff_dsm_crop, fun = quantile, 
                    probs = c(0.005, 0.995), na.rm = TRUE)
 
-diff_dsm_clipped <- clamp(diff_dsm, 
+diff_dsm_scaled <- clamp(diff_dsm_crop, 
                           lower = quantiles[1,1], 
                           upper =quantiles[1,2] )
 
-
-breaks <- c(seq(quantiles[1,1], 0, length.out = 4),
-            seq(0, quantiles[1,2], length.out = 4)[-1])
-
 # Create fire damage color palette
 fire_palette <- c("#8B0000", "#FF4500", "#FF6347", "#FFFFFF", 
                   "#87CEEB", "#4169E1", "#00008B")
 
 # DSM difference map
-tm_dsm <- tm_shape(diff_dsm_clipped) +
+tm_dsm <- tm_shape(diff_dsm_scaled) +
   tm_raster(
     col.scale = tm_scale_intervals(
       values = fire_palette,
-      breaks = round(breaks),
+      breaks = c(-14, -10, -5, -2, 0, 2, 5, 10, 16),
       midpoint = 0
     ),
     col.legend = tm_legend(
-      title = "Elevation\nChange (m)"
+      title = "Elevation\nChange (m)",
+      position = tm_pos_out("right", "center")
     )
   ) +
-  tm_lines(eaton_perimeter)+ 
+  tm_shape(eaton_perimeter) +
+  tm_borders(col = "red", lwd = 2.5) +
   tm_title("Eaton Fire: DSM Elevation Change (2025 - 2016)") +
-  tm_credits("Red = elevation loss (destroyed buildings/vegetation) | Blue = elevation gain\nData: OpenTopography",
+  tm_credits("Data: OpenTopography",
              position = c("left", "bottom"))
 
 tm_dsm
+
 ```
+
+
+
+
 
 We will zoom in to a particular block of Altadena Homes to assess their damage and run some analyses with our elevation data. The bounding box below uses coordinates from this Altadena neighborhood:
 
 ![](images/altadena_neighborhood.png)
 
-Let's start with creating our bounding box and cropping our raster's to its extent. 
+Let's start with creating our bounding box and cropping our rasters to the extent of our box. 
 
 ```{r}
 # Pick single block of homes in Altadena
 neighborhood <-  ext(394486.57, 395167.24, 3784596.32, 3784987.29)  
 
-
 # Crop
 diff_crop <- crop(diff_dsm, neighborhood)
 dtm_crop <- crop(dtm_post, neighborhood)
-dtm_crop <- resample(dtm_crop, diff_crop, method = "bilinear")
 
+
+```
+
+
+Now that we have zoomed into a specific neighborhood, lets create a plot using the `rayshader` package to visualize elevation differences. 
+
+```{r}
 # Convert to matrices
 elev_mat <- raster_to_matrix(dtm_crop)
 diff_mat <- raster_to_matrix(diff_crop)
@@ -235,9 +216,9 @@ elev_mat %>%
   plot_map()
 ```
 
-
 ## 6. Damage assesment in a specific Altadena Neighborhood
 
+Now let's quantify the relationship between building characteristics and fire damage severity.
 
 ```{r}
 damage_buffers <- st_buffer(damage, dist = 25)
