@@ -1,5 +1,5 @@
 ---
-title: "Land Cover Classification"
+title: "Active Remote Sensing"
 subtitle: "Week 9"
 ---
 
@@ -9,7 +9,7 @@ subtitle: "Week 9"
 #| echo: false
 #| out-width: "80%"
 #| fig-align: "center"
-knitr::include_graphics("images/week9-image.png")
+knitr::include_graphics("images/week10-image.png")
 ```
 
 ::: {.gray-text .center-text}
@@ -20,10 +20,10 @@ knitr::include_graphics("images/week9-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Vector and raster interactions cont.; False color images](labs/week6.qmd)        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Vector and raster interactions cont.; False color images](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week6){target="_blank"} |
-| {{< fa comments title="two speech bubbles" >}} Discussion |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | No Lecture this week - Thanksgiving Break!                 |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Active Remote Sensing](labs/week9.qmd)        |
+| {{< fa download title="download" >}} Lab materials to download                  | [Active Remote Sensing](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week9){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion |No Discussion this week - Thanksgiving Break!
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
