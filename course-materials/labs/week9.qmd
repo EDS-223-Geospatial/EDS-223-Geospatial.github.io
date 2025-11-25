@@ -188,6 +188,7 @@ diff_dsm_scaled <- clamp(diff_dsm_crop,
 ```
 
 ```{r}
+#| code-fold: true
 # Create fire damage color palette
 fire_palette <- c("#8B0000", "#FF4500", "#FF6347", "#FFFFFF", 
                   "#87CEEB", "#4169E1", "#00008B")
@@ -272,8 +273,8 @@ Now let's quantify the relationship between building characteristics and fire da
 damage_buffers <- st_buffer(damage, dist = 6)
 
 # Extract minimum and mean elevation loss for each building buffer
-lidar_min <- terra::extract(diff_dsm, vect(damage_buffers), fun = min, na.rm = TRUE)
-lidar_mean <- terra::extract(diff_dsm, vect(damage_buffers), fun = mean, na.rm = TRUE)
+lidar_min <- terra::extract(diff_dsm, damage_buffers, fun = min, na.rm = TRUE)
+
 
 ```
 
@@ -283,7 +284,6 @@ lidar_mean <- terra::extract(diff_dsm, vect(damage_buffers), fun = mean, na.rm =
 damage_analysis <- damage_buffers %>%
   mutate(
     lidar_min_change = lidar_min[[2]],
-    lidar_mean_change = lidar_mean[[2]],
     elevation_loss = abs(lidar_min_change)
   )
 
@@ -291,34 +291,29 @@ damage_analysis <- damage_buffers %>%
 
 
 ```{r}
+#| code-fold: true
 # Create plot of elevation loss based on year built
 
 damage_plot <- damage_analysis %>% 
          st_drop_geometry() %>%
          filter(!is.na(YEARBUILT)) %>%
          mutate(
-           age_category = case_when(
+           age_category = factor(case_when(
              YEARBUILT >= 2000 ~ "2000 +",
              YEARBUILT >= 1980 ~ "1980-1999",
              YEARBUILT >= 1960 ~ "1960-1979",
              YEARBUILT >= 1940 ~ "1940-1959",
              TRUE ~ "<1940"
-           ),
-           age_category = factor(age_category, 
-                                levels = c("<1940", 
-                                         "1940-1959",
-                                         "1960-1979", 
-                                         "1980-1999",
-                                         "2000 +"))
-         )
+           )))
+         
 ggplot(damage_plot,
        aes(x = age_category, y = elevation_loss, fill = age_category)) +
   geom_boxplot(alpha = 0.7) +
   scale_fill_brewer(palette = "YlOrRd") +
   coord_flip() +
   labs(
-    title = 'Building Age vs Elevation Loss',
-    x = 'Building Era', 
+    title = 'Building Time Period vs Elevation Loss',
+    x = 'Building Time Period', 
     y = 'Elevation Loss (m)'
   ) +
   theme_minimal() +
