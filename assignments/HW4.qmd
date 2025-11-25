@@ -58,7 +58,7 @@ This assignment will reinforce key concepts in geospatial analysis by practicing
 
 Your repository should have the following structure:
 
-```{md}
+```
 EDS223-HW3
 └─── README.md
 └─── qmd/Rmd/Proj files
