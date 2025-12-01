@@ -320,3 +320,9 @@ ggplot(damage_plot,
   theme(legend.position = "none")
 ```
 
+
+## References 
+
+Brigham, C., Scott, C., & Crosby, C. (2025). Using Lidar to understand the impacts of the 2025 Palisades and Eaton Fires, Los Angeles, CA. OpenTopography Blog. https://opentopography.org/blog/using-lidar-understand-impacts-2025-palisades-and-eaton-fires-los-angeles-ca
+
+OpenTopography. (2025). Topographic differencing spanning the 2025 Palisades and Eaton Fires, LA [Dataset]. OpenTopography. https://doi.org/10.5069/G95B00PW
