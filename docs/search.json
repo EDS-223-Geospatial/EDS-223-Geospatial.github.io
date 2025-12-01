@@ -1629,5 +1629,12 @@
     "title": "Intro to active remote sensing",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+  },
+  {
+    "objectID": "course-materials/labs/week9.html#references",
+    "href": "course-materials/labs/week9.html#references",
+    "title": "Week 9: Lab",
+    "section": "References",
+    "text": "References\nBrigham, C., Scott, C., & Crosby, C. (2025). Using Lidar to understand the impacts of the 2025 Palisades and Eaton Fires, Los Angeles, CA. OpenTopography Blog. https://opentopography.org/blog/using-lidar-understand-impacts-2025-palisades-and-eaton-fires-los-angeles-ca\nOpenTopography. (2025). Topographic differencing spanning the 2025 Palisades and Eaton Fires, LA [Dataset]. OpenTopography. https://doi.org/10.5069/G95B00PW"
   }
 ]
