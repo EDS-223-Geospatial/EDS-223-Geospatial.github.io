@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Intro to active remote sensing</title>
+<title>Drone Field Work</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,14 +33,15 @@ ul.task-list li input[type="checkbox"] {
 <link href="../images/favicon.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5b088bc1b061208832f78ccf2e33693d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-cd4e4562af9062d9f200841793bf5c06.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a3e411f41c4ff336b0e6206611796094.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-ee4c17f4ab7034be40864025011158b8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -81,6 +82,8 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">EDS 223</span>
     </a>
@@ -174,7 +177,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Intro to active remote sensing</h1>
+      <h1 class="title">Drone Field Work</h1>
             <p class="subtitle lead">Week 10</p>
                       </div>
   </div>
@@ -198,7 +201,6 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#class-materials" id="toc-class-materials" class="nav-link active" data-scroll-target="#class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</a></li>
   <li><a href="#assignment-reminders" id="toc-assignment-reminders" class="nav-link" data-scroll-target="#assignment-reminders"><i class="fa-solid fa-pencil" title="pencil" aria-label="pencil"></i> Assignment Reminders</a></li>
-  <li><a href="#background-reading" id="toc-background-reading" class="nav-link" data-scroll-target="#background-reading"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Background Reading</a></li>
   <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Additional Resources</a></li>
   </ul>
 </nav>
@@ -214,13 +216,13 @@ ul.task-list li input[type="checkbox"] {
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/week10-image.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="images/drones.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="gray-text center-text">
-<p><a href="https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/index.html" target="_blank">Your Name in Landsat</a></p>
+<p><a href="https://science.nasa.gov/specials/your-name-in-landsat/" target="_blank">Your Name in Landsat</a></p>
 </div>
 <section id="class-materials" class="level2">
 <h2 class="anchored" data-anchor-id="class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</h2>
@@ -234,17 +236,13 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td><i class="fa-solid fa-person-chalkboard" title="A person motioning at a chalkboard" aria-label="person-chalkboard"></i> Lecture</td>
-<td><a href="https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?usp=sharing" target="_blank">Fundamentals of active remote sensing: LiDAR and RADAR</a></td>
+<td><a href="" target="_blank">Drone Field Work at NCOS</a></td>
 </tr>
 <tr class="even">
 <td><i class="fa-solid fa-laptop-code" title="A laptop with on-screen code" aria-label="laptop-code"></i> Lab</td>
-<td><a href="../course-materials/labs/week10.html">Validating LiDAR tree height estimates</a></td>
+<td><a href="">Drone Lab Activity</a></td>
 </tr>
 <tr class="odd">
-<td><i class="fa-solid fa-key" title="key" aria-label="key"></i> Lab solution</td>
-<td></td>
-</tr>
-<tr class="even">
 <td><i class="fa-solid fa-comments" title="two speech bubbles" aria-label="comments"></i> Discussion</td>
 <td><a href="discussions/_week10-discussion.qmd">Practice gridding and spatial interpolation</a></td>
 </tr>
@@ -259,7 +257,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Important</span>Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -278,17 +276,11 @@ Important
 <tbody>
 <tr class="odd">
 <td>Check-In</td>
-<td><a href="https://forms.gle/99wrYNRxvVGL3gKj6" target="_blank">Check-In (week 10)</a></td>
+<td><a href="https://forms.gle/vAuKHsRSjFe4K1ca8" target="_blank">Check-In (week 10)</a></td>
 <td>12/04/2025</td>
 <td>12/04/2025</td>
 </tr>
 <tr class="even">
-<td>SR</td>
-<td><a href="../assignments/SR3.html" target="_blank">End-of-course reflection (SR#3)</a></td>
-<td>12/02/2025</td>
-<td>12/06/2023</td>
-</tr>
-<tr class="odd">
 <td>PR</td>
 <td><a href="../assignments/PR.html" target="_blank">Portfolio Repository</a></td>
 <td>11/13/2025</td>
@@ -297,20 +289,10 @@ Important
 </tbody>
 </table>
 </section>
-<section id="background-reading" class="level2">
-<h2 class="anchored" data-anchor-id="background-reading"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Background Reading</h2>
-<ul>
-<li><a href="../readings/Jensen-chapter9.pdf" target="_blank">Remote Sensing of the Environment, Chapter 9</a></li>
-<li><a href="../readings/MicroImages-RADAR-tutorial.pdf" target="_blank">Introduction to Interpreting Digital RADAR Images</a></li>
-<li><a href="https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/" target="_blank">Introduction to Light Detection and Ranging (Lidar) Remote Sensing Data</a> (Earth Lab, CU Boulder)</li>
-<li><a href="https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar" target="_blank">What is Synthetic Aperture Radar?</a> (NASA)</li>
-<li><a href="https://nisar.jpl.nasa.gov/mission/get-to-know-sar/polarimetry/" target="_blank">Get To Know SAR: Polarimetry</a> (NASA)</li>
-</ul>
-</section>
 <section id="additional-resources" class="level2">
 <h2 class="anchored" data-anchor-id="additional-resources"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Additional Resources</h2>
 <ul>
-<li><a href="https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/explore-lidar-point-clouds-plasio/" target="_blank">Explore Lidar Points in Plas.io</a> (Earth Lab, CU Boulder)</li>
+<li><a href="https://www.youtube.com/watch?v=iJTqlb7gsWY">Structure From Motion</a></li>
 </ul>
 
 
@@ -368,13 +350,14 @@ Important
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
