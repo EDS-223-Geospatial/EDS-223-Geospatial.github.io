@@ -193,7 +193,7 @@
     "href": "course-materials/week9.html#assignment-reminders",
     "title": "Active Remote Sensing",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/13/2025\n11/26/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/discussions/week0-discussion.html",
@@ -774,14 +774,14 @@
     "href": "assignments.html",
     "title": "Assignments",
     "section": "",
-    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+    "text": "ImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
   },
   {
     "objectID": "assignments.html#calendar",
     "href": "assignments.html#calendar",
     "title": "Assignments",
     "section": "",
-    "text": "Important\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+    "text": "ImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
   },
   {
     "objectID": "assignments.html#assignments",
@@ -1605,16 +1605,16 @@
   {
     "objectID": "course-materials/week10.html#class-materials",
     "href": "course-materials/week10.html#class-materials",
-    "title": "Intro to active remote sensing",
+    "title": "Drone Field Work",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of active remote sensing: LiDAR and RADAR\n\n\n Lab\nValidating LiDAR tree height estimates\n\n\n Lab solution\n\n\n\n Discussion\nPractice gridding and spatial interpolation"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nDrone Field Work at NCOS\n\n\n Lab\nDrone Lab Activity\n\n\n Discussion\nPractice gridding and spatial interpolation"
   },
   {
     "objectID": "course-materials/week10.html#assignment-reminders",
     "href": "course-materials/week10.html#assignment-reminders",
-    "title": "Intro to active remote sensing",
+    "title": "Drone Field Work",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 10)\n12/04/2025\n12/04/2025\n\n\nSR\nEnd-of-course reflection (SR#3)\n12/02/2025\n12/06/2023\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nCheck-In\nCheck-In (week 10)\n12/04/2025\n12/04/2025\n\n\nPR\nPortfolio Repository\n11/13/2025\n12/06/2025"
   },
   {
     "objectID": "course-materials/week10.html#background-reading",
@@ -1626,9 +1626,9 @@
   {
     "objectID": "course-materials/week10.html#additional-resources",
     "href": "course-materials/week10.html#additional-resources",
-    "title": "Intro to active remote sensing",
+    "title": "Drone Field Work",
     "section": " Additional Resources",
-    "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
+    "text": "Additional Resources\n\nStructure From Motion"
   },
   {
     "objectID": "course-materials/labs/week9.html#references",
@@ -1636,5 +1636,19 @@
     "title": "Week 9: Lab",
     "section": "References",
     "text": "References\nBrigham, C., Scott, C., & Crosby, C. (2025). Using Lidar to understand the impacts of the 2025 Palisades and Eaton Fires, Los Angeles, CA. OpenTopography Blog. https://opentopography.org/blog/using-lidar-understand-impacts-2025-palisades-and-eaton-fires-los-angeles-ca\nOpenTopography. (2025). Topographic differencing spanning the 2025 Palisades and Eaton Fires, LA [Dataset]. OpenTopography. https://doi.org/10.5069/G95B00PW"
+  },
+  {
+    "objectID": "course-materials/week9.html#background-reading",
+    "href": "course-materials/week9.html#background-reading",
+    "title": "Active Remote Sensing",
+    "section": " Background Reading",
+    "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 9\nIntroduction to Interpreting Digital RADAR Images\nIntroduction to Light Detection and Ranging (Lidar) Remote Sensing Data (Earth Lab, CU Boulder)\nWhat is Synthetic Aperture Radar? (NASA)\nGet To Know SAR: Polarimetry (NASA)"
+  },
+  {
+    "objectID": "course-materials/week9.html#additional-resources",
+    "href": "course-materials/week9.html#additional-resources",
+    "title": "Active Remote Sensing",
+    "section": " Additional Resources",
+    "text": "Additional Resources\n\nExplore Lidar Points in Plas.io (Earth Lab, CU Boulder)"
   }
 ]

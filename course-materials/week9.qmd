@@ -9,7 +9,7 @@ subtitle: "Week 9"
 #| echo: false
 #| out-width: "80%"
 #| fig-align: "center"
-knitr::include_graphics("images/week10-image.png")
+knitr::include_graphics("images/drones.png")
 ```
 
 ::: {.gray-text .center-text}
@@ -36,3 +36,15 @@ All assignments are **due at 11:59 PM** on the date listed.
 |-----------------|-----------------------------------------------|---------------|------------|
 | HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/13/2025    | 11/26/2025 |
 | PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/13/2025    | 12/06/2025 |
+
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
+- [Remote Sensing of the Environment, Chapter 9](/readings/Jensen-chapter9.pdf){target="_blank"}
+- [Introduction to Interpreting Digital RADAR Images](/readings/MicroImages-RADAR-tutorial.pdf){target="_blank"}
+- [Introduction to Light Detection and Ranging (Lidar) Remote Sensing Data](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/){target="_blank"} (Earth Lab, CU Boulder)
+- [What is Synthetic Aperture Radar?](https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar){target="_blank"} (NASA)
+- [Get To Know SAR: Polarimetry](https://nisar.jpl.nasa.gov/mission/get-to-know-sar/polarimetry/){target="_blank"} (NASA)
+
+
+## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
+- [Explore Lidar Points in Plas.io](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/explore-lidar-point-clouds-plasio/){target="_blank"} (Earth Lab, CU Boulder)
