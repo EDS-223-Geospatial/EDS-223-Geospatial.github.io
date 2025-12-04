@@ -51,7 +51,10 @@ The style is up to you, but it should incorporate the following elements clearly
     
 ## Submitting assignment
 
-Once you have completed your blog post, submit the link to your blog post on this [google form](https://forms.gle/rpkAf1JRh4oCoqRF7). 
+Once you have completed your blog post, submit the following: 
+
+- Submit the link to your blog post on your personal website on this [google form](https://forms.gle/rpkAf1JRh4oCoqRF7). 
+- Save your blog post as a PDF and submit to the `Final Project Blog Post` portal on Gradescope. 
 
 
 | Task                           | Due Date |
