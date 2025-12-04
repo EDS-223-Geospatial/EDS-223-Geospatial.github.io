@@ -19,8 +19,8 @@ knitr::include_graphics("images/drones.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Drone Field Work at NCOS](){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Drone Lab Activity]()       |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | Drone Field Work at NCOS                |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | Drone Lab Activity      |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice gridding and spatial interpolation](discussions/_week10-discussion.qmd) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
