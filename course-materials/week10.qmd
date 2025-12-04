@@ -20,8 +20,8 @@ knitr::include_graphics("images/drones.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | Drone Field Work at NCOS                |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | Drone Lab Activity      |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice gridding and spatial interpolation](discussions/_week10-discussion.qmd) |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | Geospatial Data Hackathon!    |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Drone Lab Activity](resources/NCOS_ProcessingReport.pdf) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -37,5 +37,6 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
-
+- [Structure From Motion Processing](resources/Structure-From-Motion-Processing.pdf)
+- [Process RedEdge Panchromatic Images with MetaShape](resources/WingtraKnowledgeBase_Process_Panchromatic.pdf)
 - [Geospatial Data Resources](https://docs.google.com/document/d/1SIYV1tHMfcQWbQknl06QaAohQdRbeKjbCSoYx_ejdjo/edit?tab=t.0)

@@ -1607,7 +1607,7 @@
     "href": "course-materials/week10.html#class-materials",
     "title": "Drone Field Work",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nDrone Field Work at NCOS\n\n\n Lab\nDrone Lab Activity\n\n\n Discussion\nPractice gridding and spatial interpolation"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nDrone Field Work at NCOS\n\n\n Lab\nGeospatial Data Hackathon!\n\n\n Discussion\nDrone Lab Activity"
   },
   {
     "objectID": "course-materials/week10.html#assignment-reminders",
@@ -1628,7 +1628,7 @@
     "href": "course-materials/week10.html#additional-resources",
     "title": "Drone Field Work",
     "section": " Additional Resources",
-    "text": "Additional Resources\n\nGeospatial Data Resources"
+    "text": "Additional Resources\n\nStructure From Motion Processing\nProcess RedEdge Panchromatic Images with MetaShape\nGeospatial Data Resources"
   },
   {
     "objectID": "course-materials/labs/week9.html#references",
