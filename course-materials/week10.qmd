@@ -38,4 +38,4 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
 
-- [Structure From Motion](https://www.youtube.com/watch?v=iJTqlb7gsWY)
+- [Geospatial Data Resources](https://docs.google.com/document/d/1SIYV1tHMfcQWbQknl06QaAohQdRbeKjbCSoYx_ejdjo/edit?tab=t.0)
