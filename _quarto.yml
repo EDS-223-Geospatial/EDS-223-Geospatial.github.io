@@ -7,6 +7,12 @@ project:
     # - "!data/"
 
 website:
+
+  announcement:
+    icon: info-circle
+    dismissable: false
+    position: above-navbar
+    content: "Course materials are currently undergoing revision! EDS 223 will begin again in Fall 2026."
   favicon: images/favicon.png
   navbar:
     title: "EDS 223"
