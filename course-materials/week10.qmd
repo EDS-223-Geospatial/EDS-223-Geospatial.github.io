@@ -32,7 +32,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                | Date Assigned | Date Due   |
 |-----------------|-------------------------------------------------|---------------|------------|
-| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/11/2026    | 12/06/2026 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}      | 11/12/2026    | 12/02/2026 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Additional Resources
