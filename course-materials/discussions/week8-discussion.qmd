@@ -118,7 +118,7 @@ Let's start by loading in the first scene collected on June 12, 2018:
 
 ```{r }
 #| echo: false
-landsat_20180612 <- rast(here("course-materials", "data", "week8-section", "landsat_20180612.tif"))
+landsat_20180612 <- rast(here("course-materials", "data", "week8", "landsat_20180612.tif"))
 ```
 
 ```{r }
@@ -169,14 +169,14 @@ landsat_20190701 <- rast(here("data", "landsat_20190701.tif"))
 
 ```{r}
 #| echo: false
-landsat_20180612 <-rast(here("course-materials", "data", "week8-section", "landsat_20180612.tif"))
-landsat_20180815 <- rast(here("course-materials", "data", "week8-section", "landsat_20180815.tif"))
-landsat_20181018 <- rast(here("course-materials", "data", "week8-section", "landsat_20181018.tif"))
-landsat_20181103 <- rast(here("course-materials", "data", "week8-section", "landsat_20181103.tif"))
-landsat_20190122 <- rast(here("course-materials", "data", "week8-section", "landsat_20190122.tif"))
-landsat_20190223 <- rast(here("course-materials", "data", "week8-section", "landsat_20190223.tif"))
-landsat_20190412 <- rast(here("course-materials", "data", "week8-section", "landsat_20190412.tif"))
-landsat_20190701 <- rast(here("course-materials", "data", "week8-section", "landsat_20190701.tif"))
+landsat_20180612 <-rast(here("course-materials", "data", "week8", "landsat_20180612.tif"))
+landsat_20180815 <- rast(here("course-materials", "data", "week8", "landsat_20180815.tif"))
+landsat_20181018 <- rast(here("course-materials", "data", "week8", "landsat_20181018.tif"))
+landsat_20181103 <- rast(here("course-materials", "data", "week8", "landsat_20181103.tif"))
+landsat_20190122 <- rast(here("course-materials", "data", "week8", "landsat_20190122.tif"))
+landsat_20190223 <- rast(here("course-materials", "data", "week8", "landsat_20190223.tif"))
+landsat_20190412 <- rast(here("course-materials", "data", "week8", "landsat_20190412.tif"))
+landsat_20190701 <- rast(here("course-materials", "data", "week8", "landsat_20190701.tif"))
 ```
 
 And rename each layer:
@@ -298,7 +298,7 @@ We want a list of the scenes so that we can tell our function to compute NDVI fo
 ```{r}
 #| echo: false
 files <- list.files(
-  here("course-materials", "data", "week8-section"), pattern = "*.tif$", 
+  here("course-materials", "data", "week8"), pattern = "*.tif$", 
   full.names = TRUE)
 ```
 
@@ -376,7 +376,7 @@ sites <- st_read(here("data","study_sites.shp"))
 ```{r}
 #| echo: false
 #| output: false
-sites <- st_read(here("course-materials", "data","week8-section","study_sites.shp"))
+sites <- st_read(here("course-materials", "data","week8","study_sites.shp"))
 ```
 
 ```{r }

@@ -2,19 +2,25 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ruth Oliver &amp; Alessandra Vidal Meza">
-<meta name="dcterms.date" content="2025-11-25">
+<meta name="dcterms.date" content="2026-08-24">
 
 <title>Week 8: Discussion Section</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -74,10 +80,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-5b088bc1b061208832f78ccf2e33693d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17e5a23d094ee4d3ea1f9bf67e0e3d54.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a3e411f41c4ff336b0e6206611796094.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-5cef1391e92990c1d02e0f0e735fafd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -115,6 +121,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <div id="quarto-announcement" data-announcement-id="0edb71929a775bd879e815e746ea4419" class="alert alert-primary hidden"><i class="bi bi-info-circle quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>Course materials are currently undergoing revision! EDS 223 will begin again in Fall 2026.</p>
+</div></div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -181,6 +190,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week9.html">
  <span class="dropdown-text">week 9</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week10.html">
+ <span class="dropdown-text">week 10</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -229,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 25, 2025</p>
+        <p class="date">August 24, 2026</p>
       </div>
     </div>
     
@@ -285,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Source Materials
+<span class="screen-reader-only">Note</span>Source Materials
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -325,11 +338,11 @@ Source Materials
 </ul>
 <p>Let’s load all necessary packages:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You will be working with the following datasets:</p>
 <p><strong>Multi-spectral remote sensing data:</strong> <a href="https://landsat.gsfc.nasa.gov/satellites/landsat-8/spacecraft-instruments/operational-land-imager/">Landsat’s Operational Land Imager (OLI)</a></p>
@@ -363,9 +376,9 @@ Source Materials
 <h3 class="anchored" data-anchor-id="create-function-to-compute-ndvi">Create function to compute NDVI</h3>
 <p>Let’s start by defining a function to compute the Normalized Difference Vegetation Index (<strong>NDVI</strong>). NDVI computes the difference in reflectance between the <strong>near infrared (NIR)</strong> and <strong>red</strong> bands, normalized by their sum.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red) <span class="sc">/</span> (nir <span class="sc">+</span> red)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -373,18 +386,18 @@ Source Materials
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Compute NDVI for a single scene
+<span class="screen-reader-only">Tip</span>Compute NDVI for a single scene
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>We have 8 scenes collected by Landsat’s OLI sensor on 8 different days throughout the year.</p>
 <p>Let’s start by loading in the first scene collected on June 12, 2018:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>landsat_20180612 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20180612.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>landsat_20180612 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20180612.tif"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s update the names of the layers to match the spectral bands they correspond to:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180612) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180612) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can apply the NDVI function we created to compute NDVI for this scene using the <code>lapp()</code> function.</p>
 <ul>
@@ -393,14 +406,14 @@ Compute NDVI for a single scene
 </ul>
 <p>The NIR band is the 4th layer and the red band is the 3rd layer in our raster. In this case, because we defined the NIR band as the first argument and the red band as the second argument in our function, we tell <code>lapp()</code> to use the 4th layer first and 3rd layer second.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ndvi_20180612 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180612[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ndvi_20180612 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180612[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ndvi_20180612) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ndvi_20180612) <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend  =</span> <span class="fu">tm_legend</span>(<span class="st">"NDVI"</span>)) <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.outside.position =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.outside.position =</span> <span class="st">"right"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -417,58 +430,58 @@ Compute NDVI for a single scene
 <h3 class="anchored" data-anchor-id="compute-ndvi-for-all-scences">Compute NDVI for all scences</h3>
 <p>Now we want to repeat the same operations for all 8 scenes. Below is a solution (where we repeat each line for each scene), but it’s pretty clunky.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>landsat_20180612 <span class="ot">&lt;-</span><span class="fu">rast</span>(<span class="fu">here</span>( <span class="st">"data"</span>, <span class="st">"landsat_20180612.tif"</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>landsat_20180612 <span class="ot">&lt;-</span><span class="fu">rast</span>(<span class="fu">here</span>( <span class="st">"data"</span>, <span class="st">"landsat_20180612.tif"</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>landsat_20180815 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20180815.tif"</span>))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>landsat_20181018 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20181018.tif"</span>))</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>landsat_20181103 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20181103.tif"</span>))</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>landsat_20190122 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190122.tif"</span>))</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>landsat_20190223 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190223.tif"</span>))</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>landsat_20190412 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190412.tif"</span>))</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>landsat_20190701 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190701.tif"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>landsat_20190701 <span class="ot">&lt;-</span> <span class="fu">rast</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"landsat_20190701.tif"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And rename each layer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180612) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180612) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20180815) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20181018) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20181103) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190122) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190223) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190412) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190701) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_20190701) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, compute NDVI for each layer:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ndvi_20180612 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180612[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ndvi_20180612 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180612[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ndvi_20180815 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20180815[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ndvi_20181018 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20181018[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>ndvi_20181103 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20181103[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>ndvi_20190122 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190122[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>ndvi_20190223 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190223[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>ndvi_20190412 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190412[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ndvi_20190701 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190701[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>ndvi_20190701 <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_20190701[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s combine NDVI layers into a single raster stack.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>all_ndvi <span class="ot">&lt;-</span> <span class="fu">c</span>(ndvi_20180612, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>all_ndvi <span class="ot">&lt;-</span> <span class="fu">c</span>(ndvi_20180612, </span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>              ndvi_20180815, </span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>              ndvi_20181018, </span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              ndvi_20181103, </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>              ndvi_20190122, </span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>              ndvi_20190223, </span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>              ndvi_20190412, </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>              ndvi_20190701)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>              ndvi_20190701)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, update the names of each layer to match the date of each image:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_ndvi) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018-06-12"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(all_ndvi) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"2018-06-12"</span>, </span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2018-08-15"</span>, </span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2018-10-18"</span>, </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2018-11-03"</span>, </span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-01-22"</span>, </span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-02-23"</span>, </span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-04-12"</span>, </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-07-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"2019-07-01"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first attempt was pretty clunky and required a lot of copy/pasting. Because we’re performing the same operations over and over again, this is a good opportunity to generalize our workflow into a function!</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -477,7 +490,7 @@ Compute NDVI for a single scene
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-When should I create a function?
+<span class="screen-reader-only">Tip</span>When should I create a function?
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -491,21 +504,21 @@ When should I create a function?
 <h2 class="anchored" data-anchor-id="create-function-to-compute-ndvi-1">2. Create function to compute NDVI</h2>
 <p>Let’s define a function for NDVI, which computes the difference in reflectance between the <strong>near infrared (NIR)</strong> and <strong>red</strong> bands, normalized by their sum.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red) <span class="sc">/</span> (nir <span class="sc">+</span> red)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -515,19 +528,19 @@ Solution
 <h2 class="anchored" data-anchor-id="write-pseudo-code">3. Write pseudo code</h2>
 <p>Let’s first sketch out what operations we want to perform so we can figure out what our function needs. Before diving into the detailed nuances of your function, it’s helpful to start by outlining the major steps you want your function to perform using pseudo-code.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: this code is not meant to run! </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: this code is not meant to run! </span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We're just outlining the function we want to create</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>create_ndvi_layer <span class="ot">&lt;-</span> <span class="cf">function</span>(){</span>
@@ -540,7 +553,7 @@ Solution
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ndvi)</span>
 <span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># What do we notice as what we need to pass into our function?</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># What do we notice as what we need to pass into our function?</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -556,21 +569,21 @@ Solution
 <li>Set the <code>full.names</code> option returns the full file path for each scene</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">here</span>(<span class="st">"data"</span>), <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">*.tif$"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -583,28 +596,28 @@ Solution
 <li>Pass function a number that will correspond to the index in the list of file names</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>create_ndvi_layer <span class="ot">&lt;-</span> <span class="cf">function</span>(i){</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>create_ndvi_layer <span class="ot">&lt;-</span> <span class="cf">function</span>(i){</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  landsat <span class="ot">&lt;-</span> <span class="fu">rast</span>(files[i])</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(landsat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  ndvi <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat[[<span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">3</span>)]], <span class="at">fun =</span> ndvi_fun)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(ndvi)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s test our function by asking it to read in the first file:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">create_ndvi_layer</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="fu">create_ndvi_layer</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -614,12 +627,12 @@ Solution
 <h2 class="anchored" data-anchor-id="compute-ndvi-for-each-scene-and-create-raster-stack">6. Compute NDVI for each scene and create raster stack</h2>
 <p>Now we can use our function to create a NDVI layer for each scene and stack them into a single raster stack. And then update layer names to match date:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -627,7 +640,7 @@ Solution
 <div class="callout-body-container callout-body">
 <p>Is there a way to improve this last step even further? Wrap it into a <code>for</code> loop? Could we pull the date strings directly from the file names?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>all_ndvi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">create_ndvi_layer</span>(<span class="dv">1</span>), </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>all_ndvi <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">create_ndvi_layer</span>(<span class="dv">1</span>), </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">2</span>), </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">3</span>), </span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">create_ndvi_layer</span>(<span class="dv">4</span>), </span>
@@ -643,7 +656,7 @@ Solution
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-01-22"</span>, </span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-02-23"</span>, </span>
 <span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-04-12"</span>, </span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-07-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"2019-07-01"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -656,16 +669,16 @@ Solution
 <li>Read shapefile of study sites to obtain data on vegetation communities</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"study_sites.shp"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sites <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"study_sites.shp"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(all_ndvi[[<span class="dv">1</span>]]) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(all_ndvi[[<span class="dv">1</span>]]) <span class="sc">+</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>() <span class="sc">+</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(sites) <span class="sc">+</span></span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.show =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.show =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -680,28 +693,28 @@ Solution
 </ul>
 <p>Now we want to find the average NDVI within each study site. The output of <code>terra::zonal()</code> is a <code>data.frame</code> with rows that match the study site data set, so we bind the results to the original data set.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>veg_zones <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(sites, all_ndvi, <span class="at">field =</span> <span class="st">"study_site"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>veg_zones <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(sites, all_ndvi, <span class="at">field =</span> <span class="st">"study_site"</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>sites_ndvi <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">zonal</span>(all_ndvi, veg_zones, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>sites_annotated <span class="ot">&lt;-</span> <span class="fu">cbind</span>(sites, sites_ndvi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>sites_annotated <span class="ot">&lt;-</span> <span class="fu">cbind</span>(sites, sites_ndvi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sites_ndvi <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(all_ndvi, sites, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>sites_ndvi <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(all_ndvi, sites, <span class="at">fun =</span> <span class="st">"mean"</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sites_annotated <span class="ot">&lt;-</span> <span class="fu">cbind</span>(sites, sites_ndvi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>sites_annotated <span class="ot">&lt;-</span> <span class="fu">cbind</span>(sites, sites_ndvi)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -718,19 +731,19 @@ Solution
 <li>Summarize results within vegetation types</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sites_clean <span class="ot">&lt;-</span> sites_annotated <span class="sc">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sites_clean <span class="ot">&lt;-</span> sites_annotated <span class="sc">|&gt;</span> </span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># initial cleaning</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="sc">|&gt;</span> <span class="co"># drop geometry</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>ID) <span class="sc">|&gt;</span> <span class="co"># remove ID generated by terra::extract()</span></span>
@@ -751,13 +764,13 @@ Solution
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>                                study_site <span class="sc">==</span> <span class="st">"chaparral"</span> <span class="sc">~</span> <span class="st">"chaparral"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># summarize results by vegetation type</span></span>
 <span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(veg_type, date) <span class="sc">|&gt;</span> </span>
-<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">"NDVI"</span> <span class="ot">=</span> <span class="fu">mean</span>(NDVI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">"NDVI"</span> <span class="ot">=</span> <span class="fu">mean</span>(NDVI, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s plot the results!</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sites_clean,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sites_clean,</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> NDVI,</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">group =</span> veg_type, <span class="at">col =</span> veg_type)) <span class="sc">+</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#EAAC8B"</span>, <span class="st">"#315C2B"</span>,<span class="st">"#9EA93F"</span>)) <span class="sc">+</span></span>
@@ -765,7 +778,7 @@ Solution
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> <span class="st">"Normalized Difference Vegetation Index (NDVI)"</span>, <span class="at">col =</span> <span class="st">"Vegetation type"</span>,</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Seasonal cycles of vegetation productivity"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Seasonal cycles of vegetation productivity"</span>) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -841,13 +854,14 @@ Solution
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
