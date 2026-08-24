@@ -269,7 +269,7 @@ diff_nbr <- pre_nbr_rast - post_nbr_rast
 
 tm_shape(diff_nbr) +
   tm_raster(style = "equal", n = 6, 
-            palette = get_brewer_pal("YlOrRd", n = 6, plot = FALSE),
+            palette = RColorBrewer::brewer.pal(6, "YlOrRd"),
             title = "Difference NBR (dNBR)", colorNA = "black") +
   tm_layout(legend.outside = TRUE)
 ```
@@ -311,7 +311,7 @@ reclassified[is.nan(reclassified)] <- NA
 tm_shape(reclassified) +
   tm_raster(style = "cat",
             labels = c(categories, "Missing"),
-            palette = get_brewer_pal("YlOrRd", n = 5, plot = FALSE),
+            palette = RColorBrewer::brewer.pal(5, "YlOrRd"),
             title = "Severity Level", colorNA = "black")+
   tm_layout(legend.outside = TRUE)
 ```

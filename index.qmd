@@ -1,7 +1,7 @@
 ---
 title: "Geospatial Analysis & Remote Sensing"
 subtitle: "Master of Environmental Data Science (MEDS)"
-description: "Fall 2025"
+description: "Fall 2026"
 title-block-banner: false
 toc: false
 ---
@@ -25,7 +25,7 @@ This course introduces the spatial modeling and analytic techniques of geographi
 
 ## Weekly Schedule
 
-- Lecture: Tuesday/Thursday 8- 9:15 AM at Bren Hall 4016
+- Lecture: Tuesday/Thursday 8- 9:15 AM at BH 1424
 - Discussion Section: Friday 9:00 - 10:20 AM in Bren Hall 3022
 
 ## Readings and References
@@ -66,7 +66,7 @@ knitr::include_graphics("images/annie.png")
 
 **Email:** [aradams@ucsb.edu](mailto::aradams@ucsb.edu) 
 
-**Student Hours:** Thursday 11 am - 12 pm @ BH 3418
+**Student Hours:** Monday 2:30 - 3:30 PM @ BH 3418
 
 **Learn more:** [annieradams.github.io](https://annieradams.github.io/)  
 :::
@@ -84,17 +84,17 @@ knitr::include_graphics("images/annie.png")
 #| echo: false
 #| fig-align: "center"
 #| out-width: "45%" 
-knitr::include_graphics("images/alessandra.png")
+knitr::include_graphics("images/")
 ```
 
 ::: {.center-text}
-[**Alessandra Vidal Meza**]{.teal-text}  
+[****]{.teal-text}  
 
-**Email:** [avidalmeza@ucsb.edu](mailto::avidalmeza@ucsb.edu)   
+**Email:** [](mailto::)   
 
-**Student Hours:** Monday 3 pm - 4 pm @ BH 1001
+**Student Hours:**
 
-**Learn more:** [avidalmeza.com](https://avidalmeza.com/)
+**Learn more:** 
 :::
 
 :::

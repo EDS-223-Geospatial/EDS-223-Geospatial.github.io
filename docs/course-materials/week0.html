@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Intro to EDS 223 and map making</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -37,10 +43,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-5b088bc1b061208832f78ccf2e33693d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-17e5a23d094ee4d3ea1f9bf67e0e3d54.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a3e411f41c4ff336b0e6206611796094.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-5cef1391e92990c1d02e0f0e735fafd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -78,6 +84,9 @@ ul.task-list li input[type="checkbox"] {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <div id="quarto-announcement" data-announcement-id="0edb71929a775bd879e815e746ea4419" class="alert alert-primary hidden"><i class="bi bi-info-circle quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>Course materials are currently undergoing revision! EDS 223 will begin again in Fall 2026.</p>
+</div></div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -96,7 +105,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://docs.google.com/document/d/1uEfXTgl5TAkB50B46yjDWe_gEkgBNy38ghjwXqk40bs/view" target="_blank"> 
+    <a class="nav-link" href="https://docs.google.com/document/d/1dK9oioz1eajKsdCC7hGzT6N9BPj5O3bpZIKcGFmLmm4/view" target="_blank"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -111,38 +120,6 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="../course-materials/week1.html">
  <span class="dropdown-text">week 1</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week2.html">
- <span class="dropdown-text">week 2</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week3.html">
- <span class="dropdown-text">week 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week4.html">
- <span class="dropdown-text">week 4</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week5.html">
- <span class="dropdown-text">week 5</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week6.html">
- <span class="dropdown-text">week 6</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week7.html">
- <span class="dropdown-text">week 7</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week8.html">
- <span class="dropdown-text">week 8</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../course-materials/week9.html">
- <span class="dropdown-text">week 9</span></a>
   </li>  
     </ul>
   </li>
@@ -196,9 +173,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#class-materials" id="toc-class-materials" class="nav-link active" data-scroll-target="#class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</a></li>
+  <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials" class="nav-link active" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</a></li>
   <li><a href="#assignment-reminders" id="toc-assignment-reminders" class="nav-link" data-scroll-target="#assignment-reminders"><i class="fa-solid fa-pencil" title="pencil" aria-label="pencil"></i> Assignment Reminders</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Additional Resources</a></li>
+  <li><a href="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-additional-resources" id="toc-b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-additional-resources" class="nav-link" data-scroll-target="#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-additional-resources"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Additional Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -221,8 +198,8 @@ ul.task-list li input[type="checkbox"] {
 <div class="gray-text center-text">
 <p><a href="https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/index.html" target="_blank">Your Name in Landsat</a></p>
 </div>
-<section id="class-materials" class="level2">
-<h2 class="anchored" data-anchor-id="class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</h2>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials" class="level2">
+<h2 class="anchored" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials"><i class="fa-solid fa-person-chalkboard" title="a person pointing at a chalkboard" aria-label="person-chalkboard"></i> Class Materials</h2>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -250,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Important
+<span class="screen-reader-only">Important</span>Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -270,14 +247,14 @@ Important
 <tr class="odd">
 <td>SR</td>
 <td><a href="../assignments/SR1.html" target="_blank">Pre-course Self Reflection (SR#1)</a></td>
-<td>09/30/2025</td>
-<td>10/04/2025</td>
+<td>09/24/2026</td>
+<td>09/26/2026</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="additional-resources" class="level2">
-<h2 class="anchored" data-anchor-id="additional-resources"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Additional Resources</h2>
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-additional-resources" class="level2">
+<h2 class="anchored" data-anchor-id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-additional-resources"><i class="fa-solid fa-clipboard-list" title="a clipboard with a To Do list" aria-label="clipboard-list"></i> Additional Resources</h2>
 <ul>
 <li><a href="https://ucsb-meds.github.io/MEDS-installation-guide/#install" target="_blank">MEDS Installation Guide</a></li>
 </ul>
@@ -337,13 +314,14 @@ Important
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
