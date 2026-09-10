@@ -52,7 +52,7 @@ website:
       - text: assignments
         href: assignments.qmd
       - text: redeem tokens
-        href: https://script.google.com/a/macros/ucsb.edu/s/AKfycbx2l5pbXt0J8y2PnNi9Ohi3jxRZGd4dZfZMBMT_MWA23OPQ0Dt31vC7zbAWVHtcFC5C/exec
+        href: https://script.google.com/a/macros/ucsb.edu/s/AKfycbxSp4_DX-QfxAegqY5mUL5Q8CLXhHSulJ0eI2l5lAjEDJsS1NUK9bG7SrkOZyuo_eBn/exec
       - text: resources
         href: resources.qmd
       - icon: github
