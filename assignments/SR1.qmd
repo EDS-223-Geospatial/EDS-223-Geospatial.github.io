@@ -2,7 +2,7 @@
 title: "Pre-Course Self Reflection (SR #1)"
 description: "Adapted from [An Bui's](https://an-bui.com/) reflection exercises in ENVS 193DS and Sam Csik's in [EDS 240](https://samanthacsik.github.io/EDS-240-data-viz/)"
 author: "Ruth Oliver"
-date: last-modified
+date: last-modified 
 execute: 
   eval: false
 format:
