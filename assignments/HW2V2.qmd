@@ -43,7 +43,7 @@ The assignment **must be submitted through Gradescope**.
 ## Instructions
 
 1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
-2. Download data from [here](https://drive.google.com/drive/folders/1L4hDigakSLccmh7qUdmuJD0-kEzDPRwE?usp=sharing)
+2. Download data from [here](https://drive.google.com/file/d/14x1CTz3ZUJdm8_8625OGM5W32TkcCife/view?usp=sharing)
 3. Unzip data and place in repository
 4. Add the data to your `gitignore`!
 5. Create a Quarto document with responses
