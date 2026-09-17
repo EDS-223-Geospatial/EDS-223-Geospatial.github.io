@@ -1,0 +1,210 @@
+---
+title: "Homework Assignment 2"
+subtitle: "Exploring patterns of environmental justice"
+author: "Ruth Oliver & Annie Adams"
+date: last-modified
+execute: 
+  eval: false
+format:
+  html:
+    toc: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "80%"
+#| fig-align: "center"
+knitr::include_graphics("images/holc-la.png")
+```
+
+::: {.gray-text .center-text}
+[Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/data/CA-LosAngeles){target="_blank"}
+:::
+
+:::{.callout-important icon=true}
+
+You must earn a "Satisfactory" on **all** parts of the assignment to earn a "Satisfactory" on the assignment.
+
+The assignment **must be submitted through Gradescope**. 
+
+**Read each part of the assignment carefully**, and use the check boxes to ensure you've addressed all elements of the assignment!
+
+:::
+
+## Learning outcomes
+
+- build effective, responsible, accessible and aesthetically-pleasing maps
+- practice manipulating vector and raster data to build multi-layer maps
+- practice making maps in R, specifically using `tmap`
+
+## Instructions
+
+1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
+2. Download data from [here](https://drive.google.com/file/d/14x1CTz3ZUJdm8_8625OGM5W32TkcCife/view?usp=sharing)
+3. Unzip data and place in repository
+4. Add the data to your `gitignore`!
+5. Create a Quarto document with responses
+6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
+      - [ ] Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
+7. Fill out this [google form](https://docs.google.com/forms/d/e/1FAIpQLSeEyFG9oZFOG6WaSiEq65qotC-hHmOugTBOt4wyDc5fKIKvZw/viewform?usp=publish-editor) to submit your Github repo link
+
+
+Your repository should have the following structure:
+
+```{md}
+EDS223-HW2
+│   README.md
+│   HW2.qmd
+│   Rmd/Proj files    
+│
+└───.gitignore
+     └───data
+         └───ejscreen
+         └───SWITRS_LA
+         └───mapping-inequality
+```
+
+## Background
+
+Present-day environmental justice may reflect legacies of injustice in the past. The United States has a long history of racial segregation which is still visible. During the 1930's the Home Owners' Loan Corporation (HOLC), as part of the New Deal, rated neighborhoods based on their perceived safety for real estate investment. Their ranking system, (A (green), B (blue), C (yellow), D (red)) was then used to block access to loans for home ownership. Colloquially known as "redlining", this practice has had widely-documented consequences not only for community wealth, but also health.^[Gee, G. C. (2008). A multilevel analysis of the relationship between institutional and individual racial discrimination and health status. American journal of public health, 98(Supplement_1), S48-S56.] Redlined neighborhoods have less greenery^[Nardone, A., Rudolph, K. E., Morello-Frosch, R., & Casey, J. A. (2021). Redlines and greenspace: the relationship between historical redlining and 2010 greenspace across the United States. Environmental health perspectives, 129(1), 017006.] and are hotter than other neighborhoods.^[Hoffman, J. S., Shandas, V., & Pendleton, N. (2020). The effects of historical housing policies on resident exposure to intra-urban heat: a study of 108 US urban areas. Climate, 8(1), 12.] 
+
+Check out coverage by the [New York Times](https://www.nytimes.com/interactive/2020/08/24/climate/racism-redlining-cities-global-warming.html).
+
+A recent study found that redlining has not only affected the environments communities are exposed to, it has also shaped pedestrian safety outcomes decades later.^[Taylor, N. L., Porter, J. M., Bryan, S., Harmon, K. J., & Sandt, L. S. (2023). Structural racism and pedestrian safety: Measuring the association between historical redlining and contemporary pedestrian fatalities across the United States, 2010–2019. American Journal of Public Health, 113(4).] Analyzing over 52,000 pedestrian fatalities across 202 U.S. cities from 2010–2019, Taylor and co-authors found a clear pattern: as HOLC grades deteriorated from A (Best) to D (Hazardous), pedestrian fatality rates increased systematically. Census tracts graded "D" experienced 2.6 times the rate of pedestrian deaths compared to "A"-graded areas. These findings highlight the need for targeted pedestrian infrastructure investments in historically redlined neighborhoods to address longstanding safety disparities.
+
+Check out the study on [PMC](https://publichealthpost.org/health-equity/structural-racism-and-pedestrian-safety/).
+
+
+## Data details
+### EJScreen
+
+**Data file:** `ejscreen/EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb`
+
+We will be working with data from the United States Environmental Protection Agency's former EJScreen: Environmental Justice Screening and Mapping Tool. This tool is no longer operating, but you can find an unofficial version of it [here](https://pedp-ejscreen.azurewebsites.net/)
+
+According to the former US EPA website:
+
+The tool, when in existence, was intended to support research and policy goals. It was shared with the public to achieve the following: 
+
+
+> - to be more transparent about how we consider environmental justice in our work,  
+> - to assist our stakeholders in making informed decisions about pursuing environmental justice and,   
+> - to create a common starting point between the agency and the public when looking at issues related to environmental justice.
+
+
+EJScreen provided on environmental and demographic information for the US at the Census [tract](https://en.wikipedia.org/wiki/Census_tract) and [block group](https://en.wikipedia.org/wiki/Census_block_group) levels. You will be working with data at the block group level that has been downloaded from the [EPA site](https://www.epa.gov/ejscreen/download-ejscreen-data). To understand the associated data columns, you will need to explore the following in the `data` folder:
+
+- Technical documentation: `ejscreen-tech-doc-version-2-2.pdf`
+- Column descriptions: `EJSCREEN_2023_BG_Columns.xlsx`
+
+
+### HOLC Redlining
+
+**Data file:** `mapping-inequality/mapping-inequality-los-angeles.json`
+
+A team of researchers, led by the [Digital Scholarship Lab](https://dsl.richmond.edu/) at the University of Richmond have digitized maps and information from the HOLC as part of the [Mapping Inequality](https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58) project. 
+
+We will be working with maps of HOLC grade designations for Los Angeles. Information on the data can be found [here](https://dsl.richmond.edu/panorama/redlining/#loc=5/39.1/-94.58&text=downloads).^[Robert K. Nelson, LaDale Winling, Richard Marciano, Nathan Connolly, et al., “Mapping Inequality,” American Panorama, ed. Robert K. Nelson and Edward L. Ayers, accessed October 17, 2023, https://dsl.richmond.edu/panorama/redlining/] 
+
+### Bike and Pedestrian Crash Reports
+
+**Data file:** `crashes.csv`
+
+The Statewide Integrated Traffice Records System (SWITRS) database collects and processes data gathered from a collision scenes. The data is hosted on the [Transportation Information Mapping System (TIMS)](https://tims.berkeley.edu/), developed by UC Berkley SafeTREC. 
+
+We will be working with crash reports from 2020- 2025. 
+
+:::{.callout-tip icon=true}
+
+Make sure to check that these datasets have the same coordinate reference systems! If not, transform them to match.
+
+:::
+
+
+## Part 1: Legacy of redlining in current environmental (in)justice
+
+Your first task is to explore historical redlining in Los Angeles and its legacy on present-day environmental justice.
+
+### Description
+
+For this assignment, you must complete the following:
+
+1. Create a map of historical redlining neighborhoods, including:
+  - [ ] neighborhoods colored by HOLC grade
+  - [ ] an appropriate base map
+  - [ ] a clear title and legend
+  
+  
+2.  Create a table summarizing: 
+  - [ ] the percentage of census block groups that fall within each HOLC grade
+  - [ ] Also include the percent of census black groups that don't fall within a HOLC grade
+  - [ ] **Hint:** The HOLC data contains the grades and the EJScreen data contains the census blocks, so you        will need to combine the data spatially before doing summary statistics. Once you combine and no longer need the geometries, you can use `st_drop_geometry()`. 
+  
+  
+3.  Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables or create separate plots):
+  - [ ] % low income
+  - [ ] percentile for Particulate Matter 2.5
+  - [ ] percentile for low life expectancy
+  - [ ] Use `ggplot` for your visualizations! You will first need to calculate mean of each variable grouped by HOLC grade. 
+  
+  
+  
+4.  Write a brief paragraph reflecting on these results
+  - [ ] Interpret the patterns you observe in your results 
+  - [ ] Discuss potential relationships between historical redlining grades and current                 environmental/socioeconomic conditions
+
+## Part 2: Legacy of redlining in pedstrian and bike accidents
+
+Your second task is to explore the legacy of historical redlining in Los Angeles on the report of pedestrian and bike crashes/ fatalities.
+
+### Description
+
+For this assignment, you must produce the following based on observations from 2020-2025:
+
+1.  A figure summarizing the percent of observations within redlined neighborhoods within each HOLC grade 
+
+    Create a visualizations that shows: 
+    - [ ] The percentage of bike and pedestrian crashes and fatalities within each HOLC grade
+    - [ ] Include an appropiate title, axis labels, and legend
+    - [ ] **Hints**: Ensure the SWITRS data and HOLC dataset have matching CRS', then perform a spatial join to assign each crash to a corresponding HOLC grade. 
+    
+
+ 
+## Rubric (specifications)
+
+Assignments will be deemed "Satisfactory" based on the following criteria:
+
+#### Data analysis
+- [ ] Code must produce expected output based on correct data manipulation
+- [ ] Spatial operations must be performed correctly with appropriate verification (e.g., CRS matching, appropriate join methods, checking results)
+- [ ] Multiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. "Correct" answers are not sufficient. Justification and verification of approach should be demonstrated using the following:
+  - custom warning and error message (e.g. `warning()` and `stop()`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-4.html#adding-helpful-error-and-warning-messages))
+  - informative comments ([resource from EDS 220](https://meds-eds-220.github.io/MEDS-eds-220-course/book/appendices/comments-guidelines.html))
+  - **BONUS:** unit tests (e.g. using `{testthat}`; [resources from EDS 221](https://eds-221-programming-essentials.github.io/course-materials/interactive-sessions/interactive-session-5.html#testing-functions-with-testthat))
+
+#### Plots, tables, and maps
+- [ ] All plots, tables, and maps must be clear, accurate, and effectively convey the intended information
+- [ ] All plots and maps must include the following elements:
+  - an informative title
+  - legends with legible titles, including units
+  - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
+  - for maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass), and an appropiate basemap included where necessary
+- All tables should be rendered with legible titles and styling (e.g. [`{gt}`](https://r-graph-gallery.com/package/gt.html))
+
+
+
+#### Written reflections
+
+- [ ] Reflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.
+
+#### Professional Output
+- [ ] The rendered Quarto doc must show all required elements in a professional style with explanation of each step of analysis
+  - see examples of professional and unprofessional output on the [Assignments](../assignments.qmd) page
+
+
+
+
+
