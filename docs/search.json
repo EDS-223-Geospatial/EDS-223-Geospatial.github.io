@@ -571,7 +571,7 @@
     "href": "index.html#teaching-team",
     "title": "Geospatial Analysis & Remote Sensing",
     "section": "Teaching Team",
-    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nAnnie Adams\nEmail: aradams@ucsb.edu\nStudent Hours: Monday 2:30 - 3:30 PM @ BH 3418\nLearn more: annieradams.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\n****\nEmail: \nStudent Hours:\nLearn more:"
+    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nAnnie Adams\nEmail: aradams@ucsb.edu\nStudent Hours: Monday 2:30 - 3:30 PM @ BH 3418\nLearn more: annieradams.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nMary Salami\nEmail: marysalami@ucsb.edu\nStudent Hours: Thursday 11 am - 12 pm @\nLearn more:"
   },
   {
     "objectID": "index.html#acknowledgements",
@@ -740,5 +740,243 @@
     "title": "Pre-Course Self Reflection (SR #1)",
     "section": "Rubric (specifications)",
     "text": "Rubric (specifications)\nTo receive a “Satisfactory” score, you must adhere to the following:\n\nRespond to each of the above questions on a word document. Upload a pdf of this document to Gradescope by 11:59 PM on the due date. Extensions are not allowed on this first assignment.\nYour response must include answers to each question listed in the Description section.\nYou should aim to answer each question in 2-4 sentences.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”.\n\n\n\n\n\n\n\nTipTips for a “Satisfactory”\n\n\n\nBy clicking the boxes above, you can keep track of which items you’ve completed! I suggest drafting your response in a word document before copy/pasting into the submission form."
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html",
+    "href": "course-materials/discussions/week1-discussion.html",
+    "title": "Week 1: Discussion Section",
+    "section": "",
+    "text": "In this section, we’ll kick-off our mapmaking skills using the tmap package. Your task will be to make a map of Rapa Nui (Easter Island or Isla de Pascua). Rapa Nui is a volcanic island in Polynesia and territory of Chile. It is widely known for monumental statues called moai, but it is also a place of geoscientific inquiry. Several research programs about the island’s volcanic history, petrology, and human-environment interactions exist."
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#get-started",
+    "href": "course-materials/discussions/week1-discussion.html#get-started",
+    "title": "Week 1: Discussion Section",
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(stars)\nlibrary(tmap)\n\nNext, let’s download some data from Rapa Nui. Unzip and move this to your version-controlled R Project’s data folder.\n\nRead in the spatial objects for Rapa Nui:\n\nei_points: file contains several points on the island\n\nUse the pipe operator to filter() output for points representing volcanoes\n\nei_elev: raster with elevation data\nei_borders: polygon with the island outline\nei_roads: lines contains a road network for the island\n\n\n\nei_points &lt;- st_read(here(\"data\", \"easter_island\", \"ei_points.gpkg\")) |&gt; \n  filter(type == \"volcano\")\nei_elev &lt;- read_stars(here(\"data\", \"easter_island\", \"ei_elev.tif\"))\nei_borders &lt;- st_read(here(\"data\", \"easter_island\", \"ei_border.gpkg\"))\nei_roads &lt;- st_read(here(\"data\", \"easter_island\", \"ei_roads.gpkg\"))"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-a-single-object-map-with-tmap",
+    "href": "course-materials/discussions/week1-discussion.html#create-a-single-object-map-with-tmap",
+    "title": "Week 1: Discussion Section",
+    "section": "2. Create a single-object map with tmap",
+    "text": "2. Create a single-object map with tmap\n\nCreate a map of the outline Rapa Nui using tm_shape() + tm_borders()\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Add Easter Island vector in default gray\ntm_shape(ei_borders) +\n  tm_borders() +\n# Set general map layout options\n  tm_layout(main.title = \"Easter Island\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-tmap",
+    "href": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-tmap",
+    "title": "Week 1: Discussion Section",
+    "section": "3. Create a multiple-object map with tmap",
+    "text": "3. Create a multiple-object map with tmap\nExpand on your single-object map to create a map of Rapa Nui and…\n\n…denote the island’s borders and continuous elevation\n…denote the island’s volcanoes and roads\n…play with the color palette and essential map elements\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nei_map &lt;- tm_shape(ei_elev) +\n  tm_graticules() +\n  tm_raster(col.scale = tm_scale_continuous(values = \"-rd_yl_gn\"),\n            col.legend = tm_legend(\"Elevation (m asl)\")) +\n  tm_shape(ei_borders) + \n    tm_borders() +\n  tm_shape(ei_roads) +\n    tm_lines() +\n  tm_shape(ei_points) +\n    tm_symbols(shape = 24, \n               size = \"elevation\", \n               size.legend = tm_legend(\"Volcanoes (m asl)\")) +\n  tm_compass(position = c(\"right\", \"top\")) +\n  tm_scalebar() +\n  tm_title(\"Easter Island\")\n\nei_map"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-an-interactive-map-with-tmap",
+    "href": "course-materials/discussions/week1-discussion.html#create-an-interactive-map-with-tmap",
+    "title": "Week 1: Discussion Section",
+    "section": "4. Create an interactive map with tmap",
+    "text": "4. Create an interactive map with tmap\n\nSwitch from the default \"plot\" mode to \"view\"\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ntmap_mode(\"view\") # Convert default static map to interactive map \n\nℹ tmap modes \"plot\" - \"view\"\nℹ toggle with `tmap::ttm()`\n\nei_map\n\nWarning: tm_scale_intervals `label.style = \"continuous\"` implementation in view mode\nwork in progress"
+  },
+  {
+    "objectID": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-ggplot2",
+    "href": "course-materials/discussions/week1-discussion.html#create-a-multiple-object-map-with-ggplot2",
+    "title": "Week 1: Discussion Section",
+    "section": "5. Create a multiple-object map with ggplot2",
+    "text": "5. Create a multiple-object map with ggplot2\n\n\n\n\n\n\nNoteMore map making in R\n\n\n\nThere are MANY different ways to make maps in R, all with different pros/cons. Check out this resource for examples of what map making looks like in ggplot2, leaflet, and more!\n\n\nAs a bonus challenge, reproduce your multiple-object map from earlier using ggplot2!\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# extract lat & long from geom column \nvolcanoes_point &lt;- ei_points %&gt;%\n  mutate(lon = unlist(map(ei_points$geom,1)), # longitude = first component (x)\n         lat = unlist(map(ei_points$geom,2))) # latitude = second component (y)\n\n\nggplot() +\n  # first add Easter Isand borders\n  geom_sf(data = ei_borders, color = \"#212529\") +\n  # add elevation raster\n  geom_stars(data = ei_elev) +\n  scale_fill_distiller(name = \"Elevation (m asl)\", # legend title with units\n                       palette = \"RdYlGn\",         # red-yellow-green palette (no need to reverse)\n                       na.value = \"lightblue\") +  # set NA color (background ocean)\n  # add road vector\n  geom_sf(data = ei_roads, color = \"#343a40\") +\n  # add volcano vector\n  geom_point(data = volcanoes_point, \n             aes(x = lon, y = lat, \n                 size = elevation), # point size depends on attribute value\n             shape = 17,            # triangle\n             color = \"#22577a\") +\n  scale_size_continuous(name = \"Volcanoes (m asl)\") +       # legend title with units\n  ggspatial::annotation_north_arrow(location = \"br\",        # bottom right\n                                    which_north = \"true\") + # point to north pole\n  ggspatial::annotation_scale(location = \"bl\",              # bottom left\n                              width_hint = 0.5) +           # proportion of map area the scalebar should occupy\n  labs(title = \"Easter Island\") +\n  theme_minimal()"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html",
+    "href": "course-materials/discussions/week2-discussion.html",
+    "title": "Week 2: Discussion Section",
+    "section": "",
+    "text": "In this section, we’ll explore key functions inside the sf package using data from Colombia. Colombia is considered one of the world’s most “megadiverse” countries, hosting close to 10% of the planet’s biodiversity. Per square kilometer, there are more bird, amphibian, butterfly, and frog species in Colombia than anywhere else on Earth. Here, ill-planned road development poses a significant threat to habitat fragmentation, wildlife movement, and water flows. The Colombian government has developed a broad set of guidelines for sustainable road development, called the Lineamientos de Infraestructura Verde Vial (LIVV) or Green Road Infrastructure Guidelines (GRI). The GRI is mandatory for all national roads across Colombia."
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#get-started",
+    "href": "course-materials/discussions/week2-discussion.html#get-started",
+    "title": "Week 2: Discussion Section",
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(tmap)\n\nYou will be working with the following datasets:\n\nColombia’s Terrestrial Ecosystems (The Nature Conservancy/NatureServe)\nColombia’s Roads (Esri)\nBird Observations (DATAVES)\n\nNext, let’s download our data. Unzip and move this to your version-controlled R Project’s data folder.\n\nRead in the data for Colombia’s ecoregions, roads, and bird observations\n\n\nUse rename() to rename the columns decimal_longitude and decimal_latitude to long and lat in the bird observation dataset\nUse st_as_sf() to convert the bird observation dataset into an sf object\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ncol &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"Colombia\", \"Colombia.shp\"))\n\nroads &lt;- st_read(here::here(\"data\", \"week2-discussion\", \"RDLINE_colombia\", \"RDLINE_colombia.shp\"))\n\naves &lt;- read_csv(here::here(\"data\", \"week2-discussion\", \"dataves.csv\")) |&gt; \n  as_tibble() |&gt; \n  rename(long = decimal_longitude,\n         lat = decimal_latitude) |&gt; \n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#view-class-and-geometry-type",
+    "href": "course-materials/discussions/week2-discussion.html#view-class-and-geometry-type",
+    "title": "Week 2: Discussion Section",
+    "section": "2. View class and geometry type",
+    "text": "2. View class and geometry type\n\nCheck the class() of all vector objects (including the spatially-enabled bird observation dataset)\nUse st_geometry_type() to peak at the geometry type\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# View class of each object\nclass(col)\nclass(roads)\nclass(aves)\n\n# View geometry type of each object\nunique(st_geometry_type(col))\nunique(st_geometry_type(roads))\nunique(st_geometry_type(aves))"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#select-a-macro-ecoregion-of-interest",
+    "href": "course-materials/discussions/week2-discussion.html#select-a-macro-ecoregion-of-interest",
+    "title": "Week 2: Discussion Section",
+    "section": "3. Select a macro ecoregion of interest",
+    "text": "3. Select a macro ecoregion of interest\n\nUse filter() to select a macro region of interest from N1_MacroBi in Colombia’s ecoregions dataset\nPlot the subset using tmap\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ncol_andean &lt;- col |&gt;\n  # Set categorical \"levels\" in attribute N1_MacroBi (subregions of Colombia)\n  mutate(N1_MacroBi = as.factor(N1_MacroBi)) |&gt;\n  # Subset to Andean region of Colombia\n  filter(N1_MacroBi == \"Andean\")\n\n\ntm_shape(col_andean) +\n  tm_polygons() +\n  tm_title(\"Andean Region of Colombia\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#play-with-coordinate-reference-system-crs",
+    "href": "course-materials/discussions/week2-discussion.html#play-with-coordinate-reference-system-crs",
+    "title": "Week 2: Discussion Section",
+    "section": "4. Play with coordinate reference system (CRS)",
+    "text": "4. Play with coordinate reference system (CRS)\nFirst, let’s use st_crs() to check the CRS and it’s units.\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# View CRS of each object\nst_crs(col)\nst_crs(roads)\nst_crs(aves)\n\n# View units of each object CRS \nst_crs(col)$units\nst_crs(roads)$units\nst_crs(aves)$units\n\n\n\n\nSay, you want to remove the CRS of an object, in order to “disable” its spatial features. Setting the CRS to NA with st_crs() &lt;- NA is a brute force way to remove a CRS and “corrupt” a spatial object. Let’s do it the right way!\n\nExtract the longitude and latitude from the geometry column and use st_drop_geometry()\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nThere are several ways to extract the longitude and latitude from the geometry column.\n\nUse map() to unlist/extract\n\naves_df_purrr &lt;- aves |&gt;\n  # Extract lat & long from geometry column\n  mutate(lon = unlist(purrr::map(aves$geometry, 1)), # longitude = first component (x)\n         lat = unlist(purrr::map(aves$geometry, 2))) |&gt; # latitude = second component (y)\n  st_drop_geometry() # Remove geometry column now that it's redundant\n\n\n\nUse st_coordinates() to extract/assign\n\naves_df_st_coords &lt;- aves %&gt;%\n  dplyr::mutate(lon = st_coordinates(.)[,1], # Assign first matrix item to \"lon\"\n                lat = st_coordinates(.)[,2])  %&gt;% # Assign second matrix item to \"lat\"\n  st_drop_geometry() # Remove geometry column now that it's redundant\n\n\n\n\n\n\nConvert long and lat into a geometry again with st_as_sf() to obtain a proper sf data frame\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\nConvert to an sf object with st_as_sf()\n\naves_df_purrr &lt;- aves |&gt;\n  st_as_sf(coords = c(\"lon\", \"lat\"), crs = 4326)"
+  },
+  {
+    "objectID": "course-materials/discussions/week2-discussion.html#make-a-map",
+    "href": "course-materials/discussions/week2-discussion.html#make-a-map",
+    "title": "Week 2: Discussion Section",
+    "section": "5. Make a map",
+    "text": "5. Make a map\n\nCheck that the CRS of the ecoregions and roads datasets match\nTransform CRS of the bird observations dataset using st_transform() to match with the other datasets\nUse tmap to plot the ecoregions, roads, and bird observations together\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Boolen check if CRS match between 2 datasets\nst_crs(col) == st_crs(roads)\n\n\n# Transform bird observation dataset into same CRS as other Colombia dataset\naves &lt;- st_transform(aves, crs = st_crs(col))\n\n\ntm_shape(col) +\n  tm_polygons() +\n  tm_shape(roads) +\n  tm_lines() +\n  tm_shape(aves) +\n  tm_dots() +\n  tm_title(\"Colombia ecoregions, roads,\\nand bird observations\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html",
+    "href": "course-materials/discussions/week3-discussion.html",
+    "title": "Week 3: Discussion Section",
+    "section": "",
+    "text": "In this section, we’ll explore key vector operations inside the sf package using data from California. California is considered a key global biodiversity hotspot. It is home to an exceptional variety of species and ecosystems as well as high endemism. Its mix of elevation, from the highest to the lowest points in the continental U.S., and its location, near both the ocean and mountains, make it geodiverse and so biologically special. As a result, California has one of the most extensive and advanced systems of protected areas in the U.S. It currently conserves more than 25% of its land. At large, area-based conservation is complex and implementation of conservation sites has been a way for governments to displace Indigenous peoples and local communities."
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#get-started",
+    "href": "course-materials/discussions/week3-discussion.html#get-started",
+    "title": "Week 3: Discussion Section",
+    "section": "1. Get started",
+    "text": "1. Get started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(here)\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(tmap)\n\nYou will be working with the following datasets:\n\nSanta Barbara County’s City Boundaries (Santa Barbara County)\nCalifornia Protected Areas Database (CPAD)\niNaturalist Research-grade Observations, 2020-2024 (via rinat)\n\nNext, let’s download our data. Unzip and move this to your version-controlled R Project’s data folder.\n\nsb_protected_areas &lt;- st_read(here(\"data\", \"cpad_super_units_sb.shp\")) |&gt;  \n  st_transform(\"ESRI:102009\")\n\nsb_city_boundaries &lt;- st_read(here(\"data\", \"sb_city_boundaries_2003.shp\")) |&gt; \n  st_transform(\"ESRI:102009\")\n\nsb_county_boundary &lt;- st_read(here(\"data\", \"sb_county_boundary_2020.shp\")) |&gt; \n  st_transform(\"ESRI:102009\")\n\naves &lt;- st_read(here(\"data\", \"aves_observations_2020_2024.shp\")) |&gt; \n  st_transform(\"ESRI:102009\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#find-bird-observations-within-pas-in-santa-barbara-county",
+    "href": "course-materials/discussions/week3-discussion.html#find-bird-observations-within-pas-in-santa-barbara-county",
+    "title": "Week 3: Discussion Section",
+    "section": "2. Find bird observations within PAs in Santa Barbara County",
+    "text": "2. Find bird observations within PAs in Santa Barbara County\n\nFind how many bird observations are within protected areas in Santa Barbara County and show how your output differs with a spatial subset versus a spatial join\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\naves_PA_subset &lt;- sb_protected_areas[aves, ] # Subset\n\nnrow(aves_PA_subset) # Check number of rows\n\n[1] 35\n\ntm_shape(sb_county_boundary) +\n  tm_fill() +\n  tm_shape(sb_protected_areas) +\n    tm_borders(lwd = 1, col = \"#fb8500\") +\n    tm_fill(col = \"#fb8500\", alpha = 0.2) +\n  tm_shape(aves_PA_subset) +\n    tm_dots(col = \"#023047\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\naves_PA_join &lt;- st_join(aves, sb_protected_areas) # default: `st_intersects` \n\nnrow(aves_PA_join) # Check number of rows\n\n[1] 500\n\ntm_shape(sb_county_boundary) +\n  tm_fill() +\n  tm_shape(sb_protected_areas) +\n    tm_borders(lwd = 1, col = \"#fb8500\") +\n    tm_fill(col = \"#fb8500\", alpha = 0.2) +\n  tm_shape(aves_PA_join) +\n    tm_dots(col = \"#023047\")\n\n\n\n\n\n\n\n\n\n\n\n\nMake a 5 km buffer around the protected areas and subset buffered geometries to only those with bird observations\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nst_crs(sb_protected_areas)$units # Check if units are in meters\n\n[1] \"m\"\n\nPA_buffer_5km &lt;- st_buffer(sb_protected_areas, dist = 5000) # Create 5000 m buffer around PAs\n\n\naves_buffer_subset &lt;- PA_buffer_5km[aves, ] # Subset\n\nnrow(aves_buffer_subset) # Check number of rows\n\n[1] 327\n\n\n\ntm_shape(sb_county_boundary) +\n  tm_fill() +\n  tm_shape(sb_protected_areas) +\n    tm_borders(lwd = 1, col = \"#fb8500\") +\n    tm_fill(col = \"#fb8500\", alpha = 0.2) +\n  tm_shape(aves_buffer_subset) +\n  tm_dots(col = \"#023047\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#find-pas-within-15km-of-goleta",
+    "href": "course-materials/discussions/week3-discussion.html#find-pas-within-15km-of-goleta",
+    "title": "Week 3: Discussion Section",
+    "section": "3. Find PAs within 15km of Goleta",
+    "text": "3. Find PAs within 15km of Goleta\n\nFind the protected areas within 15 km of a city in Santa Barbara County\n\nHint: Use dplyr::filter() to select a city from sb_city_boundaries\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Subset SB county to Goleta\ngoleta &lt;- sb_city_boundaries |&gt; \n  dplyr::filter(NAME == \"Goleta\")\n\nst_crs(goleta)$units  # Check if units are in meters\n\n[1] \"m\"\n\ngoleta_buffer_15km &lt;- st_buffer(goleta, dist = 15000) # Create 15 km buffer around Goleta\n\n\n\n\n\nExplore different outputs for #3 with st_intersects(), st_intersection(), and st_within()\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ngoleta_PAs_within &lt;- st_within(sb_protected_areas, goleta_buffer_15km)\n\n\ngoleta_PAs_intersect &lt;- st_intersects(sb_protected_areas, goleta_buffer_15km)\n\n\ngoleta_PAs_intersection &lt;- st_intersection(sb_protected_areas, goleta_buffer_15km)\n\n\n\n\n\nPractice a distance-based join with st_is_within_distance()\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\ngoleta_PAs_join &lt;- st_join(sb_protected_areas, goleta, st_is_within_distance, dist = 15000)"
+  },
+  {
+    "objectID": "course-materials/discussions/week3-discussion.html#find-distance-between-goleta-and-dangermond-preserve",
+    "href": "course-materials/discussions/week3-discussion.html#find-distance-between-goleta-and-dangermond-preserve",
+    "title": "Week 3: Discussion Section",
+    "section": "3. Find distance between Goleta and Dangermond Preserve",
+    "text": "3. Find distance between Goleta and Dangermond Preserve\n\nFind the distance between your city of choice and a protected area of your choice, using the geometries’ edges and the centroid\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Subset PA to Dangermond Preserve\ndangermond &lt;- sb_protected_areas |&gt;\n  dplyr::filter(UNIT_NAME == \"Jack and Laura Dangermond Preserve\")\n\n\ndanger_dist &lt;- st_distance(goleta, dangermond) # Compute the distance between geometries edges\n\n\n# Calculate the geometric center\ndangermond_centroid &lt;- st_centroid(dangermond)\ngoleta_centroid &lt;- st_centroid(goleta)\n\ndanger_dist_centroid &lt;- st_distance(goleta_centroid, dangermond_centroid) # Compute the distance between geometries edges\n\n\n# Check if the distance matrices are equal\ndanger_dist == danger_dist_centroid\n\n      [,1]\n[1,] FALSE"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html",
+    "href": "course-materials/discussions/week4-discussion.html",
+    "title": "Week 4: Discussion Section",
+    "section": "",
+    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#get-started",
+    "href": "course-materials/discussions/week4-discussion.html#get-started",
+    "title": "Week 4: Discussion Section",
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nCreate a Quarto document\n\n\n\n\n\n\n\nWarning\n\n\n\nIf you don’t have spDataLarge installed, make sure to run:  install.packages('spDataLarge', repos='https://nowosad.github.io/drat/', type='source')\n\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(spData)\nlibrary(spDataLarge)\nlibrary(sf)\nlibrary(stars)\nlibrary(terra)\n\nYou will be working with the following datasets:\n\nDigital elevation model (DEM) of Mt. Mongón, Perú, obtained from spDataLarge\nLandsat image of Zion National Park, obtained from spDataLarge\nSRTM elevation of Zion National Park, obtained from spDataLarge\n\n\n\ndem &lt;- terra::rast(system.file(\"raster/dem.tif\", package = \"spDataLarge\"))\nlandsat &lt;- terra::rast(system.file(\"raster/landsat.tif\", package = \"spDataLarge\"))\nsrtm &lt;- terra::rast(system.file(\"raster/srtm.tif\", package = \"spDataLarge\"))"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#explore-elevation-at-mt.-mongón-perú",
+    "href": "course-materials/discussions/week4-discussion.html#explore-elevation-at-mt.-mongón-perú",
+    "title": "Week 4: Discussion Section",
+    "section": "2. Explore elevation at Mt. Mongón, Perú",
+    "text": "2. Explore elevation at Mt. Mongón, Perú\n\nMake a boxplot and histogram of elevation at Mt. Mongón, Perú\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nhist(dem,\n     main = \"Digital Elevation Model Distribution\",\n     xlab = \"Value\")\n\n\n\n\n\n\n\nboxplot(dem,\n        main = \"Digital Elevation Model Distribution\",\n        ylab = \"Value\")\n\n\n\n\n\n\n\n\n\n\n\n\nReclassify dem and compute the mean for the three classes:\n\nLow, where elevation is less than 300\nMedium\nHigh, where elevation is greater than 500\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Define a reclassification matrix\nrcl &lt;- matrix(c(-Inf, 300, 0, # values -Inf to 300 = 0\n                300, 500, 1,  # values 300 to 500 = 1\n                500, Inf, 2), # values 500 to Inf = 2\n              ncol = 3, byrow = TRUE)\n\n# Apply the matrix to reclassify the raster, making all cells 0 or 1 or 2\ndem_rcl &lt;- terra::classify(dem, rcl = rcl)\n\n# Assign labels to the numerical categories\nlevels(dem_rcl) &lt;- tibble::tibble(id = 0:2, \n                                  cats = c(\"low\", \"medium\", \"high\"))\n\n# Calculate mean elevation for each category using original DEM values\nelevation_mean &lt;- terra::zonal(dem, dem_rcl, fun = \"mean\")\nelevation_mean\n\n    cats      dem\n1    low 274.3910\n2 medium 392.0486\n3   high 765.2197"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#explore-ndvi-and-ndwi-at-zion-national-park",
+    "href": "course-materials/discussions/week4-discussion.html#explore-ndvi-and-ndwi-at-zion-national-park",
+    "title": "Week 4: Discussion Section",
+    "section": "3. Explore NDVI and NDWI at Zion National Park",
+    "text": "3. Explore NDVI and NDWI at Zion National Park\nLandsat 8 bands 2-5 correspond to bands 1-4 for this raster. Bands are as follows:\n\n\n\nBand\n\nColor\n\n\n\n\n1\nblue\n30 meter\n\n\n2\ngreen\n30 meter\n\n\n3\nred\n30 meter\n\n\n4\nnear-infrared\n30 meter\n\n\n\n\n\n\n\n\n\nNoteApply a scale factor and offset for all grid cells\n\n\n\n\nLandsat Level-2 products are written as scaled integers to allow us to convert the data from floating point to integer for delivery. In most cases these are written to a 16-bit integer, which saves disk space and provides faster download times. Each floating point pixel has an offset applied and then multiplied by a gain to bring the value into the 16-bit integer (or unsigned integer) range. These values are referred to as scaled integers. To allow the user to get the data back to its original floating point value, a scale factor and offset are provided for each band.\n\n\n\n\nScience product\nScale factor\nOffset\n\n\n\n\nSurface reflectance\n0.0000275\n-0.2\n\n\n\n\n\nFirst, correct the scale across all grid cells and then apply the following functions at each grid cell, in the image:\n\n\\[\\text{NDWI} = \\frac{\\text{(green - NIR)}}{\\text{(green + NIR)}}\\] \\[\\text{NDVI} = \\frac{\\text{(NIR - red)}}{\\text{(NIR + red)}}\\]\n\nCalculate the Normalized Difference Vegetation Index (NDVI) at Zion National Park\nCalculate the Normalized Difference Water Index (NDWI) at Zion National Park\nFind a correlation between NDVI and NDWI at Zion National Park\n\nHint: Explore the terra package to find a function that can help achieve this!\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nscale_factor &lt;- 0.0000275\noffset &lt;- 0.2\n\nscale_function &lt;- function(x) {\n  x * scale_factor + offset\n}\n\nlandsat_scaled &lt;- terra::app(landsat, fun = scale_function)\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nndwi_fun &lt;- function(green, nir){\n    (green - nir)/(green + nir)\n}\n\nndvi_fun &lt;- function(nir, red){\n  (nir - red)/(nir + red)\n}\n\n\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nndwi_rast &lt;- terra::lapp(landsat_scaled[[c(2, 4)]],\n                         fun = ndwi_fun)\n\nndvi_rast &lt;- terra::lapp(landsat_scaled[[c(4, 3)]],\n                         fun = ndvi_fun)\n\n\nplot(ndwi_rast,\n     main = \"Zion National Park NDWI\")\n\n\n\n\n\n\n\nplot(ndvi_rast,\n     main = \"Zion National Park NDVI\")\n\n\n\n\n\n\n\n\n\ncombine &lt;- c(ndvi_rast, ndwi_rast) # Stack rasters\n\nplot(combine, main = c(\"NDVI\", \"NDWI\")) # Plot\n\n\n\n\n\n\n\n\n\n# Calculate correlation between raster layers \nterra::layerCor(combine, fun = cor)\n\n           [,1]       [,2]\n[1,]  1.0000000 -0.9062336\n[2,] -0.9062336  1.0000000"
+  },
+  {
+    "objectID": "course-materials/discussions/week4-discussion.html#change-resolution-of-elevation-at-zion-national-park",
+    "href": "course-materials/discussions/week4-discussion.html#change-resolution-of-elevation-at-zion-national-park",
+    "title": "Week 4: Discussion Section",
+    "section": "4. Change resolution of elevation at Zion National Park",
+    "text": "4. Change resolution of elevation at Zion National Park\n\nUse all the methods available to change the resolution of elevation at Zion National Park to 0.01 by 0.01 degrees\n\nNote: The srtm raster has a resolution of 0.00083 by 0.00083 degrees\n\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nplot(srtm)\n\n\n\n\n\n\n\n\n\nrast_template &lt;- terra::rast(terra::ext(srtm), res = 0.01) # Create empty template\n\n\nsrtm_resampl1 &lt;- terra::resample(srtm, y = rast_template, method = \"bilinear\")\nsrtm_resampl2 &lt;- terra::resample(srtm, y = rast_template, method = \"near\")\nsrtm_resampl3 &lt;- terra::resample(srtm, y = rast_template, method = \"cubic\")\nsrtm_resampl4 &lt;- terra::resample(srtm, y = rast_template, method = \"cubicspline\")\nsrtm_resampl5 &lt;- terra::resample(srtm, y = rast_template, method = \"lanczos\")\n\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nlabs &lt;- c(\"Bilinear\", \"Near\", \"Cubic\", \"Cubic Spline\", \"Lanczos\")\n\nplot(srtm_resampl_all, main = labs)"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html",
+    "href": "course-materials/discussions/week5-discussion.html",
+    "title": "Week 5: Discussion Section",
+    "section": "",
+    "text": "NoteSource Materials\n\n\n\nThe following materials are modified from Geocomputation with R by Robin Lovelace."
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#get-started",
+    "href": "course-materials/discussions/week5-discussion.html#get-started",
+    "title": "Week 5: Discussion Section",
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(spData)\n\nYou will be working with the following datasets: - High points in New Zealand, obtained from spData - Artificial grain dataset (with three classes: clay, silt, and sand), obtained from spData\n\nnz_height &lt;- nz_height\ngrain &lt;- terra::rast(system.file(\"raster/grain.tif\", package = \"spData\"))"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#high-elevation-points-in-new-zealandaotearoa",
+    "href": "course-materials/discussions/week5-discussion.html#high-elevation-points-in-new-zealandaotearoa",
+    "title": "Week 5: Discussion Section",
+    "section": "3. High elevation points in New Zealand/Aotearoa",
+    "text": "3. High elevation points in New Zealand/Aotearoa\n\nSubset points higher than 3100 meters in nz_height\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nnz_height3100 &lt;- nz_height |&gt;  \n  dplyr::filter(elevation &gt; 3100) # rows where column elevation &gt; 3100 meters\n\n\n\n\n\nCreate a template raster with rast(), where the resolution is 3 km x 3 km, with the same extent and CRS as the previous subset\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nnz_template &lt;- rast(terra::ext(nz_height3100), # Set extent based on nz_height3100\n                    resolution = 3000, \n                    crs = terra::crs(nz_height3100)) # Set CRS based on nz_height3100\n\n\n\n\n\nCount numbers of the highest points in each grid cell\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nnz_raster &lt;- rasterize(nz_height3100, nz_template, # Convert vector points to raster data\n                       fun = \"length\") # \"length\" returns a count per cell\n\n\nplot(nz_raster, main = \"Number of elevation points &gt; 3100 in each grid cell\")\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nFind the maximum elevation in each grid cell\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nnz_raster2 &lt;- rasterize(nz_height3100, nz_template, # Convert vector points to raster data\n                        fun = max) # \"max\" returns maximum elevation value per cell\n\n\nplot(nz_raster2, main = \"Maximum elevation in each grid cell \")\nplot(st_geometry(nz_height3100), add = TRUE)\n\n\n\n\n\n\n\n\n\n\n\n\nWith the raster template, complete the following:\n\n\nAggregate raster that counts the highest points in New Zealand/Aotearoa, to reduce its geographic resolution by half\nResample back to the original resolution\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nnz_raster_low &lt;- aggregate(nz_raster, \n                           fact = 2, # Reduce resolution by combining 2 cells in each direction into larger cells\n                           fun = sum, na.rm = TRUE) # Sum values of all cells for resulting elevation value\n\n\n# Convert resolution back to original 3kmx3km resolution\nnz_resample &lt;- resample(nz_raster_low, nz_raster)\n\n\nplots &lt;- c(nz_raster, nz_resample)\nlabs &lt;- c(\"Original 3 x 3 km\", \"Resample 3 x 3 km\")\nplot(plots, main = labs)\n\n\n\n\n\n\n\n\n\nplot(nz_raster_low, main = \"Resample 6 x 6 km\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week5-discussion.html#vectorize-grain-raster",
+    "href": "course-materials/discussions/week5-discussion.html#vectorize-grain-raster",
+    "title": "Week 5: Discussion Section",
+    "section": "4. Vectorize grain raster",
+    "text": "4. Vectorize grain raster\n\nPolygonize grain and filter to only keep squares that represent clay\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Convert raster data to polygon vector data\ngrain_poly &lt;- as.polygons(grain) %&gt;% \n  st_as_sf()\n\nplot(grain, main = \"Grain (Raster)\")\n\n\n\n\n\n\n\nplot(grain_poly, main = \"Grain (Vector)\")\n\n\n\n\n\n\n\n# Subset polygons to only clay\nclay &lt;- grain_poly %&gt;% \n  dplyr::filter(grain == \"clay\")\n\nplot(clay, main = \"Clay\")"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html",
+    "href": "course-materials/discussions/week7-discussion.html",
+    "title": "Week 7: Discussion Section",
+    "section": "",
+    "text": "Climate envelope models map where a species currently lives based on its climate conditions, then project where those conditions will exist under future climate scenarios. The key concern is whether suitable climate conditions will still exist anywhere or if a species’ climate envelope will shrink entirely. This threat is particularly acute for endemic species that are restricted to narrow geographic ranges.\nTwo California examples illustrate different vulnerabilities:\nThese simple species distribution models help identify the climate space each species occupies and the risk of losing it as climate conditions shift.This week, you will practice function making with rasters and create a generalizable workflow to determine the current climate envelope of the two species."
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#get-started",
+    "href": "course-materials/discussions/week7-discussion.html#get-started",
+    "title": "Week 7: Discussion Section",
+    "section": "1. Get Started",
+    "text": "1. Get Started\n\nCreate a version-controlled R Project\nAdd (at least) a subfolder to your R project: data\nCreate a Quarto document\n\nLet’s load all necessary packages:\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(terra)\nlibrary(tmap)\nlibrary(patchwork)\n\nYou will be working with the following datasets:\n\niNaturalist Research-grade Observations (via rinat)\nWorldClim version 2.1 data (via geodata)\n\nNext, let’s download our data. Unzip and move this to your version-controlled R Project’s data folder.\n\nmagpie &lt;- read_csv(here::here(\"data\", \"magpie_obvs.csv\"))\ntule_elk &lt;- read_csv(here::here(\"data\", \"tule_elk_obvs.csv\"))\n\nbioclim_dir &lt;- here::here(\"data\", \"climate\", \"wc2.1_2.5m\")\nbioclim &lt;- list.files(bioclim_dir, pattern = glob2rx(\"*.tif$\"), full.names = TRUE)\nbioclim_sort &lt;- bioclim[\n  # Sort filepaths based on numeric suffix\n  order(\n    # Extract numeric suffix of filenames and convert to numeric\n    as.numeric(gsub(\".*_(\\\\d+)\\\\.tif$\", \"\\\\1\", bioclim))\n    )\n  ]\nbioclim_rast &lt;- rast(bioclim_sort)"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#name-raster-layers",
+    "href": "course-materials/discussions/week7-discussion.html#name-raster-layers",
+    "title": "Week 7: Discussion Section",
+    "section": "2. Name raster layers",
+    "text": "2. Name raster layers\n\nUpdate the bioclim_rast layer names to match the Bioclimatic variables using names()\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nvariables &lt;- c(\"annualMeanTemp\", \"meanDiurnalRange\", \"isothermality\", \"tempSeasonality\", \"maxTempWarmMonth\", \"maxTempColdMonth\", \"tempAnnualRange\", \"meanTempWetQ\", \"meanTempDryQ\", \"meanTempWarmQ\", \"meanTempColdQ\", \"annualPrecip\", \"precipWetMonth\", \"precipDryMonth\", \"precipSeasonality\", \"precipWetQ\", \"precipDryQ\", \"precipWarmQ\", \"precipColdQ\")\nnames(bioclim_rast) &lt;- variables"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#find-geographic-extent-of-species-occurrence-and-crop-raster",
+    "href": "course-materials/discussions/week7-discussion.html#find-geographic-extent-of-species-occurrence-and-crop-raster",
+    "title": "Week 7: Discussion Section",
+    "section": "3. Find geographic extent of species occurrence and crop raster",
+    "text": "3. Find geographic extent of species occurrence and crop raster\n\nUse st_as_sf to convert and find the geographic extent of species occurrence data magpie using st_bbox()\nCrop bioclim_rast to match the extent of species occurrence data magpie\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nmagpie_sf &lt;- magpie |&gt; \n  rename(long = longitude,\n         lat = latitude) |&gt; \n  drop_na(long, lat) |&gt; \n  st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n\n# Obtain geographic extent/bounding box of species occurrences\nmagpie_bbox &lt;- st_bbox(magpie_sf)\n\n# Crop raster to match geographic extent of species occurrences\nbioclim_crop &lt;- crop(bioclim_rast, magpie_bbox)"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#extract-points-from-species-occurrence",
+    "href": "course-materials/discussions/week7-discussion.html#extract-points-from-species-occurrence",
+    "title": "Week 7: Discussion Section",
+    "section": "4. Extract points from species occurrence",
+    "text": "4. Extract points from species occurrence\n\nExtract points from the cropped bioclim_rast for each occurrence in magpie\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Extract points from raster for all species occurrences\nbioClim_pts &lt;- as_tibble(terra::extract(bioclim_crop, magpie_sf))"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#create-background-values-and-extract-points",
+    "href": "course-materials/discussions/week7-discussion.html#create-background-values-and-extract-points",
+    "title": "Week 7: Discussion Section",
+    "section": "5. Create background values and extract points",
+    "text": "5. Create background values and extract points\n\nCreate “background values” by generating random sample points from the cropped bioclim_rast\nExtract points from cropped bioclim_rast for the background values\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\n# Generate random sample points from raster\nrandom_pts &lt;- spatSample(bioclim_crop[[\"annualMeanTemp\"]],\n                         na.rm = TRUE, # Random sample non-NA cells\n                         size = (nrow(magpie) * 2), # Sample size\n                         as.points = TRUE) |&gt; # Return SpatVector\n  st_as_sf()\n\n# Extract points from raster for background values\nbioClim_random_pts &lt;- as_tibble(terra::extract(bioclim_crop, random_pts))"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#plot-species-climate-niche",
+    "href": "course-materials/discussions/week7-discussion.html#plot-species-climate-niche",
+    "title": "Week 7: Discussion Section",
+    "section": "6. Plot species climate niche",
+    "text": "6. Plot species climate niche\n\nPlot species climate niche and background climate (temperature vs. precipitation)\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nmap_1 &lt;- tm_shape(bioclim_crop[[\"annualPrecip\"]]) +\n  tm_raster(col.scale = tm_scale_continuous(values = \"Blues\"), \n            col.legend = tm_legend(title = \"Annual precipitation\")) +\n  tm_shape(magpie_sf) +\n  tm_dots(fill = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n            legend.orientation = \"landscape\",\n            legend.bg.color = \"white\")\n\nmap_2 &lt;- tm_shape(bioclim_crop[[\"annualMeanTemp\"]]) +\n  tm_raster(col.scale = tm_scale_continuous(values = \"-RdYlBu\"), \n            col.legend = tm_legend(title = \"Annual mean temperature\")) +\n  tm_shape(magpie_sf) +\n  tm_dots(fill = \"#3a5a40\", size = 0.15) +\n  tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n            legend.orientation = \"landscape\",\n            legend.bg.color = \"white\")\n\ntmap_arrange(map_1, map_2)\n\n\n\n\n\n\n\n\n\nplot_1 &lt;- ggplot(data = bioClim_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16, color = \"#3a5a40\") +\n  labs(x = \"Annual precipitation\",\n       y = \"Annual mean temperature\", \n       title = \"Species climate niche\") +\n  theme_bw()\n\nplot_2 &lt;- ggplot(data = bioClim_random_pts, aes(x = annualPrecip, y = annualMeanTemp)) +\n  geom_point(shape = 16) +\n  labs(x = \"Annual precipitation\",\n       y = element_blank(), \n       title = \"Background climate\") +\n  theme_bw()\n\nplot_1 + plot_2"
+  },
+  {
+    "objectID": "course-materials/discussions/week7-discussion.html#create-generalizable-workflow-and-apply",
+    "href": "course-materials/discussions/week7-discussion.html#create-generalizable-workflow-and-apply",
+    "title": "Week 7: Discussion Section",
+    "section": "7. Create generalizable workflow and apply",
+    "text": "7. Create generalizable workflow and apply\n\nModify previous steps into a generalizable workflow for other species occurrence data\nTry your new function with species occurrence data tule_elk\n\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nclimate_envelope &lt;- function(clim_rast, clim_var1, clim_var2, occurences, species_name){\n  \n  species_name_lower &lt;- species_name |&gt; \n    str_to_lower() |&gt; \n    str_replace_all(\" \", \"_\")\n  \n  occurences_sf &lt;- occurences |&gt; \n    rename(long = longitude,\n           lat = latitude) |&gt; \n    drop_na(long) |&gt; \n    st_as_sf(coords = c(\"long\", \"lat\"), crs = 4326)\n  \n  occurences_bbox &lt;- st_bbox(occurences_sf)\n  \n  clim_crop &lt;- crop(clim_rast, occurences_bbox)\n  \n  clim_pts &lt;- as_tibble(extract(clim_crop, occurences_sf))\n  \n  random_pts &lt;- spatSample(clim_rast[[clim_var1]],\n                           na.rm = TRUE,\n                           size = (nrow(occurences) * 2),\n                           as.points = TRUE) |&gt;\n    st_as_sf()\n\n  clim_random_pts &lt;- as_tibble(terra::extract(clim_crop, random_pts))\n  \n  map_1 &lt;- tm_shape(clim_crop[[clim_var1]]) +\n    tm_raster(col.scale = tm_scale_continuous(values = \"Blues\")) +\n    tm_shape(occurences_sf) +\n    tm_dots(fill = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n              legend.orientation = \"landscape\",\n              legend.bg.color = \"white\")\n\n  map_2 &lt;- tm_shape(clim_crop[[clim_var2]]) +\n    tm_raster(col.scale = tm_scale_continuous(values = \"-RdYlBu\")) +\n    tm_shape(occurences_sf) +\n    tm_dots(fill = \"#3a5a40\", size = 0.15) +\n    tm_layout(legend.position = tm_pos_in(\"center\", \"bottom\"),\n              legend.orientation = \"landscape\",\n              legend.bg.color = \"white\")\n  \n  plot_1 &lt;- ggplot(data = clim_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16, color = \"#3a5a40\") +\n    labs(title = paste(\"Species climate niche of\", str_to_sentence(species_name))) +\n    theme_bw()\n  \n  plot_2 &lt;- ggplot(data = clim_random_pts, aes_string(x = clim_var1, y = clim_var2)) +\n    geom_point(shape = 16) +\n    labs(y = element_blank(), \n         title = paste(\"Background climate of\", str_to_sentence(species_name))) +\n    theme_bw()\n  \n  assign(paste0(species_name_lower, \"_map_1\"), map_1, envir = .GlobalEnv)\n  assign(paste0(species_name_lower, \"_map_2\"), map_2, envir = .GlobalEnv)\n  assign(paste0(species_name_lower, \"_plot_1\"), plot_1, envir = .GlobalEnv)\n  assign(paste0(species_name_lower, \"_plot_2\"), plot_2, envir = .GlobalEnv)\n  \n}\n\n\nclimate_envelope(clim_rast = bioclim_rast,\n                 clim_var1 = \"annualPrecip\",\n                 clim_var2 = \"annualMeanTemp\",\n                 occurences = tule_elk, \n                 species_name = \"Tule Elk\")\n\ntule_elk_map_1\n\n\n\n\n\n\n\ntule_elk_map_2\n\n\n\n\n\n\n\ntule_elk_plot_1\n\n\n\n\n\n\n\ntule_elk_plot_2"
   }
 ]

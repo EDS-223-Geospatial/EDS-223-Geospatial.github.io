@@ -84,15 +84,15 @@ knitr::include_graphics("images/annie.png")
 #| echo: false
 #| fig-align: "center"
 #| out-width: "45%" 
-knitr::include_graphics("images/")
+knitr::include_graphics("images/Mary.png")
 ```
 
 ::: {.center-text}
-[****]{.teal-text}  
+[**Mary Salami**]{.teal-text}  
 
-**Email:** [](mailto::)   
+**Email:** [marysalami@ucsb.edu](mailto:marysalami@ucsb.edu)   
 
-**Student Hours:**
+**Student Hours:** Thursday 11 am - 12 pm @ 
 
 **Learn more:** 
 :::
