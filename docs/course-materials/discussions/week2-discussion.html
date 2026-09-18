@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://docs.google.com/document/d/1uEfXTgl5TAkB50B46yjDWe_gEkgBNy38ghjwXqk40bs/view" target="_blank"> 
+    <a class="nav-link" href="https://docs.google.com/document/d/1dK9oioz1eajKsdCC7hGzT6N9BPj5O3bpZIKcGFmLmm4/view" target="_blank"> 
 <span class="menu-text">syllabus</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -158,42 +158,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../../course-materials/week1.html">
  <span class="dropdown-text">week 1</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week2.html">
- <span class="dropdown-text">week 2</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week3.html">
- <span class="dropdown-text">week 3</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week4.html">
- <span class="dropdown-text">week 4</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week5.html">
- <span class="dropdown-text">week 5</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week6.html">
- <span class="dropdown-text">week 6</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week7.html">
- <span class="dropdown-text">week 7</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week8.html">
- <span class="dropdown-text">week 8</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week9.html">
- <span class="dropdown-text">week 9</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../../course-materials/week10.html">
- <span class="dropdown-text">week 10</span></a>
-  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -201,7 +165,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">assignments</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbx2l5pbXt0J8y2PnNi9Ohi3jxRZGd4dZfZMBMT_MWA23OPQ0Dt31vC7zbAWVHtcFC5C/exec"> 
+    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbxSp4_DX-QfxAegqY5mUL5Q8CLXhHSulJ0eI2l5lAjEDJsS1NUK9bG7SrkOZyuo_eBn/exec"> 
 <span class="menu-text">redeem tokens</span></a>
   </li>  
   <li class="nav-item">
@@ -411,11 +375,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(col_andean) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Andean Region of Colombia"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>[plot mode] fit legend/component: Some legend items or map compoments do not
-fit well, and are therefore rescaled.
-ℹ Set the tmap option `component.autoscale = FALSE` to disable rescaling.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -444,15 +403,15 @@ fit well, and are therefore rescaled.
 <div id="callout-4" class="callout-4-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View CRS of each object</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(roads)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(aves)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># View units of each object CRS </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col)<span class="sc">$</span>units</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(roads)<span class="sc">$</span>units</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(aves)<span class="sc">$</span>units</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View CRS of each object</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(roads)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(aves)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># View units of each object CRS </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col)<span class="sc">$</span>units</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(roads)<span class="sc">$</span>units</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(aves)<span class="sc">$</span>units</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -477,20 +436,20 @@ fit well, and are therefore rescaled.
 <section id="use-map-to-unlistextract" class="level3">
 <h3 class="anchored" data-anchor-id="use-map-to-unlistextract">Use <code>map()</code> to unlist/extract</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aves_df_purrr <span class="ot">&lt;-</span> aves <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract lat &amp; long from geometry column</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map</span>(aves<span class="sc">$</span>geometry, <span class="dv">1</span>)), <span class="co"># longitude = first component (x)</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">lat =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map</span>(aves<span class="sc">$</span>geometry, <span class="dv">2</span>))) <span class="sc">|&gt;</span> <span class="co"># latitude = second component (y)</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="co"># Remove geometry column now that it's redundant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>aves_df_purrr <span class="ot">&lt;-</span> aves <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extract lat &amp; long from geometry column</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map</span>(aves<span class="sc">$</span>geometry, <span class="dv">1</span>)), <span class="co"># longitude = first component (x)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">lat =</span> <span class="fu">unlist</span>(purrr<span class="sc">::</span><span class="fu">map</span>(aves<span class="sc">$</span>geometry, <span class="dv">2</span>))) <span class="sc">|&gt;</span> <span class="co"># latitude = second component (y)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="co"># Remove geometry column now that it's redundant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="use-st_coordinates-to-extractassign" class="level3">
 <h3 class="anchored" data-anchor-id="use-st_coordinates-to-extractassign">Use <code>st_coordinates()</code> to extract/assign</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>aves_df_st_coords <span class="ot">&lt;-</span> aves <span class="sc">%&gt;%</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">st_coordinates</span>(.)[,<span class="dv">1</span>], <span class="co"># Assign first matrix item to "lon"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">lat =</span> <span class="fu">st_coordinates</span>(.)[,<span class="dv">2</span>])  <span class="sc">%&gt;%</span> <span class="co"># Assign second matrix item to "lat"</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="co"># Remove geometry column now that it's redundant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aves_df_st_coords <span class="ot">&lt;-</span> aves <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">lon =</span> <span class="fu">st_coordinates</span>(.)[,<span class="dv">1</span>], <span class="co"># Assign first matrix item to "lon"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">lat =</span> <span class="fu">st_coordinates</span>(.)[,<span class="dv">2</span>])  <span class="sc">%&gt;%</span> <span class="co"># Assign second matrix item to "lat"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>() <span class="co"># Remove geometry column now that it's redundant</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </div>
@@ -513,8 +472,8 @@ fit well, and are therefore rescaled.
 <section id="convert-to-an-sf-object-with-st_as_sf" class="level3 callout-body-container callout-body">
 <h3 class="anchored" data-anchor-id="convert-to-an-sf-object-with-st_as_sf">Convert to an <code>sf</code> object with <code>st_as_sf()</code></h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>aves_df_purrr <span class="ot">&lt;-</span> aves <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>aves_df_purrr <span class="ot">&lt;-</span> aves <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_as_sf</span>(<span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>), <span class="at">crs =</span> <span class="dv">4326</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </div>
@@ -540,21 +499,21 @@ fit well, and are therefore rescaled.
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boolen check if CRS match between 2 datasets</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col) <span class="sc">==</span> <span class="fu">st_crs</span>(roads)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Boolen check if CRS match between 2 datasets</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">st_crs</span>(col) <span class="sc">==</span> <span class="fu">st_crs</span>(roads)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform bird observation dataset into same CRS as other Colombia dataset</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>aves <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(aves, <span class="at">crs =</span> <span class="fu">st_crs</span>(col))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform bird observation dataset into same CRS as other Colombia dataset</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>aves <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(aves, <span class="at">crs =</span> <span class="fu">st_crs</span>(col))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(col) <span class="sc">+</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(roads) <span class="sc">+</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>() <span class="sc">+</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aves) <span class="sc">+</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>() <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Colombia ecoregions, roads,</span><span class="sc">\n</span><span class="st">and bird observations"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(col) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(roads) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_lines</span>() <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(aves) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_dots</span>() <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Colombia ecoregions, roads,</span><span class="sc">\n</span><span class="st">and bird observations"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
