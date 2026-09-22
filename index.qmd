@@ -66,7 +66,7 @@ knitr::include_graphics("images/annie.png")
 
 **Email:** [aradams@ucsb.edu](mailto::aradams@ucsb.edu) 
 
-**Student Hours:** Monday 2:30 - 3:30 PM @ BH 3418
+**Student Hours:** Monday 2:30 - 3:30 PM @ BH 3414
 
 **Learn more:** [annieradams.github.io](https://annieradams.github.io/)  
 :::
@@ -92,7 +92,7 @@ knitr::include_graphics("images/Mary.png")
 
 **Email:** [marysalami@ucsb.edu](mailto:marysalami@ucsb.edu)   
 
-**Student Hours:** Thursday 11 am - 12 pm @ 
+**Student Hours:** Thursday 11 am - 12 pm @ BH 1520
 
 **Learn more:** 
 :::
