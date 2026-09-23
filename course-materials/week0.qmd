@@ -1,6 +1,6 @@
 ---
 title: "Intro to EDS 223 and map making"
-subtitle: "Week0"
+subtitle: "Week 0"
 ---
 
 ```{r}
