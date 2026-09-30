@@ -4,7 +4,7 @@
     "href": "course-materials/week1.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials",
     "title": "Intro to EDS 223 and map making",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nWhy spatial?, and fundamentals of good maps\n\n\n Lab materials to download\nMaking maps in R with tmap\n\n\n Lab solution\nMaking maps in R with tmap\n\n\n Discussion\nMaking maps with tmap and beyond"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nWhy spatial?, and fundamentals of good maps\n\n\n Lab materials to download\nMaking maps in R with tmap\n\n\n Lab solution\nMaking maps in R with tmap\n\n\n Discussion Slides\ntmap Overview\n\n\n Discussion Activity\nMaking maps with tmap and beyond"
   },
   {
     "objectID": "course-materials/week1.html#assignment-reminders",
@@ -971,5 +971,82 @@
     "title": "Drone Field Work",
     "section": " Additional Resources",
     "text": "Additional Resources\n\nStructure From Motion Processing\nProcess RedEdge Panchromatic Images with MetaShape\nGeospatial Data Resources"
+  },
+  {
+    "objectID": "assignments.html",
+    "href": "assignments.html",
+    "title": "Assignments",
+    "section": "",
+    "text": "ImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+  },
+  {
+    "objectID": "assignments.html#calendar",
+    "href": "assignments.html#calendar",
+    "title": "Assignments",
+    "section": "",
+    "text": "ImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed. Homework Assignments (HWs) and Self-reflections (SRs) are always due on Saturdays to ensure that you have at least one day a week with no course obligations."
+  },
+  {
+    "objectID": "assignments.html#assignments",
+    "href": "assignments.html#assignments",
+    "title": "Assignments",
+    "section": "Assignments",
+    "text": "Assignments\n\n\n\n\n\n\nImportant\n\n\n\nEarning “Satisfactory”/ “Almost”/ “Not Yet” marks on Self-reflections (SRs), Homework Assignments (HWs), and the Portfolio Repository (PR) will determine your letter grade (e.g. A, B, etc.) for this course. See Grader Tracker below.\n\n\nLinks to assignments will become available as they are assigned.\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nPre-course Self Reflection (SR#1)\n09/24/2026\n09/26/2026\n\n\nHW\nHomework Assignment #1\n10/01/2026\n10/10/2026\n\n\nHW\nHomework Assignment #2\n10/15/2026\n10/24/2026\n\n\nHW\nHomework Assignment #3\n10/29/2026\n11/07/2026\n\n\nSR\nMid Quarter Self Reflection (SR#2)\n10/28/2026\n11/01/2026\n\n\nHW\nHomework Assignment #4\n11/12/2026\n11/21/2026\n\n\nPR\nPortfolio Repository\n11/12/2026\n12/02/2026"
+  },
+  {
+    "objectID": "assignments.html#grade-tracker",
+    "href": "assignments.html#grade-tracker",
+    "title": "Assignments",
+    "section": "Grade Tracker",
+    "text": "Grade Tracker\nUse the Grade Tracker, below, to determine your course grade:\n\n\n\n\n\n\n\n\n\nRedeem tokens to revise / resubmit an assignment that received an “Almost” or “Not Yet” mark after your first resubmission."
+  },
+  {
+    "objectID": "assignments.html#rubric",
+    "href": "assignments.html#rubric",
+    "title": "Assignments",
+    "section": "Rubric",
+    "text": "Rubric\nEach Homework Assignment (HWs) will include an individual rubric. However, to earn a “Satisfactory” assignments must adhere to best practices for producing professional output. Below are examples of professional and unprofessional outputs for guidance.\nExamples of Professional Output:\n\nGood Example with sourced functions\nBad Example"
+  },
+  {
+    "objectID": "assignments.html#getting-unstuck",
+    "href": "assignments.html#getting-unstuck",
+    "title": "Assignments",
+    "section": "Getting unstuck",
+    "text": "Getting unstuck\n\nWhere to find help\nBeing a great data scientist isn’t about writing perfect code; it’s about learning how to teach yourself and when to ask for help. The only way to get better at this process is to practice by taking the time to troubleshoot on our own, so you should always plan to start there! The graphic below shows the order in which you should approach different resources for help:\n\n\n\n\n\n\n\n\n\n\n\nRoadblock checklist\nIf you hit a roadblock, run through this checklist to make sure you’ve done your due diligence before bringing your question(s) to a peer, TA, or instructor.\n\nrevisit the course materials - your question may already be answered in the slides, textbook, or discussion section materials\nread the documentation - you can do so directly from RStudio by typing ?function_name in the console\nread the package’s vignette, if available - these are often linked on CRAN under the Documents sections (e.g. see {dplyr} on CRAN) or can be found through the command vignette(package = \"package-name\") and vignette(\"vignette-name\")\ntry Googling! - don’t forget to look back at our suggested troubleshooting and Googling tips (Teach Me How to Google)\n\n\n\nHow to ask questions\nWhen you decide to ask a question to a peer, TA, or instructor be sure to:\n\nProvide context. For example, “I’m trying to do this…” or “I’m working on the task where we do this…”\nShare the specific challenge. “I’m specifically trying to [insert function / package] to do this thing.”\nShare what happens and what you’ve learned. “I repeatedly get an error message that says [this]. I’ve tried [this] and [this]”\nShow your code ideally with a reprex that they can run / test.\nValue and expect the Socratic method, especially in classes and workshops – our goal is to provide critical thinking that is transferable, not just to provide a quick fix for a single error."
+  },
+  {
+    "objectID": "assignments/HW1.html",
+    "href": "assignments/HW1.html",
+    "title": "Homework Assignment 1",
+    "section": "",
+    "text": "Important\n\n\n\nYou must earn a “Satisfactory” on all parts of the assignment to earn a “Satisfactory” on the assignment.\nThe assignment must be submitted through Gradescope.\nRead each part of the assignment carefully, and use the check boxes to ensure you’ve addressed all elements of the assignment!"
+  },
+  {
+    "objectID": "assignments/HW1.html#learning-outcomes",
+    "href": "assignments/HW1.html#learning-outcomes",
+    "title": "Homework Assignment 1",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\n\nbuild effective, responsible, accessible and aesthetically-pleasing maps\npractice manipulating vector and raster data to build multi-layer maps\npractice making maps in R, specifically using tmap"
+  },
+  {
+    "objectID": "assignments/HW1.html#instructions",
+    "href": "assignments/HW1.html#instructions",
+    "title": "Homework Assignment 1",
+    "section": "Instructions",
+    "text": "Instructions\n\nCreate a new GitHub repository. Be sure to include a README that follows these guidelines\nDownload data from here\nUnzip data and place in repository\nAdd the data to your gitignore!\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope ** Make sure code-fold is not set to True! Your pdf should contain all your code and outputs!\nAdd the link to your github repository to this Google Form\n\nYour repository should have the following structure:\n\nEDS223-HW1\n│   README.md\n│   ej_screen.qmd\n|   ej_screen.pdf\n│   Rmd/Proj files    \n└───data\n     └───ejscreen"
+  },
+  {
+    "objectID": "assignments/HW1.html#exploring-environmental-injustice",
+    "href": "assignments/HW1.html#exploring-environmental-injustice",
+    "title": "Homework Assignment 1",
+    "section": "Exploring environmental (in)justice",
+    "text": "Exploring environmental (in)justice\nAs many of us are aware, environmental degradation, pollution, and hazards is not felt equally by all people. Environmental justice has many definitions, but the United States Environmental Protection Agency defines it as follows:\n\n“Environmental justice” means the just treatment and meaningful involvement of all people, regardless of income, race, color, national origin, Tribal affiliation, or disability, in agency decision-making and other Federal activities that affect human health and the environment so that people:\n\nare fully protected from disproportionate and adverse human health and environmental effects (including risks) and hazards, including those related to climate change, the cumulative impacts of environmental and other burdens, and the legacy of racism or other structural or systemic barriers; and\nhave equitable access to a healthy, sustainable, and resilient environment in which to live, play, work, learn, grow, worship, and engage in cultural and subsistence practices\n\n\nFor far too long, environmental inequities have been invisible, and thus ignored. Mapping environmental inequities can be a powerful tool for revealing injustices. We will be working with data from the United States Environmental Protection Agency’s previous EJScreen: Environmental Justice Screening and Mapping Tool.\nThe tool, when in existence, was intended to support research and policy goals. It was shared with the public to achieve the following:\n\n\nto be more transparent about how we consider environmental justice in our work,\n\nto assist our stakeholders in making informed decisions about pursuing environmental justice and,\n\nto create a common starting point between the agency and the public when looking at issues related to environmental justice.\n\n\nWhile this tool is no longer available, an unofficial version of the tool can be found here.\n\nDescription\nFor this assignment, you will explore an environmental justice topic of your choosing. You should select a region, community, or environmental issue that matters to you.\nYou must complete the following:\n\ncreate two maps that communicate an environmental justice issue\nwrite a brief paragraph explaining what your maps communicate\n\n\n\nData details\nEJScreen provides on environmental and demographic information for the US at the Census tract and block group levels. You will be working with data at the block group level that has been downloaded from the EPA site. To understand the associated data columns, you will need to explore the following in the data folder:\n\nTechnical documentation: ejscreen-tech-doc-version-2-2.pdf\nColumn descriptions: EJSCREEN_2023_BG_Columns.xlsx\n\nYou should also explore the limitations and caveats of the data.\nThe following code provides examples for reading and manipulating the EJScreen data. You MUST update this code to suite your problem of interest.\n\nlibrary(tidyverse)\nlibrary(sf)\nlibrary(here)\n\n# read in geodatabase of EJScreen data at the Census Block Group level\nejscreen &lt;- sf::st_read(here::here(\"data\", \"ejscreen\",\"EJSCREEN_2023_BG_StatePct_with_AS_CNMI_GU_VI.gdb\")) \n\n# filter to a state you are interested in\ncalifornia &lt;- ejscreen %&gt;%\n  dplyr::filter(ST_ABBREV == \"CA\") \n\n# filter to a county you are interested in\nsanta_barbara &lt;- ejscreen %&gt;%\n  dplyr::filter(CNTY_NAME %in% c(\"Santa Barbara County\"))\n\n# find the average values for all variables within counties\ncalifornia_counties &lt;- aggregate(california, by = list(california$CNTY_NAME), FUN = mean)"
+  },
+  {
+    "objectID": "assignments/HW1.html#rubric-specifications",
+    "href": "assignments/HW1.html#rubric-specifications",
+    "title": "Homework Assignment 1",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nYour github repository contains a README that follows the MEDS README guidelines, and you added your repo link to this google form\nEJScreen maps and text must communicate about an issue\n\nit is not sufficient to make two unrelated maps\n\nThe rendered Quarto doc must show all required elements in a professional style\n\nsee examples of professional and unprofessional output on the Assignments page"
   }
 ]

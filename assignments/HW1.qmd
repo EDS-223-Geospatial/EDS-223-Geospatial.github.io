@@ -30,14 +30,14 @@ The assignment **must be submitted through Gradescope**.
 
 ## Instructions
 
-1. Create a new GitHub repository.Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
+1. Create a new GitHub repository. Be sure to include a README that follows these [guidelines](https://ucsb-meds.github.io/README-guidelines/)
 2. Download data from [here](https://drive.google.com/file/d/1nG6Nj1bXfzQFOVMO8Km3eNy4SWu1YcIQ/view?usp=sharing)
 3. Unzip data and place in repository
 4. Add the data to your `gitignore`!
 5. Create a Quarto document with responses
 6. Render your quarto document as a pdf and submit on [Gradescope](https://www.gradescope.com/courses/1133964)
       ** Make sure code-fold is **not** set to `True`! Your pdf should contain all your code and outputs! 
-7. Add the link to your github repository to this [spreadsheet](https://docs.google.com/spreadsheets/d/1c1qxKPAW6S94Eq5f3U81RvN7TlUvELTqhrdF7PpPat0/edit?gid=0#gid=0)
+7. Add the link to your github repository to this [Google Form](https://forms.gle/9FLG2D7Mi4sjVeqLA)
 
 Your repository should have the following structure:
 
@@ -138,7 +138,7 @@ You must complete the following to receive a "Satisfactory" on the assignment:
   - legends with legible titles, including units
   - indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)
   - color scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)
-- [ ] Your github repository contains a README that follows the [MEDS README guidelines](https://ucsb-meds.github.io/README-guidelines/), and you added your repo link to this [sheet](https://drive.google.com/file/d/14CauXFZkVh_6z2Euq0m1Sq1kHQ31fiMk/view?usp=sharing)
+- [ ] Your github repository contains a README that follows the [MEDS README guidelines](https://ucsb-meds.github.io/README-guidelines/), and you added your repo link to this [google form](https://forms.gle/9FLG2D7Mi4sjVeqLA)
 - [ ] EJScreen maps and text must communicate about an issue
   - it is not sufficient to make two unrelated maps
 - [ ] The rendered Quarto doc must show all required elements in a professional style
