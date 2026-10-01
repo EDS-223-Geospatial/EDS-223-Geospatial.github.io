@@ -1,10 +1,6 @@
 project:
   type: website
   output-dir: docs
-  # render:
-    # - "*.qmd"
-    # - "!templates/"
-    # - "!data/"
 
 website:
 
@@ -48,7 +44,7 @@ website:
       - text: assignments
         href: assignments.qmd
       - text: redeem tokens
-        href: https://script.google.com/a/macros/ucsb.edu/s/AKfycbyA1_8JcF7RqwR_U50Vk25G66LrUwOEjjbmlAWPNhA3n61vaiYphgR4MtOIWbtxl8QT/exec
+        href: https://script.google.com/a/macros/ucsb.edu/s/AKfycbwCWq8xbPbVuS1AeKhmUQ9cov8CRjfraZkS6Ec0u4R89oa-WWuYZa7DNOmc-cTjR2qM/exec
       - text: resources
         href: resources.qmd
       - icon: github
@@ -79,6 +75,9 @@ format:
           });
         });
         </script>
+
+execute:
+  freeze: auto
 
 editor: source
 
