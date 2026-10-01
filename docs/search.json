@@ -1048,5 +1048,47 @@
     "title": "Homework Assignment 1",
     "section": "Rubric (specifications)",
     "text": "Rubric (specifications)\nYou must complete the following to receive a “Satisfactory” on the assignment:\n\nAll maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\nindication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\n\nYour github repository contains a README that follows the MEDS README guidelines, and you added your repo link to this google form\nEJScreen maps and text must communicate about an issue\n\nit is not sufficient to make two unrelated maps\n\nThe rendered Quarto doc must show all required elements in a professional style\n\nsee examples of professional and unprofessional output on the Assignments page"
+  },
+  {
+    "objectID": "index.html#course-description",
+    "href": "index.html#course-description",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Course Description",
+    "text": "Course Description\nThis course introduces the spatial modeling and analytic techniques of geographic information science to data science students. The emphasis is on deep understanding of spatial data models and the analytic operations they enable. Recognizing remotely sensed data as a key data type within environmental data science, this course will also introduce fundamental concepts and applications of remote sensing. In addition to this theoretical background, students will become familiar with libraries, packages, and APIs that support spatial analysis in R."
+  },
+  {
+    "objectID": "index.html#weekly-schedule",
+    "href": "index.html#weekly-schedule",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Weekly Schedule",
+    "text": "Weekly Schedule\n\nLecture: Tuesday/Thursday 8- 9:15 AM at BH 1424\nDiscussion Section: Friday 9:00 - 10:20 AM in Bren Hall 3022"
+  },
+  {
+    "objectID": "index.html#readings-and-references",
+    "href": "index.html#readings-and-references",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Readings and References",
+    "text": "Readings and References\n\nGeocompuation with R\nSpatial Data Science with Applications in R\nA Gentle Introduction to GIS"
+  },
+  {
+    "objectID": "index.html#course-requirements",
+    "href": "index.html#course-requirements",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Course Requirements",
+    "text": "Course Requirements\n\nMeet minimum MEDS device requirements\nInstall or update to R version 4.40\nInstall or update RStudio\nCreate a GitHub account"
+  },
+  {
+    "objectID": "index.html#teaching-team",
+    "href": "index.html#teaching-team",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Teaching Team",
+    "text": "Teaching Team\n\n\n\n\nInstructor\n\n\n\n\n\n\n\n\n\n\n\nAnnie Adams\nEmail: aradams@ucsb.edu\nStudent Hours: Monday 2:30 - 3:30 PM @ BH 3414\nLearn more: annieradams.github.io\n\n\n\n\nTA\n\n\n\n\n\n\n\n\n\n\n\nMary Salami\nEmail: marysalami@ucsb.edu\nStudent Hours: Thursday 11 am - 12 pm @ BH 1520\nLearn more:"
+  },
+  {
+    "objectID": "index.html#acknowledgements",
+    "href": "index.html#acknowledgements",
+    "title": "Geospatial Analysis & Remote Sensing",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThis website was designed by Sam Csik."
   }
 ]
