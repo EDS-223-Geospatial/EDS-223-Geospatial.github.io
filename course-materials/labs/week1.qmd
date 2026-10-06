@@ -182,7 +182,7 @@ tm_shape(world_elevation) +
   tm_raster() + 
 tm_shape(world_vector) +
   tm_borders() +
-tm_shape(world_cities, is.main = TRUE) + # plot world_cities last, but set as main shape
+tm_shape(world_cities, is.main = TRUE) + # plot world_cities last, but set as main shape 
   tm_dots() +
   tm_text("name")
 ```
@@ -547,7 +547,7 @@ tm_shape(world_vector) +
           fill.legend  = tm_legend(title = "Regional Income")) +
   tm_title(text = "Global income",
             frame = TRUE)+ 
-  tm_layout(text.fontfamily = "Montserrat",
+  tm_layout(text.fontfamily = "sans",
             style= "beaver",
             bg.color = "grey95")
 
