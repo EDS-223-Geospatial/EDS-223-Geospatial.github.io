@@ -293,7 +293,7 @@ world %>%
 
 ### Vector attribute aggregation
 
-Aggregation is the process of summarizing data with one or more 'grouping' variables. For example, using the 'world' which provides information on countries of the world, we might want to aggregate to the level of continents. It is important to note that aggregating data *attributes* is a different process from aggregating *geographic* data, which we will cover later.
+Aggregation is the process of summarizing data with one or more 'grouping' variables. For example, using the `world` dataframe which provides information on countries of the world, we might want to aggregate to the level of continents. It is important to note that aggregating data *attributes* is a different process from aggregating *geographic* data, which we will cover later.
 
 Let's try to find the total population within each continent:
 
