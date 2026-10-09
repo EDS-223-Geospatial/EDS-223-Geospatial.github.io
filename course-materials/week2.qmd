@@ -22,7 +22,7 @@ knitr::include_graphics("images/week2-image.png")
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to spatial/vector data models](https://docs.google.com/presentation/d/1JOu9tXJhrN0bYRXMZL6f7q5Numbnn-TfArVu8Rqajz8/edit?usp=sharing){target="_blank"} |
 | {{< fa download title="download" >}} Lab materials to download                  | [Spatial Operations with Vector Data](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week2){target="_blank"} |
 | {{< fa key title="key" >}} Lab solution                                         | [Spatial Operations with Vector Data](labs/week2.qmd) |
-| {{< fa comments title="two speech bubbles" >}} Discussion                       | [Working with multiple vector types](discussions/) |
+| {{< fa comments title="two speech bubbles" >}} Discussion                       | [GIS Lab #1](https://docs.google.com/document/d/1wJ50U7yxbTC5ImEo6I497ariyW2TrbdS/edit?usp=sharing&ouid=114976243173632226566&rtpof=true&sd=true) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
