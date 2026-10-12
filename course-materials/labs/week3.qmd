@@ -210,8 +210,7 @@ map1 <- tm_shape(nz) +
   tm_fill(fill = "darkgrey") +
   tm_shape(c_height1) +
   tm_dots(fill = "red") +
-  tm_title(text = "Bracket subsetting")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "Bracket subsetting")
 
 map2 <- tm_shape(nz) +
   tm_polygons() +
@@ -219,8 +218,7 @@ map2 <- tm_shape(nz) +
   tm_fill(fill = "darkgrey") +
   tm_shape(c_height2) +
   tm_dots(fill = "red") +
-  tm_title(text = "st_filter()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_filter()")
 
 map3 <- tm_shape(nz) +
   tm_polygons() +
@@ -228,8 +226,7 @@ map3 <- tm_shape(nz) +
   tm_fill(fill = "darkgrey") +
   tm_shape(c_height3) +
   tm_dots(fill = "red") +
-  tm_title(text = "st_intersects()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_intersects()")
 
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
@@ -412,14 +409,12 @@ nz_elevation <- aggregate(x = nz_height, by = nz, FUN = mean)
 map1 <- tm_shape(nz_elevation) +
   tm_polygons(fill = "elevation",
               fill.legend= tm_legend(title = "Mean elevation (meters)")) +
-  tm_title(text = "group_by()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "group_by()")
 
 map2 <- tm_shape(nz_elevation) +
   tm_polygons(fill = "elevation",
               fill.legend = tm_legend(title = "Mean elevation (meters)")) +
-  tm_title(text = "aggregate()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "aggregate()")
 
 tmap_arrange(map1, map2, nrow = 1)
 
@@ -438,24 +433,44 @@ incongruent <- spData::incongruent
 aggregating_zones <- spData::aggregating_zones
 
 tm_shape(incongruent) +
-  tm_polygons(fill = "lightblue",
-              col = "blue") +
+  tm_polygons(fill = "value",
+              fill.legend = tm_legend(title = "Value (million €)")) +
   tm_shape(aggregating_zones) +
-  tm_borders(col = "red")
-  
+  tm_borders(col = "red", lwd = 2)
+
 ```
 
 The simplest useful method for this is area weighted spatial interpolation, which transfers values from the `incongruent` object to a new column in `aggregating_zones` in proportion with the area of overlap: the larger the spatial intersection between input and output features, the larger the corresponding value. This is implemented in `st_interpolate_aw()`, as demonstrated in the code chunk below.
+
+Let us assume that the `value` column of `incongruent` refers to total regional income in million Euros. We want to transfer these values from the nine underlying polygons into the two `aggregating_zones` polygons proportionally by area overlap.
 
 ```{r}
 # select just the value to be aggregated
 incongruent_2 <- incongruent %>%
   select(value)
 
-# use area-weighted interpolation to aggregrate the "value" attribute
+# use area-weighted interpolation to aggregate the "value" attribute
+# extensive = TRUE: for count/sum data (e.g. income, population) -- values are split proportionally by area overlap
+# extensive = FALSE: for rate/density data (e.g. income per capita) -- values are averaged weighted by area overlap
 aggregating_zones_area_weighted <- st_interpolate_aw(incongruent_2, aggregating_zones, extensive = TRUE)
+```
 
-aggregating_zones_area_weighted$value
+We can compare the original values with the interpolated result to see how values were redistributed across zones:
+
+```{r}
+map1 <- tm_shape(incongruent) +
+  tm_polygons(fill = "value",
+              fill.legend = tm_legend(title = "Value (million €)")) +
+  tm_title(text = "Original (9 polygons)")
+
+map2 <- tm_shape(aggregating_zones_area_weighted) +
+  tm_polygons(fill = "value",
+              fill.legend = tm_legend(title = "Value (million €)")) +
+  tm_shape(incongruent) +
+  tm_borders(col = "grey50", lwd = 0.5) +
+  tm_title(text = "Interpolated (2 zones)")
+
+tmap_arrange(map1, map2, nrow = 1)
 ```
 
 :::
@@ -497,20 +512,17 @@ regions2 <- aggregate(x = us_states[, "total_pop_15"], # data and attribute to b
 map1 <- tm_shape(us_states) +
   tm_polygons(fill = "total_pop_15",
               fill.legend  = tm_legend("Total population")) +
-  tm_title(text = "US States")+
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "US States")
 
 map2 <- tm_shape(regions1) +
   tm_polygons(fill = "population",
               fill.legend  = tm_legend("Total population")) +
-  tm_title(text = "group_by()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "group_by()")
 
 map3 <- tm_shape(regions2) +
   tm_polygons(fill = "total_pop_15",
               fill.legend  = tm_legend("Total population")) +
-  tm_title(text = "aggregate()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "aggregate()")
 
 tmap_arrange(map1, map2, map3, nrow = 1)
 ```
@@ -534,23 +546,19 @@ texas_union <- st_union(us_west_union, texas)
 
 map1 <- tm_shape(us_west) +
   tm_polygons() +
-  tm_title(text = "western states")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "western states")
 
 map2 <- tm_shape(us_west_union) +
   tm_polygons() +
-  tm_title(text = "western states union")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "western states union")
 
 map3 <- tm_shape(texas) +
   tm_polygons() +
-  tm_title(text = "TX")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "TX")
 
 map4 <- tm_shape(texas_union) +
   tm_polygons() +
-  tm_title(text = "TX + western states union")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "TX + western states union")
 
 tmap_arrange(map1, map2, map3, map4, nrow = 2)
 ```
@@ -574,15 +582,13 @@ map1 <- tm_shape(seine_buffer_5km) +
   tm_polygons() +
   tm_shape(seine) +
   tm_lines() +
-  tm_title(text = "5km buffer")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "5km buffer")
 
 map2 <- tm_shape(seine_buffer_50km) +
   tm_polygons() +
   tm_shape(seine) +
   tm_lines() +
-  tm_title(text = "50km buffer")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "50km buffer")
 
 tmap_arrange(map1, map2, nrow = 1)
 ```
@@ -663,39 +669,33 @@ bbox <- st_union(x, y)
 map1 <- tm_shape(x, bbox = bbox) +
   tm_borders(col = "red") +
   tm_shape(y) +
-  tm_borders(col = "blue")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_borders(col = "blue")
 
 map2 <- map1 +
   tm_shape(intersection, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_title(text = "st_intersection()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_intersection()")
 
 map3 <- map1 +
   tm_shape(difference_x_y, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_title(text = "st_difference(x,y)")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_difference(x,y)")
 
 
 map4 <- map1 +
   tm_shape(difference_y_x, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_title(text = "st_difference(y,x)")+
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_difference(y,x)")
 
 map5 <- map1 +
   tm_shape(union, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_title(text = "st_union()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_union()")
 
 map6 <- map1 +
   tm_shape(sym_difference, bbox = bbox) +
   tm_fill(col = "purple") +
-  tm_title(text = "st_sym_diffference()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "st_sym_diffference()")
 
 tmap_arrange(map1, map2, map3, map4, map5, map6, nrow = 2)
 ```
@@ -790,16 +790,14 @@ map1 <- tm_shape(nz) +
   tm_shape(nz_centroid) +
   tm_symbols(fill = "red", fill_alpha = 0.5) +
   tm_shape(nz_pos) +
-  tm_symbols(fill = "blue", fill_alpha = 0.5)+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_symbols(fill = "blue", fill_alpha = 0.5)
 
 map2 <- tm_shape(seine) +
   tm_lines() +
   tm_shape(seine_centroid) +
   tm_symbols(fill = "red", fill_alpha = 0.5) +
   tm_shape(seine_pos) +
-  tm_symbols(fill = "blue", fill_alpha = 0.5)+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_symbols(fill = "blue", fill_alpha = 0.5)
 
 tmap_arrange(map1, map2, nrow = 1)
 ```
@@ -817,13 +815,11 @@ seine_simple <- st_simplify(seine, dTolerance = 2000)  # 2000 m
 
 map1 <- tm_shape(seine) +
   tm_lines() +
-  tm_title("original")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title("original")
 
 map2 <- tm_shape(seine_simple) +
   tm_lines() +
-  tm_title("st_simplify()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title("st_simplify()")
 
 tmap_arrange(map1, map2, nrow = 1)
 ```
