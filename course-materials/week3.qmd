@@ -19,7 +19,7 @@ knitr::include_graphics("images/week3-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to basic spatial data and geometry operations with vector data](https://docs.google.com/presentation/d/1iygfMXO3VI11_XJjdq2OomKUbOYosz5pJ1yW87mP-3s/present){target="_blank"}                  |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to basic spatial data and geometry operations with vector data](https://docs.google.com/presentation/d/1g-WYgMWMB4XXk0-QUBq9aH5MPFxCV7LlHhHFV77twPA/edit?usp=sharing){target="_blank"}                  |
 | {{< fa download title="download" >}} Lab materials to download                  | [Spatial joins, topological relationships, and distance relationships](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week3){target="_blank"} |
 | {{< fa key title="key" >}} Lab solution                                         | [Spatial joins, topological relationships, and distance relationships](labs/week3.qmd) |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice vector operations](discussions/week3-discussion.qmd) |
@@ -33,7 +33,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| HW              | [Homework Assignment #2](../assignments/HW2.qmd){target="_blank"} | 10/15/2026    | 10/24/2026 |
+| HW              | [Homework Assignment #2](){target="_blank"} | 10/15/2026    | 10/24/2026 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
