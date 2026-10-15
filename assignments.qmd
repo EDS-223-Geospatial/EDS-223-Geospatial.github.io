@@ -25,7 +25,7 @@ Links to assignments will become available as they are assigned.
 |-----------------|----------------------------------------------------------|---------------|------------|
 | SR              | [Pre-course Self Reflection (SR#1)](assignments/SR1.qmd){target="_blank"} | 09/24/2026    | 09/26/2026 |
 | HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 10/01/2026    | 10/10/2026 |
-| HW              | [Homework Assignment #2](){target="_blank"}            | 10/15/2026    | 10/24/2026 |
+| HW              | [Homework Assignment #2](assignments/HW2V2.qmd){target="_blank"}            | 10/15/2026    | 10/24/2026 |
 | HW              | [Homework Assignment #3](a){target="_blank"}            | 10/29/2026    | 11/07/2026 |
 | SR              | [Mid Quarter Self Reflection (SR#2)](){target="_blank"}            | 10/28/2026    |     11/01/2026 |
 | HW              | [Homework Assignment #4](){target="_blank"}            | 11/12/2026    | 11/21/2026 |
