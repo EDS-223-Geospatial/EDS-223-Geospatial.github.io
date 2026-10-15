@@ -113,7 +113,7 @@ We will be working with maps of HOLC grade designations for Los Angeles. Informa
 
 **Data file:** `crashes.csv`
 
-The Statewide Integrated Traffice Records System (SWITRS) database collects and processes data gathered from a collision scenes. The data is hosted on the [Transportation Information Mapping System (TIMS)](https://tims.berkeley.edu/), developed by UC Berkley SafeTREC. 
+The Statewide Integrated Traffice Records System (SWITRS) database collects and processes data gathered from a collision scenes. The data is hosted on the [Transportation Information Mapping System (TIMS)](https://tims.berkeley.edu/), developed by UC Berkley SafeTREC. Metadata can be found on the [SWITRS Codebook](https://tims.berkeley.edu/help/crashdata/switrs-codebook.php).
 
 We will be working with crash reports from 2020- 2025. 
 
@@ -140,11 +140,11 @@ For this assignment, you must complete the following:
   
 2.  Create a table summarizing: 
   - [ ] the percentage of census block groups that fall within each HOLC grade
-  - [ ] Also include the percent of census black groups that don't fall within a HOLC grade
+  - [ ] Also include the percent of census black groups that don't fall within a HOLC grade in your table
   - [ ] **Hint:** The HOLC data contains the grades and the EJScreen data contains the census blocks, so you        will need to combine the data spatially before doing summary statistics. Once you combine and no longer need the geometries, you can use `st_drop_geometry()`. 
   
   
-3.  Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables or create separate plots):
+3.  Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables in a single visualization or look at a single variable per plot):
   - [ ] % low income
   - [ ] percentile for Particulate Matter 2.5
   - [ ] percentile for low life expectancy
@@ -169,7 +169,7 @@ For this assignment, you must produce the following based on observations from 2
     Create a visualizations that shows: 
     - [ ] The percentage of bike and pedestrian crashes and fatalities within each HOLC grade
     - [ ] Include an appropiate title, axis labels, and legend
-    - [ ] **Hints**: Ensure the SWITRS data and HOLC dataset have matching CRS', then perform a spatial join to assign each crash to a corresponding HOLC grade. 
+    - [ ] **Hints**: Make sure to filter for bike and pedestrian crahes(`PEDESTRIAN_ACCIDENT` and `BICYCLE_ACCIDENT`). Look at the difference in NAs between `POINT_X`/`POINT_Y` and `LONGITUDE`/`LATITUDE` before you decide which to use. Ensure the SWITRS data and HOLC dataset have matching CRS', then perform a spatial join to assign each crash to a corresponding HOLC grade. 
     
 
  

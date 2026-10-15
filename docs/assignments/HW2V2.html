@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ruth Oliver &amp; Annie Adams">
-<meta name="dcterms.date" content="2026-09-29">
+<meta name="dcterms.date" content="2026-10-14">
 
 <title>Homework Assignment 2</title>
 <style>
@@ -155,6 +155,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="../course-materials/week1.html">
  <span class="dropdown-text">week 1</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../course-materials/week2.html">
+ <span class="dropdown-text">week 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../course-materials/week3.html">
+ <span class="dropdown-text">week 3</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item">
@@ -162,7 +170,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">assignments</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbyA1_8JcF7RqwR_U50Vk25G66LrUwOEjjbmlAWPNhA3n61vaiYphgR4MtOIWbtxl8QT/exec"> 
+    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbwCWq8xbPbVuS1AeKhmUQ9cov8CRjfraZkS6Ec0u4R89oa-WWuYZa7DNOmc-cTjR2qM/exec"> 
 <span class="menu-text">redeem tokens</span></a>
   </li>  
   <li class="nav-item">
@@ -203,7 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 29, 2026</p>
+        <p class="date">October 14, 2026</p>
       </div>
     </div>
     
@@ -349,7 +357,7 @@ Important
 <section id="bike-and-pedestrian-crash-reports" class="level3">
 <h3 class="anchored" data-anchor-id="bike-and-pedestrian-crash-reports">Bike and Pedestrian Crash Reports</h3>
 <p><strong>Data file:</strong> <code>crashes.csv</code></p>
-<p>The Statewide Integrated Traffice Records System (SWITRS) database collects and processes data gathered from a collision scenes. The data is hosted on the <a href="https://tims.berkeley.edu/">Transportation Information Mapping System (TIMS)</a>, developed by UC Berkley SafeTREC.</p>
+<p>The Statewide Integrated Traffice Records System (SWITRS) database collects and processes data gathered from a collision scenes. The data is hosted on the <a href="https://tims.berkeley.edu/">Transportation Information Mapping System (TIMS)</a>, developed by UC Berkley SafeTREC. Metadata can be found on the <a href="https://tims.berkeley.edu/help/crashdata/switrs-codebook.php">SWITRS Codebook</a>.</p>
 <p>We will be working with crash reports from 2020- 2025.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -385,11 +393,11 @@ Tip
 </ol>
 <ul class="task-list">
 <li><label><input type="checkbox">the percentage of census block groups that fall within each HOLC grade</label></li>
-<li><label><input type="checkbox">Also include the percent of census black groups that don’t fall within a HOLC grade</label></li>
+<li><label><input type="checkbox">Also include the percent of census black groups that don’t fall within a HOLC grade in your table</label></li>
 <li><label><input type="checkbox"><strong>Hint:</strong> The HOLC data contains the grades and the EJScreen data contains the census blocks, so you will need to combine the data spatially before doing summary statistics. Once you combine and no longer need the geometries, you can use <code>st_drop_geometry()</code>.</label></li>
 </ul>
 <ol start="3" type="1">
-<li>Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables or create separate plots):</li>
+<li>Create at least two visualizations summarizing current conditions (from the EJScreen data) within HOLC grades using the mean of the following variables (you may combine variables in a single visualization or look at a single variable per plot):</li>
 </ol>
 <ul class="task-list">
 <li><label><input type="checkbox">% low income</label></li>
@@ -418,7 +426,7 @@ Tip
 <ul class="task-list">
 <li><label><input type="checkbox">The percentage of bike and pedestrian crashes and fatalities within each HOLC grade</label></li>
 <li><label><input type="checkbox">Include an appropiate title, axis labels, and legend</label></li>
-<li><label><input type="checkbox"><strong>Hints</strong>: Ensure the SWITRS data and HOLC dataset have matching CRS’, then perform a spatial join to assign each crash to a corresponding HOLC grade.</label></li>
+<li><label><input type="checkbox"><strong>Hints</strong>: Make sure to filter for bike and pedestrian crahes(<code>PEDESTRIAN_ACCIDENT</code> and <code>BICYCLE_ACCIDENT</code>). Look at the difference in NAs between <code>POINT_X</code>/<code>POINT_Y</code> and <code>LONGITUDE</code>/<code>LATITUDE</code> before you decide which to use. Ensure the SWITRS data and HOLC dataset have matching CRS’, then perform a spatial join to assign each crash to a corresponding HOLC grade.</label></li>
 </ul></li>
 </ol>
 </section>
