@@ -19,7 +19,7 @@ knitr::include_graphics("images/week4-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to raster data](https://docs.google.com/presentation/d/1pShiSbS6bCnyQ4PZp2H59dQohASq7ZnLkwmVGggv2Fw/present){target="_blank"}                  |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Intro to raster data](https://docs.google.com/presentation/d/1S1HpCY9KP0ygsfZu-r7M7_r7SHj1spDOU3xylc8pA0Y/edit?usp=sharing){target="_blank"}                  |
 | {{< fa download title="download" >}} Lab materials to download                  | [Basics of raster operations with `terra`](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week4){target="_blank"} |
 | {{< fa key title="key" >}} Lab solution                 | [Basics of raster operations with `terra`](labs/week4.qmd)        |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster manipulations](discussions/week4-discussion.qmd) |
@@ -33,7 +33,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"} | 10/29/2026    | 11/07/2026 |
+| HW              | [Homework Assignment #2](../assignments/HW2V2.qmd){target="_blank"} | 10/15/2026    | 10/24/2026 |
 
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
