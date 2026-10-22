@@ -264,7 +264,7 @@ We can also subset raster objects based on the extent another raster object. Her
 
 ```{r}
 # create a raster with a smaller extent
-clip <- rast(xmin = -113.3, xmax = -113, ymin = 37.2, ymax = 37.9,
+clip <- rast(box 1: -113.2, xmax = -113.0, ymin = 37.2, ymax = 37.4,
             resolution = 0.3,
             vals = 1)
 
@@ -538,7 +538,7 @@ When merging or performing map algebra, rasters need to match in their resolutio
 In the simplest case, two images differ only in their extent. Let's start by increasing the extent of a elevation raster.
 
 ```{r}
-elev_2 <- extend(zion_elevation, c(1, 200)) # add one row and two columns
+elev_2 <- extend(zion_elevation, c(1, 2)) # add one row and two columns
 
 ```
 
