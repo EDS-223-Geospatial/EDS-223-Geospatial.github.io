@@ -93,14 +93,12 @@ class(zion_elevation)
 #| code-fold: true
 #| message: false
 map1 <- tm_shape(zion_elevation) +
-  tm_raster(col.legend = tm_legend("Elevation (m)"))+   
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_raster(col.legend = tm_legend("Elevation (m)"))
 
   
 
 map2 <- tm_shape(zion_land) +
-  tm_raster(col.legend = tm_legend("Land cover"))+
-      tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_raster(col.legend = tm_legend("Land cover"))
 
 
 tmap_arrange(map1, map2, nrow = 1)
@@ -161,20 +159,17 @@ merged <- merge(austria, switzerland)
   
 map1 <- tm_shape(austria) +
   tm_raster(col.legend = tm_legend( "Elevation (m)")) +
-  tm_title(text = "Austria")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "Austria")
 
   
 map2 <- tm_shape(switzerland) +
   tm_raster(col.legend = tm_legend( "Elevation (m)")) +
-  tm_title(text = "Switzerland")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "Switzerland")
 
 
 map3 <- tm_shape(merged) +
  tm_raster(col.legend = tm_legend( "Elevation (m)")) +
-  tm_title(text = "Merged") +
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "Merged") 
 
   
 tmap_arrange(map1, map2, map3, nrow = 1)  
@@ -264,7 +259,7 @@ We can also subset raster objects based on the extent another raster object. Her
 
 ```{r}
 # create a raster with a smaller extent
-clip <- rast(box 1: -113.2, xmax = -113.0, ymin = 37.2, ymax = 37.4,
+clip <- rast(xmin = -113.2, xmax = -113.0, ymin = 37.2, ymax = 37.4,
             resolution = 0.3,
             vals = 1)
 
@@ -296,14 +291,12 @@ zion_elevation_clip <- zion_elevation[clip, drop = FALSE]
 #| message: false
 map1 <- tm_shape(zion_elevation) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "original")+
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "original")
 
 
 map2 <- tm_shape(zion_elevation_clip) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "clipped")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "clipped")
 
 
 
@@ -352,18 +345,15 @@ masked2 <- mask(zion_elevation, rmask)
 #| message: false
 map1 <- tm_shape(zion_elevation) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "original")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "original")
 
 map2 <- tm_shape(masked1) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "bracket subsetting")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "bracket subsetting")
 
 map3 <- tm_shape(masked2) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "mask()")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "mask()")
 
 tmap_arrange(map1, map2, map3, nrow = 1) 
 ```
@@ -411,14 +401,12 @@ values(reclassified) <- as.factor(values(reclassified))
 #| message: false
 map1 <- tm_shape(zion_elevation) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "original")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "original")
 
 
 map2 <- tm_shape(reclassified) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text= "reclassified")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text= "reclassified")
 
 
 tmap_arrange(map1, map2, nrow = 1) 
@@ -493,14 +481,12 @@ elevation_focal <- focal(zion_elevation,
 #| message: false
 map1 <- tm_shape(zion_elevation) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "original")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "original")
 
 
 map2 <- tm_shape(elevation_focal) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "aggregated")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "aggregated")
 
 
 tmap_arrange(map1, map2, nrow = 1) 
@@ -560,6 +546,7 @@ The origin function returns the coordinates of the cell corner closes to the coo
 
 ```{r}
 origin(zion_elevation)
+origin(elev_2)
 
 ```
 
@@ -570,7 +557,7 @@ Raster datasets can also differ in their resolution. To match resolutions we can
 When decreasing the resolution of rasters, we are effectively combining multiple cells into a single cell. Let's start by coarsening the resolution of the Zion elevation data by a factor of 5, by taking the mean value of cells.
 
 ```{r}
-zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
+zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean) 
 ```
 
 ```{r}
@@ -578,14 +565,12 @@ zion_elevation_coarse <-  aggregate(zion_elevation, fact = 5, fun = mean)
 #| message: false
 map1 <- tm_shape(zion_elevation) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "original")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "original")
 
 
 map2 <- tm_shape(zion_elevation_coarse) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "aggregated")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "aggregated")
 
 tmap_arrange(map1, map2, nrow = 1) 
 
@@ -644,8 +629,7 @@ if(identical(zion_elevation, zion_elevation_disagg)){
 
 map3 <- tm_shape(zion_elevation_disagg) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "disaggregated")+ 
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "disaggregated")
 
 
 tmap_arrange(map1, map2, map3, nrow = 1) 
@@ -690,8 +674,7 @@ zion_elevation_resample <- resample(zion_elevation, y = target_rast, method = "b
 
 map4 <- tm_shape(zion_elevation_resample) +
   tm_raster(col.legend = tm_legend(title = "Elevation (m)"))+
-  tm_title(text = "resampled")+
-  tm_layout(meta.margins = c(.2, 0, 0, 0))
+  tm_title(text = "resampled")
 
 
 tmap_arrange(map1, map4, nrow = 1) 
