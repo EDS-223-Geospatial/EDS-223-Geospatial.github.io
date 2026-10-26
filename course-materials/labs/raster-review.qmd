@@ -35,7 +35,7 @@ In this review, each map algebra operation is motivated by a concrete question t
 :::
 
 ***
-# Pre Lab Prep
+# Pre Lab Prep{.anchored}  
 
 ## Data Download
 
