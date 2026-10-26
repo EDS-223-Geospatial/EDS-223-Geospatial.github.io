@@ -1,0 +1,6 @@
+PRISM_DATASET_FILENAME: prism_tmean_us_30s_2020_avg_30y.bil
+PRISM_DATASET_CREATE_DATE: 20240112-1109
+PRISM_DATASET_TYPE: an91/r2207h, normals/9120.b
+PRISM_DATASET_VERSION: M5
+PRISM_CODE_VERSION: 16.1-20230816-1307
+PRISM_DATASET_REMARKS: This grid was initially modeled with PRISM at 30-arc-second (~800-m) resolution to produce the source grid listed under PRISM_FILENAME, on the date(s) listed under PRISM_CREATE_DATE. This source grid was then upscaled to 2.5-arc-minute (~4-km) resolution with a Gaussian filter.

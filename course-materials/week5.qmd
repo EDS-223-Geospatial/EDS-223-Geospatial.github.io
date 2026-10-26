@@ -1,5 +1,5 @@
 ---
-title: "Intro to remote sensing & electromagnetism"
+title: "Intro to remote sensing"
 subtitle: "Week 5"
 ---
 
@@ -19,10 +19,11 @@ knitr::include_graphics("images/week5-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1j2kapjQdJsenY1AxEnUB98GTMeHzE2-TPZptLLySRcc/present){target="_blank"}                  |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](){target="_blank"}                  |
+| {{< fa key title="key" >}} Raster Review                 | [Raster Review](labs/raster-review.qmd)        |
 | {{< fa download title="download" >}} Lab materials to download                  | [Vector and raster interactions](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week5){target="_blank"} |
 | {{< fa key title="key" >}} Lab solution                 | [Vector and raster interactions](labs/week5.qmd)        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster operations with vectors](discussions/week5-discussion.qmd) |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster operations with vectors]() |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -33,8 +34,8 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/28/2026    | 11/01/2026 |
-| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"}            | 10/29/2026    | 11/07/2026 |
+| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/27/2026    | 11/01/2026 |
+| HW              | [Homework Assignment #3](){target="_blank"}            | 10/29/2026    | 11/07/2026 |
 
 
 

@@ -58,21 +58,21 @@
   {
     "objectID": "course-materials/week5.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials",
     "href": "course-materials/week5.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials",
-    "title": "Intro to remote sensing & electromagnetism",
+    "title": "Intro to remote sensing",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of electromagnetic radiation\n\n\n Lab materials to download\nVector and raster interactions\n\n\n Lab solution\nVector and raster interactions\n\n\n Discussion\nPractice raster operations with vectors"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nFundamentals of electromagnetic radiation\n\n\n Raster Review\nRaster Review\n\n\n Lab materials to download\nVector and raster interactions\n\n\n Lab solution\nVector and raster interactions\n\n\n Discussion\nPractice raster operations with vectors"
   },
   {
     "objectID": "course-materials/week5.html#assignment-reminders",
     "href": "course-materials/week5.html#assignment-reminders",
-    "title": "Intro to remote sensing & electromagnetism",
+    "title": "Intro to remote sensing",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nSelf Reflection #2\n10/28/2026\n11/01/2026\n\n\nHW\nHomework Assignment #3\n10/29/2026\n11/07/2026"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nSR\nSelf Reflection #2\n10/27/2026\n11/01/2026\n\n\nHW\nHomework Assignment #3\n10/29/2026\n11/07/2026"
   },
   {
     "objectID": "course-materials/week5.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-background-reading",
     "href": "course-materials/week5.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-background-reading",
-    "title": "Intro to remote sensing & electromagnetism",
+    "title": "Intro to remote sensing",
     "section": " Background Reading",
     "text": "Background Reading\n\nRemote Sensing of the Environment, Chapter 1\nRemote Sensing of the Environment, Chapter 2"
   },
@@ -1622,5 +1622,124 @@
     "title": "Week 4: Discussion Section (terra and stars)",
     "section": "4. Change resolution of elevation at Zion National Park",
     "text": "4. Change resolution of elevation at Zion National Park\n\n\n\n\n\n\nTipSolution\n\n\n\n\n\n\nplot(srtm)\n\n\n\n\n\n\n\n\n\n# Create empty template from the bounding box of srtm\nrast_template &lt;- stars::st_as_stars(sf::st_bbox(srtm), dx = 0.01, dy = 0.01)\n\n\n# use_gdal = TRUE is needed for methods other than nearest neighbor\nsrtm_resampl1 &lt;- stars::st_warp(srtm, dest = rast_template, method = \"bilinear\", use_gdal = TRUE, no_data_value = -9999)\nsrtm_resampl2 &lt;- stars::st_warp(srtm, dest = rast_template, method = \"near\", use_gdal = TRUE, no_data_value = -9999)\nsrtm_resampl3 &lt;- stars::st_warp(srtm, dest = rast_template, method = \"cubic\", use_gdal = TRUE, no_data_value = -9999)\nsrtm_resampl4 &lt;- stars::st_warp(srtm, dest = rast_template, method = \"cubicspline\", use_gdal = TRUE, no_data_value = -9999)\nsrtm_resampl5 &lt;- stars::st_warp(srtm, dest = rast_template, method = \"lanczos\", use_gdal = TRUE, no_data_value = -9999)\n\n\nsrtm_resampl_all &lt;- c(srtm_resampl1, srtm_resampl2, srtm_resampl3, srtm_resampl4, srtm_resampl5)\nnames(srtm_resampl_all) &lt;- c(\"Bilinear\", \"Near\", \"Cubic\", \"Cubic Spline\", \"Lanczos\")\n\nplot(merge(srtm_resampl_all))"
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html",
+    "href": "course-materials/labs/raster-review.html",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "",
+    "text": "NoteOverview\n\n\n\nCalifornia spans the full spectrum of western North American climates from the foggy Pacific Coast, the Central Valley, the Sierra Nevada, and the Mojave Desert, making it an excellent case study for climate analysis with raster data.\nIn this review, each map algebra operation is motivated by a concrete question that a real analyst would ask:\n\nLocal operations: How arid or humid is each location, and which climate zone does it fall in?\nFocal operations: Where are the large-scale precipitation gradients, stripped of local noise?\nZonal operations: How do temperature and precipitation vary across California’s climate regions?\nResolution matching: What spatial detail is gained — and what is the cost — of using higher-resolution climate data?\n\nData: Annual mean temperature and annual total precipitation from PRISM Climate Group at Oregon State University. PRISM data must be downloaded manually through the project’s portal."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#step-1-navigate-to-the-prism-normals-page",
+    "href": "course-materials/labs/raster-review.html#step-1-navigate-to-the-prism-normals-page",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Step 1 — Navigate to the PRISM Normals page",
+    "text": "Step 1 — Navigate to the PRISM Normals page\nGo to prism.oregonstate.edu, click Get Data, then select Normals (1991–2020)."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#step-2-download-annual-mean-temperature-4-km",
+    "href": "course-materials/labs/raster-review.html#step-2-download-annual-mean-temperature-4-km",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Step 2 — Download annual mean temperature (4 km)",
+    "text": "Step 2 — Download annual mean temperature (4 km)\nOn the Normals page:\n\nSet Variable to Mean Temperature (tmean)\nSet Resolution to 4km\nSet Time Step to Annual\nDownload the file and save the .zip archive.\n\nExpected filename: PRISM_tmean_30yr_normal_4kmM5_annual_bil.zip\nCreate a folder called data/ and unzip the archive into it. Each archive contains several files — you need the .tif and the .xml."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#step-3-download-annual-total-precipitation-4-km",
+    "href": "course-materials/labs/raster-review.html#step-3-download-annual-total-precipitation-4-km",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Step 3 — Download annual total precipitation (4 km)",
+    "text": "Step 3 — Download annual total precipitation (4 km)\nRepeat Step 2 but change Variable to Precipitation (ppt):\nExpected filename: PRISM_ppt_30yr_normal_4kmM5_annual_bil.zip\nUnzip into the same data/ folder."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#step-4-download-annual-total-precipitation-800-m",
+    "href": "course-materials/labs/raster-review.html#step-4-download-annual-total-precipitation-800-m",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Step 4 — Download annual total precipitation (800 m)",
+    "text": "Step 4 — Download annual total precipitation (800 m)\nRepeat Step 3 but change Resolution to 800m:\nExpected filename: PRISM_ppt_30yr_normal_800mM5_annual_bil.zip\nUnzip into data/ as well. This higher-resolution file is used only in the Resolution Matching section."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#crop-to-california",
+    "href": "course-materials/labs/raster-review.html#crop-to-california",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Crop to California",
+    "text": "Crop to California\nPRISM normals cover the entire contiguous United States. We crop all three rasters to California’s bounding box before any analysis:\nHow can you determine the coordinates for a bounding box? A few reliable options:\n\nbboxfinder.com — draw a rectangle on a map and copy the coordinates directly\nboundingbox.klokantech.com — search by place name, adjust the box, and export in several formats including decimal degrees (CSV Raw Option)\nGoogle Maps — right-click any point to copy its latitude/longitude\nOther data you are using — if you already have a spatial object covering your area of interest, ext() returns its bounding box\n\n\nca_ext &lt;- ext(-124.4820030034, -114.13078174, 32.5295238201, 42.0094992115)\n\nannual_temp_ca &lt;- crop(annual_temp, ca_ext)\nannual_prec_ca &lt;- crop(annual_prec, ca_ext)\nprec_800m_ca   &lt;- crop(prec_800m,   ca_ext)\n\nDid changing the extent change our resolution at all? Let’s check:\n\ncat(\"\\n=== Resolution comparison ===\\n\")\ncat(\"US Precip Resolution:\", res(annual_prec), \"\\n\")\ncat(\"CA Precip Resolution:\", res(annual_prec_ca), \"\\n\")\n\ncat(\"US Temp Resolution:\", res(annual_temp), \"\\n\")\ncat(\"CA Temp Resolution:\", res(annual_temp_ca), \"\\n\")\n\ncat(\"US Precip High Resolution:\", res(prec_800m), \"\\n\")\ncat(\"CA Precip High Resolution:\", res(prec_800m_ca), \"\\n\")\n\n\n=== Resolution comparison ===\nUS Precip Resolution: 0.04166667 0.04166667 \nCA Precip Resolution: 0.04166667 0.04166667 \nUS Temp Resolution: 0.04166667 0.04166667 \nCA Temp Resolution: 0.04166667 0.04166667 \nUS Precip High Resolution: 0.008333333 0.008333333 \nCA Precip High Resolution: 0.008333333 0.008333333 \n\n\nNope! Changing the extent of our raster does not change the resolution. What does it change?\n\ncat(\"\\n=== Dimension comparison ===\\n\")\ncat(\"US Precip Dimensions:\", dim(annual_prec), \"\\n\")\ncat(\"CA Precip Dimensions:\", dim(annual_prec_ca), \"\\n\")\n\ncat(\"US Temp Dimensions:\", dim(annual_temp), \"\\n\")\ncat(\"CA Temp Dimensions:\", dim(annual_temp_ca), \"\\n\")\n\ncat(\"US Precip High Dimensions:\", dim(prec_800m), \"\\n\")\ncat(\"CA Precip High Dimensions:\", dim(prec_800m_ca), \"\\n\")\n\n\n=== Dimension comparison ===\nUS Precip Dimensions: 621 1405 1 \nCA Precip Dimensions: 228 248 1 \nUS Temp Dimensions: 621 1405 1 \nCA Temp Dimensions: 228 248 1 \nUS Precip High Dimensions: 3105 7025 1 \nCA Precip High Dimensions: 1138 1242 1 \n\n\nA quick look at what we’re working with:\n\nmap1 &lt;- tm_shape(annual_temp_ca) +\n  tm_raster(col.legend = tm_legend(\"Mean Annual\\nTemp (°C)\",\n                                    position = tm_pos_out(\"right\", \"center\"))) +\n  tm_title(\"Mean Annual Temperature\")\n\nmap2 &lt;- tm_shape(annual_prec_ca) +\n  tm_raster(\n    col.legend = tm_legend(\"Annual\\nPrecip (mm)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.yl_gn_bu\")\n  ) +\n  tm_title(\"Annual Total Precipitation\")\n\ntmap_arrange(map1, map2, nrow = 1)"
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#local-operations",
+    "href": "course-materials/labs/raster-review.html#local-operations",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Local Operations",
+    "text": "Local Operations\nLocal operations are computed on each cell individually, either by transforming a single layer or combining multiple layers into one. No information from neighboring cells is used.\n\nComputing a derived index with lapp()\nQuestion: How arid or humid is each location, combining temperature and precipitation into a single metric?\nlapp() applies a function using multiple raster layers as named arguments. Here we compute the de Martonne Aridity Index:\n\\[AI = \\frac{P}{T + 10}\\]\nwhere \\(P\\) is annual precipitation (mm) and \\(T\\) is mean annual temperature (°C). Higher values indicate a more humid climate. The constant 10 prevents division by zero and keeps the index meaningful at sub-zero temperatures.\nA single aridity metric captures the moisture balance that governs ecosystem type far better than either variable alone. It appears in drought monitoring systems, desertification risk mapping, and global biome classification.\n\nclimate_stack &lt;- c(annual_prec_ca, annual_temp_ca)\n\naridity &lt;- lapp(climate_stack, fun = function(p, t) p / (t + 10))\nnames(aridity) &lt;- \"aridity\"\n\n\ntm_shape(aridity) +\n  tm_raster(\n    col.legend = tm_legend(\"Aridity Index\\n(mm / °C)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.yl_gn_bu\")\n  ) +\n  tm_title(\"De Martonne Aridity Index\")\n\n\n\n\n\n\n\n\n\n\nReclassifying into discrete zones with classify()\nQuestion: Which broad climate zone does each cell belong to?\nThe aridity index is a continuous surface. classify() bins it into discrete categories using a reclassification matrix, converting continuous values into a categorical raster.\nThe cut points below follow the de Martonne (1926) classification scheme:\n\n\n\nAridity Index\nClimate Zone\n\n\n\n\n&lt; 5\nHyperarid\n\n\n5 – 15\nArid\n\n\n15 – 25\nSemi-arid\n\n\n25 – 55\nSub-humid\n\n\n&gt; 55\nHumid\n\n\n\n\nrcl &lt;- matrix(c(\n   0,   5,  1,\n   5,  15,  2,\n  15,  25,  3,\n  25,  55,  4,\n  55, Inf,  5\n), ncol = 3, byrow = TRUE)\n\nclimate_zones &lt;- as.factor(classify(aridity, rcl = rcl))\n\nlevels(climate_zones) &lt;- data.frame(\n  value = 1:5,\n  label = c(\"Hyperarid\", \"Arid\", \"Semi-arid\", \"Sub-humid\", \"Humid\")\n)\n\n\nmap1 &lt;- tm_shape(aridity) +\n  tm_raster(col.legend = tm_legend(\"Aridity Index\",\n                                    position = tm_pos_out(\"right\", \"center\"))) +\n  tm_title(\"Continuous Index\")\n\nmap2 &lt;- tm_shape(climate_zones) +\n  tm_raster(col.legend = tm_legend(\"Climate Zone\",\n                                    position = tm_pos_out(\"right\", \"center\"))) +\n  tm_title(\"Classified Zones\")\n\ntmap_arrange(map1, map2, nrow = 1)"
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#focal-operations",
+    "href": "course-materials/labs/raster-review.html#focal-operations",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Focal Operations",
+    "text": "Focal Operations\nFocal operations compute a new value for each cell based on the values in a surrounding neighborhood (kernel). The window moves across every cell in the raster.\nQuestion: Where is precipitation most spatially variable?\nA focal standard deviation answers this directly: for each cell, focal() computes the standard deviation of precipitation across all cells in the surrounding 7 × 7 neighborhood. High values indicate that nearby cells span a wide range of precipitation totals; low values indicate a spatially uniform neighborhood.\n\nprec_sd &lt;- focal(\n  annual_prec_ca,\n  w     = matrix(1, nrow = 7, ncol = 7),\n  fun   = sd,\n  na.rm = TRUE\n)\n\n\nmap1 &lt;- tm_shape(annual_prec_ca) +\n  tm_raster(\n    col.legend = tm_legend(\"Precip (mm)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.yl_gn_bu\")\n  ) +\n  tm_title(\"Annual Precipitation\")\n\nmap2 &lt;- tm_shape(prec_sd) +\n  tm_raster(\n    col.legend = tm_legend(\"SD (mm)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.yl_or_rd\")\n  ) +\n  tm_title(\"Local Precipitation Variability\\n(7 × 7 SD)\")\n\ntmap_arrange(map1, map2, nrow = 1)"
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#zonal-operations",
+    "href": "course-materials/labs/raster-review.html#zonal-operations",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Zonal Operations",
+    "text": "Zonal Operations\nZonal operations aggregate raster cell values based on spatially defined zones in a second categorical raster. Unlike focal operations, zones don’t need to be spatially contiguous. All cells sharing a zone label are aggregated together regardless of location.\nQuestion: How do temperature and precipitation vary across California’s climate zones?\nWe already have a climate zone raster (derived from the aridity index). We can use those zones to compute summary statistics that reveal the full climatic profile of each region.\nWhy this matters: Understanding how temperature and precipitation co-vary by zone is fundamental to water resource planning, fire risk modeling, and projecting how ecosystem boundaries shift under climate change.\n\nprec_by_zone &lt;- zonal(annual_prec_ca, climate_zones, fun = \"mean\")\ntemp_by_zone &lt;- zonal(annual_temp_ca, climate_zones, fun = \"mean\")\n\n\nbind_cols(temp_by_zone, prec_by_zone[, 2]) |&gt;\n  kable(\n    col.names = c(\"Climate Zone\", \"Mean Annual Temp (°C)\", \"Mean Annual Precip (mm)\"),\n    digits    = 1\n  ) |&gt;\n  kable_styling(bootstrap_options = \"striped\")\n\n\n\n\nClimate Zone\nMean Annual Temp (°C)\nMean Annual Precip (mm)\n\n\n\n\nHyperarid\n20.8\n108.9\n\n\nArid\n13.2\n223.6\n\n\nSemi-arid\n10.9\n399.1\n\n\nSub-humid\n11.0\n775.3\n\n\nHumid\n9.7\n1577.7"
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#comparing-raster-properties",
+    "href": "course-materials/labs/raster-review.html#comparing-raster-properties",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Comparing raster properties",
+    "text": "Comparing raster properties\n\ncat(\"=== Resolution ===\\n\")\ncat(\"4 km: \", res(annual_prec_ca), \"\\n\")\ncat(\"800 m:\", res(prec_800m_ca),   \"\\n\\n\")\n\ncat(\"=== Same CRS? ===\\n\")\ncat(same.crs(annual_prec_ca, prec_800m_ca), \"\\n\")\n\ncat(\"\\n=== Origin ===\\n\")\ncat(\"4 km origin: \",  origin(annual_prec_ca), \"\\n\")\ncat(\"800 m origin: \", origin(prec_800m_ca),   \"\\n\")\n\n=== Resolution ===\n4 km:  0.04166667 0.04166667 \n800 m: 0.008333333 0.008333333 \n\n=== Same CRS? ===\nTRUE \n\n=== Origin ===\n4 km origin:  -0.02083333 0.02083333 \n800 m origin:  0.004166617 -0.004166314 \n\n\nDespite sharing the same CRS, the two rasters differ in resolution and origin.\nThe grids are misaligned. Cell corners fall at different coordinates and cells are different sizes. Map algebra between these two rasters will fail or produce incorrect results."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#visualizing-the-resolution-difference",
+    "href": "course-materials/labs/raster-review.html#visualizing-the-resolution-difference",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Visualizing the resolution difference",
+    "text": "Visualizing the resolution difference\n\nmap1 &lt;- tm_shape(annual_prec_ca) +\n  tm_raster(\n    col.legend = tm_legend(\"Precip (mm)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.yl_gn_bu\")\n  ) +\n  tm_title(\"Annual Precipitation — 4 km\")\n\nmap2 &lt;- tm_shape(prec_800m_ca) +\n  tm_raster(\n    col.legend = tm_legend(\"Precip (mm)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.yl_gn_bu\")\n  ) +\n  tm_title(\"Annual Precipitation — 800 m\")\n\ntmap_arrange(map1, map2, nrow = 1)"
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#aligning-with-resample",
+    "href": "course-materials/labs/raster-review.html#aligning-with-resample",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Aligning with resample()",
+    "text": "Aligning with resample()\nresample() transfers values from a source raster onto a new grid defined by a target raster’s resolution, extent, and origin:\n\nprec_800m_resampled &lt;- resample(prec_800m_ca, annual_prec_ca, method = \"bilinear\")\n\ncat(\"After resampling to 4 km grid:\\n\")\ncat(\"Resolutions match:\", all(res(annual_prec_ca) == res(prec_800m_resampled)), \"\\n\")\ncat(\"Origins match:    \", all(round(origin(annual_prec_ca), 8) ==\n                               round(origin(prec_800m_resampled), 8)), \"\\n\")\ncat(\"Extents match:    \", ext(annual_prec_ca) == ext(prec_800m_resampled), \"\\n\")\n\nAfter resampling to 4 km grid:\nResolutions match: TRUE \nOrigins match:     TRUE \nExtents match:     TRUE \n\n\nNow the grids align and we can perform map algebra. We will create a difference map that shows where the two products disagree most:\n\nprec_diff &lt;- annual_prec_ca - prec_800m_resampled\n\ntm_shape(prec_diff) +\n  tm_raster(\n    col.legend = tm_legend(\"Difference (mm)\",\n                            position = tm_pos_out(\"right\", \"center\")),\n    col.scale  = tm_scale_continuous(values = \"brewer.rd_bu\", midpoint = 0)\n  ) +\n  tm_title(\"4 km minus 800 m (resampled)\\nAnnual Precipitation\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWarningDoes resampling to a coarser grid recover fine-scale detail?\n\n\n\nNo. Downsampling from 800 m to 4 km permanently discards fine-scale spatial structure. Each resampled cell is a bilinear interpolation of nearby fine-resolution cells. Features like narrow ridges and canyon floors that are resolved at 800 m are smoothed away at 4 km."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#data-download",
+    "href": "course-materials/labs/raster-review.html#data-download",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Data Download",
+    "text": "Data Download\n\n\n\n\n\n\nImportantDownload data\n\n\n\nAll data comes from the PRISM Climate Group portal. You will download three files total.\n\n\n\nStep 1 — Navigate to the PRISM Normals page\nGo to prism.oregonstate.edu, click Data Grids, then select 1991-2020 Normals.\n\n\nStep 2 — Download annual mean temperature (4 km)\nOn the Normals page:\n\nSet ** Spatial Resolution** to 4km\nSet Variable to Mean Temperature (tmean)\nSet Time Step to Annual\nDownload the .zip file, unzip it, and save it to your data directory for your labs repo.\n\n\n\nStep 3 — Download annual total precipitation (4 km)\nRepeat Step 2 but change Variable to Precipitation (ppt):\nUnzip into the same data/ folder.\n\n\nStep 4 — Download annual total precipitation (800 m)\nRepeat Step 3 but change Resolution to 800m:\nUnzip into data/ as well. This higher-resolution file is used only in the Resolution Matching section."
+  },
+  {
+    "objectID": "course-materials/labs/raster-review.html#metadata-review",
+    "href": "course-materials/labs/raster-review.html#metadata-review",
+    "title": "Raster Review: Climate Analysis in California",
+    "section": "Metadata Review",
+    "text": "Metadata Review\n\n\n\n\n\n\nImportantComplete this section before writing any code\n\n\n\nEvery PRISM ZIP archive includes a .xml file alongside the .tif raster. This XML contains the dataset’s metadata. Open the metadata for the three different datasets you downloaded and use it to answer the questions below. Store your answers in the table below.\nFind and record each of the following. Fill in your answers in the summary table below:\n\nSpatial resolution — What are the cell dimensions in degrees?\nCoordinate reference system — What geographic coordinate system and datum are used?\nUnits for temperature — What units are temperature values reported in?\nUnits for precipitation — What units are precipitation values reported in?\nTemporal coverage — What 30-year period do the normals represent?\n\n\n\n\nProperty\nPRISM 4 km (tmean)\nPRISM 4 km (ppt)\nPRISM 800 m (ppt)\n\n\n\n\nSpatial Resolution\n\n\n\n\n\nTemporal coverage\n\n\n\n\n\nCRS\n\n\n\n\n\nUnits"
+  },
+  {
+    "objectID": "assignments/SR2.html",
+    "href": "assignments/SR2.html",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+  },
+  {
+    "objectID": "assignments/SR2.html#description",
+    "href": "assignments/SR2.html#description",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "",
+    "text": "In this assignment you’ll reflect on your progress in the course so far. Reread your response to the Pre-Course Self Reflection (SR #1) and answer the following questions:\n\n\n\nHow have you progressed towards your learning goals for this course?\nLooking back, have your learning goals changed? If so, how?\nLooking forward, do you have new goals?\nWhat skills are you proud of developing?\n\n\n\n\n\nLooking back at your plan for achieving your learning goals, have your strategies been effective?\nLooking forward, will you adopt new strategies? If so, what will they be?\nIf you’ve needed help, how have you sought it out? If you haven’t sought out help, why not?\n\n\n\n\n\nWhat topics have excited you the most so far? Have you spent time outside of class diving deeper into any of these topics? If so, what have you learned?\nIs there anything about this course that you are really enjoying? Anything that isn’t working for you?\nWhat else would you like me to know about your experience so far?"
+  },
+  {
+    "objectID": "assignments/SR2.html#rubric-specifications",
+    "href": "assignments/SR2.html#rubric-specifications",
+    "title": "Mid-Course Self Reflection (SR #2)",
+    "section": "Rubric (specifications)",
+    "text": "Rubric (specifications)\nTo receive a late pass, you must adhere to the following:\n\nSubmit your response on Gradescope.\nYour response must include answers to each question listed in the Description section.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”."
   }
 ]

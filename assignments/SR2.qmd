@@ -34,7 +34,7 @@ In this assignment you'll reflect on your progress in the course so far. Reread 
 
 
 ## Rubric (specifications)
-To receive 2 tokens, you must adhere to the following:
+To receive a late pass, you must adhere to the following:
 
 - [ ] Submit your response on Gradescope. 
 - [ ] Your response must include answers to each question listed in the Description section.

@@ -1,0 +1,5 @@
+PRISM_DATASET_FILENAME: dem_ppt_us_us_30s_912001.bil, dem_ppt_us_us_30s_912002.bil, dem_ppt_us_us_30s_912003.bil, dem_ppt_us_us_30s_912004.bil, dem_ppt_us_us_30s_912005.bil, dem_ppt_us_us_30s_912006.bil, dem_ppt_us_us_30s_912007.bil, dem_ppt_us_us_30s_912008.bil, dem_ppt_us_us_30s_912009.bil, dem_ppt_us_us_30s_912010.bil, dem_ppt_us_us_30s_912011.bil, dem_ppt_us_us_30s_912012.bil
+PRISM_DATASET_CREATE_DATE: 20220830-1811
+PRISM_DATASET_TYPE: an91/r2207d, normals/9120.a
+PRISM_DATASET_VERSION: M4 
+PRISM_CODE_VERSION: 16.1-20210412-1020
