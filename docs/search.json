@@ -1741,5 +1741,26 @@
     "title": "Mid-Course Self Reflection (SR #2)",
     "section": "Rubric (specifications)",
     "text": "Rubric (specifications)\nTo receive a late pass, you must adhere to the following:\n\nSubmit your response on Gradescope.\nYour response must include answers to each question listed in the Description section.\nYour responses must demonstrate genuine reflection. Obviously low effort responses will receive a “Not Yet”."
+  },
+  {
+    "objectID": "course-materials/labs/apply-review.html",
+    "href": "course-materials/labs/apply-review.html",
+    "title": "Apply Functions Review: app(), tapp(), and lapp()",
+    "section": "",
+    "text": "NoteOverview\n\n\n\nWhen working with multi-layer rasters, we often need to apply a function across layers to summarize or combine them. The terra package provides three key functions for this:\n\napp() applies a function to each cell using all layers as input, returning a single summary layer\ntapp() extends app() by applying a function to user-defined subsets (groups) of layers\nlapp() applies a function where each layer is passed as a separate positional argument, enabling formulas that treat layers differently\n\nIn this review we use two synthetic datasets — monthly temperature layers and a two-band reflectance raster — to explore each function."
+  },
+  {
+    "objectID": "course-materials/labs/apply-review.html#monthly-temperature-stack",
+    "href": "course-materials/labs/apply-review.html#monthly-temperature-stack",
+    "title": "Apply Functions Review: app(), tapp(), and lapp()",
+    "section": "Monthly temperature stack",
+    "text": "Monthly temperature stack\nWe simulate 12 layers of monthly mean temperature (°C) over a 30 × 30 grid representing a generic mid-latitude region. Each layer corresponds to one calendar month.\n\nset.seed(42)\n\n# Spatial template\ntemplate &lt;- rast(nrow = 30, ncol = 30,\n                 xmin = -124, xmax = -114,\n                 ymin = 32,   ymax = 42,\n                 crs = \"EPSG:4326\")\n\n# Typical monthly means (°C) — cool winters, warm summers\nmonthly_means &lt;- c(5, 7, 10, 14, 18, 22, 26, 26, 22, 16, 10, 6)\n\nmonthly_temp &lt;- rast(lapply(seq_along(monthly_means), function(i) {\n  r         &lt;- template\n  lat       &lt;- init(r, \"y\")               # north–south gradient\n  noise     &lt;- rast(template)\n  values(noise) &lt;- rnorm(ncell(r), 0, 1.5)\n  values(r) &lt;- monthly_means[i] - 0.4 * (values(lat) - 32) + values(noise)\n  r\n}))\n\nnames(monthly_temp) &lt;- month.abb\nmonthly_temp\n\nclass       : SpatRaster \nsize        : 30, 30, 12  (nrow, ncol, nlyr)\nresolution  : 0.3333333, 0.3333333  (x, y)\nextent      : -124, -114, 32, 42  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsource(s)   : memory\nnames       :       Jan,       Feb,       Mar,       Apr,      May,      Jun, ... \nmin values  : -3.289635, -1.724275,  2.612132,  6.228076, 10.29151, 14.27293, ... \nmax values  :  9.483465, 11.776989, 13.674883, 17.678095, 22.28335, 26.47197, ..."
+  },
+  {
+    "objectID": "course-materials/labs/apply-review.html#two-band-reflectance-raster",
+    "href": "course-materials/labs/apply-review.html#two-band-reflectance-raster",
+    "title": "Apply Functions Review: app(), tapp(), and lapp()",
+    "section": "Two-band reflectance raster",
+    "text": "Two-band reflectance raster\nWe also simulate a two-band raster with a red and a near-infrared (NIR) reflectance layer, mimicking what a satellite sensor would record over a landscape.\n\nred_nir &lt;- rast(template, nlyrs = 2)\nvalues(red_nir) &lt;- cbind(\n  runif(ncell(template), 0.02, 0.25),   # red band\n  runif(ncell(template), 0.15, 0.60)    # NIR band\n)\nnames(red_nir) &lt;- c(\"red\", \"nir\")\nred_nir\n\nclass       : SpatRaster \nsize        : 30, 30, 2  (nrow, ncol, nlyr)\nresolution  : 0.3333333, 0.3333333  (x, y)\nextent      : -124, -114, 32, 42  (xmin, xmax, ymin, ymax)\ncoord. ref. : lon/lat WGS 84 (EPSG:4326) \nsource(s)   : memory\nnames       :        red,       nir \nmin values  : 0.02014154, 0.1526077 \nmax values  : 0.24954428, 0.5995263"
   }
 ]

@@ -19,7 +19,7 @@ knitr::include_graphics("images/week5-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](){target="_blank"}                  |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1Y36oJ4uMazS2WFbmAIVnE2qDfp6ABBKgie6er54V_qg/edit?usp=sharing){target="_blank"}                  |
 | {{< fa key title="key" >}} Raster Review                 | [Raster Review](labs/raster-review.qmd)        |
 | {{< fa download title="download" >}} Lab materials to download                  | [Vector and raster interactions](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week5){target="_blank"} |
 | {{< fa key title="key" >}} Lab solution                 | [Vector and raster interactions](labs/week5.qmd)        |
