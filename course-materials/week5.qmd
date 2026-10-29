@@ -22,7 +22,7 @@ knitr::include_graphics("images/week5-image.png")
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1Y36oJ4uMazS2WFbmAIVnE2qDfp6ABBKgie6er54V_qg/edit?usp=sharing){target="_blank"}                  |
 | {{< fa key title="key" >}} Raster Review                 | [Raster Review](labs/raster-review.qmd)        |
 | {{< fa key title="key" >}} Lab                 | [Vector and raster interactions](labs/week5_v2.qmd)        |
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster operations with vectors]() |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [GIS Lab #2](https://docs.google.com/document/d/1LPXrNCx9m_Y-V0JYlXjX0WM7j6lgnloN/edit?usp=sharing&ouid=114976243173632226566&rtpof=true&sd=true) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -33,8 +33,8 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/27/2026    | 11/01/2026 |
-| HW              | [Homework Assignment #3](){target="_blank"}            | 10/29/2026    | 11/07/2026 |
+| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/27/2026    | 11/07/2026 |
+| HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"}            | 10/29/2026    | 11/07/2026 |
 
 
 
