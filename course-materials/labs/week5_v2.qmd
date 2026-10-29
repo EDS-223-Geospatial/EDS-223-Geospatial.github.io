@@ -1,0 +1,375 @@
+---
+title: "Week 5: Lab (v2)"
+subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
+author: "Annie Adams"
+date: last-modified
+execute:
+  eval: true
+  dir: project
+format:
+  html:
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+::: {.callout-note icon=true}
+# Source Materials
+The following materials are modified from [Chapter 6](https://r.geocompx.org/raster-vector#raster-vector) of *Geocomputation with R* by Robin Lovelace.
+:::
+
+In this lab we'll explore operations that rely on interactions between vector and raster datasets, including how to convert raster data into vector data. We'll use real-world elevation data downloaded via the `{elevatr}` package and county boundaries from the `{tigris}` package.
+
+## 1. Set up
+
+First, we'll load all relevant packages.
+
+:::{.callout-note}
+If you haven't used `{elevatr}` or `{tigris}` before, install them first in your console:
+
+```r
+install.packages(c("elevatr", "tigris"))
+```
+:::
+
+```{r}
+#| message: false
+#| warning: false
+library(sf)          # vector handling
+library(terra)       # raster handling
+library(tidyverse)
+library(tmap)        # map making
+library(elevatr)     # elevation data download
+library(tigris)      # US Census boundary data
+library(viridisLite)
+
+options(tigris_use_cache = TRUE)
+```
+
+We'll download the following real-world datasets:
+
+- **Elevation**: terrain elevation downloaded from AWS terrain tiles via `{elevatr}`
+- **Boundary**: Santa Barbara County boundary from the US Census Bureau via `{tigris}`
+
+```{r}
+#| message: false
+#| results: hide
+
+# load Santa Barbara County boundary from US Census Bureau
+boundary <- counties(state = "CA", cb = TRUE, year = 2021) %>%
+  filter(NAME == "Santa Barbara") %>%
+  st_transform(4326)
+
+# expand the boundary bbox to cover a broader Southern California region
+expanded_bbox <- st_bbox(boundary)
+expanded_bbox["xmin"] <- expanded_bbox["xmin"] - 2
+expanded_bbox["xmax"] <- expanded_bbox["xmax"] + 2
+expanded_bbox["ymin"] <- expanded_bbox["ymin"] - 1.5
+expanded_bbox["ymax"] <- expanded_bbox["ymax"] + 1.5
+
+# convert to sf polygon (get_elev_raster requires sf, not sfc)
+socal_region <- st_as_sfc(expanded_bbox) %>% st_sf()
+
+# download elevation for the broader region at zoom level 7 (~1.2km resolution)
+elevation_raw <- get_elev_raster(locations = socal_region, z = 7, clip = "bbox")
+
+# convert from {raster} RasterLayer to {terra} SpatRaster
+elevation <- rast(elevation_raw)
+
+# rename layer from temp file path to something meaningful
+names(elevation) <- "elevation"
+```
+
+:::{.callout-warning icon=true}
+# Remember to check the CRS!
+
+Whenever we work with multiple spatial datasets, we need to check that the coordinate reference systems match. If they don't, we need to transform one to match the other.
+
+```{r}
+# check if coordinate reference systems match
+if(crs(elevation) == crs(boundary)) {
+  print("Coordinate reference systems match")
+} else{
+  warning("Updating coordinate reference systems to match")
+  # transform data to match
+  boundary <- st_transform(boundary, st_crs(elevation))
+}
+```
+:::
+
+
+```{r}
+#| code-fold: true
+#| message: false
+
+tm_shape(elevation) +
+  tm_raster(col.legend = tm_legend(title = "Elevation (meters)")) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2)
+```
+
+
+## 2. Checking raster resolution with `cellsize()`
+
+Before performing any spatial operations on our raster, it's useful to understand its spatial resolution. Two functions help us do this:
+
+- `terra::res()` returns the x and y spacing between grid lines in the units of the CRS
+- `terra::cellsize()` returns a SpatRaster where each cell's value is its actual area, accounting for distortion across latitudes in geographic CRS
+
+```{r}
+# resolution in CRS units (degrees for WGS84)
+res(elevation)
+```
+
+```{r}
+# actual cell area (in square meters by default)
+# returns a SpatRaster because cell area varies by latitude in geographic CRS
+cell_sizes <- cellSize(elevation)
+cell_sizes
+
+```
+
+```{r}
+# summarize cell size variation across the extent
+global(cell_sizes, fun = c("mean", "min", "max"))
+```
+
+:::{.callout-note}
+For a geographic CRS (like WGS84), grid cells span equal degrees but **not** equal area — cells near the poles are physically smaller than cells near the equator. `cellsize()` computes the true area of each cell. For a projected CRS with linear units (e.g. UTM in meters), all cells have equal area and `cellsize()` returns a constant value across the raster.
+:::
+
+We can visualize how cell size varies across our extent:
+
+```{r}
+#| code-fold: true
+#| message: false
+
+tm_shape(cell_sizes) +
+  tm_raster(col.legend = tm_legend(title = "Cell area (m²)")) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2)
+```
+
+
+## 3. Raster cropping
+
+Many geographic data projects involve integrating data from many different sources, such as remote sensing images (rasters) and administrative boundaries (vectors). Often the extent of input raster datasets is larger than the area of interest. In this case, raster cropping and masking are useful for unifying the spatial extent of input data. Both operations reduce object memory use and associated computational resources for subsequent analysis steps, and may be a necessary preprocessing step when creating attractive maps involving raster data.
+
+First, let's crop the extent of the elevation raster to match the extent of Santa Barbara County's boundaries. Through this process, we eliminate grid cells that fall outside the extent of the county and reduce the size of the raster. To do so, we use the `terra::crop()` function.
+
+```{r}
+# crop raster to extent of vector object
+elevation_cropped <- crop(elevation, boundary)
+```
+
+
+Let's see what our cropped raster looks like compared to our original: 
+
+```{r}
+map1 <- tm_shape(elevation) +
+  tm_raster(col.legend = tm_legend_hide()) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2)+
+tm_title(text = "Original")
+
+
+
+map2 <- tm_shape(elevation_cropped) +
+  tm_raster(col.legend = tm_legend_hide()) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2) +
+tm_title(text = "Cropped")
+
+
+tmap_arrange(map1, map2)
+
+```
+
+We cropped to the extent of the Santa Barbara County raster, but notice how there are still raster cells outside our boundary. We can set these values to `NA` using `terra::mask()`.
+
+
+```{r}
+# mask raster based on vector object
+# (cells outside of vector are converted to NA)
+elevation_masked <- mask(elevation, boundary)
+```
+
+
+
+```{r}
+map3 <- tm_shape(elevation_masked) +
+  tm_raster(col.legend = tm_legend_hide()) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2) +
+tm_title(text  = "masked")
+
+map3
+```
+
+
+Often, we will want to combine both cropping and masking to reduce the size of the raster as much as possible.
+
+```{r}
+# crop and mask raster
+elevation_final <- mask(elevation_cropped, boundary)
+```
+
+
+```{r}
+map4 <- tm_shape(elevation_final) +
+  tm_raster(col.legend = tm_legend_hide()) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2) +
+tm_title(text =  "cropped & masked")
+
+map4
+```
+
+In some cases, we may want to mask the raster cells **inside** of the boundaries (i.e. assign cells inside the county to `NA`). We can do so with `terra::mask()` by setting the argument `inverse = TRUE`.
+
+```{r}
+# mask raster based on vector object
+# (cells inside of vector are converted to NA)
+elevation_inv_masked <- mask(elevation_cropped, boundary, inverse = TRUE)
+```
+
+
+```{r}
+map5 <- tm_shape(elevation_inv_masked) +
+  tm_raster(col.legend = tm_legend_hide()) +
+tm_shape(boundary) +
+  tm_borders(lwd = 2) +
+tm_title(text =  "inverse mask")
+
+map5
+
+```
+
+
+
+## 4. Raster vectorization
+
+There are several ways to convert raster data into vector. The most common, and straightforward, is converting raster grid cells into polygons. For more examples, check out [*Geocomputation with R*](https://r.geocompx.org/raster-vector#spatial-vectorization).
+
+We could simply convert all grid cells into polygons like so:
+
+```{r}
+elevation_raster_poly <- as.polygons(elevation_final) %>%
+  st_as_sf() %>%
+  rename(elevation = 1)
+
+head(elevation_raster_poly)
+```
+
+Notice that the elevation values are no longer stored as pixel intensities in a grid. They are now an attribute **column** in a data frame, just like any other vector dataset. Each row is one former raster cell as a polygon. 
+
+```{r}
+tm_shape(elevation_raster_poly) +
+  tm_fill(fill = "elevation",
+          fill.scale = tm_scale_continuous(values = "viridis"),
+          fill.legend = tm_legend(title = "Elevation (m)")) +
+  tm_borders(lwd = 0.1) +
+  tm_title(text = "vectorized raster")
+```
+
+How does this break down under the hood? Each raster cell becomes its own **square polygon**. Here's what a single cell looks like:
+
+```{r}
+# each row in the sf object is one square polygon — one former raster cell
+elevation_raster_poly$geometry[1]
+
+tm_shape(elevation_raster_poly[1, ]) +
+  tm_polygons(fill = "firebrick") +
+  tm_title(text = "single raster cell as polygon")
+```
+
+Zoom out to the first 50 cells and the grid structure becomes clear. Each polygon is a rectangle aligned to the original raster grid:
+
+```{r}
+tm_shape(elevation_raster_poly[1:50, ]) +
+  tm_polygons(fill = "firebrick") +
+  tm_title(text = "first 50 raster cells as polygons")
+```
+
+
+But, it may be more helpful to create polygons based on some condition.
+
+
+In this example, we'll select grid cells above 1000 meters — the approximate base of the Santa Ynez Mountains — by masking the elevation raster. We'll then convert these grid cells into polygons using the `terra::as.polygons()` function and turn this into an `sf` object.
+
+```{r}
+elevation_mask <- elevation_final
+
+# set all elevation values below 1000 meters to NA
+elevation_mask[elevation_mask < 1000] <- NA
+
+# convert high-elevation (above 1000m) pixels into polygon shapes
+elevation_mask_poly <- as.polygons(elevation_mask) %>%
+  st_as_sf() %>%
+  rename(elevation = 1)
+
+# elevation values are preserved as an attribute column
+head(elevation_mask_poly)
+```
+
+
+```{r}
+#| code-fold: true
+#| message: false
+
+map1 <- tm_shape(elevation_mask) +
+  tm_raster() +
+  tm_title(text = "masked raster") +
+  tm_layout(legend.position = c("left", "bottom"))
+
+map2 <- tm_shape(elevation_mask_poly) +
+  tm_fill(fill = "elevation",
+          fill.scale = tm_scale_continuous(values = "viridis"),
+          fill.legend = tm_legend(title = "Elevation (m)")) +
+  tm_borders(lwd = 0.1) +
+  tm_title(text = "vectorized raster")
+
+tmap_arrange(map1, map2, nrow = 1)
+```
+
+## 5. Rasterization
+
+Rasterization is the inverse of vectorization . It converts vector features (points, lines, polygons) into raster cells. In terra, this is done with `terra::rasterize()`. It requires two inputs: the vector object to burn in, and a raster template that defines the grid (extent, resolution, CRS) to burn onto.
+
+To close the loop, let's rasterize our high-elevation polygons back onto the elevation raster grid:
+
+```{r}
+# rasterize the high-elevation polygons back onto the elevation raster grid
+# cells that overlap a polygon get the polygon's elevation value; all others get NA
+elevation_rasterized <- rasterize(elevation_mask_poly, elevation_final,
+                                   field = names(elevation_mask_poly)[1])
+```
+
+```{r}
+#| code-fold: true
+#| message: false
+
+county_bbox <- st_bbox(elevation_final)
+
+map1 <- tm_shape(elevation_mask_poly, bbox = county_bbox) +
+  tm_polygons() +
+  tm_title(text = "vector polygons")
+
+map2 <- tm_shape(elevation_rasterized, bbox = county_bbox) +
+  tm_raster() +
+  tm_title(text = "rasterized")
+
+tmap_arrange(map1, map2, nrow = 1)
+```
+
+We can also rasterize the county boundary itself. This can be useful for creating a binary mask raster (1 if inside boundary, NA if outside):
+
+```{r}
+# rasterize boundary polygon — cells inside get value 1, cells outside get NA
+boundary_rast <- rasterize(boundary, elevation_final)
+
+tm_shape(boundary_rast) +
+  tm_raster(col.legend = tm_legend(title = "Inside boundary")) +
+  tm_shape(boundary) +
+  tm_borders(lwd = 2)
+```
