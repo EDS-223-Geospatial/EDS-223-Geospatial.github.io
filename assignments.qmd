@@ -27,7 +27,7 @@ Links to assignments will become available as they are assigned.
 | HW              | [Homework Assignment #1](assignments/HW1.qmd){target="_blank"}            | 10/01/2026    | 10/10/2026 |
 | HW              | [Homework Assignment #2](assignments/HW2V2.qmd){target="_blank"}            | 10/15/2026    | 10/24/2026 |
 | HW              | [Homework Assignment #3](assignments/HW3.qmd){target="_blank"}            | 10/29/2026    | 11/07/2026 |
-| SR              | [Mid Quarter Self Reflection (SR#2)](assignments/SR2.qmd){target="_blank"}            | 10/28/2026    |     11/07/2026 |
+| SR              | [Mid Quarter Self Reflection (SR#2)](assignments/SR2.qmd){target="_blank"}            | 10/28/2026    |     11/05/2026 |
 | HW              | [Homework Assignment #4](){target="_blank"}            | 11/12/2026    | 11/21/2026 |
 | PR              | [Portfolio Repository](){target="_blank"}               | 11/12/2026    | 12/02/2026 |    |
 

@@ -33,7 +33,7 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                                         | Date Assigned | Date Due   |
 |-----------------|----------------------------------------------------------|---------------|------------|
-| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/27/2026    | 11/07/2026 |
+| SR             | [Self Reflection #2](../assignments/SR2.qmd){target="_blank"}                         | 10/27/2026    | 11/05/2026 |
 | HW              | [Homework Assignment #3](../assignments/HW3.qmd){target="_blank"}            | 10/29/2026    | 11/07/2026 |
 
 
