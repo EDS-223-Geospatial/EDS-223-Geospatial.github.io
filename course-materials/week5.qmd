@@ -40,6 +40,6 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 ## {{< fa clipboard-list title="a clipboard with a To Do list" >}} Background Reading
 
-- [Remote Sensing of the Environment, Chapter 1](/readings/Jensen-chapter1.pdf){target="_blank"}
-- [Remote Sensing of the Environment, Chapter 2](/readings/Jensen-chapter2.pdf){target="_blank"}
+- [Remote Sensing of the Environment, Chapter 1](readings/Jensen-chapter1.pdf){target="_blank"}
+- [Remote Sensing of the Environment, Chapter 2](readings/Jensen-chapter2.pdf){target="_blank"}
 
