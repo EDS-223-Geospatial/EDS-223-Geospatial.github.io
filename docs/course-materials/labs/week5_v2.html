@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Annie Adams">
-<meta name="dcterms.date" content="2026-10-28">
+<meta name="dcterms.date" content="2026-10-29">
 
-<title>Week 5: Lab (v2)</title>
+<title>Week 5: Lab</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Week 5: Lab (v2)</h1>
+      <h1 class="title">Week 5: Lab</h1>
             <p class="subtitle lead">EDS 223: Geospatial Analysis &amp; Remote Sensing</p>
                       </div>
   </div>
@@ -219,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">October 28, 2026</p>
+        <p class="date">October 29, 2026</p>
       </div>
     </div>
     
@@ -235,11 +235,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">1. Set up</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a>
+  <ul class="collapse">
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#accessing-the-data" id="toc-accessing-the-data" class="nav-link" data-scroll-target="#accessing-the-data">Accessing the data</a></li>
+  </ul></li>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link" data-scroll-target="#set-up">1. Set up</a></li>
   <li><a href="#checking-raster-resolution-with-cellsize" id="toc-checking-raster-resolution-with-cellsize" class="nav-link" data-scroll-target="#checking-raster-resolution-with-cellsize">2. Checking raster resolution with <code>cellsize()</code></a></li>
   <li><a href="#raster-cropping" id="toc-raster-cropping" class="nav-link" data-scroll-target="#raster-cropping">3. Raster cropping</a></li>
   <li><a href="#raster-vectorization" id="toc-raster-vectorization" class="nav-link" data-scroll-target="#raster-vectorization">4. Raster vectorization</a></li>
-  <li><a href="#rasterization" id="toc-rasterization" class="nav-link" data-scroll-target="#rasterization">5. Rasterization</a></li>
   </ul>
 </nav>
     </div>
@@ -264,6 +268,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>In this lab we’ll explore operations that rely on interactions between vector and raster datasets, including how to convert raster data into vector data. We’ll use real-world elevation data downloaded via the <code>{elevatr}</code> package and county boundaries from the <code>{tigris}</code> package.</p>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<section id="data" class="level3">
+<h3 class="anchored" data-anchor-id="data">Data</h3>
+<p><strong>Elevation raster</strong> — terrain elevation for a Southern California region centered on Santa Barbara County. The values represent meters above (or below) sea level and come from the <a href="https://registry.opendata.aws/terrain-tiles/">AWS Terrain Tiles</a> dataset, a global, cloud-hosted mosaic of digital elevation models (DEMs) derived from sources such as the USGS 3DEP, SRTM, and GMTED2010.</p>
+<p><strong>County boundary</strong> — the administrative boundary of Santa Barbara County, sourced from the <a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html">US Census Bureau TIGER/Line shapefiles</a>. TIGER/Line (Topologically Integrated Geographic Encoding and Referencing) is the Census Bureau’s authoritative geographic database, covering legal and statistical boundaries for the entire US — states, counties, census tracts, zip code tabulation areas, roads, water features, and more. These boundaries represent legal/administrative limits as of the specified year (2021 in this lab).</p>
+<p>The <code>{tigris}</code> R package provides a direct interface to the TIGER/Line database, letting you download any of these geographies as <code>sf</code> objects with a single function call.</p>
+</section>
+<section id="accessing-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="accessing-the-data">Accessing the data</h3>
+<p><strong><code>elevatr::get_elev_raster()</code></strong> downloads elevation data from AWS Terrain Tiles for a given spatial extent.</p>
+<p><strong><code>tigris::counties()</code></strong> downloads US Census Bureau county boundaries as an <code>sf</code> object.</p>
+</section>
+</section>
 <section id="set-up" class="level2">
 <h2 class="anchored" data-anchor-id="set-up">1. Set up</h2>
 <p>First, we’ll load all relevant packages.</p>
@@ -288,9 +306,7 @@ Note
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)        <span class="co"># map making</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(elevatr)     <span class="co"># elevation data download</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tigris)      <span class="co"># US Census boundary data</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">tigris_use_cache =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(viridisLite)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll download the following real-world datasets:</p>
 <ul>
@@ -299,7 +315,7 @@ Note
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load Santa Barbara County boundary from US Census Bureau</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>boundary <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"CA"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>boundary <span class="ot">&lt;-</span> <span class="fu">counties</span>(<span class="at">state =</span> <span class="st">"CA"</span>, <span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">year =</span> <span class="dv">2021</span>) <span class="sc">%&gt;%</span> <span class="co"># cb = cartographic boundary, simplified for faster download time</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(NAME <span class="sc">==</span> <span class="st">"Santa Barbara"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(<span class="dv">4326</span>)</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
@@ -310,11 +326,11 @@ Note
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>expanded_bbox[<span class="st">"ymin"</span>] <span class="ot">&lt;-</span> expanded_bbox[<span class="st">"ymin"</span>] <span class="sc">-</span> <span class="fl">1.5</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>expanded_bbox[<span class="st">"ymax"</span>] <span class="ot">&lt;-</span> expanded_bbox[<span class="st">"ymax"</span>] <span class="sc">+</span> <span class="fl">1.5</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to sf polygon (get_elev_raster requires sf, not sfc)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># convert expanded banding box to sf </span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>socal_region <span class="ot">&lt;-</span> <span class="fu">st_as_sfc</span>(expanded_bbox) <span class="sc">%&gt;%</span> <span class="fu">st_sf</span>()</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># download elevation for the broader region at zoom level 7 (~1.2km resolution)</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>elevation_raw <span class="ot">&lt;-</span> <span class="fu">get_elev_raster</span>(<span class="at">locations =</span> socal_region, <span class="at">z =</span> <span class="dv">7</span>, <span class="at">clip =</span> <span class="st">"bbox"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>elevation_raw <span class="ot">&lt;-</span> <span class="fu">get_elev_raster</span>(<span class="at">locations =</span> socal_region, <span class="at">z =</span> <span class="dv">7</span>)</span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># convert from {raster} RasterLayer to {terra} SpatRaster</span></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>elevation <span class="ot">&lt;-</span> <span class="fu">rast</span>(elevation_raw)</span>
@@ -386,14 +402,15 @@ Note
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>cell_sizes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>class       : SpatRaster 
-size        : 932, 1131, 1  (nrow, ncol, nlyr)
+size        : 1372, 1684, 1  (nrow, ncol, nlyr)
 resolution  : 0.005009092, 0.005009092  (x, y)
-extent      : -122.6831, -117.0178, 31.95513, 36.6236  (xmin, xmax, ymin, ymax)
+extent      : -123.75, -115.3147, 31.95012, 38.82259  (xmin, xmax, ymin, ymax)
 coord. ref. : +proj=longlat +datum=WGS84 +no_defs 
 source(s)   : memory
+varname     : file7296d0d5730 
 name        :     area 
-min value   : 249065.1 
-max value   : 263023.7 </code></pre>
+min value   : 241899.4 
+max value   : 263037.7 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -401,7 +418,7 @@ max value   : 263023.7 </code></pre>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">global</span>(cell_sizes, <span class="at">fun =</span> <span class="fu">c</span>(<span class="st">"mean"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         mean      min      max
-area 256186.7 249065.1 263023.7</code></pre>
+area 252773.7 241899.4 263037.7</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -414,7 +431,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For a geographic CRS (like WGS84), grid cells span equal degrees but <strong>not</strong> equal area — cells near the poles are physically smaller than cells near the equator. <code>cellsize()</code> computes the true area of each cell. For a projected CRS with linear units (e.g.&nbsp;UTM in meters), all cells have equal area and <code>cellsize()</code> returns a constant value across the raster.</p>
+<p>For a geographic CRS (like WGS84), grid cells span equal degrees but <strong>not</strong> equal area. Cells near the poles are physically smaller than cells near the equator. <code>cellsize()</code> computes the true area of each cell. For a projected CRS with linear units (e.g.&nbsp;UTM in meters), all cells have equal area and <code>cellsize()</code> returns a constant value across the raster.</p>
 </div>
 </div>
 <p>We can visualize how cell size varies across our extent:</p>
@@ -695,79 +712,17 @@ Geodetic CRS:  GEOGCRS["unknown",
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>map1 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(elevation_mask) <span class="sc">+</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>() <span class="sc">+</span></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"masked raster"</span>) <span class="sc">+</span></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>map2 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(elevation_mask_poly) <span class="sc">+</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">fill =</span> <span class="st">"elevation"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> <span class="st">"viridis"</span>),</span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Elevation (m)"</span>)) <span class="sc">+</span></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"vectorized raster"</span>)</span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map1, map2, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(elevation_mask_poly) <span class="sc">+</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_fill</span>(<span class="at">fill =</span> <span class="st">"elevation"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.scale =</span> <span class="fu">tm_scale_continuous</span>(<span class="at">values =</span> <span class="st">"viridis"</span>),</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">fill.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Elevation (m)"</span>)) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">lwd =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"vectorized raster"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="week5_v2_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="rasterization" class="level2">
-<h2 class="anchored" data-anchor-id="rasterization">5. Rasterization</h2>
-<p>Rasterization is the inverse of vectorization . It converts vector features (points, lines, polygons) into raster cells. In terra, this is done with <code>terra::rasterize()</code>. It requires two inputs: the vector object to burn in, and a raster template that defines the grid (extent, resolution, CRS) to burn onto.</p>
-<p>To close the loop, let’s rasterize our high-elevation polygons back onto the elevation raster grid:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rasterize the high-elevation polygons back onto the elevation raster grid</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># cells that overlap a polygon get the polygon's elevation value; all others get NA</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>elevation_rasterized <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(elevation_mask_poly, elevation_final,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">field =</span> <span class="fu">names</span>(elevation_mask_poly)[<span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>county_bbox <span class="ot">&lt;-</span> <span class="fu">st_bbox</span>(elevation_final)</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>map1 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(elevation_mask_poly, <span class="at">bbox =</span> county_bbox) <span class="sc">+</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>() <span class="sc">+</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"vector polygons"</span>)</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>map2 <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(elevation_rasterized, <span class="at">bbox =</span> county_bbox) <span class="sc">+</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>() <span class="sc">+</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"rasterized"</span>)</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map1, map2, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="week5_v2_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>We can also rasterize the county boundary itself — useful for creating a binary mask raster (1 = inside boundary, NA = outside):</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rasterize boundary polygon — cells inside get value 1, cells outside get NA</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>boundary_rast <span class="ot">&lt;-</span> <span class="fu">rasterize</span>(boundary, elevation_final)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(boundary_rast) <span class="sc">+</span></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"Inside boundary"</span>)) <span class="sc">+</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_shape</span>(boundary) <span class="sc">+</span></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_borders</span>(<span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The map variable `col` of the layer "raster" contains a unique value. Therefore
-a discrete scale is applied (tm_scale_discrete).</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="week5_v2_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

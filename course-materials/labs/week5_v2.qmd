@@ -1,5 +1,5 @@
 ---
-title: "Week 5: Lab (v2)"
+title: "Week 5: Lab"
 subtitle: "EDS 223: Geospatial Analysis & Remote Sensing"
 author: "Annie Adams"
 date: last-modified
@@ -19,6 +19,24 @@ The following materials are modified from [Chapter 6](https://r.geocompx.org/ras
 :::
 
 In this lab we'll explore operations that rely on interactions between vector and raster datasets, including how to convert raster data into vector data. We'll use real-world elevation data downloaded via the `{elevatr}` package and county boundaries from the `{tigris}` package.
+
+## Background
+
+### Data
+
+**Elevation raster** — terrain elevation for a Southern California region centered on Santa Barbara County. The values represent meters above (or below) sea level and come from the [AWS Terrain Tiles](https://registry.opendata.aws/terrain-tiles/) dataset, a global, cloud-hosted mosaic of digital elevation models (DEMs) derived from sources such as the USGS 3DEP, SRTM, and GMTED2010.
+
+**County boundary** — the administrative boundary of Santa Barbara County, sourced from the [US Census Bureau TIGER/Line shapefiles](https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html). TIGER/Line (Topologically Integrated Geographic Encoding and Referencing) is the Census Bureau's authoritative geographic database, covering legal and statistical boundaries for the entire US — states, counties, census tracts, zip code tabulation areas, roads, water features, and more. These boundaries represent legal/administrative limits as of the specified year (2021 in this lab).
+
+The `{tigris}` R package provides a direct interface to the TIGER/Line database, letting you download any of these geographies as `sf` objects with a single function call.
+
+### Accessing the data
+
+**`elevatr::get_elev_raster()`** downloads elevation data from AWS Terrain Tiles for a given spatial extent.
+
+
+
+**`tigris::counties()`** downloads US Census Bureau county boundaries as an `sf` object. 
 
 ## 1. Set up
 
@@ -43,7 +61,6 @@ library(elevatr)     # elevation data download
 library(tigris)      # US Census boundary data
 library(viridisLite)
 
-options(tigris_use_cache = TRUE)
 ```
 
 We'll download the following real-world datasets:
@@ -56,7 +73,7 @@ We'll download the following real-world datasets:
 #| results: hide
 
 # load Santa Barbara County boundary from US Census Bureau
-boundary <- counties(state = "CA", cb = TRUE, year = 2021) %>%
+boundary <- counties(state = "CA", cb = TRUE, year = 2021) %>% # cb = cartographic boundary, simplified for faster download time
   filter(NAME == "Santa Barbara") %>%
   st_transform(4326)
 
@@ -67,11 +84,11 @@ expanded_bbox["xmax"] <- expanded_bbox["xmax"] + 2
 expanded_bbox["ymin"] <- expanded_bbox["ymin"] - 1.5
 expanded_bbox["ymax"] <- expanded_bbox["ymax"] + 1.5
 
-# convert to sf polygon (get_elev_raster requires sf, not sfc)
+# convert expanded banding box to sf 
 socal_region <- st_as_sfc(expanded_bbox) %>% st_sf()
 
 # download elevation for the broader region at zoom level 7 (~1.2km resolution)
-elevation_raw <- get_elev_raster(locations = socal_region, z = 7, clip = "bbox")
+elevation_raw <- get_elev_raster(locations = socal_region, z = 7)
 
 # convert from {raster} RasterLayer to {terra} SpatRaster
 elevation <- rast(elevation_raw)
@@ -135,7 +152,7 @@ global(cell_sizes, fun = c("mean", "min", "max"))
 ```
 
 :::{.callout-note}
-For a geographic CRS (like WGS84), grid cells span equal degrees but **not** equal area — cells near the poles are physically smaller than cells near the equator. `cellsize()` computes the true area of each cell. For a projected CRS with linear units (e.g. UTM in meters), all cells have equal area and `cellsize()` returns a constant value across the raster.
+For a geographic CRS (like WGS84), grid cells span equal degrees but **not** equal area. Cells near the poles are physically smaller than cells near the equator. `cellsize()` computes the true area of each cell. For a projected CRS with linear units (e.g. UTM in meters), all cells have equal area and `cellsize()` returns a constant value across the raster.
 :::
 
 We can visualize how cell size varies across our extent:
@@ -317,59 +334,13 @@ head(elevation_mask_poly)
 #| code-fold: true
 #| message: false
 
-map1 <- tm_shape(elevation_mask) +
-  tm_raster() +
-  tm_title(text = "masked raster") +
-  tm_layout(legend.position = c("left", "bottom"))
 
-map2 <- tm_shape(elevation_mask_poly) +
+
+tm_shape(elevation_mask_poly) +
   tm_fill(fill = "elevation",
           fill.scale = tm_scale_continuous(values = "viridis"),
           fill.legend = tm_legend(title = "Elevation (m)")) +
   tm_borders(lwd = 0.1) +
   tm_title(text = "vectorized raster")
 
-tmap_arrange(map1, map2, nrow = 1)
-```
-
-## 5. Rasterization
-
-Rasterization is the inverse of vectorization . It converts vector features (points, lines, polygons) into raster cells. In terra, this is done with `terra::rasterize()`. It requires two inputs: the vector object to burn in, and a raster template that defines the grid (extent, resolution, CRS) to burn onto.
-
-To close the loop, let's rasterize our high-elevation polygons back onto the elevation raster grid:
-
-```{r}
-# rasterize the high-elevation polygons back onto the elevation raster grid
-# cells that overlap a polygon get the polygon's elevation value; all others get NA
-elevation_rasterized <- rasterize(elevation_mask_poly, elevation_final,
-                                   field = names(elevation_mask_poly)[1])
-```
-
-```{r}
-#| code-fold: true
-#| message: false
-
-county_bbox <- st_bbox(elevation_final)
-
-map1 <- tm_shape(elevation_mask_poly, bbox = county_bbox) +
-  tm_polygons() +
-  tm_title(text = "vector polygons")
-
-map2 <- tm_shape(elevation_rasterized, bbox = county_bbox) +
-  tm_raster() +
-  tm_title(text = "rasterized")
-
-tmap_arrange(map1, map2, nrow = 1)
-```
-
-We can also rasterize the county boundary itself. This can be useful for creating a binary mask raster (1 if inside boundary, NA if outside):
-
-```{r}
-# rasterize boundary polygon — cells inside get value 1, cells outside get NA
-boundary_rast <- rasterize(boundary, elevation_final)
-
-tm_shape(boundary_rast) +
-  tm_raster(col.legend = tm_legend(title = "Inside boundary")) +
-  tm_shape(boundary) +
-  tm_borders(lwd = 2)
 ```

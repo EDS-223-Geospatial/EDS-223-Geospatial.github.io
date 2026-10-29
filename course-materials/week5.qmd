@@ -21,8 +21,7 @@ knitr::include_graphics("images/week5-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of electromagnetic radiation](https://docs.google.com/presentation/d/1Y36oJ4uMazS2WFbmAIVnE2qDfp6ABBKgie6er54V_qg/edit?usp=sharing){target="_blank"}                  |
 | {{< fa key title="key" >}} Raster Review                 | [Raster Review](labs/raster-review.qmd)        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Vector and raster interactions](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week5){target="_blank"} |
-| {{< fa key title="key" >}} Lab solution                 | [Vector and raster interactions](labs/week5.qmd)        |
+| {{< fa key title="key" >}} Lab                 | [Vector and raster interactions](labs/week5_v2.qmd)        |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice raster operations with vectors]() |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
