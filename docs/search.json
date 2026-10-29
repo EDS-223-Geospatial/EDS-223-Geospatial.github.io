@@ -1815,56 +1815,56 @@
   {
     "objectID": "assignments/HW3.html#learning-outcomes",
     "href": "assignments/HW3.html#learning-outcomes",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Learning outcomes",
     "text": "Learning outcomes\nThis assignment will reinforce key concepts in geospatial analysis by practicing the following:\n\ncombining vector/raster data\nresampling raster data\nmasking raster data\nmap algebra"
   },
   {
     "objectID": "assignments/HW3.html#instructions",
     "href": "assignments/HW3.html#instructions",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Instructions",
     "text": "Instructions\n\nCreate a new GitHub repository. Give your repository a descriptive title that reflects your analysis (not “EDS223-HW3”). Be sure to include a README that follows these guidelines.\nDownload data from here\nUnzip data and place in repository\nAdd the data to your gitignore! Run git add .gitignore to avoid attempting to push any large data to your repo.\nCreate a Quarto document with responses\nRender your quarto document as a pdf and submit on Gradescope\n\nMake sure code-fold is not set to True! Your pdf should contain all your code and outputs!\n\nFill out this google form to submit your Github repo link\n\nYour repository should have the following structure:\nEDS223-HW3\n└─── README.md\n└─── qmd/Rmd/Proj files\n└─── aquaculture_analysis.qmd # Name your file a title that is representative of your analysis!\n|   .gitignore\n    └───data\n        └─── wc_regions_clean.shp\n        └─── depth.tif\n        └─── average_annual_sst_2008.tif\n        └─── average_annual_sst_2009.tif\n        └─── average_annual_sst_2010.tif\n        └─── average_annual_sst_2011.tif\n        └─── average_annual_sst_2012.tif"
   },
   {
     "objectID": "assignments/HW3.html#background",
     "href": "assignments/HW3.html#background",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Background",
     "text": "Background\nMarine aquaculture has the potential to play an important role in the global food supply as a more sustainable protein option than land-based meat production.1 Gentry et al. mapped the potential for marine aquaculture globally based on multiple constraints, including ship traffic, dissolved oxygen, and bottom depth. They found that global seafood demand could be met using less than 0.015% of the global ocean area2"
   },
   {
     "objectID": "assignments/HW3.html#description",
     "href": "assignments/HW3.html#description",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Description",
     "text": "Description\nFor this assignment, you are tasked with determining which Exclusive Economic Zones (EEZ) on the West Coast of the US are best suited to developing marine aquaculture for several species of oysters and a species of your choice. Suitable locations will be determined based on range of suitable sea surface temperature (SST) and depth values for the species.\nTo make your workflow generalizable, you must create a function that has the following characteristics:\n\narguments:\n\nminimum and maximum sea surface temperature\nminimum and maximum depth\nspecies name\n\noutputs:\n\nmap of EEZ regions colored by amount of suitable area\n\nspecies name should be included in the map’s title\n\n\n\n\n\n\n\n\n\nTipTip: Building a generalizable workflow\n\n\n\nRemember, functions can be hard to debug! So it’s highly recommended that you build the workflow for a single species (not in a function). Then you can start translating your workflow into a function by identifying the pieces that need to be generalized.\nQuestions to ask yourself: which variables can stay the same for each species and which ones would need to change?"
   },
   {
     "objectID": "assignments/HW3.html#data-details",
     "href": "assignments/HW3.html#data-details",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Data details",
     "text": "Data details\n\nSuitable growing conditions\n\nOysters\nResearch has shown that oysters need the following conditions for optimal growth:\n\nsea surface temperature: 11-30°C\ndepth: 0-70 meters below sea level\n\n\n\nChoose-your-own species\nYou can find information on species depth and temperature requirements on SeaLifeBase. Remember, we are thinking about the potential for marine aquaculture, so these species should have some reasonable potential for commercial consumption.\n\n\n\nSea Surface Temperature\nWe will use average annual sea surface temperature (SST) from the years 2008 to 2012 to characterize the average sea surface temperature within the region. The data we are working with was originally generated from NOAA’s 5km Daily Global Satellite Sea Surface Temperature Anomaly v3.1.\nData files:\n\naverage_annual_sst_2008.tif\naverage_annual_sst_2009.tif\naverage_annual_sst_2010.tif\naverage_annual_sst_2011.tif\naverage_annual_sst_2012.tif\n\n\n\nBathymetry\nTo characterize the depth of the ocean we will use the General Bathymetric Chart of the Oceans (GEBCO).3\nData file: depth.tif\n\n\nExclusive Economic Zones\nWe will be designating maritime boundaries using Exclusive Economic Zones off of the west coast of US from Marineregions.org.\nData file: wc_regions_clean.shp"
   },
   {
     "objectID": "assignments/HW3.html#workflow-outline",
     "href": "assignments/HW3.html#workflow-outline",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Workflow outline",
     "text": "Workflow outline\nBelow is an outline of the steps you should consider taking to achieve the assignment tasks.\n\nPrepare data\nTo start, we need to load all necessary data and make sure it has the coordinate reference system.\n\nshapefile for the West Coast EEZ\nbathymetry raster\nSST rasters\n\ncombine SST rasters into a raster stack\n\n\n\n\n\n\n\n\nTip\n\n\n\nMake sure to check that these datasets have the same coordinate reference systems! If not, transform them to match.\n\n\n\n\nProcess data\nNext, we need to process the SST and depth data so that they can be combined. In this case the SST and depth data have slightly different resolutions, extents, and positions.\n\nfind the mean SST from 2008-2012 (e.g. create single raster of average SST)\nconvert average SST from Kelvin to Celsius\n\nhint: subtract by 273.15\n\ncrop depth raster to match the extent of the SST raster\nnote: the resolutions of the SST and depth data do not match\n\nresample the depth data to match the resolution of the SST data using the bilinear method approach\n\ncheck that the depth and SST match in resolution, extent, and coordinate reference system\n\nhint: can the rasters be stacked?\n\n\n\n\nFind suitable locations\nTo find suitable locations for marine aquaculture, we’ll need to find locations that are suitable in terms of both SST and depth.\n\nreclassify SST and depth data into locations that are suitable for oysters\n\nhint: set suitable values to 1 and unsuitable values to 0\n\nfind locations that satisfy both SST and depth conditions\n\n\n\n\n\n\n\nTipTip: finding suitable locations\n\n\n\nThe SST and depth rasters should now identify the suitability of locations as 0 or 1. To find locations that have both suitable temperature and depth, you can use map algebra. One idea is to multiply the values of the cells, using the lapp() function.\n\n\n\n\nDetermine the most suitable EEZ\nWe want to determine the total suitable area within each EEZ in order to rank zones by priority. To do so, we need to find the total area of suitable locations within each EEZ.\n\nselect suitable cells within West Coast EEZs\nfind area of grid cells\nfind the total suitable area within each EEZ\n\nhint: it might be helpful to rasterize the EEZ data"
   },
   {
     "objectID": "assignments/HW3.html#rubric-specifications",
     "href": "assignments/HW3.html#rubric-specifications",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Rubric (specifications)",
     "text": "Rubric (specifications)\nYour output should serve as a stand-alone item that someone unfamiliar with the assignment would be able to understand your analysis, including the decisions made in selecting your approach and interpretation of the results.\nAssignments will be deemed “Satisfactory” based on the following criteria:\n\nData analysis\n\nCode must produce expected output based on correct data manipulation\nMultiple approaches can be used to reach the correct output. Analysis must demonstrate critical interrogation of the approach used by showing justification and verification of intermediate steps. “Correct” answers are not sufficient. Justification and verification of approach should be demonstrated using the following:\n\ncustom warning and error message (e.g. warning() and stop(); resources from EDS 221)\ninformative comments (resource from EDS 220)\nBONUS: unit tests (e.g. using {testthat}; resources from EDS 221)\n\n\n\n\nPlots, tables, and maps\n\nAll plots, tables, and maps must be clear, accurate, and effectively convey the intended information\nAll plots and maps must include the following elements:\n\nan informative title\nlegends with legible titles, including units\ncolor scales that are accessible (i.e. make intuitive sense) and appropriate to the data (i.e. discrete vs. continuous)\nfor maps: indication of scale and orientation (i.e. graticules/gridlines or scale bar and compass)\nfor figures: axes with legible labels and titles, including units\n\nAll tables should be rendered with legible titles and stypling (e.g. {kableExtra})\n\n\n\nWritten reflections\n\nReflections must be clear, accurate, and demonstrate a deep understanding of the analysis performed.\n\n\n\nProfessional output\n\nQuarto document must be rendered to pdf\nThe rendered output must include the following elements:\n\ndocument header with title, name, and date (ideally the date rendered)\nall packages are loaded together at the top of the document\nall unnecessary/distracting warnings and messages are suppressed\ninclude informative code comments when appropriate (resource from EDS 220)\nfolding code or sourcing separate scripts when appropriate to direct reader’s attention\nsuccinct documentation between steps, such as section headers, descriptions for an analysis and map/plot interpretation\ncomplete and detailed data citations\nall defined variables are used in analysis (no variables are defined that are not used)\n\n\n\n\n\n\n\n\nTipGuide to professional output\n\n\n\nSee examples of professional and unprofessional output on the Assignments page"
   },
   {
     "objectID": "assignments/HW3.html#footnotes",
     "href": "assignments/HW3.html#footnotes",
-    "title": "Homework Assignment 4",
+    "title": "Homework Assignment 3",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nHall, S. J., Delaporte, A., Phillips, M. J., Beveridge, M. & O’Keefe, M. Blue Frontiers: Managing the Environmental Costs of Aquaculture (The WorldFish Center, Penang, Malaysia, 2011).↩︎\nGentry, R. R., Froehlich, H. E., Grimm, D., Kareiva, P., Parke, M., Rust, M., Gaines, S. D., & Halpern, B. S. Mapping the global potential for marine aquaculture. Nature Ecology & Evolution, 1, 1317-1324 (2017).↩︎\nGEBCO Compilation Group (2022) GEBCO_2022 Grid (doi:10.5285/e0f0bb80-ab44-2739-e053-6c86abc0289c).↩︎"
   }

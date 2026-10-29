@@ -1,5 +1,5 @@
 ---
-title: "Homework Assignment 4"
+title: "Homework Assignment 3"
 subtitle: "Prioritizing potential aquaculture"
 author: "Ruth Oliver"
 date: last-modified
