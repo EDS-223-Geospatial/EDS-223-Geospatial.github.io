@@ -139,10 +139,9 @@ Open the `_MTL.txt` file in a text editor and use the guide above to answer the 
 
 1. Which satellite and sensor collected this image?
 2. What date and time (UTC) was the image acquired?
-3. The `EARTH_SUN_DISTANCE` is ~0.997 AU. Is Earth closer to or farther from the Sun than average on this date? What does this mean for the amount of incoming solar radiation?
-4. Write out the complete scaling equation for Band 4 (Red) using the values you find in `LEVEL2_SURFACE_REFLECTANCE_PARAMETERS`.
-5. What is the `CLOUD_COVER_LAND` percentage? Would you consider this scene suitable for analysis? What cloud cover threshold would you set when searching for usable Landsat scenes, and why?
-6. Check `SATURATION_BAND_4` and `SATURATION_BAND_5`. If a band is marked `Y`, what does that mean for the pixel values in that band? How could saturation affect a spectral index like NDVI that uses both bands?
+3. Write out the complete scaling equation for Band 4 (Red) using the values you find in `LEVEL2_SURFACE_REFLECTANCE_PARAMETERS`.
+4. What is the `CLOUD_COVER_LAND` percentage? Would you consider this scene suitable for analysis? What cloud cover threshold would you set when searching for usable Landsat scenes, and why?
+5. Check `SATURATION_BAND_4` and `SATURATION_BAND_5`. If a band is marked `Y`, what does that mean for the pixel values in that band? How could saturation affect a spectral index like NDVI that uses both bands?
 
 
 :::
@@ -317,10 +316,4 @@ map_swir <- tm_shape(landsat_scaled) +
 tmap_arrange(map_true, map_nir, map_swir, nrow = 1)
 ```
 
-:::{.callout-warning icon=true}
-# Interpret the composites
 
-1. What land cover types are clearest in the true color image?
-2. Where do you see evidence of vegetation in the NIR false color image? Does its brightness match the Band 5 (NIR) grayscale image?
-3. How does the SWIR composite help distinguish open water from other dark features such as shadows or urban areas?
-:::

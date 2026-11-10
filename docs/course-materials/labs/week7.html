@@ -524,7 +524,6 @@ LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata</code></pre>
 <ol type="1">
 <li>Which satellite and sensor collected this image?</li>
 <li>What date and time (UTC) was the image acquired?</li>
-<li>The <code>EARTH_SUN_DISTANCE</code> is ~0.997 AU. Is Earth closer to or farther from the Sun than average on this date? What does this mean for the amount of incoming solar radiation?</li>
 <li>Write out the complete scaling equation for Band 4 (Red) using the values you find in <code>LEVEL2_SURFACE_REFLECTANCE_PARAMETERS</code>.</li>
 <li>What is the <code>CLOUD_COVER_LAND</code> percentage? Would you consider this scene suitable for analysis? What cloud cover threshold would you set when searching for usable Landsat scenes, and why?</li>
 <li>Check <code>SATURATION_BAND_4</code> and <code>SATURATION_BAND_5</code>. If a band is marked <code>Y</code>, what does that mean for the pixel values in that band? How could saturation affect a spectral index like NDVI that uses both bands?</li>
@@ -888,23 +887,6 @@ SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
 <p><img src="week7_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Interpret the composites
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>What land cover types are clearest in the true color image?</li>
-<li>Where do you see evidence of vegetation in the NIR false color image? Does its brightness match the Band 5 (NIR) grayscale image?</li>
-<li>How does the SWIR composite help distinguish open water from other dark features such as shadows or urban areas?</li>
-</ol>
 </div>
 </div>
 
