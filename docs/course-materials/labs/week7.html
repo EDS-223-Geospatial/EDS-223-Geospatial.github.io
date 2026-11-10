@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Annie Adams">
-<meta name="dcterms.date" content="2026-11-09">
+<meta name="dcterms.date" content="2026-11-10">
 
 <title>Week 7: Lab</title>
 <style>
@@ -256,7 +256,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 9, 2026</p>
+        <p class="date">November 10, 2026</p>
       </div>
     </div>
     
@@ -312,7 +312,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="gray-text center-text">
-<p>The first image taken by Landsat 8 on March 18,2023, showing where the Great Plains and the Rocky Mountains meet in CO.</p>
+<p>The first image taken by Landsat 8 on March 18,2023,showing where the Great Plains and the Rocky Mountains meet in CO.</p>
 </div>
 <p>In this lab we’ll work with our first remotely sensed dataset! We’ll read the metadata file distributed alongside every Landsat scene to understand the image properties and extract the parameters needed for reflectance scaling, then create true and false color composite images.</p>
 <section id="set-up" class="level2">
@@ -339,7 +339,7 @@ window.Quarto = {
 <p><strong>Step 5: Select Datasets</strong></p>
 <p>Click Landsat &gt; Landsat Collection 2 Level-2 &gt; Landsat 8-9 OLI/TIRS C2 L2. Then click <strong>Results</strong>.</p>
 <p><strong>Step 6: Download</strong></p>
-<p>After selecting the download arrow, click “Select Files” for the Level-2 Surface Reflectance Bands (13 files) option. Donwload the <code>.tif</code> files for bands 1 -7, as well as the metadata (<code>MTL.xml</code>)</p>
+<p>After selecting the download arrow, click “Select Files” for the Level-2 Surface Reflectance Bands (13 files) option. Donwload the <code>.tif</code> files for bands 2-7, as well as the metadata (<code>MTL.xml</code>)</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -428,7 +428,7 @@ LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>SATURATION_BAND_X</code></td>
-<td style="text-align: left;">Whether any pixels in that band hit the sensor’s maximum recordable value (<code>Y</code> = saturated pixels present; data is clipped)</td>
+<td style="text-align: left;">Whether any pixels in that band hit the sensor’s maximum recordable value. <code>Y</code> = at least one pixel was brighter than the sensor could record. Its DN is clipped to 65535 (max value for 16 bit) regardless of the true reflectance, so the actual value is unknown. This typically happens over very bright surfaces (snow, clouds, sun glint on water).</td>
 </tr>
 </tbody>
 </table>
@@ -526,6 +526,8 @@ LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata</code></pre>
 <li>What date and time (UTC) was the image acquired?</li>
 <li>The <code>EARTH_SUN_DISTANCE</code> is ~0.997 AU. Is Earth closer to or farther from the Sun than average on this date? What does this mean for the amount of incoming solar radiation?</li>
 <li>Write out the complete scaling equation for Band 4 (Red) using the values you find in <code>LEVEL2_SURFACE_REFLECTANCE_PARAMETERS</code>.</li>
+<li>What is the <code>CLOUD_COVER_LAND</code> percentage? Would you consider this scene suitable for analysis? What cloud cover threshold would you set when searching for usable Landsat scenes, and why?</li>
+<li>Check <code>SATURATION_BAND_4</code> and <code>SATURATION_BAND_5</code>. If a band is marked <code>Y</code>, what does that mean for the pixel values in that band? How could saturation affect a spectral index like NDVI that uses both bands?</li>
 </ol>
 </div>
 </div>
@@ -537,7 +539,7 @@ LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata</code></pre>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>band_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(data_dir,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pattern =</span> <span class="st">"SR_B[2-7]</span><span class="sc">\\</span><span class="st">.TIF$"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.TIF$"</span>,</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">full.names =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span>
@@ -545,7 +547,7 @@ LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata</code></pre>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(band_files)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Now set the scaling parameters you found in the MTL file — we’ll use these in Section 4.</p>
+<p>Now set the scaling parameters you found in the MTL file. We’ll use these in Section 4.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scale_factor <span class="ot">&lt;-</span> <span class="fl">2.75e-05</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>add_offset   <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -662,7 +664,6 @@ names       : blue, green, red, NIR, SWIR1, SWIR2 </code></pre>
 <ul>
 <li>In which bands does water appear darkest? Why?</li>
 <li>In which band does vegetation appear brightest? Why?</li>
-<li>How do the SWIR bands compare to the visible bands?</li>
 </ul>
 </div>
 </div>

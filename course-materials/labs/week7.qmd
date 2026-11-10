@@ -64,7 +64,7 @@ Click Landsat > Landsat Collection 2 Level-2 > Landsat 8-9 OLI/TIRS C2 L2. Then 
 
 **Step 6: Download**
 
-After selecting the download arrow, click "Select Files" for the Level-2 Surface Reflectance Bands (13 files) option. Donwload the `.tif` files for bands 1 -7, as well as the metadata (`MTL.xml`)
+After selecting the download arrow, click "Select Files" for the Level-2 Surface Reflectance Bands (13 files) option. Donwload the `.tif` files for bands  2-7, as well as the metadata (`MTL.xml`)
 
 :::{.callout-warning icon=true}
 # File sizes
@@ -108,7 +108,7 @@ The MTL file is organized into named `GROUP` sections. The two most important fo
 | `SUN_ELEVATION` | Angle of the sun above the horizon at acquisition (degrees). Higher = summer/tropics, lower = winter/poles. Affects shadow length and overall image brightness |
 | `SUN_AZIMUTH` | Compass direction of the sun at acquisition (degrees clockwise from north). Determines which side of objects shadows fall on |
 | `EARTH_SUN_DISTANCE` | Distance from Earth to Sun in astronomical units (AU) at time of acquisition. Earth is closest (~0.983 AU) in early January and farthest (~1.017 AU) in early July |
-| `SATURATION_BAND_X` | Whether any pixels in that band hit the sensor's maximum recordable value (`Y` = saturated pixels present; data is clipped) |
+| `SATURATION_BAND_X` | Whether any pixels in that band hit the sensor's maximum recordable value. `Y` = at least one pixel was brighter than the sensor could record. Its DN is clipped to 65535 (max value for 16 bit) regardless of the true reflectance, so the actual value is unknown. This typically happens over very bright surfaces (snow, clouds, sun glint on water). |
 
 **`LEVEL2_SURFACE_REFLECTANCE_PARAMETERS`**
 
@@ -137,10 +137,13 @@ The MTL file is organized into named `GROUP` sections. The two most important fo
 
 Open the `_MTL.txt` file in a text editor and use the guide above to answer the following:
 
-1. Which satellite and sensor collected this image? 
-2. What date and time (UTC) was the image acquired? 
+1. Which satellite and sensor collected this image?
+2. What date and time (UTC) was the image acquired?
 3. The `EARTH_SUN_DISTANCE` is ~0.997 AU. Is Earth closer to or farther from the Sun than average on this date? What does this mean for the amount of incoming solar radiation?
 4. Write out the complete scaling equation for Band 4 (Red) using the values you find in `LEVEL2_SURFACE_REFLECTANCE_PARAMETERS`.
+5. What is the `CLOUD_COVER_LAND` percentage? Would you consider this scene suitable for analysis? What cloud cover threshold would you set when searching for usable Landsat scenes, and why?
+6. Check `SATURATION_BAND_4` and `SATURATION_BAND_5`. If a band is marked `Y`, what does that mean for the pixel values in that band? How could saturation affect a spectral index like NDVI that uses both bands?
+
 
 :::
 
@@ -151,7 +154,7 @@ data_dir <- here::here("course-materials/labs/data/landsat/")
 
 
 band_files <- list.files(data_dir,
-                         pattern = "SR_B[2-7]\\.TIF$",
+                         pattern = "\\.TIF$",
                          full.names = TRUE,
                          ignore.case = TRUE) |>
   sort()
@@ -162,7 +165,7 @@ names(landsat) <- c("blue", "green", "red", "NIR", "SWIR1", "SWIR2")
 ```
 
 
-Now set the scaling parameters you found in the MTL file — we'll use these in Section 4.
+Now set the scaling parameters you found in the MTL file. We'll use these in Section 4.
 
 ```{r}
 scale_factor <- 2.75e-05
@@ -216,7 +219,6 @@ plot(landsat, col = gray.colors(256))
 
 - In which bands does water appear darkest? Why?
 - In which band does vegetation appear brightest? Why?
-- How do the SWIR bands compare to the visible bands?
 :::
 
 
