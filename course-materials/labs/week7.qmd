@@ -11,8 +11,19 @@ format:
 editor_options:
   chunk_output_type: console
 ---
+```{r}
+#| eval: true
+#| echo: false
+#| out-width: "75%"
+#| fig-align: "center"
+knitr::include_graphics("images/Landsat8-First-Light.png")
+```
 
-In this lab we'll work with our first remotely sensed dataset. We'll read the metadata file distributed alongside every Landsat scene to understand the image properties and extract the parameters needed for reflectance scaling, then create true and false color composite images.
+::: {.gray-text .center-text}
+The first image taken by Landsat 8 on March 18,2023,\n showing where the Great Plains and the Rocky Mountains meet in CO. 
+:::
+
+In this lab we'll work with our first remotely sensed dataset! We'll read the metadata file distributed alongside every Landsat scene to understand the image properties and extract the parameters needed for reflectance scaling, then create true and false color composite images.
 
 ## 1. Set up
 
@@ -47,7 +58,7 @@ Navigate to the **Search Criteria** tab. In the **Address/Place** search box, ty
 **Step 4: Select a date range of 10/01/2026 to 11/01/2026**
 
 
-**Step 5: Select **Datasets**
+**Step 5: Select Datasets**
 
 Click Landsat > Landsat Collection 2 Level-2 > Landsat 8-9 OLI/TIRS C2 L2. Then click **Results**. 
 
@@ -71,9 +82,6 @@ LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata
 
 Where `LC08` = Landsat 8, `042036` = WRS-2 path/row, and the first date is the acquisition date.
 :::
-
-
-```
 
 ## 3. Metadata exploration
 
@@ -113,26 +121,16 @@ The MTL file is organized into named `GROUP` sections. The two most important fo
 
 **Band specifications** *(from [USGS Landsat sensor documentation](https://www.usgs.gov/landsat-missions/landsat-8), not the MTL file)*
 
-```{r}
-#| echo: false
-#| eval: true
+| Band | Wavelength | Useful for |
+|:-----|:-----------|:-----------|
+| `Band 2 (blue)` | 0.45–0.51 µm | Water depth, coastal features, urban areas |
+| `Band 3 (green)` | 0.53–0.59 µm | Vegetation health (chlorophyll), sediment in water |
+| `Band 4 (red)` | 0.64–0.67 µm | Iron oxides in soil; healthy vegetation *absorbs* red |
+| `Band 5 (NIR)` | 0.85–0.88 µm | Vegetation biomass; water *absorbs* NIR strongly |
+| `Band 6 (SWIR1)` | 1.57–1.65 µm | Soil/vegetation moisture, fire detection |
+| `Band 7 (SWIR2)` | 2.11–2.29 µm | Mineral mapping, burned area detection |
 
-band_info <- tibble::tribble(
-  ~Band,    ~`Wavelength`,    ~`Useful for`,
-  "Band 2 (blue)",   "0.45–0.51 µm",   "Water depth, coastal features, urban areas",
-  "Band 3 (green)",  "0.53–0.59 µm",   "Vegetation health (chlorophyll), sediment in water",
-  "Band 4 (red)",    "0.64–0.67 µm",   "Iron oxides in soil; healthy vegetation *absorbs* red",
-  "Band 5 (NIR)",    "0.85–0.88 µm",   "Vegetation biomass; water *absorbs* NIR strongly",
-  "Band 6 (SWIR1)",  "1.57–1.65 µm",   "Soil/vegetation moisture, fire detection",
-  "Band 7 (SWIR2)",  "2.11–2.29 µm",   "Mineral mapping, burned area detection"
-)
 
-knitr::kable(band_info,
-             caption = "Landsat 8 OLI band characteristics",
-             booktabs = TRUE) |> 
-  kableExtra::kable_styling("striped", full_width = FALSE) |> 
-  kableExtra::column_spec(1, bold = TRUE, monospace = TRUE)
-```
 
 :::{.callout-warning icon=true}
 # Questions
@@ -151,8 +149,7 @@ Open the `_MTL.txt` file in a text editor and use the guide above to answer the 
 ```{r}
 data_dir <- here::here("course-materials/labs/data/landsat/")
 
-# load surface reflectance bands 2–7
-# sort() gives alphabetical order: B2, B3, B4, B5, B6, B7
+
 band_files <- list.files(data_dir,
                          pattern = "SR_B[2-7]\\.TIF$",
                          full.names = TRUE,
@@ -193,7 +190,7 @@ datatype(landsat)
 | **Spatial**    | Pixel size on the ground | Raster summary |
 | **Spectral**   | Number of bands | Raster summary |
 | **Radiometric** | Possible values per pixel | `datatype()` — `INT2U` = 16-bit = 65,536 levels |
-| **Temporal**   | Revisit time | Landsat Metadata |
+| **Temporal**   | Revisit time | [Landsat Mission Info](https://www.usgs.gov/landsat-missions/landsat-8) |
 :::
 
 :::{.callout-note icon=true}
@@ -204,7 +201,7 @@ Landsat Collection 2 Level-2 data is stored as **16-bit unsigned integers** (`IN
 
 ### Visualizing individual bands
 
-Each band responds to a different portion of the electromagnetic spectrum. Before combining bands into composites, let's visualize them individually as grayscale images — bright = high pixel value, dark = low pixel value.
+Each band responds to a different portion of the electromagnetic spectrum. Before combining bands into composites, let's visualize them individually as grayscale images where bright = high pixel value, dark = low pixel value.
 
 ```{r}
 #| code-fold: true
@@ -225,7 +222,7 @@ plot(landsat, col = gray.colors(256))
 
 ## 4. Reflectance scaling
 
-The downloaded TIF files contain **scaled integers**, not raw sensor output. Landsat Collection 2 Level-2 products are already atmospherically corrected to surface reflectance, but the values are stored as integers to reduce file size. To recover actual reflectance values (0–1), we apply the linear equation:
+The downloaded TIF files contain **scaled integers**, not raw sensor output. Landsat Collection 2 Level-2 products are already atmospherically corrected to surface reflectance, but the values are stored as integers to reduce file size. To recover actual reflectance values (0–1), we apply the linear equation with the scale factor and additive offset values we found in the metadata:
 
 $$\text{Reflectance} = \text{integer} \times \text{scale factor} + \text{additive offset}$$
 
@@ -234,7 +231,6 @@ landsat_scaled <- (landsat * scale_factor) + add_offset
 landsat_scaled <- clamp(landsat_scaled, lower = 0, upper = 1)
 
 # verify: values should now be approximately 0–1
-minmax(landsat)
 minmax(landsat_scaled)
 ```
 

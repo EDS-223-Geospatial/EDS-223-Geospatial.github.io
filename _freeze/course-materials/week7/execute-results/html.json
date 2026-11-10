@@ -1,0 +1,15 @@
+{
+  "hash": "1708415508fb1bd89c65cc0c97cbfe5a",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Land Cover Classification\"\nsubtitle: \"Week 7\"\n---\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](images/week9-image.png){fig-align='center' width=80%}\n:::\n:::\n\n\n::: {.gray-text .center-text}\n[Your Name in Landsat](https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/index.html){target=\"_blank\"}\n:::\n\n## {{< fa person-chalkboard title=\"a person pointing at a chalkboard\" >}} Class Materials\n\n| Session                                                                         | Materials                                             |\n|---------------------------------------------------------------------------------|-------------------------------------------------------|\n| {{< fa laptop-code title=\"A laptop with on-screen code\" >}} Lab                 | [Remotely Sensed Rasters](labs/week7.qmd)        |\n| {{< fa download title=\"download\" >}} Lab materials to download                  | [Remotely Sensed Rasters](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week7){target=\"_blank\"} |\n\n\n## {{< fa pencil title=\"pencil\" >}} Assignment Reminders {#assignment-reminders}\n\n:::{.callout-important icon=true}\n## Important\nAll assignments are **due at 11:59 PM** on the date listed.\n:::\n\n| Assignment Type | Assignment Title                              | Date Assigned | Date Due   |\n|-----------------|-----------------------------------------------|---------------|------------|\n| HW              | [Homework Assignment #4](){target=\"_blank\"} | 11/12/2026    | 11/21/2026 |\n\n\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

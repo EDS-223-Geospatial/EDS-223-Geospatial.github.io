@@ -1,0 +1,1342 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Annie Adams">
+<meta name="dcterms.date" content="2026-11-09">
+
+<title>Week 7: Lab</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../images/favicon.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-17e5a23d094ee4d3ea1f9bf67e0e3d54.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-5cef1391e92990c1d02e0f0e735fafd2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">EDS 223</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://docs.google.com/document/d/1dK9oioz1eajKsdCC7hGzT6N9BPj5O3bpZIKcGFmLmm4/view" target="_blank"> 
+<span class="menu-text">syllabus</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-course-materials" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">course materials</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-course-materials">    
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week0.html">
+ <span class="dropdown-text">week 0</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week1.html">
+ <span class="dropdown-text">week 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week2.html">
+ <span class="dropdown-text">week 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week3.html">
+ <span class="dropdown-text">week 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week4.html">
+ <span class="dropdown-text">week 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week5.html">
+ <span class="dropdown-text">week 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week6.html">
+ <span class="dropdown-text">week 6</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../course-materials/week7.html">
+ <span class="dropdown-text">week 7</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../../assignments.html"> 
+<span class="menu-text">assignments</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://script.google.com/a/macros/ucsb.edu/s/AKfycbwCWq8xbPbVuS1AeKhmUQ9cov8CRjfraZkS6Ec0u4R89oa-WWuYZa7DNOmc-cTjR2qM/exec"> 
+<span class="menu-text">redeem tokens</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../resources.html"> 
+<span class="menu-text">resources</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/EDS-223-Geospatial" target="_blank"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-page-left">
+      <h1 class="title">Week 7: Lab</h1>
+            <p class="subtitle lead">EDS 223: Geospatial Analysis &amp; Remote Sensing</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta column-page-left">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Annie Adams </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 9, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#set-up" id="toc-set-up" class="nav-link active" data-scroll-target="#set-up">1. Set up</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">2. Data</a>
+  <ul class="collapse">
+  <li><a href="#downloading-the-data" id="toc-downloading-the-data" class="nav-link" data-scroll-target="#downloading-the-data">Downloading the data</a></li>
+  </ul></li>
+  <li><a href="#metadata-exploration" id="toc-metadata-exploration" class="nav-link" data-scroll-target="#metadata-exploration">3. Metadata exploration</a>
+  <ul class="collapse">
+  <li><a href="#metadata-field-guide" id="toc-metadata-field-guide" class="nav-link" data-scroll-target="#metadata-field-guide">Metadata field guide</a></li>
+  <li><a href="#loading-the-data" id="toc-loading-the-data" class="nav-link" data-scroll-target="#loading-the-data">Loading the data</a></li>
+  <li><a href="#raster-properties" id="toc-raster-properties" class="nav-link" data-scroll-target="#raster-properties">Raster properties</a></li>
+  <li><a href="#visualizing-individual-bands" id="toc-visualizing-individual-bands" class="nav-link" data-scroll-target="#visualizing-individual-bands">Visualizing individual bands</a></li>
+  </ul></li>
+  <li><a href="#reflectance-scaling" id="toc-reflectance-scaling" class="nav-link" data-scroll-target="#reflectance-scaling">4. Reflectance scaling</a></li>
+  <li><a href="#true-color-imagery" id="toc-true-color-imagery" class="nav-link" data-scroll-target="#true-color-imagery">5. True color imagery</a></li>
+  <li><a href="#false-color-imagery" id="toc-false-color-imagery" class="nav-link" data-scroll-target="#false-color-imagery">6. False color imagery</a>
+  <ul class="collapse">
+  <li><a href="#vegetation-false-color-nir-red-green" id="toc-vegetation-false-color-nir-red-green" class="nav-link" data-scroll-target="#vegetation-false-color-nir-red-green">Vegetation false color (NIR, Red, Green)</a></li>
+  <li><a href="#swir-false-color-swir1-nir-green" id="toc-swir-false-color-swir1-nir-green" class="nav-link" data-scroll-target="#swir-false-color-swir1-nir-green">SWIR false color (SWIR1, NIR, Green)</a></li>
+  <li><a href="#comparing-all-three-composites" id="toc-comparing-all-three-composites" class="nav-link" data-scroll-target="#comparing-all-three-composites">Comparing all three composites</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+
+
+
+
+
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Landsat8-First-Light.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="gray-text center-text">
+<p>The first image taken by Landsat 8 on March 18,2023, showing where the Great Plains and the Rocky Mountains meet in CO.</p>
+</div>
+<p>In this lab we’ll work with our first remotely sensed dataset! We’ll read the metadata file distributed alongside every Landsat scene to understand the image properties and extract the parameters needed for reflectance scaling, then create true and false color composite images.</p>
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">1. Set up</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">2. Data</h2>
+<p>We’ll work with a <strong>Landsat 8 OLI</strong> image collected over <strong>Santa Barbara, CA</strong> on October 15, 2026. Landsat 8 is part of the longest-running Earth observation program, operated jointly by NASA and USGS since 1972.</p>
+<section id="downloading-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="downloading-the-data">Downloading the data</h3>
+<p>We’ll download data directly from <a href="https://earthexplorer.usgs.gov/"><strong>USGS Earth Explorer</strong></a>, the primary portal for Landsat imagery.</p>
+<p><strong>Step 1: Create a free USGS account</strong></p>
+<p>Go to <a href="https://earthexplorer.usgs.gov/">earthexplorer.usgs.gov</a> and click <strong>Login → Create New Account</strong>. You’ll need to verify your email before you can download data.</p>
+<p><strong>Step 2: Define your search area</strong></p>
+<p>Navigate to the <strong>Search Criteria</strong> tab. In the <strong>Address/Place</strong> search box, type <strong>Santa Barbara, CA</strong> and click <strong>Show</strong>.</p>
+<p><strong>Step 3: Select the California option (first row)</strong></p>
+<p><strong>Step 4: Select a date range of 10/01/2026 to 11/01/2026</strong></p>
+<p><strong>Step 5: Select Datasets</strong></p>
+<p>Click Landsat &gt; Landsat Collection 2 Level-2 &gt; Landsat 8-9 OLI/TIRS C2 L2. Then click <strong>Results</strong>.</p>
+<p><strong>Step 6: Download</strong></p>
+<p>After selecting the download arrow, click “Select Files” for the Level-2 Surface Reflectance Bands (13 files) option. Donwload the <code>.tif</code> files for bands 1 -7, as well as the metadata (<code>MTL.xml</code>)</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>File sizes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You should have the following files:</p>
+<pre><code>LC08_L2SP_042036_20261015_20261021_02_T1_SR_B2.TIF   ← Blue
+LC08_L2SP_042036_20261015_20261021_02_T1_SR_B3.TIF   ← Green
+LC08_L2SP_042036_20261015_20261021_02_T1_SR_B4.TIF   ← Red
+LC08_L2SP_042036_20261015_20261021_02_T1_SR_B5.TIF   ← Near Infrared
+LC08_L2SP_042036_20261015_20261021_02_T1_SR_B6.TIF   ← SWIR 1
+LC08_L2SP_042036_20261015_20261021_02_T1_SR_B7.TIF   ← SWIR 2
+LC08_L2SP_042036_20261015_20261021_02_T1_MTL.txt     ← Metadata</code></pre>
+<p>Where <code>LC08</code> = Landsat 8, <code>042036</code> = WRS-2 path/row, and the first date is the acquisition date.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="metadata-exploration" class="level2">
+<h2 class="anchored" data-anchor-id="metadata-exploration">3. Metadata exploration</h2>
+<p>USGS distributes an <code>_MTL.txt</code> file alongside every Landsat scene. Open the file directly in a text editor and use the guide below to find key fields. You’ll answer questions about what you find before moving on to the R analysis.</p>
+<p>The MTL file is organized into named <code>GROUP</code> sections. The two most important for this lab are:</p>
+<ul>
+<li><strong><code>IMAGE_ATTRIBUTES</code></strong> — when and where the image was collected, cloud cover, and sun geometry</li>
+<li><strong><code>LEVEL2_SURFACE_REFLECTANCE_PARAMETERS</code></strong> — the scaling parameters needed to convert raw DN values to surface reflectance</li>
+</ul>
+<section id="metadata-field-guide" class="level3">
+<h3 class="anchored" data-anchor-id="metadata-field-guide">Metadata field guide</h3>
+<p><strong><code>IMAGE_ATTRIBUTES</code></strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>SPACECRAFT_ID</code></td>
+<td style="text-align: left;">Which satellite collected the image</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SENSOR_ID</code></td>
+<td style="text-align: left;">Which sensor (<code>OLI_TIRS</code> = Operational Land Imager + Thermal Infrared Sensor)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>DATE_ACQUIRED</code></td>
+<td style="text-align: left;">Date the image was captured</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SCENE_CENTER_TIME</code></td>
+<td style="text-align: left;">Time of acquisition in UTC</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>WRS_PATH</code> / <code>WRS_ROW</code></td>
+<td style="text-align: left;">WRS-2 grid location — the global addressing system for Landsat scenes. Path = descending orbit track, Row = latitude band</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>CLOUD_COVER_LAND</code></td>
+<td style="text-align: left;">Percentage of the land area covered by clouds</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>IMAGE_QUALITY_OLI</code></td>
+<td style="text-align: left;">Sensor quality score from 0 (worst) to 9 (best)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SUN_ELEVATION</code></td>
+<td style="text-align: left;">Angle of the sun above the horizon at acquisition (degrees). Higher = summer/tropics, lower = winter/poles. Affects shadow length and overall image brightness</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SUN_AZIMUTH</code></td>
+<td style="text-align: left;">Compass direction of the sun at acquisition (degrees clockwise from north). Determines which side of objects shadows fall on</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>EARTH_SUN_DISTANCE</code></td>
+<td style="text-align: left;">Distance from Earth to Sun in astronomical units (AU) at time of acquisition. Earth is closest (~0.983 AU) in early January and farthest (~1.017 AU) in early July</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>SATURATION_BAND_X</code></td>
+<td style="text-align: left;">Whether any pixels in that band hit the sensor’s maximum recordable value (<code>Y</code> = saturated pixels present; data is clipped)</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>LEVEL2_SURFACE_REFLECTANCE_PARAMETERS</code></strong></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>REFLECTANCE_MULT_BAND_X</code></td>
+<td style="text-align: left;">Scale factor — multiply raw DN by this value</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>REFLECTANCE_ADD_BAND_X</code></td>
+<td style="text-align: left;">Additive offset — add this after multiplying</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>QUANTIZE_CAL_MAX/MIN_BAND_X</code></td>
+<td style="text-align: left;">Valid DN range (1–65535; a value of 0 means no data)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>REFLECTANCE_MAXIMUM/MINIMUM_BAND_X</code></td>
+<td style="text-align: left;">Valid reflectance range after scaling (slightly negative values can occur from atmospheric correction; values slightly above 1 are physically possible for some surfaces)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Band specifications</strong> <em>(from <a href="https://www.usgs.gov/landsat-missions/landsat-8">USGS Landsat sensor documentation</a>, not the MTL file)</em></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 40%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Band</th>
+<th style="text-align: left;">Wavelength</th>
+<th style="text-align: left;">Useful for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>Band 2 (blue)</code></td>
+<td style="text-align: left;">0.45–0.51 µm</td>
+<td style="text-align: left;">Water depth, coastal features, urban areas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Band 3 (green)</code></td>
+<td style="text-align: left;">0.53–0.59 µm</td>
+<td style="text-align: left;">Vegetation health (chlorophyll), sediment in water</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Band 4 (red)</code></td>
+<td style="text-align: left;">0.64–0.67 µm</td>
+<td style="text-align: left;">Iron oxides in soil; healthy vegetation <em>absorbs</em> red</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Band 5 (NIR)</code></td>
+<td style="text-align: left;">0.85–0.88 µm</td>
+<td style="text-align: left;">Vegetation biomass; water <em>absorbs</em> NIR strongly</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Band 6 (SWIR1)</code></td>
+<td style="text-align: left;">1.57–1.65 µm</td>
+<td style="text-align: left;">Soil/vegetation moisture, fire detection</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Band 7 (SWIR2)</code></td>
+<td style="text-align: left;">2.11–2.29 µm</td>
+<td style="text-align: left;">Mineral mapping, burned area detection</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Questions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Open the <code>_MTL.txt</code> file in a text editor and use the guide above to answer the following:</p>
+<ol type="1">
+<li>Which satellite and sensor collected this image?</li>
+<li>What date and time (UTC) was the image acquired?</li>
+<li>The <code>EARTH_SUN_DISTANCE</code> is ~0.997 AU. Is Earth closer to or farther from the Sun than average on this date? What does this mean for the amount of incoming solar radiation?</li>
+<li>Write out the complete scaling equation for Band 4 (Red) using the values you find in <code>LEVEL2_SURFACE_REFLECTANCE_PARAMETERS</code>.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="loading-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="loading-the-data">Loading the data</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data_dir <span class="ot">&lt;-</span> here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"course-materials/labs/data/landsat/"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>band_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(data_dir,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">pattern =</span> <span class="st">"SR_B[2-7]</span><span class="sc">\\</span><span class="st">.TIF$"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">full.names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>()</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(band_files)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now set the scaling parameters you found in the MTL file — we’ll use these in Section 4.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>scale_factor <span class="ot">&lt;-</span> <span class="fl">2.75e-05</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>add_offset   <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fl">0.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="raster-properties" class="level3">
+<h3 class="anchored" data-anchor-id="raster-properties">Raster properties</h3>
+<p>Printing the raster object gives a summary of the spatial properties. Compare what you see here to the four image resolutions from lecture.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>landsat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>class       : SpatRaster 
+size        : 7961, 7831, 6  (nrow, ncol, nlyr)
+resolution  : 30, 30  (x, y)
+extent      : 121185, 356115, 3713685, 3952515  (xmin, xmax, ymin, ymax)
+coord. ref. : WGS 84 / UTM zone 11N (EPSG:32611) 
+sources     : LC08_L2SP_042036_20261015_20261021_02_T1_SR_B2.TIF  
+              LC08_L2SP_042036_20261015_20261021_02_T1_SR_B3.TIF  
+              LC08_L2SP_042036_20261015_20261021_02_T1_SR_B4.TIF  
+              ... and 3 more sources
+names       : blue, green, red, NIR, SWIR1, SWIR2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confirm data type — determines radiometric resolution</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">datatype</span>(landsat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "INT2U" "INT2U" "INT2U" "INT2U" "INT2U" "INT2U"</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Connecting raster properties to image resolutions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Resolution</th>
+<th style="text-align: left;">What it describes</th>
+<th style="text-align: left;">Where to find it</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Spatial</strong></td>
+<td style="text-align: left;">Pixel size on the ground</td>
+<td style="text-align: left;">Raster summary</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Spectral</strong></td>
+<td style="text-align: left;">Number of bands</td>
+<td style="text-align: left;">Raster summary</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Radiometric</strong></td>
+<td style="text-align: left;">Possible values per pixel</td>
+<td style="text-align: left;"><code>datatype()</code> — <code>INT2U</code> = 16-bit = 65,536 levels</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Temporal</strong></td>
+<td style="text-align: left;">Revisit time</td>
+<td style="text-align: left;"><a href="https://www.usgs.gov/landsat-missions/landsat-8">Landsat Mission Info</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Bit depth in Landsat Collection 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Landsat Collection 2 Level-2 data is stored as <strong>16-bit unsigned integers</strong> (<code>INT2U</code>): 2^16 = <strong>65,536 possible values</strong> per pixel. This is higher radiometric resolution than older 8-bit Landsat products, allowing finer discrimination of subtle reflectance differences.</p>
+</div>
+</div>
+</section>
+<section id="visualizing-individual-bands" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-individual-bands">Visualizing individual bands</h3>
+<p>Each band responds to a different portion of the electromagnetic spectrum. Before combining bands into composites, let’s visualize them individually as grayscale images where bright = high pixel value, dark = low pixel value.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(landsat, <span class="at">col =</span> <span class="fu">gray.colors</span>(<span class="dv">256</span>))                                                                                 </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Explore the bands
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>In which bands does water appear darkest? Why?</li>
+<li>In which band does vegetation appear brightest? Why?</li>
+<li>How do the SWIR bands compare to the visible bands?</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="reflectance-scaling" class="level2">
+<h2 class="anchored" data-anchor-id="reflectance-scaling">4. Reflectance scaling</h2>
+<p>The downloaded TIF files contain <strong>scaled integers</strong>, not raw sensor output. Landsat Collection 2 Level-2 products are already atmospherically corrected to surface reflectance, but the values are stored as integers to reduce file size. To recover actual reflectance values (0–1), we apply the linear equation with the scale factor and additive offset values we found in the metadata:</p>
+<p><span class="math display">\[\text{Reflectance} = \text{integer} \times \text{scale factor} + \text{additive offset}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>landsat_scaled <span class="ot">&lt;-</span> (landsat <span class="sc">*</span> scale_factor) <span class="sc">+</span> add_offset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          
+
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>landsat_scaled <span class="ot">&lt;-</span> <span class="fu">clamp</span>(landsat_scaled, <span class="at">lower =</span> <span class="dv">0</span>, <span class="at">upper =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># verify: values should now be approximately 0–1</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">minmax</span>(landsat_scaled)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       blue     green     red NIR SWIR1 SWIR2
+min 0.00000 0.0000000 0.00000   0     0     0
+max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
+</div>
+</div>
+</section>
+<section id="true-color-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="true-color-imagery">5. True color imagery</h2>
+<p>A <strong>true color composite</strong> maps the red, green, and blue bands to the red, green, and blue display channels, approximating how the scene looks to the human eye.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Display channel</th>
+<th style="text-align: left;">Satellite band</th>
+<th style="text-align: left;">Wavelength</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Red</td>
+<td style="text-align: left;">Band 4 (red)</td>
+<td style="text-align: left;">0.64–0.67 µm</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Green</td>
+<td style="text-align: left;">Band 3 (green)</td>
+<td style="text-align: left;">0.53–0.59 µm</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Blue</td>
+<td style="text-align: left;">Band 2 (blue)</td>
+<td style="text-align: left;">0.45–0.51 µm</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"True color composite"</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="false-color-imagery" class="level2">
+<h2 class="anchored" data-anchor-id="false-color-imagery">6. False color imagery</h2>
+<p>A <strong>false color composite</strong> assigns satellite bands beyond the visible spectrum (or in a non-standard order) to the display channels, letting us highlight features that are difficult to distinguish in true color.</p>
+<section id="vegetation-false-color-nir-red-green" class="level3">
+<h3 class="anchored" data-anchor-id="vegetation-false-color-nir-red-green">Vegetation false color (NIR, Red, Green)</h3>
+<p>Placing the <strong>near infrared band</strong> in the red channel makes healthy vegetation appear vivid red — useful for assessing vegetation extent and health.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 42%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Display channel</th>
+<th style="text-align: left;">Satellite band</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Red</td>
+<td style="text-align: left;">Band 5 (NIR)</td>
+<td style="text-align: left;">Vegetation reflects strongly in NIR → appears red</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Green</td>
+<td style="text-align: left;">Band 4 (Red)</td>
+<td style="text-align: left;">Soil reflects red → appears green</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Blue</td>
+<td style="text-align: left;">Band 3 (Green)</td>
+<td style="text-align: left;">Water reflects slightly in green → appears blue</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"False color: NIR–Red–Green"</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="swir-false-color-swir1-nir-green" class="level3">
+<h3 class="anchored" data-anchor-id="swir-false-color-swir1-nir-green">SWIR false color (SWIR1, NIR, Green)</h3>
+<p>Placing the <strong>shortwave infrared band</strong> in the red channel highlights moisture. Water absorbs both SWIR and NIR strongly, so water bodies appear very dark.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 43%">
+<col style="width: 43%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Display channel</th>
+<th style="text-align: left;">Satellite band</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Red</td>
+<td style="text-align: left;">Band 6 (SWIR1)</td>
+<td style="text-align: left;">Dry/burned surfaces reflect strongly → bright</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Green</td>
+<td style="text-align: left;">Band 5 (NIR)</td>
+<td style="text-align: left;">Vegetated areas reflect NIR → appears green</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Blue</td>
+<td style="text-align: left;">Band 3 (Green)</td>
+<td style="text-align: left;">Water absorbs all three → very dark</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"SWIR1"</span>, <span class="st">"NIR"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"False color: SWIR1–NIR–Green"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="comparing-all-three-composites" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-all-three-composites">Comparing all three composites</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>map_true <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"True color"</span>)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>map_nir <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"NIR false color"</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>map_swir <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"SWIR1"</span>, <span class="st">"NIR"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"SWIR false color"</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_true, map_nir, map_swir, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.
+SpatRaster object downsampled to 3189 by 3137 cells.
+SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Interpret the composites
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>What land cover types are clearest in the true color image?</li>
+<li>Where do you see evidence of vegetation in the NIR false color image? Does its brightness match the Band 5 (NIR) grayscale image?</li>
+<li>How does the SWIR composite help distinguish open water from other dark features such as shadows or urban areas?</li>
+</ol>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><img src="images/bren-logo.png" alt="The Bren School of Environmental Science &amp; Management logo" width="250"></p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>This website is built with <a href="https://github.com/samanthacsik/EDS-212-essential-math"><i class="fa-brands fa-github" title="the github octocat logo" aria-label="github"></i></a>, <a href="https://www.r-project.org/about.html"><i class="fa-brands fa-r-project" title="R Project" aria-label="r-project"></i></a> and <a href="https://quarto.org/">Quarto</a></p>
+</div>
+  </div>
+</footer>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Reinitialize Bootstrap dropdowns on every page load
+  var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+  dropdownElementList.forEach(function(dropdownToggle) {
+    new bootstrap.Dropdown(dropdownToggle);
+  });
+});
+</script>
+
+
+
+
+</body></html>

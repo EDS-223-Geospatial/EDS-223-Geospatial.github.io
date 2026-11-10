@@ -19,9 +19,9 @@ knitr::include_graphics("images/week9-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Image classifiction: unsupervised and supervised approaches](https://docs.google.com/presentation/d/1NMY3uMM1qJkMny1PLSd9ZWpf4eI2PZ9qJn9O8m1eO4Q/present?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}}No lab this week!
-| {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice function making with rasters](discussions/week7-discussion.qmd) |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Remotely Sensed Rasters](labs/week7.qmd)        |
+| {{< fa download title="download" >}} Lab materials to download                  | [Remotely Sensed Rasters](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week7){target="_blank"} |
+
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -32,7 +32,6 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/12/2026    | 11/21/2026 |
-| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/11/2026    | 12/06/2026 |
+| HW              | [Homework Assignment #4](){target="_blank"} | 11/12/2026    | 11/21/2026 |
 
 
