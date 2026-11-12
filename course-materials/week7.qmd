@@ -21,6 +21,8 @@ knitr::include_graphics("images/week9-image.png")
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Remotely Sensed Rasters](labs/week7.qmd)        |
 | {{< fa download title="download" >}} Lab materials to download                  | [Remotely Sensed Rasters](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week7){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion               | [GIS Lab #3](https://arcg.is/18bLOm3) |
+
 
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
