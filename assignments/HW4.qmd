@@ -66,7 +66,6 @@ EDS223-HW4
     └───data
         └───gis_osm_buildings_a_free_1.gpkg
         └───gis_osm_roads_free_1.gpkg
-            └───census tract gdb files
         └───VNP46A1
             └───VIIRS data files
 ```
@@ -90,8 +89,6 @@ For this assignment, you must produce the following:
 - [ ] a set of maps comparing night light intensities before and after the first two storms
 - [ ] a map of the homes in Houston that lost power
 - [ ] an estimate of the number of homes in Houston that lost power 
-- [ ] a map of the census tracts in Houston that lost power
-- [ ] a plot comparing the distributions of median household income for census tracts that did and did not experience blackouts
 - [ ]  a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study
 
 ## Data details
@@ -123,12 +120,7 @@ Typically highways account for a large portion of the night lights observable fr
 
 We can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.\
 
-### Socioeconomic
-We cannot readily get socioeconomic information for every home, so instead we obtained data from the [U.S. Census Bureau's American Community Survey](https://www.census.gov/programs-surveys/acs) for census tracts in 2019. The *folder* `ACS_2019_5YR_TRACT_48.gdb` is an ArcGIS ["file geodatabase"](https://desktop.arcgis.com/en/arcmap/latest/manage-data/administer-file-gdbs/file-geodatabases.htm), a multi-file proprietary format that's roughly analogous to a GeoPackage file.\
 
-You can use `st_layers()` to explore the contents of the geodatabase. Each layer contains a subset of the fields documents in the [ACS metadata](https://www2.census.gov/geo/docs/maps-data/data/tiger/prejoined/ACSMetadata2011.txt).\
-
-The geodatabase contains a layer holding the geometry information (`ACS_2019_5YR_TRACT_48_TEXAS`), separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that `sf` can use. 
 
 
 :::{.callout-tip icon=true}
@@ -144,7 +136,6 @@ To complete complete the tasks of this assignment, you will need to break your a
 - find locations that experienced a blackout by creating a mask
 - exclude highways from analysis
 - identify homes that experienced blackouts by combining the locations of homes and blackouts
-- identify the census tracts likely impacted by blackout
 
 Below is guidance and suggestions for each of these steps.
 
@@ -153,6 +144,9 @@ Below is guidance and suggestions for each of these steps.
 For improved computational efficiency and easier interoperability with `sf`, I recommend using the `stars` package for raster handling.
 
 :::
+
+### Data Merging
+As mentioned above, Houston lies on the border of two tiles. You will need to combine these two tiles together to get one raster for each date (2021-02-07 and 2021-02-16). You can merge rasters using the method discussed in [Lab 4](https://eds-223-geospatial.github.io/course-materials/labs/week4.html), or, if you plan to use the `stars` package, you can combine them using `st_mosaic`. 
 
 ### Create blackout mask
 To identify places that experienced a blackout, you should create a "mask" that indicates for each cell whether or not it experienced a blackout.

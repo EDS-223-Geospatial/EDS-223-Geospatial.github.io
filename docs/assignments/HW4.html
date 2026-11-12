@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ruth Oliver">
-<meta name="dcterms.date" content="2026-11-11">
+<meta name="dcterms.date" content="2026-11-12">
 
 <title>Homework Assignment 3</title>
 <style>
@@ -227,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 11, 2026</p>
+        <p class="date">November 12, 2026</p>
       </div>
     </div>
     
@@ -252,10 +252,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#night-lights" id="toc-night-lights" class="nav-link" data-scroll-target="#night-lights">Night lights</a></li>
   <li><a href="#roads" id="toc-roads" class="nav-link" data-scroll-target="#roads">Roads</a></li>
   <li><a href="#houses" id="toc-houses" class="nav-link" data-scroll-target="#houses">Houses</a></li>
-  <li><a href="#socioeconomic" id="toc-socioeconomic" class="nav-link" data-scroll-target="#socioeconomic">Socioeconomic</a></li>
   </ul></li>
   <li><a href="#workflow-outline" id="toc-workflow-outline" class="nav-link" data-scroll-target="#workflow-outline">Workflow outline</a>
   <ul class="collapse">
+  <li><a href="#data-merging" id="toc-data-merging" class="nav-link" data-scroll-target="#data-merging">Data Merging</a></li>
   <li><a href="#create-blackout-mask" id="toc-create-blackout-mask" class="nav-link" data-scroll-target="#create-blackout-mask">Create blackout mask</a></li>
   <li><a href="#exclude-highways-from-the-cropped-blackout-mask" id="toc-exclude-highways-from-the-cropped-blackout-mask" class="nav-link" data-scroll-target="#exclude-highways-from-the-cropped-blackout-mask">Exclude highways from the cropped blackout mask</a></li>
   <li><a href="#identify-the-number-of-homes-likely-impacted-by-blackouts" id="toc-identify-the-number-of-homes-likely-impacted-by-blackouts" class="nav-link" data-scroll-target="#identify-the-number-of-homes-likely-impacted-by-blackouts">Identify the number of homes likely impacted by blackouts</a></li>
@@ -334,7 +334,6 @@ Important
     └───data
         └───gis_osm_buildings_a_free_1.gpkg
         └───gis_osm_roads_free_1.gpkg
-            └───census tract gdb files
         └───VNP46A1
             └───VIIRS data files</code></pre>
 </section>
@@ -353,8 +352,6 @@ Important
 <li><label><input type="checkbox">a set of maps comparing night light intensities before and after the first two storms</label></li>
 <li><label><input type="checkbox">a map of the homes in Houston that lost power</label></li>
 <li><label><input type="checkbox">an estimate of the number of homes in Houston that lost power</label></li>
-<li><label><input type="checkbox">a map of the census tracts in Houston that lost power</label></li>
-<li><label><input type="checkbox">a plot comparing the distributions of median household income for census tracts that did and did not experience blackouts</label></li>
 <li><label><input type="checkbox">a brief reflection (approx. 100 words) summarizing your results and discussing any limitations to this study</label></li>
 </ul>
 </section>
@@ -387,14 +384,6 @@ Important
 <p><strong>Data file:</strong> <code>gis_osm_buildings_a_free_1.gpkg</code></p>
 <p>We can also obtain building data from OpenStreetMap. We again downloaded from Geofabrick and prepared a GeoPackage containing only houses in the Houston metropolitan area.<br>
 </p>
-</section>
-<section id="socioeconomic" class="level3">
-<h3 class="anchored" data-anchor-id="socioeconomic">Socioeconomic</h3>
-<p>We cannot readily get socioeconomic information for every home, so instead we obtained data from the <a href="https://www.census.gov/programs-surveys/acs">U.S. Census Bureau’s American Community Survey</a> for census tracts in 2019. The <em>folder</em> <code>ACS_2019_5YR_TRACT_48.gdb</code> is an ArcGIS <a href="https://desktop.arcgis.com/en/arcmap/latest/manage-data/administer-file-gdbs/file-geodatabases.htm">“file geodatabase”</a>, a multi-file proprietary format that’s roughly analogous to a GeoPackage file.<br>
-</p>
-<p>You can use <code>st_layers()</code> to explore the contents of the geodatabase. Each layer contains a subset of the fields documents in the <a href="https://www2.census.gov/geo/docs/maps-data/data/tiger/prejoined/ACSMetadata2011.txt">ACS metadata</a>.<br>
-</p>
-<p>The geodatabase contains a layer holding the geometry information (<code>ACS_2019_5YR_TRACT_48_TEXAS</code>), separate from the layers holding the ACS attributes. You have to combine the geometry with the attributes to get a feature layer that <code>sf</code> can use.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -417,7 +406,6 @@ Tip
 <li>find locations that experienced a blackout by creating a mask</li>
 <li>exclude highways from analysis</li>
 <li>identify homes that experienced blackouts by combining the locations of homes and blackouts</li>
-<li>identify the census tracts likely impacted by blackout</li>
 </ul>
 <p>Below is guidance and suggestions for each of these steps.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -433,6 +421,10 @@ Tip
 <p>For improved computational efficiency and easier interoperability with <code>sf</code>, I recommend using the <code>stars</code> package for raster handling.</p>
 </div>
 </div>
+<section id="data-merging" class="level3">
+<h3 class="anchored" data-anchor-id="data-merging">Data Merging</h3>
+<p>As mentioned above, Houston lies on the border of two tiles. You will need to combine these two tiles together to get one raster for each date (2021-02-07 and 2021-02-16). You can merge rasters using the method discussed in <a href="https://eds-223-geospatial.github.io/course-materials/labs/week4.html">Lab 4</a>, or, if you plan to use the <code>stars</code> package, you can combine them using <code>st_mosaic</code>.</p>
+</section>
 <section id="create-blackout-mask" class="level3">
 <h3 class="anchored" data-anchor-id="create-blackout-mask">Create blackout mask</h3>
 <p>To identify places that experienced a blackout, you should create a “mask” that indicates for each cell whether or not it experienced a blackout.</p>
