@@ -99,7 +99,7 @@ post_fire_bands <- list.files(post_fire_dir,
 post_fire_rast <- rast(post_fire_bands)
 
 # Read mask raster
-post_mask <- rast(here::here("data", "LC80340322016189-SC20170128091153", "LC80340322016205LGN00_cfmask_crop.tif"))
+post_mask <- rast(here::here("data", "LC80340322016205-SC20170127160728", "LC80340322016205LGN00_cfmask_crop.tif"))
 ```
 
 ```{r}
