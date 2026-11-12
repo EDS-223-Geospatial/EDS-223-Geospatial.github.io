@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Annie Adams">
-<meta name="dcterms.date" content="2026-11-11">
+<meta name="dcterms.date" content="2026-11-12">
 
 <title>Week 7: Lab</title>
 <style>
@@ -256,7 +256,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 11, 2026</p>
+        <p class="date">November 12, 2026</p>
       </div>
     </div>
     
@@ -294,7 +294,6 @@ window.Quarto = {
   <li><a href="#vegetation-false-color-nir-red-green" id="toc-vegetation-false-color-nir-red-green" class="nav-link" data-scroll-target="#vegetation-false-color-nir-red-green">Vegetation false color (NIR, Red, Green)</a></li>
   <li><a href="#swir-false-color-swir1-nir-green" id="toc-swir-false-color-swir1-nir-green" class="nav-link" data-scroll-target="#swir-false-color-swir1-nir-green">SWIR false color (SWIR1, NIR, Green)</a></li>
   </ul></li>
-  <li><a href="#ndvi" id="toc-ndvi" class="nav-link" data-scroll-target="#ndvi">7. NDVI</a></li>
   </ul>
 </nav>
     </div>
@@ -1024,69 +1023,9 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="ndvi" class="level2">
-<h2 class="anchored" data-anchor-id="ndvi">7. NDVI</h2>
-<p>The <strong>Normalized Difference Vegetation Index (NDVI)</strong> quantifies vegetation density and health using the contrast between how plants reflect near-infrared light (strongly) versus red light (absorbed for photosynthesis):</p>
-<p><span class="math display">\[\text{NDVI} = \frac{NIR - Red}{NIR + Red}\]</span></p>
-<p>NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; bare soil falls near 0 (slightly positive); negative values correspond to water, snow, or clouds.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define NDVI as the normalized difference between NIR and red bands</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red) <span class="sc">/</span> (nir <span class="sc">+</span> red)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># apply NDVI function to scaled reflectance values</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>ndvi_rast <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_scaled[[<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-|---------|---------|---------|---------|
-=========================================
-                                          </code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ndvi_rast) <span class="sc">+</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale_continuous</span>(</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">values   =</span> <span class="st">"brewer.rd_yl_gn"</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"NDVI"</span>,</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">position =</span> <span class="fu">tm_pos_out</span>(<span class="st">"right"</span>, <span class="st">"top"</span>))) <span class="sc">+</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"NDVI"</span>) <span class="sc">+</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>[`tm_scale_continous()`] Variable(s) "col" contains positive and negative
-values, so midpoint is set to 0. Set midpoint = NA to show the full range of
-visual values.
-This message is displayed once per session.</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="week7_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Explore NDVI
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ul>
-<li>How do the high-NDVI areas correspond to what you observed in the vegetation false color composite?</li>
-</ul>
-</div>
-</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

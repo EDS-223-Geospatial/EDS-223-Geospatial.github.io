@@ -353,37 +353,3 @@ tm_shape(landsat_scaled) +
 ```
 
 
-
-## 7. NDVI
-
-The **Normalized Difference Vegetation Index (NDVI)** quantifies vegetation density and health using the contrast between how plants reflect near-infrared light (strongly) versus red light (absorbed for photosynthesis):
-
-$$\text{NDVI} = \frac{NIR - Red}{NIR + Red}$$
-
-NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; bare soil falls near 0 (slightly positive); negative values correspond to water, snow, or clouds.
-
-```{r}
-
-# define NDVI as the normalized difference between NIR and red bands
-ndvi_fun <- function(nir, red){
-  (nir - red) / (nir + red)
-}
-
-# apply NDVI function to scaled reflectance values
-ndvi_rast <- lapp(landsat_scaled[[c("NIR", "red")]], fun = ndvi_fun)
-
-tm_shape(ndvi_rast) +
-  tm_raster(col.scale = tm_scale_continuous(
-    values   = "brewer.rd_yl_gn"
-  ),
-  col.legend = tm_legend(title = "NDVI",
-                         position = tm_pos_out("right", "top"))) +
-  tm_title("NDVI") +
-  tm_scalebar(position = c("left", "bottom"))
-```
-
-:::{.callout-warning icon=true}
-# Explore NDVI
-
-- How do the high-NDVI areas correspond to what you observed in the vegetation false color composite?
-:::
