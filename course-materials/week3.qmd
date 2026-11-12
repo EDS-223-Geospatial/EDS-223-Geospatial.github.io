@@ -23,6 +23,10 @@ knitr::include_graphics("images/week3-image.png")
 | {{< fa download title="download" >}} Lab materials to download                  | [Spatial joins, topological relationships, and distance relationships](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week3){target="_blank"} |
 | {{< fa key title="key" >}} Lab solution                                         | [Spatial joins, topological relationships, and distance relationships](labs/week3.qmd) |
 | {{< fa comments title="two speech bubbles" >}} Discussion               | [Practice vector operations](discussions/week3-discussion.qmd) |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Discussion Slides | [Vector Operations](https://docs.google.com/presentation/d/1O93VKmCqT3g4GgXAb0n-QIpvQWJfQEwi/edit?usp=sharing&ouid=114976243173632226566&rtpof=true&sd=true) | 
+
+
+
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

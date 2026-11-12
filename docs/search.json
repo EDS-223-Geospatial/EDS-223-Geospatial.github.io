@@ -109,7 +109,7 @@
     "href": "course-materials/week3.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials",
     "title": "Spatial and geometry operations with vector data",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab materials to download\nSpatial joins, topological relationships, and distance relationships\n\n\n Lab solution\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice vector operations"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to basic spatial data and geometry operations with vector data\n\n\n Lab materials to download\nSpatial joins, topological relationships, and distance relationships\n\n\n Lab solution\nSpatial joins, topological relationships, and distance relationships\n\n\n Discussion\nPractice vector operations\n\n\n Discussion Slides\nVector Operations"
   },
   {
     "objectID": "course-materials/week3.html#assignment-reminders",
@@ -935,7 +935,7 @@
     "href": "course-materials/week4.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials",
     "title": "Raster spatial and geometry operations",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to raster data\n\n\n Lab materials to download\nBasics of raster operations with terra\n\n\n Lab solution\nBasics of raster operations with terra\n\n\n Discussion\nPractice raster manipulations"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nIntro to raster data\n\n\n Lab materials to download\nBasics of raster operations with terra\n\n\n Lab solution\nBasics of raster operations with terra\n\n\n Discussion\nPractice raster manipulations\n\n\n Discussion Slides\nTerra vs Stars"
   },
   {
     "objectID": "course-materials/week4.html#assignment-reminders",
