@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Annie Adams">
-<meta name="dcterms.date" content="2026-11-10">
+<meta name="dcterms.date" content="2026-11-11">
 
 <title>Week 7: Lab</title>
 <style>
@@ -256,7 +256,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 10, 2026</p>
+        <p class="date">November 11, 2026</p>
       </div>
     </div>
     
@@ -285,13 +285,16 @@ window.Quarto = {
   <li><a href="#visualizing-individual-bands" id="toc-visualizing-individual-bands" class="nav-link" data-scroll-target="#visualizing-individual-bands">Visualizing individual bands</a></li>
   </ul></li>
   <li><a href="#reflectance-scaling" id="toc-reflectance-scaling" class="nav-link" data-scroll-target="#reflectance-scaling">4. Reflectance scaling</a></li>
-  <li><a href="#true-color-imagery" id="toc-true-color-imagery" class="nav-link" data-scroll-target="#true-color-imagery">5. True color imagery</a></li>
+  <li><a href="#true-color-imagery" id="toc-true-color-imagery" class="nav-link" data-scroll-target="#true-color-imagery">5. True color imagery</a>
+  <ul class="collapse">
+  <li><a href="#gamma-correction" id="toc-gamma-correction" class="nav-link" data-scroll-target="#gamma-correction">Gamma correction</a></li>
+  </ul></li>
   <li><a href="#false-color-imagery" id="toc-false-color-imagery" class="nav-link" data-scroll-target="#false-color-imagery">6. False color imagery</a>
   <ul class="collapse">
   <li><a href="#vegetation-false-color-nir-red-green" id="toc-vegetation-false-color-nir-red-green" class="nav-link" data-scroll-target="#vegetation-false-color-nir-red-green">Vegetation false color (NIR, Red, Green)</a></li>
   <li><a href="#swir-false-color-swir1-nir-green" id="toc-swir-false-color-swir1-nir-green" class="nav-link" data-scroll-target="#swir-false-color-swir1-nir-green">SWIR false color (SWIR1, NIR, Green)</a></li>
-  <li><a href="#comparing-all-three-composites" id="toc-comparing-all-three-composites" class="nav-link" data-scroll-target="#comparing-all-three-composites">Comparing all three composites</a></li>
   </ul></li>
+  <li><a href="#ndvi" id="toc-ndvi" class="nav-link" data-scroll-target="#ndvi">7. NDVI</a></li>
   </ul>
 </nav>
     </div>
@@ -746,13 +749,128 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 </div>
 </div>
 </div>
+<p>Notice how dark our image looks? This is because our pixel brightness values are closer to 0 (remember, lower values = darker).</p>
+<blockquote class="blockquote">
+<p>“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”</p>
+</blockquote>
+<p>The <code>plotRGB()</code> function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.</p>
+<p>But why would you want to normalize the colors in an image?</p>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="../discussions/images/raster-image-stretch-dark.jpg" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="../discussions/images/raster-image-stretch-light.jpg" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>landsat_stretch <span class="ot">&lt;-</span> landsat_scaled[[<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)]]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_stretch, <span class="at">r =</span> <span class="dv">1</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">3</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The linear stretch maps the minimum pixel value to 0 and the maximum to 255, distributing all values across the full display range to increase visual contrast.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 27%">
+<col style="width: 16%">
+<col style="width: 26%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Reflectance</th>
+<th style="text-align: center;">Before stretch (0–255)</th>
+<th style="text-align: center;">Before color</th>
+<th style="text-align: center;">After stretch (0–255)</th>
+<th style="text-align: center;">After color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.02 (min)</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">Very dark</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Black</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">Very dark</td>
+<td style="text-align: center;">64</td>
+<td style="text-align: center;">Dark gray</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">Dark</td>
+<td style="text-align: center;">128</td>
+<td style="text-align: center;">Mid gray</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.17</td>
+<td style="text-align: center;">43</td>
+<td style="text-align: center;">Dark</td>
+<td style="text-align: center;">191</td>
+<td style="text-align: center;">Light gray</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.22 (max)</td>
+<td style="text-align: center;">56</td>
+<td style="text-align: center;">Dark</td>
+<td style="text-align: center;">255</td>
+<td style="text-align: center;">White</td>
+</tr>
+</tbody>
+</table>
+<section id="gamma-correction" class="level3">
+<h3 class="anchored" data-anchor-id="gamma-correction">Gamma correction</h3>
+<p><strong>Gamma correction</strong> applies a power transform to each pixel value. Because surface reflectance values are all between 0 and 1, raising them to a power less than 1 pushes mid-range values upward without clipping, brightening the midtones while preserving relative differences across the scene. <span class="math display">\[\text{display value} = \text{reflectance}^{\gamma}\]</span></p>
+<p>A gamma of 0.4–0.5 works well for Landsat over most landscapes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>landsat_gamma <span class="ot">&lt;-</span> landsat_scaled[[<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)]]<span class="sc">^</span><span class="fl">0.4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(landsat_gamma) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_gamma) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"True color (gamma = 0.4)"</span>) <span class="sc">+</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week7_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="false-color-imagery" class="level2">
 <h2 class="anchored" data-anchor-id="false-color-imagery">6. False color imagery</h2>
 <p>A <strong>false color composite</strong> assigns satellite bands beyond the visible spectrum (or in a non-standard order) to the display channels, letting us highlight features that are difficult to distinguish in true color.</p>
 <section id="vegetation-false-color-nir-red-green" class="level3">
 <h3 class="anchored" data-anchor-id="vegetation-false-color-nir-red-green">Vegetation false color (NIR, Red, Green)</h3>
-<p>Placing the <strong>near infrared band</strong> in the red channel makes healthy vegetation appear vivid red — useful for assessing vegetation extent and health.</p>
+<p>Placing the <strong>near infrared band</strong> in the red channel makes healthy vegetation appear vivid red. This is useful for assessing vegetation extent and health.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 44%">
@@ -785,18 +903,18 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 </tbody>
 </table>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"False color: NIR–Red–Green"</span>) <span class="sc">+</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"False color: NIR–Red–Green"</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week7_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week7_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -837,61 +955,85 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 </tbody>
 </table>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"SWIR1"</span>, <span class="st">"NIR"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"False color: SWIR1–NIR–Green"</span>) <span class="sc">+</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"SWIR1"</span>, <span class="st">"NIR"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"False color: SWIR1–NIR–Green"</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week7_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week7_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="comparing-all-three-composites" class="level3">
-<h3 class="anchored" data-anchor-id="comparing-all-three-composites">Comparing all three composites</h3>
+</section>
+<section id="ndvi" class="level2">
+<h2 class="anchored" data-anchor-id="ndvi">7. NDVI</h2>
+<p>The <strong>Normalized Difference Vegetation Index (NDVI)</strong> quantifies vegetation density and health using the contrast between how plants reflect near-infrared light (strongly) versus red light (absorbed for photosynthesis):</p>
+<p><span class="math display">\[\text{NDVI} = \frac{NIR - Red}{NIR + Red}\]</span></p>
+<p>NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; water and bare soil fall near 0 or below; negative values correspond to water, snow, or clouds.</p>
 <div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>map_true <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"True color"</span>)</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>map_nir <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"NIR false color"</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>map_swir <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(landsat_scaled) <span class="sc">+</span></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_rgb</span>(<span class="at">col =</span> <span class="fu">tm_vars</span>(<span class="fu">c</span>(<span class="st">"SWIR1"</span>, <span class="st">"NIR"</span>, <span class="st">"green"</span>), <span class="at">multivariate =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">col.scale =</span> <span class="fu">tm_scale_rgb</span>(<span class="at">max_color_value =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"SWIR false color"</span>)</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(map_true, map_nir, map_swir, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define NDVI as the normalized difference between NIR and red bands</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  (nir <span class="sc">-</span> red) <span class="sc">/</span> (nir <span class="sc">+</span> red)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co"># apply NDVI function to scaled reflectance values</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>ndvi_rast <span class="ot">&lt;-</span> <span class="fu">lapp</span>(landsat_scaled[[<span class="fu">c</span>(<span class="st">"NIR"</span>, <span class="st">"red"</span>)]], <span class="at">fun =</span> ndvi_fun)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+|---------|---------|---------|---------|
+=========================================
+                                          </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(ndvi_rast) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(<span class="at">col.scale =</span> <span class="fu">tm_scale_continuous</span>(</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">values   =</span> <span class="st">"brewer.rd_yl_gn"</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="at">title =</span> <span class="st">"NDVI"</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">position =</span> <span class="fu">tm_pos_out</span>(<span class="st">"right"</span>, <span class="st">"top"</span>))) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"NDVI"</span>) <span class="sc">+</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_scalebar</span>(<span class="at">position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.
-SpatRaster object downsampled to 3189 by 3137 cells.
-SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+<pre><code>SpatRaster object downsampled to 3189 by 3137 cells.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>[`tm_scale_continous()`] Variable(s) "col" contains positive and negative
+values, so midpoint is set to 0. Set midpoint = NA to show the full range of
+visual values.
+This message is displayed once per session.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week7_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week7_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Explore NDVI
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>How do the high-NDVI areas correspond to what you observed in the vegetation false color composite?</li>
+</ul>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

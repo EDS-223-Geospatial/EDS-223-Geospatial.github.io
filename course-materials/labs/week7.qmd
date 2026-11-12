@@ -16,7 +16,7 @@ editor_options:
 #| echo: false
 #| out-width: "75%"
 #| fig-align: "center"
-knitr::include_graphics("images/Landsat8-First-Light.png")
+knitr::include_graphics(here::here("course-materials/labs/images/Landsat8-First-Light.png"))
 ```
 
 ::: {.gray-text .center-text}
@@ -253,13 +253,65 @@ tm_shape(landsat_scaled) +
   tm_scalebar(position = c("left", "bottom"))
 ```
 
+
+Notice how dark our image looks? This is because our pixel brightness values are closer to 0 (remember, lower values = darker). 
+
+> "When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image."
+
+The `plotRGB()` function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.
+
+But why would you want to normalize the colors in an image?
+
+::: {layout-ncol=2}
+![](../discussions/images/raster-image-stretch-dark.jpg)
+
+![](../discussions/images/raster-image-stretch-light.jpg)
+:::
+
+
+
+
+```{r}
+landsat_stretch <- landsat_scaled[[c("red", "green", "blue")]]
+
+plotRGB(landsat_stretch, r = 1, g = 2, b = 3, stretch = "lin")
+```
+
+The linear stretch maps the minimum pixel value to 0 and the maximum to 255, distributing all values across the full display range to increase visual contrast.
+
+| Reflectance | Before stretch (0–255) | Before color | After stretch (0–255) | After color |
+|:-----------:|:----------------------:|:------------:|:---------------------:|:-----------:|
+| 0.02 (min)  | 5                      | Very dark    | 0                     | Black       |
+| 0.07        | 18                     | Very dark    | 64                    | Dark gray   |
+| 0.12        | 31                     | Dark         | 128                   | Mid gray    |
+| 0.17        | 43                     | Dark         | 191                   | Light gray  |
+| 0.22 (max)  | 56                     | Dark         | 255                   | White       |
+
+### Gamma correction
+
+**Gamma correction** applies a power transform to each pixel value. Because surface reflectance values are all between 0 and 1, raising them to a power less than 1 pushes mid-range values upward without clipping, brightening the midtones while preserving relative differences across the scene. 
+$$\text{display value} = \text{reflectance}^{\gamma}$$
+
+A gamma of 0.4–0.5 works well for Landsat over most landscapes.
+
+```{r}
+landsat_gamma <- landsat_scaled[[c("red", "green", "blue")]]^0.4
+names(landsat_gamma) <- c("red", "green", "blue")
+
+tm_shape(landsat_gamma) +
+  tm_rgb(col = tm_vars(c("red", "green", "blue"), multivariate = TRUE),
+         col.scale = tm_scale_rgb(max_color_value = 1)) +
+  tm_title("True color (gamma = 0.4)") +
+  tm_scalebar(position = c("left", "bottom"))
+```
+
 ## 6. False color imagery
 
 A **false color composite** assigns satellite bands beyond the visible spectrum (or in a non-standard order) to the display channels, letting us highlight features that are difficult to distinguish in true color.
 
 ### Vegetation false color (NIR, Red, Green)
 
-Placing the **near infrared band** in the red channel makes healthy vegetation appear vivid red — useful for assessing vegetation extent and health.
+Placing the **near infrared band** in the red channel makes healthy vegetation appear vivid red. This is useful for assessing vegetation extent and health.
 
 | Display channel | Satellite band | Why |
 |:----------------|:---------------|:----|
@@ -293,27 +345,38 @@ tm_shape(landsat_scaled) +
   tm_scalebar(position = c("left", "bottom"))
 ```
 
-### Comparing all three composites
+
+
+## 7. NDVI
+
+The **Normalized Difference Vegetation Index (NDVI)** quantifies vegetation density and health using the contrast between how plants reflect near-infrared light (strongly) versus red light (absorbed for photosynthesis):
+
+$$\text{NDVI} = \frac{NIR - Red}{NIR + Red}$$
+
+NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; water and bare soil fall near 0 or below; negative values correspond to water, snow, or clouds.
 
 ```{r}
-#| code-fold: true
 
-map_true <- tm_shape(landsat_scaled) +
-  tm_rgb(col = tm_vars(c("red", "green", "blue"), multivariate = TRUE),
-         col.scale = tm_scale_rgb(max_color_value = 1)) +
-  tm_title("True color")
+# define NDVI as the normalized difference between NIR and red bands
+ndvi_fun <- function(nir, red){
+  (nir - red) / (nir + red)
+}
 
-map_nir <- tm_shape(landsat_scaled) +
-  tm_rgb(col = tm_vars(c("NIR", "red", "green"), multivariate = TRUE),
-         col.scale = tm_scale_rgb(max_color_value = 1)) +
-  tm_title("NIR false color")
+# apply NDVI function to scaled reflectance values
+ndvi_rast <- lapp(landsat_scaled[[c("NIR", "red")]], fun = ndvi_fun)
 
-map_swir <- tm_shape(landsat_scaled) +
-  tm_rgb(col = tm_vars(c("SWIR1", "NIR", "green"), multivariate = TRUE),
-         col.scale = tm_scale_rgb(max_color_value = 1)) +
-  tm_title("SWIR false color")
-
-tmap_arrange(map_true, map_nir, map_swir, nrow = 1)
+tm_shape(ndvi_rast) +
+  tm_raster(col.scale = tm_scale_continuous(
+    values   = "brewer.rd_yl_gn"
+  ),
+  col.legend = tm_legend(title = "NDVI",
+                         position = tm_pos_out("right", "top"))) +
+  tm_title("NDVI") +
+  tm_scalebar(position = c("left", "bottom"))
 ```
 
+:::{.callout-warning icon=true}
+# Explore NDVI
 
+- How do the high-NDVI areas correspond to what you observed in the vegetation false color composite?
+:::
