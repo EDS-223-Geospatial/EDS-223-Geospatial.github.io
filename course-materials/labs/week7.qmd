@@ -258,9 +258,8 @@ Notice how dark our image looks? This is because our pixel brightness values are
 
 > "When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image."
 
-The `plotRGB()` function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.
+The `plotRGB()` function allows you to apply a linear stretch to normalize the colors in an image. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. 
 
-But why would you want to normalize the colors in an image?
 
 ::: {layout-ncol=2}
 ![](../discussions/images/raster-image-stretch-dark.jpg)
@@ -268,13 +267,13 @@ But why would you want to normalize the colors in an image?
 ![](../discussions/images/raster-image-stretch-light.jpg)
 :::
 
-
+Let's stretch our true color image:
 
 
 ```{r}
-landsat_stretch <- landsat_scaled[[c("red", "green", "blue")]]
 
-plotRGB(landsat_stretch, r = 1, g = 2, b = 3, stretch = "lin")
+plotRGB(landsat_scaled, r = 3, g = 2, b = 1, stretch = "lin")
+
 ```
 
 The linear stretch maps the minimum pixel value to 0 and the maximum to 255, distributing all values across the full display range to increase visual contrast.
@@ -293,6 +292,14 @@ The linear stretch maps the minimum pixel value to 0 and the maximum to 255, dis
 $$\text{display value} = \text{reflectance}^{\gamma}$$
 
 A gamma of 0.4–0.5 works well for Landsat over most landscapes.
+
+| Reflectance | Before gamma (0–255) | Before color | After gamma = 0.4 (0–255) | After color |
+|:-----------:|:--------------------:|:------------:|:-------------------------:|:-----------:|
+| 0.02 (min)  | 5                    | Black        | 53                        | Dark gray   |
+| 0.07        | 18                   | Very dark    | 88                        | Dark gray   |
+| 0.12        | 31                   | Dark         | 109                       | Gray        |
+| 0.17        | 43                   | Dark         | 125                       | Mid gray    |
+| 0.22 (max)  | 56                   | Dark         | 139                       | Mid gray    |
 
 ```{r}
 landsat_gamma <- landsat_scaled[[c("red", "green", "blue")]]^0.4
@@ -353,7 +360,7 @@ The **Normalized Difference Vegetation Index (NDVI)** quantifies vegetation dens
 
 $$\text{NDVI} = \frac{NIR - Red}{NIR + Red}$$
 
-NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; water and bare soil fall near 0 or below; negative values correspond to water, snow, or clouds.
+NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; bare soil falls near 0 (slightly positive); negative values correspond to water, snow, or clouds.
 
 ```{r}
 

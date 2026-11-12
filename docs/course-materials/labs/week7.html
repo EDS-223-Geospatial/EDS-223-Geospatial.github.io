@@ -753,8 +753,7 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 <blockquote class="blockquote">
 <p>“When the range of pixel brightness values is closer to 0, a darker image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image. When the range of pixel brightness values is closer to 255, a lighter image is rendered by default. You can stretch the values to extend to the full 0-255 range of potential values to increase the visual contrast of the image.”</p>
 </blockquote>
-<p>The <code>plotRGB()</code> function allows you to apply a stretch to normalize the colors in an image. You can either apply a linear stretch or histogram equalization. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster. A histogram equalization stretches dense parts of the histogram and condenses sparse parts.</p>
-<p>But why would you want to normalize the colors in an image?</p>
+<p>The <code>plotRGB()</code> function allows you to apply a linear stretch to normalize the colors in an image. A linear stretch distributes the values across the entire histogram range defined by the max/min lower bounds of the original raster.</p>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -765,10 +764,9 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 </div>
 </div>
 </div>
+<p>Let’s stretch our true color image:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>landsat_stretch <span class="ot">&lt;-</span> landsat_scaled[[<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)]]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_stretch, <span class="at">r =</span> <span class="dv">1</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">3</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_scaled, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -837,6 +835,61 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 <h3 class="anchored" data-anchor-id="gamma-correction">Gamma correction</h3>
 <p><strong>Gamma correction</strong> applies a power transform to each pixel value. Because surface reflectance values are all between 0 and 1, raising them to a power less than 1 pushes mid-range values upward without clipping, brightening the midtones while preserving relative differences across the scene. <span class="math display">\[\text{display value} = \text{reflectance}^{\gamma}\]</span></p>
 <p>A gamma of 0.4–0.5 works well for Landsat over most landscapes.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 24%">
+<col style="width: 15%">
+<col style="width: 30%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Reflectance</th>
+<th style="text-align: center;">Before gamma (0–255)</th>
+<th style="text-align: center;">Before color</th>
+<th style="text-align: center;">After gamma = 0.4 (0–255)</th>
+<th style="text-align: center;">After color</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0.02 (min)</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">Black</td>
+<td style="text-align: center;">53</td>
+<td style="text-align: center;">Dark gray</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.07</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">Very dark</td>
+<td style="text-align: center;">88</td>
+<td style="text-align: center;">Dark gray</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">Dark</td>
+<td style="text-align: center;">109</td>
+<td style="text-align: center;">Gray</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0.17</td>
+<td style="text-align: center;">43</td>
+<td style="text-align: center;">Dark</td>
+<td style="text-align: center;">125</td>
+<td style="text-align: center;">Mid gray</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">0.22 (max)</td>
+<td style="text-align: center;">56</td>
+<td style="text-align: center;">Dark</td>
+<td style="text-align: center;">139</td>
+<td style="text-align: center;">Mid gray</td>
+</tr>
+</tbody>
+</table>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>landsat_gamma <span class="ot">&lt;-</span> landsat_scaled[[<span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)]]<span class="sc">^</span><span class="fl">0.4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -977,7 +1030,7 @@ max 0.74501 0.7985525 0.84093   1     1     1</code></pre>
 <h2 class="anchored" data-anchor-id="ndvi">7. NDVI</h2>
 <p>The <strong>Normalized Difference Vegetation Index (NDVI)</strong> quantifies vegetation density and health using the contrast between how plants reflect near-infrared light (strongly) versus red light (absorbed for photosynthesis):</p>
 <p><span class="math display">\[\text{NDVI} = \frac{NIR - Red}{NIR + Red}\]</span></p>
-<p>NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; water and bare soil fall near 0 or below; negative values correspond to water, snow, or clouds.</p>
+<p>NDVI ranges from −1 to 1. Values above ~0.3 generally indicate healthy vegetation; bare soil falls near 0 (slightly positive); negative values correspond to water, snow, or clouds.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define NDVI as the normalized difference between NIR and red bands</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>ndvi_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(nir, red){</span>
