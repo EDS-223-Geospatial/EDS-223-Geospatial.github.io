@@ -80,7 +80,6 @@ Your analysis will be based on remotely-sensed night lights data, acquired from 
 
 To determine the number of homes that lost power, you link (spatially join) these areas with [OpenStreetMap](https://www.openstreetmap.org/#map=4/38.01/-95.84) data on buildings and roads. 
 
-To investigate potential socioeconomic factors that influenced recovery, you will link your analysis with data from the US Census Bureau.
 
 ## Description
 
