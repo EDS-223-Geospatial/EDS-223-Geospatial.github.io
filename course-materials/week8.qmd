@@ -1,5 +1,5 @@
 ---
-title: "Landcover Classification & Active Remote Sensing"
+title: "Landcover Classification"
 subtitle: "Week 8"
 ---
 
@@ -20,10 +20,10 @@ knitr::include_graphics("images/week10-image.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Fundamentals of active remote sensing: LiDAR and RADAR](https://docs.google.com/presentation/d/1rcbMqAokB75Y8FJw-AmkAuxz3hPydXLJamKz6wrsvko/present?slide=id.g19295fc0117_0_56){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification](labs/week8.qmd)        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week8){target="_blank"} |
-| {{< fa comments title="two speech bubbles" >}} Discussion             | [Generalizable functions](discussions/week8-discussion.qmd) |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Landcover Classification](https://docs.google.com/presentation/d/1OMvbEt96tAAxBPJR4LojCoXn_qECgz5sZmT-7Q95mfk/edit?usp=sharing){target="_blank"}                  |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification]()        |
+| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion             | [Generalizable functions]() |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 
@@ -35,5 +35,5 @@ All assignments are **due at 11:59 PM** on the date listed.
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
 | HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/12/2026    | 11/21/2026 |
-| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/12/2026    | 12/02/2026 |
+| PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/19/2026    | 12/02/2026 |
 
