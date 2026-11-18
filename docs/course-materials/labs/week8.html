@@ -269,7 +269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#training-classifier" id="toc-training-classifier" class="nav-link" data-scroll-target="#training-classifier">1. Training classifier</a></li>
   <li><a href="#classify-image" id="toc-classify-image" class="nav-link" data-scroll-target="#classify-image">2. Classify image</a></li>
-  <li><a href="#plot-results" id="toc-plot-results" class="nav-link" data-scroll-target="#plot-results">3. Plot results</a></li>
+  <li><a href="#assess-accuracy" id="toc-assess-accuracy" class="nav-link" data-scroll-target="#assess-accuracy">3. Assess accuracy</a></li>
+  <li><a href="#plot-results" id="toc-plot-results" class="nav-link" data-scroll-target="#plot-results">4. Plot results</a></li>
   </ul></li>
   <li><a href="#unsupervised" id="toc-unsupervised" class="nav-link" data-scroll-target="#unsupervised">Unsupervised</a>
   <ul class="collapse">
@@ -327,9 +328,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="task" class="level1">
 <h1>Task</h1>
-<p>In this lab, we are using a form of supervised classification – a decision tree classifier.</p>
-<p><a href="https://medium.com/@ml.at.berkeley/machine-learning-crash-course-part-5-decision-trees-and-ensemble-models-dcc5a36af8cd">Decision trees</a> classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data.</p>
-<p>We will also use a form of unsupervised classification – K means clustering. <a href="">K Means Clustering</a> classifies pixels based on their distance to a mean. These conditions are developed based on the relationship of reflectance values alone, without any labeled data.</p>
+<p>In this lab, we are using a form of supervised classification (a decision tree classifier) and unsupervised classification ( k means clustering).</p>
+<p>Decision trees classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data.</p>
+<p>K Means Clustering classifiy pixels based on their distance to a mean. These conditions are developed based on the relationship of reflectance values alone, without any labeled data.</p>
 <p>In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types:</p>
 <ul>
 <li>green vegetation</li>
@@ -430,7 +431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="load-study-area" class="level2">
 <h2 class="anchored" data-anchor-id="load-study-area">3. Load study area</h2>
-<p>We want to constrain our analysis to the southern portion of the county where we have training data, so we’ll read in a file that defines the area we would like to study.</p>
+<p>We want to constrain our analysis to the southern portion of Santa Barbara County. This is our study area, and the training data we’ll use was collected to represent the land cover types found here.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># read in shapefile for southern portion of SB county</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>SB_county_south <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"SB_county_south.shp"</span>)) <span class="sc">%&gt;%</span></span>
@@ -456,7 +457,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now, we can crop and mask the Landsat data to our study area.</p>
 <ul>
 <li><strong>Why</strong>? This reduces the amount of data we’ll be working with and therefore saves computational time</li>
-<li><strong>Bonus</strong>: We can also remove any objects we’re no longer working with to save space</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crop Landsat scene to the extent of the SB county shapefile</span></span>
@@ -465,10 +465,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mask the raster to southern portion of SB county</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>landsat_masked <span class="ot">&lt;-</span> <span class="fu">mask</span>(landsat_cropped, SB_county_south)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># remove unnecessary object from environment</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(landsat, SB_county_south, landsat_cropped)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_masked, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plotRGB</span>(landsat_masked, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">g =</span> <span class="dv">2</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">stretch =</span> <span class="st">"lin"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -499,27 +497,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> <span class="fu">classify</span>(landsat_masked, <span class="at">rcl =</span> rcl)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust values based on scaling factor</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> (landsat <span class="sc">*</span> <span class="fl">0.0000275</span> <span class="sc">-</span> <span class="fl">0.2</span>) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>landsat <span class="ot">&lt;-</span> (landsat <span class="sc">*</span> <span class="fl">0.0000275</span> <span class="sc">-</span> <span class="fl">0.2</span>) </span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># check values are 0 - 100</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># check values are 0 - 1</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(landsat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      blue            green             red              NIR        
- Min.   : 1.106   Min.   : 0.743   Min.   : 0.004   Min.   : 0.232  
- 1st Qu.: 2.490   1st Qu.: 2.173   1st Qu.: 1.084   1st Qu.: 0.749  
- Median : 3.064   Median : 4.588   Median : 4.447   Median :14.394  
- Mean   : 3.833   Mean   : 5.017   Mean   : 4.920   Mean   :11.515  
- 3rd Qu.: 4.626   3rd Qu.: 6.758   3rd Qu.: 7.404   3rd Qu.:19.341  
- Max.   :39.425   Max.   :53.321   Max.   :56.684   Max.   :57.080  
- NA's   :39856    NA's   :39855    NA's   :39855    NA's   :39856   
-     SWIR1            SWIR2       
- Min.   : 0.097   Min.   : 0.199  
- 1st Qu.: 0.410   1st Qu.: 0.600  
- Median :13.432   Median : 8.155  
- Mean   :11.877   Mean   : 8.516  
- 3rd Qu.:18.695   3rd Qu.:13.066  
- Max.   :49.132   Max.   :48.068  
- NA's   :42892    NA's   :46809   </code></pre>
+<pre><code>      blue           green            red             NIR       
+ Min.   :0.011   Min.   :0.007   Min.   :0.000   Min.   :0.002  
+ 1st Qu.:0.025   1st Qu.:0.022   1st Qu.:0.011   1st Qu.:0.007  
+ Median :0.031   Median :0.046   Median :0.044   Median :0.144  
+ Mean   :0.038   Mean   :0.050   Mean   :0.049   Mean   :0.115  
+ 3rd Qu.:0.046   3rd Qu.:0.068   3rd Qu.:0.074   3rd Qu.:0.193  
+ Max.   :0.394   Max.   :0.533   Max.   :0.567   Max.   :0.571  
+ NA's   :39856   NA's   :39855   NA's   :39855   NA's   :39856  
+     SWIR1           SWIR2      
+ Min.   :0.001   Min.   :0.002  
+ 1st Qu.:0.004   1st Qu.:0.006  
+ Median :0.134   Median :0.082  
+ Mean   :0.119   Mean   :0.085  
+ 3rd Qu.:0.187   3rd Qu.:0.131  
+ Max.   :0.491   Max.   :0.481  
+ NA's   :42892   NA's   :46809  </code></pre>
 </div>
 </div>
 </section>
@@ -535,20 +533,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>training_data <span class="ot">&lt;-</span> <span class="fu">st_read</span>(here<span class="sc">::</span><span class="fu">here</span>( <span class="st">"data"</span>, <span class="st">"trainingdata.shp"</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_transform</span>(., <span class="at">crs =</span> <span class="fu">crs</span>(landsat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Visualize training data </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tm_shape</span>(training_data) <span class="sc">+</span> </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_polygons</span>(<span class="at">fill =</span> <span class="st">"type"</span>)<span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="st">"Training Data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="week8_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Now, we can extract the spectral reflectance values at each site to create a data frame that relates land cover types to their spectral reflectance.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract reflectance values at training sites</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>training_data_values <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(landsat, training_data, <span class="at">df =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># convert training data to data frame</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>training_data_attributes <span class="ot">&lt;-</span> training_data <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># join training data attributes and extracted reflectance values</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>SB_training_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(training_data_values, training_data_attributes,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span> <span class="ot">=</span> <span class="st">"id"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type)) <span class="co"># convert landcover type to factor</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># extract reflectance values at training sites</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>training_data_values <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">extract</span>(landsat, training_data, <span class="at">df =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop training data geometry</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>training_data_attributes <span class="ot">&lt;-</span> training_data <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_drop_geometry</span>()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># join training data attributes and extracted reflectance values</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>SB_training_data <span class="ot">&lt;-</span> <span class="fu">left_join</span>(training_data_values, training_data_attributes,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                              <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"ID"</span> <span class="ot">=</span> <span class="st">"id"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">as.factor</span>(type)) <span class="co"># convert landcover type to factor</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(SB_training_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  ID      blue     green       red       NIR     SWIR1     SWIR2
+1  1 0.0391675 0.0469225 0.0509650 0.1941575 0.1712775 0.0928200
+2  1 0.0371875 0.0592700 0.0509925 0.1941300 0.1686375 0.1079175
+3  1 0.0329800 0.0509375 0.0542375 0.1864300 0.1766400 0.1041500
+4  1 0.0370775 0.0509650 0.0575650 0.1903075 0.1766125 0.1079175
+5  1 0.0371050 0.0592150 0.0542650 0.1902800 0.1845600 0.1041225
+6  1 0.0391675 0.0509925 0.0542925 0.1786200 0.1686650 0.1079175
+              type
+1 green_vegetation
+2 green_vegetation
+3 green_vegetation
+4 green_vegetation
+5 green_vegetation
+6 green_vegetation</code></pre>
+</div>
 </div>
 <p>Next, let’s train the decision tree classifier!</p>
 <p>To train our decision tree, we first need to establish our model formula (i.e.&nbsp;what our response and predictor variables are).</p>
@@ -559,14 +589,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>We also set <code>na.action = na.omit</code> to remove any pixels with <code>NA</code>s from the analysis.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># establish model formula</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>SB_formula <span class="ot">&lt;-</span> type <span class="sc">~</span> red <span class="sc">+</span> green <span class="sc">+</span> blue <span class="sc">+</span> NIR <span class="sc">+</span> SWIR1 <span class="sc">+</span> SWIR2</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># train decision tree</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>SB_decision_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="at">formula =</span> SB_formula,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> SB_training_data,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"class"</span>,</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.action =</span> na.omit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># establish model formula</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SB_formula <span class="ot">&lt;-</span> type <span class="sc">~</span> red <span class="sc">+</span> green <span class="sc">+</span> blue <span class="sc">+</span> NIR <span class="sc">+</span> SWIR1 <span class="sc">+</span> SWIR2</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># train decision tree</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>SB_decision_tree <span class="ot">&lt;-</span> <span class="fu">rpart</span>(<span class="at">formula =</span> SB_formula,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>                          <span class="at">data =</span> SB_training_data,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                          <span class="at">method =</span> <span class="st">"class"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                          <span class="at">na.action =</span> na.omit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>To understand how our decision tree will classify pixels, we can plot the results!</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -585,13 +615,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot decision tree</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(SB_decision_tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot decision tree</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">prp</span>(SB_decision_tree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week8_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week8_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -602,40 +632,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.</p>
 <p>The <code>terra</code> package includes a <code>predict()</code> function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The <code>predict()</code> function will return a raster layer with integer values. These integer values correspond to the <em>factor levels</em> in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classify image based on decision tree</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>SB_classification_dt <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">predict</span>(landsat, SB_decision_tree, <span class="at">type =</span> <span class="st">"class"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect level to understand the order of classes in prediction</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(SB_training_data<span class="sc">$</span>type)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># classify image based on decision tree</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>SB_classification_dt <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">predict</span>(landsat, SB_decision_tree, <span class="at">type =</span> <span class="st">"class"</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># inspect level to understand the order of classes in prediction</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(SB_training_data<span class="sc">$</span>type)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "green_vegetation" "soil_dead_grass"  "urban"            "water"           </code></pre>
 </div>
 </div>
 </section>
+<section id="assess-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="assess-accuracy">3. Assess accuracy</h2>
+<p>To get a sense of how well our decision tree performs, we can compare the classifier’s predictions against the known labels in our training data. We’ll use <code>predict()</code> on the same training data used to build the model, then compare predictions to actual land cover types using a confusion matrix.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict on training data</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>train_predictions <span class="ot">&lt;-</span> <span class="fu">predict</span>(SB_decision_tree, SB_training_data, <span class="at">type =</span> <span class="st">"class"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create confusion matrix</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="at">predicted =</span> train_predictions, <span class="at">actual =</span> SB_training_data<span class="sc">$</span>type)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>confusion_matrix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  actual
+predicted          green_vegetation soil_dead_grass urban water
+  green_vegetation             2328               7    18     0
+  soil_dead_grass                 4             931    19     0
+  urban                           4              43   940     0
+  water                           0               0     0  2608</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate overall accuracy</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>overall_accuracy <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">diag</span>(confusion_matrix)) <span class="sc">/</span> <span class="fu">sum</span>(confusion_matrix)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Overall accuracy: "</span>, <span class="fu">round</span>(overall_accuracy <span class="sc">*</span> <span class="dv">100</span>, <span class="dv">1</span>), <span class="st">"%"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Overall accuracy: 98.6%"</code></pre>
+</div>
+</div>
+<p>The confusion matrix shows how many pixels were correctly classified (diagonal) versus misclassified (off-diagonal). Overall accuracy tells us the proportion of training pixels that were assigned the correct land cover type.</p>
+</section>
 <section id="plot-results" class="level2">
-<h2 class="anchored" data-anchor-id="plot-results">3. Plot results</h2>
+<h2 class="anchored" data-anchor-id="plot-results">4. Plot results</h2>
 <p>Now we can plot the results and check out our land cover map!</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot results</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>dt_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(SB_classification_dt) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale</span>(</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#8DB580"</span>, <span class="st">"#F2DDA4"</span>, <span class="st">"#7E8987"</span>, <span class="st">"#6A8EAE"</span>),</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"green vegetation"</span>, <span class="st">"soil/dead grass"</span>, <span class="st">"urban"</span>, <span class="st">"water"</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="st">"Landcover type"</span>)</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Decision Tree Landcover Classification"</span>) <span class="sc">+</span> </span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>( <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>dt_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot results</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>dt_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(SB_classification_dt) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale</span>(</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#8DB580"</span>, <span class="st">"#F2DDA4"</span>, <span class="st">"#7E8987"</span>, <span class="st">"#6A8EAE"</span>),</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"green vegetation"</span>, <span class="st">"soil/dead grass"</span>, <span class="st">"urban"</span>, <span class="st">"water"</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="st">"Landcover type"</span>)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"Decision Tree Landcover Classification"</span>) <span class="sc">+</span> </span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>( <span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>dt_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week8_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week8_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -648,42 +705,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We already processed our landsat data by cropping/masking to our area of interest and converting the values to reflectance. Now it’s time to jump into the classifying!</p>
 <section id="convert-raster-data-to-a-dataframe-and-scale" class="level2">
 <h2 class="anchored" data-anchor-id="convert-raster-data-to-a-dataframe-and-scale">1. Convert raster data to a dataframe and scale</h2>
-<p>The first step is to prepare our data for k-means clustering. Unlike the decision tree which can work directly with raster objects, k-means requires our data to be in a dataframe format. We’ll extract the spectral band values for each pixel and then <strong>scale</strong> them. Scaling is critical for k-means because the algorithm measures distances between pixels - if one band has much larger values than another, it would dominate the clustering. Scaling puts all bands on the same scale so each contributes equally.</p>
+<p>The first step is to prepare our data for k-means clustering. Unlike the decision tree which can work directly with raster objects, k-means requires our data to be in a dataframe format. We’ll extract the spectral band values for each pixel and then <strong>scale</strong> them. Scaling is critical for k-means because the algorithm measures distances between pixels. If one band has much larger values than another, it would dominate the clustering. Scaling puts all bands on the same scale so each contributes equally.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert raster to dataframe</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>landsat_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(landsat, <span class="at">xy =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract spectral bands for clustering</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>spectral_data <span class="ot">&lt;-</span> landsat_df[, <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)]</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale the data</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>spectral_data_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(spectral_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert raster to dataframe</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>landsat_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(landsat, <span class="at">xy =</span> <span class="cn">TRUE</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract spectral bands for clustering</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>spectral_data <span class="ot">&lt;-</span> landsat_df[, <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>, <span class="st">"NIR"</span>, <span class="st">"SWIR1"</span>, <span class="st">"SWIR2"</span>)]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Scale the data</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>spectral_data_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(spectral_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="classify-using-k-means-algorithm" class="level2">
 <h2 class="anchored" data-anchor-id="classify-using-k-means-algorithm">2. Classify using K means algorithm</h2>
-<p>Now we’re ready to run the k-means algorithm! We specify <code>centers = 4</code> because we want to find 4 groups (matching our 4 landcover types). The <code>nstart = 25</code> parameter tells the algorithm to try 25 different random starting positions and pick the best result - this helps avoid getting stuck in a poor solution. K-means works by iteratively grouping pixels with similar spectral signatures together until it finds stable clusters.</p>
+<p>Now we’re ready to run the k-means algorithm! We specify <code>centers = 4</code> because we want to find 4 groups (matching our 4 landcover types). The <code>nstart = 25</code> parameter tells the algorithm to try 25 different random starting positions and pick the best result. K-means works by iteratively grouping pixels with similar spectral signatures together until it finds stable clusters.</p>
 <p>Unlike the decision tree, <strong>k-means has no idea what “water” or “green vegetation” looks like</strong> - it’s just finding natural groupings in the spectral data!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">223</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform k-means with k=4</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>kmeans_result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(spectral_data_scaled, <span class="at">centers =</span> <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add cluster assignments to dataframe</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>landsat_df<span class="sc">$</span>cluster <span class="ot">&lt;-</span> kmeans_result<span class="sc">$</span>cluster</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">223</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform k-means with k=4</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>kmeans_result <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(spectral_data_scaled, <span class="at">centers =</span> <span class="dv">4</span>, <span class="at">nstart =</span> <span class="dv">25</span>)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Add cluster assignments to dataframe</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>landsat_df<span class="sc">$</span>cluster <span class="ot">&lt;-</span> kmeans_result<span class="sc">$</span>cluster</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="convert-data-back-to-raster-and-add-cluster-assignments-to-dataframe." class="level2">
 <h2 class="anchored" data-anchor-id="convert-data-back-to-raster-and-add-cluster-assignments-to-dataframe.">3. Convert data back to raster and add cluster assignments to dataframe.</h2>
 <p>The k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We’ll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert back to raster</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>SB_classification_kmeans <span class="ot">&lt;-</span> <span class="fu">rast</span>(landsat[[<span class="dv">1</span>]])</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(SB_classification_kmeans) <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>cells <span class="ot">&lt;-</span> <span class="fu">cellFromXY</span>(SB_classification_kmeans, landsat_df[, <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)])</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(SB_classification_kmeans)[cells] <span class="ot">&lt;-</span> landsat_df<span class="sc">$</span>cluster</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert back to raster</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>SB_classification_kmeans <span class="ot">&lt;-</span> <span class="fu">rast</span>(landsat[[<span class="dv">1</span>]])</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(SB_classification_kmeans) <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>cells <span class="ot">&lt;-</span> <span class="fu">cellFromXY</span>(SB_classification_kmeans, landsat_df[, <span class="fu">c</span>(<span class="st">"x"</span>, <span class="st">"y"</span>)])</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">values</span>(SB_classification_kmeans)[cells] <span class="ot">&lt;-</span> landsat_df<span class="sc">$</span>cluster</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="figure-out-what-our-clusters-represent" class="level2">
@@ -699,21 +756,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at cluster characteristics to determine landcover type</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>landsat_df <span class="sc">%&gt;%</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">blue =</span> <span class="fu">mean</span>(blue),</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">green =</span> <span class="fu">mean</span>(green),</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">red =</span> <span class="fu">mean</span>(red),</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">NIR =</span> <span class="fu">mean</span>(NIR),</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">SWIR1 =</span> <span class="fu">mean</span>(SWIR1),</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">SWIR2 =</span> <span class="fu">mean</span>(SWIR2),</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_pixels =</span> <span class="fu">n</span>()</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(cluster) <span class="sc">%&gt;%</span> </span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, </span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Mean Spectral Values by Cluster"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at cluster characteristics to determine landcover type</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>landsat_df <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">blue =</span> <span class="fu">mean</span>(blue),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">green =</span> <span class="fu">mean</span>(green),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">red =</span> <span class="fu">mean</span>(red),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">NIR =</span> <span class="fu">mean</span>(NIR),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">SWIR1 =</span> <span class="fu">mean</span>(SWIR1),</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">SWIR2 =</span> <span class="fu">mean</span>(SWIR2),</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_pixels =</span> <span class="fu">n</span>()</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(cluster) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">2</span>, </span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>               <span class="at">caption =</span> <span class="st">"Mean Spectral Values by Cluster"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -733,55 +790,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">8.61</td>
-<td style="text-align: right;">12.18</td>
-<td style="text-align: right;">14.28</td>
-<td style="text-align: right;">21.46</td>
-<td style="text-align: right;">29.20</td>
-<td style="text-align: right;">22.33</td>
-<td style="text-align: right;">68205</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.02</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.01</td>
+<td style="text-align: right;">0.00</td>
+<td style="text-align: right;">250431</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
-<td style="text-align: right;">5.67</td>
-<td style="text-align: right;">8.24</td>
-<td style="text-align: right;">9.24</td>
-<td style="text-align: right;">20.10</td>
-<td style="text-align: right;">22.01</td>
-<td style="text-align: right;">15.47</td>
-<td style="text-align: right;">182886</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.12</td>
+<td style="text-align: right;">0.14</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">0.29</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">68205</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
-<td style="text-align: right;">3.36</td>
-<td style="text-align: right;">5.04</td>
-<td style="text-align: right;">5.09</td>
-<td style="text-align: right;">17.69</td>
-<td style="text-align: right;">14.71</td>
-<td style="text-align: right;">8.65</td>
+<td style="text-align: right;">0.03</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: right;">0.18</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">0.09</td>
 <td style="text-align: right;">297407</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
-<td style="text-align: right;">2.51</td>
-<td style="text-align: right;">2.27</td>
-<td style="text-align: right;">1.14</td>
-<td style="text-align: right;">1.04</td>
-<td style="text-align: right;">0.51</td>
-<td style="text-align: right;">0.48</td>
-<td style="text-align: right;">250431</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">0.08</td>
+<td style="text-align: right;">0.09</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.22</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: right;">182886</td>
 </tr>
 </tbody>
 </table>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set category labels</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(SB_classification_kmeans) <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">"soil/dead grass"</span>, <span class="st">"urban"</span>, <span class="st">"green vegetation"</span>, <span class="st">"water"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set category labels</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(SB_classification_kmeans) <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">ID =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">"water"</span>, <span class="st">"soil/dead grass"</span>, <span class="st">"green vegetation"</span>, <span class="st">"urban"</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -791,24 +848,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot results</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>kmeans_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(SB_classification_kmeans) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale</span>(</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#F2DDA4"</span>,<span class="st">"#7E8987"</span>,  <span class="st">"#8DB580"</span>,<span class="st">"#6A8EAE"</span>),</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"soil/dead grass"</span>, <span class="st">"urban"</span>, <span class="st">"green vegetation"</span>, <span class="st">"water"</span>)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="st">"Landcover type"</span>)</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"K- Means Landcover Classification"</span>) <span class="sc">+</span> </span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>kmeans_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot results</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>kmeans_plot <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(SB_classification_kmeans) <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_raster</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.scale =</span> <span class="fu">tm_scale</span>(</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#6A8EAE"</span>, <span class="st">"#F2DDA4"</span>, <span class="st">"#8DB580"</span>, <span class="st">"#7E8987"</span>),</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"water"</span>, <span class="st">"soil/dead grass"</span>, <span class="st">"green vegetation"</span>, <span class="st">"urban"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.legend =</span> <span class="fu">tm_legend</span>(<span class="st">"Landcover type"</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_title</span>(<span class="at">text =</span> <span class="st">"K- Means Landcover Classification"</span>) <span class="sc">+</span> </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tm_layout</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="st">"left"</span>, <span class="st">"bottom"</span>))</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>kmeans_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week8_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week8_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -818,11 +875,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="compare-our-decision-tree-and-kmeans-algorithm-classification">6. Compare our decision tree and kmeans algorithm classification</h2>
 <p>Now let’s compare our two approaches side-by-side! The decision tree used labeled training data to learn classification rules, while k-means found natural groupings without any training.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(dt_plot, kmeans_plot, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_arrange</span>(dt_plot, kmeans_plot, <span class="at">nrow =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="week8_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="week8_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
