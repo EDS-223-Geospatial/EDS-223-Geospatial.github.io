@@ -48,6 +48,9 @@ In this lab, we are using a form of supervised classification -- a decision tree
 
 [Decision trees](https://medium.com/@ml.at.berkeley/machine-learning-crash-course-part-5-decision-trees-and-ensemble-models-dcc5a36af8cd) classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data. 
 
+We will also use a form of unsupervised classification -- K means clustering. 
+[K Means Clustering]() classifies pixels based on their distance to a mean. These conditions are developed based on the relationship of reflectance values alone, without any labeled data. 
+
 In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: 
 
 - green vegetation 
@@ -259,6 +262,8 @@ training_data <- st_read(here::here( "data", "trainingdata.shp")) %>%
 # read in and transform training data
 training_data <- st_read(here::here("course-materials", "data", "week9", "trainingdata.shp")) %>%
   st_transform(., crs = crs(landsat))
+
+head(training_data)
 ```
 
 Now, we can extract the spectral reflectance values at each site to create a data frame that relates land cover types to their spectral reflectance.
