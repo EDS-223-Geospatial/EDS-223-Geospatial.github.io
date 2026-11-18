@@ -21,9 +21,9 @@ knitr::include_graphics("images/week10-image.png")
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
 | {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Landcover Classification](https://docs.google.com/presentation/d/1OMvbEt96tAAxBPJR4LojCoXn_qECgz5sZmT-7Q95mfk/edit?usp=sharing){target="_blank"}                  |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification]()        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](){target="_blank"} |
-| {{< fa comments title="two speech bubbles" >}} Discussion             | [Generalizable functions]() |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Landcover classification](labs/week8.qmd)        |
+| {{< fa download title="download" >}} Lab materials to download                  | [Landcover Classification](https://downgit.github.io/#/home?url=https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week8){target="_blank"} |
+| {{< fa comments title="two speech bubbles" >}} Discussion             | [GIS Lab #4](https://arcg.is/18bLOm3) |
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
 

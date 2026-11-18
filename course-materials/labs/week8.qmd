@@ -23,7 +23,7 @@ knitr::include_graphics(here::here("course-materials/labs/images/santa-barbara.j
 
 
 ::: {.gray-text .center-text}
-[Unsplash](hhttps://unsplash.com/photos/a-pier-in-the-middle-of-a-body-of-water-JpSaot2H1M0){target="_blank"}
+[Unsplash](https://unsplash.com/photos/a-pier-in-the-middle-of-a-body-of-water-JpSaot2H1M0){target="_blank"}
 :::
 
 
@@ -48,7 +48,7 @@ In this lab, we are using a form of supervised classification (a decision tree c
 
 Decision trees classify pixels using a series of conditions based on values in spectral bands. These conditions (or decisions) are developed based on training data. 
 
-K Means Clustering classifiy pixels based on their distance to a mean. These conditions are developed based on the relationship of reflectance values alone, without any labeled data. 
+K Means Clustering classify pixels based on their distance to a mean. These conditions are developed based on the relationship of reflectance values alone, without any labeled data. 
 
 In this lab, we will create a land cover classification for southern Santa Barbara County based on multi-spectral imagery and data on the location of 4 land cover types: 
 
@@ -219,7 +219,7 @@ In this case, we are working with [Landsat Collection 2](https://www.usgs.gov/la
   
 Find other scale factors and additive offsets for Landsat Level-2 science products [here](https://www.usgs.gov/faqs/how-do-i-use-a-scale-factor-landsat-level-2-science-products)!
   
-Let's reclassify any erroneous values as `NA` and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-100%!
+Let's reclassify any erroneous values as `NA` and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-1!
 
 ```{r include=TRUE, warning=FALSE}
 # reclassify erroneous values as NA
@@ -292,6 +292,21 @@ SB_training_data <- left_join(training_data_values, training_data_attributes,
 head(SB_training_data)
 ```
 
+Before training, we'll split the data into **training** (70%) and **testing** (30%) sets. Splitting *within each class* (stratified) ensures all four land cover types are represented in both sets.
+
+```{r}
+set.seed(223)
+
+SB_training_data <- SB_training_data %>%
+  group_by(type) %>%
+  sample_frac(1) %>%  # shuffle within each class
+  mutate(split = ifelse(row_number() <= round(0.7 * n()), "train", "test")) %>%
+  ungroup()
+
+train_data <- filter(SB_training_data, split == "train")
+test_data  <- filter(SB_training_data, split == "test")
+```
+
 Next, let's train the decision tree classifier!
 
 To train our decision tree, we first need to establish our model formula (i.e. what our response and predictor variables are). 
@@ -308,7 +323,7 @@ SB_formula <- type ~ red + green + blue + NIR + SWIR1 + SWIR2
 
 # train decision tree
 SB_decision_tree <- rpart(formula = SB_formula,
-                          data = SB_training_data,
+                          data = train_data,
                           method = "class",
                           na.action = na.omit)
 ```
@@ -336,19 +351,19 @@ The `terra` package includes a `predict()` function that allows us to apply a mo
 SB_classification_dt <- terra::predict(landsat, SB_decision_tree, type = "class", na.rm = TRUE)
 
 # inspect level to understand the order of classes in prediction
-levels(SB_training_data$type)
+levels(train_data$type)
 ```
 
 ## 3. Assess accuracy
 
-To get a sense of how well our decision tree performs, we can compare the classifier's predictions against the known labels in our training data. We'll use `predict()` on the same training data used to build the model, then compare predictions to actual land cover types using a confusion matrix.
+To get a sense of how well our decision tree performs, we can compare the classifier's predictions against the known labels in our **held-out test data**. Using data the model never saw during training gives us a more honest estimate of accuracy.
 
 ```{r}
-# predict on training data
-train_predictions <- predict(SB_decision_tree, SB_training_data, type = "class")
+# predict on test data
+test_predictions <- predict(SB_decision_tree, test_data, type = "class")
 
 # create confusion matrix
-confusion_matrix <- table(predicted = train_predictions, actual = SB_training_data$type)
+confusion_matrix <- table(predicted = test_predictions, actual = test_data$type)
 confusion_matrix
 
 # calculate overall accuracy
@@ -356,7 +371,7 @@ overall_accuracy <- sum(diag(confusion_matrix)) / sum(confusion_matrix)
 print(paste0("Overall accuracy: ", round(overall_accuracy * 100, 1), "%"))
 ```
 
-The confusion matrix shows how many pixels were correctly classified (diagonal) versus misclassified (off-diagonal). Overall accuracy tells us the proportion of training pixels that were assigned the correct land cover type.
+The confusion matrix shows how many pixels were correctly classified (diagonal) versus misclassified (off-diagonal). Overall accuracy tells us the proportion of **test** pixels that were assigned the correct land cover type.
 
 ## 4. Plot results
 Now we can plot the results and check out our land cover map!
