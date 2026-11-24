@@ -20,9 +20,8 @@ knitr::include_graphics("images/drones.png")
 
 | Session                                                                         | Materials                                             |
 |---------------------------------------------------------------------------------|-------------------------------------------------------|
-| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | No Lecture this week - Thanksgiving Break!                 |
-| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | [Active Remote Sensing](labs/week9.qmd)        |
-| {{< fa download title="download" >}} Lab materials to download                  | [Active Remote Sensing](https://github.com/EDS-223-Geospatial/Weekly-Labs/tree/main/week9){target="_blank"} |
+| {{< fa person-chalkboard title="A person motioning at a chalkboard" >}} Lecture | [Active Remote Sensing](https://docs.google.com/presentation/d/1nS2KrXvse-Zmr32fAtzNsz8bjE_c1UJ8UnRnxpya-9Y/edit?usp=sharing)                 |
+| {{< fa laptop-code title="A laptop with on-screen code" >}} Lab                 | No Lab this week - Thanksgiving Break!       |
 | {{< fa comments title="two speech bubbles" >}} Discussion |No Discussion this week - Thanksgiving Break!
 
 ## {{< fa pencil title="pencil" >}} Assignment Reminders {#assignment-reminders}
@@ -34,7 +33,6 @@ All assignments are **due at 11:59 PM** on the date listed.
 
 | Assignment Type | Assignment Title                              | Date Assigned | Date Due   |
 |-----------------|-----------------------------------------------|---------------|------------|
-| HW              | [Homework Assignment #4](../assignments/HW4.qmd){target="_blank"} | 11/12/2026    | 11/21/2026 |
 | PR              | [Portfolio Repository](../assignments/PR.qmd){target="_blank"}    | 11/12/2026    | 12/02/2026 |
 
 

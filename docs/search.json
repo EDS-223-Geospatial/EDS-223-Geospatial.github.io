@@ -830,14 +830,14 @@
     "href": "course-materials/week9.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120706572736f6e2d6368616c6b626f617264207469746c653d226120706572736f6e20706f696e74696e672061742061206368616c6b626f61726422203e7d7d-class-materials",
     "title": "Active Remote Sensing",
     "section": " Class Materials",
-    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nNo Lecture this week - Thanksgiving Break!\n\n\n Lab\nActive Remote Sensing\n\n\n Lab materials to download\nActive Remote Sensing\n\n\n Discussion\nNo Discussion this week - Thanksgiving Break!"
+    "text": "Class Materials\n\n\n\nSession\nMaterials\n\n\n\n\n Lecture\nActive Remote Sensing\n\n\n Lab\nNo Lab this week - Thanksgiving Break!\n\n\n Discussion\nNo Discussion this week - Thanksgiving Break!"
   },
   {
     "objectID": "course-materials/week9.html#assignment-reminders",
     "href": "course-materials/week9.html#assignment-reminders",
     "title": "Active Remote Sensing",
     "section": " Assignment Reminders",
-    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nHW\nHomework Assignment #4\n11/12/2026\n11/21/2026\n\n\nPR\nPortfolio Repository\n11/12/2026\n12/02/2026"
+    "text": "Assignment Reminders\n\n\n\n\n\n\nImportantImportant\n\n\n\nAll assignments are due at 11:59 PM on the date listed.\n\n\n\n\n\nAssignment Type\nAssignment Title\nDate Assigned\nDate Due\n\n\n\n\nPR\nPortfolio Repository\n11/12/2026\n12/02/2026"
   },
   {
     "objectID": "course-materials/week9.html#b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6970626f6172642d6c697374207469746c653d226120636c6970626f6172642077697468206120546f20446f206c69737422203e7d7d-background-reading",
@@ -2189,5 +2189,124 @@
     "title": "Week 8: Lab",
     "section": "3. Assess accuracy",
     "text": "3. Assess accuracy\nTo get a sense of how well our decision tree performs, we can compare the classifier’s predictions against the known labels in our held-out test data. Using data the model never saw during training gives us a more honest estimate of accuracy.\n\n# predict on test data\ntest_predictions &lt;- predict(SB_decision_tree, test_data, type = \"class\")\n\n# create confusion matrix\nconfusion_matrix &lt;- table(predicted = test_predictions, actual = test_data$type)\nconfusion_matrix\n\n                  actual\npredicted          green_vegetation soil_dead_grass urban water\n  green_vegetation              696               3     4     0\n  soil_dead_grass                 4             269     5     0\n  urban                           1              22   284     0\n  water                           0               0     0   782\n\n# calculate overall accuracy\noverall_accuracy &lt;- sum(diag(confusion_matrix)) / sum(confusion_matrix)\nprint(paste0(\"Overall accuracy: \", round(overall_accuracy * 100, 1), \"%\"))\n\n[1] \"Overall accuracy: 98.1%\"\n\n\nThe confusion matrix shows how many pixels were correctly classified (diagonal) versus misclassified (off-diagonal). Overall accuracy tells us the proportion of test pixels that were assigned the correct land cover type."
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#data",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#data",
+    "title": "Week 8: Lab",
+    "section": "Data",
+    "text": "Data\n\nLandsat 5 Thematic Mapper\n\nLandsat 5\n1 scene from September 25, 2007\nBands: 1, 2, 3, 4, 5, 7\nCollection 2 surface reflectance product\n\nData files:\n\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B1.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B2.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B3.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B4.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B5.tif\nlandsat-data/LT05_L2SP_042036_20070925_20200829_02_T1_SR_B7.tif\n\n\n\nStudy area\nPolygon representing southern Santa Barbara county\nData file: SB_county_south.shp\n\n\nTraining data\nPolygons representing sites with training data - type: character string with land cover type\nData file: trainingdata.shp"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#set-up",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#set-up",
+    "title": "Week 8: Lab",
+    "section": "1. Set up",
+    "text": "1. Set up\nTo train our classification algorithm and plot the results, we’ll use the rpart and rpart.plot packages.\n\ninstall.packages(\"rpart\")\ninstall.packages(\"rpart.plot\")\n\nLet’s load all necessary packages:\n\nlibrary(sf) # vector data\nlibrary(terra) # raster data\nlibrary(here) # file path management\nlibrary(tidyverse)\nlibrary(rpart) # recursive partitioning and regression trees\nlibrary(rpart.plot) # plotting for rpart\nlibrary(tmap) # map making"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#load-landsat-data",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#load-landsat-data",
+    "title": "Week 8: Lab",
+    "section": "2. Load Landsat data",
+    "text": "2. Load Landsat data\nLet’s create a raster stack. Each file name ends with the band number (e.g. B1.tif).\n\nNotice that we are missing a file for band 6\nBand 6 corresponds to thermal data, which we will not be working with for this lab\n\nTo create a raster stack, we will create a list of the files that we would like to work with and read them all in at once using the terra::rast() function. We’ll then update the names of the layers to match the spectral bands and plot a true color image to see what we’re working with.\n\n# list files for each band, including the full file path\nfilelist &lt;- list.files(here::here(\"data\", \"landsat-data\"), full.names = TRUE)\n\n# read in and store as a raster stack\nlandsat &lt;- rast(filelist)\n\n# update layer names to match band\nnames(landsat) &lt;- c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")\n\n# plot true color image\nplotRGB(landsat, r = 3, g = 2, b = 1, stretch = \"lin\")\n\n\n\n\n\n\n\n\n\n\nNote: stretch = \"lin\" (linear): Stretches values linearly from min to max\n\nMaps the minimum pixel value → 0 (black)\nMaps the maximum pixel value → 255 (white)\nEverything else scales proportionally in between\nEx. Say your red band values range from 50 -150, now with stretch, 50 → 0 (black) and 150 → 255 ( white)"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#load-study-area",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#load-study-area",
+    "title": "Week 8: Lab",
+    "section": "3. Load study area",
+    "text": "3. Load study area\nWe want to constrain our analysis to the southern portion of Santa Barbara County. This is our study area, and the training data we’ll use was collected to represent the land cover types found here.\n\n# read in shapefile for southern portion of SB county\nSB_county_south &lt;- st_read(here::here(\"data\", \"SB_county_south.shp\")) %&gt;%\n      st_transform(SB_county_south, crs = crs(landsat))\n\n\ntm_shape(SB_county_south) +\n  tm_borders()"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#crop-and-mask-landsat-data-to-study-area",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#crop-and-mask-landsat-data-to-study-area",
+    "title": "Week 8: Lab",
+    "section": "4. Crop and mask Landsat data to study area",
+    "text": "4. Crop and mask Landsat data to study area\nNow, we can crop and mask the Landsat data to our study area.\n\nWhy? This reduces the amount of data we’ll be working with and therefore saves computational time\n\n\n# crop Landsat scene to the extent of the SB county shapefile\nlandsat_cropped &lt;- crop(landsat, SB_county_south) # cuts to a rectangular shape\n\n# mask the raster to southern portion of SB county\nlandsat_masked &lt;- mask(landsat_cropped, SB_county_south) # makes values outside of actual boundary NA\n\nplotRGB(landsat_masked, r = 3, g = 2, b = 1, stretch = \"lin\")"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#convert-landsat-values-to-reflectance",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#convert-landsat-values-to-reflectance",
+    "title": "Week 8: Lab",
+    "section": "5. Convert Landsat values to reflectance",
+    "text": "5. Convert Landsat values to reflectance\nNow we need to convert the values in our raster stack to correspond to reflectance values. To do so, we need to remove erroneous values and apply any scaling factors to convert to reflectance.\nIn this case, we are working with Landsat Collection 2.\n\nThe valid range of pixel values for this collection goes from 7,273 to 43,636…\n\nwith a multiplicative scale factor of 0.0000275\nwith an additive scale factor of -0.2\n\n\nFind other scale factors and additive offsets for Landsat Level-2 science products here!\nLet’s reclassify any erroneous values as NA and update the values for each pixel based on the scaling factors. Now the pixel values should range from 0-1!\nNote: Units are digital numbers. In most cases these are written to a 16-bit integer, which saves disk space and provides faster download times.To allow the user to get the data back to its original floating point value, a scale factor and offset are provided for each band. The scale_factor should be applied to each pixel and then the offset added (i.e. Digital Number (DN) * scale_factor + offset).\n\n# reclassify erroneous values as NA\nrcl &lt;- matrix(c(-Inf, 7272, NA,\n                 43637, Inf, NA), ncol = 3, byrow = TRUE)\n\nlandsat &lt;- classify(landsat_masked, rcl = rcl)\n\n# adjust values based on scaling factor\nlandsat &lt;- (landsat * 0.0000275 - 0.2)\n\n# check values are 0 - 1\nsummary(landsat)\n\n      blue           green            red             NIR       \n Min.   :0.011   Min.   :0.007   Min.   :0.000   Min.   :0.002  \n 1st Qu.:0.025   1st Qu.:0.022   1st Qu.:0.011   1st Qu.:0.007  \n Median :0.031   Median :0.046   Median :0.044   Median :0.144  \n Mean   :0.038   Mean   :0.050   Mean   :0.049   Mean   :0.115  \n 3rd Qu.:0.046   3rd Qu.:0.068   3rd Qu.:0.074   3rd Qu.:0.193  \n Max.   :0.394   Max.   :0.533   Max.   :0.567   Max.   :0.571  \n NA's   :39856   NA's   :39855   NA's   :39855   NA's   :39856  \n     SWIR1           SWIR2      \n Min.   :0.001   Min.   :0.002  \n 1st Qu.:0.004   1st Qu.:0.006  \n Median :0.134   Median :0.082  \n Mean   :0.119   Mean   :0.085  \n 3rd Qu.:0.187   3rd Qu.:0.131  \n Max.   :0.491   Max.   :0.481  \n NA's   :42892   NA's   :46809"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#training-classifier",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#training-classifier",
+    "title": "Week 8: Lab",
+    "section": "1. Training classifier",
+    "text": "1. Training classifier\nLet’s begin by extracting reflectance values for training data!\nWe will load the shapefile identifying locations within our study area as containing one of our 4 land cover types.\n\n# read in and transform training data\ntraining_data &lt;- st_read(here::here( \"data\", \"trainingdata.shp\")) %&gt;%\n  st_transform(., crs = crs(landsat))\n\n\n#Visualize training data\ntm_shape(training_data) +\n  tm_polygons(fill = \"type\") +\n  tm_title(\"Training Data\")\n\n\n\n\n\n\n\n\nNow, we can extract the spectral reflectance values at each site to create a data frame that relates land cover types to their spectral reflectance.\n\n# extract reflectance values at training sites\n# returns one row per pixel that falls inside each polygon \n# center point has to fall into the polygon -&gt; touches = TRUE to change this\ntraining_data_values &lt;- terra::extract(landsat, training_data, df = TRUE)\n# return as df instead of matrix\n\n# Drop training data geometry\n# training data = ID, type, geometry\ntraining_data_attributes &lt;- training_data %&gt;%\n  st_drop_geometry()\n\n# join training data attributes and extracted reflectance values\nSB_training_data &lt;- left_join(training_data_values, training_data_attributes,\n                              by = c(\"ID\" = \"id\")) %&gt;%\n                    mutate(type = as.factor(type)) # convert landcover type to factor\n\nhead(SB_training_data)\n\n  ID      blue     green       red       NIR     SWIR1     SWIR2\n1  1 0.0391675 0.0469225 0.0509650 0.1941575 0.1712775 0.0928200\n2  1 0.0371875 0.0592700 0.0509925 0.1941300 0.1686375 0.1079175\n3  1 0.0329800 0.0509375 0.0542375 0.1864300 0.1766400 0.1041500\n4  1 0.0370775 0.0509650 0.0575650 0.1903075 0.1766125 0.1079175\n5  1 0.0371050 0.0592150 0.0542650 0.1902800 0.1845600 0.1041225\n6  1 0.0391675 0.0509925 0.0542925 0.1786200 0.1686650 0.1079175\n              type\n1 green_vegetation\n2 green_vegetation\n3 green_vegetation\n4 green_vegetation\n5 green_vegetation\n6 green_vegetation\n\n\nNote: terra::extract is one of the functions where terra does accept sf objects as a convenience. this is more of an exception than the rule. Terra internally converts the sf object on-the-fly for extraction. In general, terra doesn’t accept simple features. they have their own spatvector/ spatraster class.\nBefore training, we’ll split the data into training (70%) and testing (30%) sets. Splitting within each class (stratified) ensures all four land cover types are represented in both sets.\n\nset.seed(223)\n\nSB_training_data &lt;- SB_training_data %&gt;%\n  group_by(type) %&gt;%\n  sample_frac(1) %&gt;%  # shuffle within each class (samples 100% of rows)\n  mutate(split = ifelse(row_number() &lt;= round(0.7 * n()), \"train\", \"test\")) %&gt;%\n  ungroup() # ungroup so any future operations on this df (like summarise)wouldnt be group based on landcover type\n\ntrain_data &lt;- filter(SB_training_data, split == \"train\")\ntest_data  &lt;- filter(SB_training_data, split == \"test\")\n\nNext, let’s train the decision tree classifier!\nTo train our decision tree, we first need to establish our model formula (i.e. what our response and predictor variables are).\n\nThe rpart() function implements the CART algorithm\nThe rpart() function needs to know the model formula and training data you would like to use\nBecause we are performing a classification, we set method = \"class\"\nWe also set na.action = na.omit to remove any pixels with NAs from the analysis.\n\nNote: - rpart() = recursive partitioning\n\n# establish model formula\nSB_formula &lt;- type ~ red + green + blue + NIR + SWIR1 + SWIR2\n\n# train decision tree\nSB_decision_tree &lt;- rpart(formula = SB_formula,\n                          data = train_data,\n                          method = \"class\", # anova is default\n                          na.action = na.omit)\n\nTo understand how our decision tree will classify pixels, we can plot the results!\n\n\n\n\n\n\nTipInterpreting decision trees\n\n\n\nNote: The decision tree is comprised of a hierarchy of binary decisions. Each decision rule has 2 outcomes based on a conditional statement pertaining to values in each spectral band.\n\n\n\n# plot decision tree\nprp(SB_decision_tree) # prp = plot rpart model"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#classify-image",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#classify-image",
+    "title": "Week 8: Lab",
+    "section": "2. Classify image",
+    "text": "2. Classify image\nNow that we have a rule set for classifying spectral reflectance values into landcover types, we can apply the classifier to identify the landcover type in each pixel.\nThe terra package includes a predict() function that allows us to apply a model to our data. In order for this to work properly, the names of the layers need to match the column names of the predictors we used to train our decision tree. The predict() function will return a raster layer with integer values. These integer values correspond to the factor levels in the training data. To figure out what category each integer corresponds to, we can inspect the levels of our training data.\n\n# classify image based on decision tree\n# (Raster, model)\nSB_classification_dt &lt;- terra::predict(landsat, SB_decision_tree,\n                                       type = \"class\", na.rm = TRUE)\n\n# inspect level to understand the order of classes in prediction\nlevels(train_data$type)\n\n[1] \"green_vegetation\" \"soil_dead_grass\"  \"urban\"            \"water\""
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#assess-accuracy",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#assess-accuracy",
+    "title": "Week 8: Lab",
+    "section": "3. Assess accuracy",
+    "text": "3. Assess accuracy\nTo get a sense of how well our decision tree performs, we can compare the classifier’s predictions against the known labels in our held-out test data. Using data the model never saw during training gives us a more honest estimate of accuracy.\n\n# predict on test data\n# this is Rparts prediction function (?predict.rpart) -&gt; (model, newdata)\ntest_predictions &lt;- predict(SB_decision_tree, test_data, type = \"class\")\n\n# create confusion matrix\nconfusion_matrix &lt;- table(predicted = test_predictions, actual = test_data$type)\nconfusion_matrix\n\n                  actual\npredicted          green_vegetation soil_dead_grass urban water\n  green_vegetation              696               3     4     0\n  soil_dead_grass                 4             269     5     0\n  urban                           1              22   284     0\n  water                           0               0     0   782\n\n# calculate overall accuracy\noverall_accuracy &lt;- sum(diag(confusion_matrix)) / sum(confusion_matrix)\nprint(paste0(\"Overall accuracy: \", round(overall_accuracy * 100, 1), \"%\"))\n\n[1] \"Overall accuracy: 98.1%\"\n\n\nThe confusion matrix shows how many pixels were correctly classified (diagonal) versus misclassified (off-diagonal). Overall accuracy tells us the proportion of test pixels that were assigned the correct land cover type."
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#plot-results",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#plot-results",
+    "title": "Week 8: Lab",
+    "section": "4. Plot results",
+    "text": "4. Plot results\nNow we can plot the results and check out our land cover map!\n\n# plot results\ndt_plot &lt;- tm_shape(SB_classification_dt) +\n  tm_raster(\n    col.scale = tm_scale(\n      values = c(\"#8DB580\", \"#F2DDA4\", \"#7E8987\", \"#6A8EAE\"),\n      labels = c(\"green vegetation\", \"soil/dead grass\", \"urban\", \"water\")\n    ),\n    col.legend = tm_legend(\"Landcover type\")\n  ) +\n  tm_title(text = \"Decision Tree Landcover Classification\") +\n  tm_layout( legend.position = c(\"left\", \"bottom\"))\n\ndt_plot"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#convert-raster-data-to-a-dataframe-and-scale",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#convert-raster-data-to-a-dataframe-and-scale",
+    "title": "Week 8: Lab",
+    "section": "1. Convert raster data to a dataframe and scale",
+    "text": "1. Convert raster data to a dataframe and scale\nThe first step is to prepare our data for k-means clustering. Unlike the decision tree which can work directly with raster objects, k-means requires our data to be in a dataframe format. We’ll extract the spectral band values for each pixel and then scale them. Scaling is critical for k-means because the algorithm measures distances between pixels. If one band has much larger values than another, it would dominate the clustering. Scaling puts all bands on the same scale so each contributes equally.\n\n# Convert raster to dataframe\n#xy = True -&gt; include coordinates as columns\nlandsat_df &lt;- terra::as.data.frame(landsat, xy = TRUE, na.rm = TRUE)\n\n# Extract spectral bands for clustering\nspectral_data &lt;- landsat_df[, c(\"blue\", \"green\", \"red\", \"NIR\", \"SWIR1\", \"SWIR2\")] # exclude x y column\n\n# Scale the data\nspectral_data_scaled &lt;- scale(spectral_data)\n\nNote: Scaling!\n\nthis method uses z score standardization\nk means is a distance based algorithm\nScaling ensures each feature contributes proportionally to the clustering decision. - Otherwise, the algorithm implicitly assumes that features with larger numeric ranges are more important, which is rarely your actual intent.\nNIR might range from 5% to 85% (high variance)\nBlue might range from 40% to 55% (low variance)\nK-means will be dominated by the high-variance bands (NIR in this case) because larger differences = larger distances, even though both are just reflectance."
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#classify-using-k-means-algorithm",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#classify-using-k-means-algorithm",
+    "title": "Week 8: Lab",
+    "section": "2. Classify using K means algorithm",
+    "text": "2. Classify using K means algorithm\nNow we’re ready to run the k-means algorithm! We specify centers = 4 because we want to find 4 groups (matching our 4 landcover types). The nstart = 25 parameter tells the algorithm to try 25 different random starting positions and pick the best result. K-means works by iteratively grouping pixels with similar spectral signatures together until it finds stable clusters.\nUnlike the decision tree, k-means has no idea what “water” or “green vegetation” looks like - it’s just finding natural groupings in the spectral data!\n\n# Set seed for reproducibility\nset.seed(223)\n\n# Perform k-means with k=4\nkmeans_result &lt;- kmeans(spectral_data_scaled, centers = 4, nstart = 25)\n\n# Add cluster assignments to dataframe\nlandsat_df$cluster &lt;- kmeans_result$cluster"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#convert-data-back-to-raster-and-add-cluster-assignments-to-dataframe.",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#convert-data-back-to-raster-and-add-cluster-assignments-to-dataframe.",
+    "title": "Week 8: Lab",
+    "section": "3. Convert data back to raster and add cluster assignments to dataframe.",
+    "text": "3. Convert data back to raster and add cluster assignments to dataframe.\nThe k-means algorithm has now assigned each pixel to one of 4 clusters (numbered 1-4). To visualize our results on a map, we need to convert these cluster assignments back into a raster format. We’ll create an empty raster with the same dimensions as our original Landsat data, then fill it with the cluster numbers.\n\n# Convert back to raster\nSB_classification_kmeans &lt;- rast(landsat[[1]]) # duplicate a raster layer\nvalues(SB_classification_kmeans) &lt;- NA # assign all values in that raster layer as NA\n\n# Takes the x,y coordinates from landsat_df , Converts them to cell numbers (row indices)\n#in the raster, Returns a vector of cell positions\n# (reference raster, xy coordinates)\n# cells is a vecotr of cells ID that hace valid (non NA) data\ncells &lt;- cellFromXY(SB_classification_kmeans, landsat_df[, c(\"x\", \"y\")])\n\n# look at output : The first point in your landsat_df (with coordinates x, y) falls in cell 559 of the raster\n\n\n# Gets all values from the raster , Indexes into those specific cells ,\n#Assigns the cluster numbers (1, 2, 3, 4) to those positions\n\n\n# look at just values(SB_classification_kmeans) first -&gt; all NA\n\n#values(SB_classification_kmeans)[cells] is looking at just the cells we are interseted in\n# uses bracket subsetting with indices\nvalues(SB_classification_kmeans)[cells] &lt;- landsat_df$cluster"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#figure-out-what-our-clusters-represent",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#figure-out-what-our-clusters-represent",
+    "title": "Week 8: Lab",
+    "section": "4. Figure out what our clusters represent!",
+    "text": "4. Figure out what our clusters represent!\nHere’s where unsupervised classification gets interesting - we have 4 clusters, but we don’t know which is which! The algorithm just labeled them 1, 2, 3, and 4. We need to examine the spectral characteristics of each cluster to determine what landcover type each represents.\nWe’ll calculate the mean reflectance values for each band within each cluster. By looking at these patterns, we can identify clusters:\n\nHigh NIR, low red → likely green vegetation (healthy plants reflect NIR strongly)\nLow NIR, high blue → likely water (water absorbs NIR)\nHigh values across all bands → likely soil/dead grass (high overall reflectance)\nModerate values → likely urban areas\n\n\n# Look at cluster characteristics to determine landcover type\nlandsat_df %&gt;%\n  group_by(cluster) %&gt;%\n  summarise(\n    blue = mean(blue),\n    green = mean(green),\n    red = mean(red),\n    NIR = mean(NIR),\n    SWIR1 = mean(SWIR1),\n    SWIR2 = mean(SWIR2),\n    n_pixels = n()\n  ) %&gt;%\n  arrange(cluster) %&gt;%\n  knitr::kable(digits = 2,\n               caption = \"Mean Spectral Values by Cluster\")\n\n\nMean Spectral Values by Cluster\n\n\ncluster\nblue\ngreen\nred\nNIR\nSWIR1\nSWIR2\nn_pixels\n\n\n\n\n1\n0.03\n0.02\n0.01\n0.01\n0.01\n0.00\n250431\n\n\n2\n0.09\n0.12\n0.14\n0.21\n0.29\n0.22\n68205\n\n\n3\n0.03\n0.05\n0.05\n0.18\n0.15\n0.09\n297407\n\n\n4\n0.06\n0.08\n0.09\n0.20\n0.22\n0.15\n182886\n\n\n\n\n# Set category labels\n\nlevels(SB_classification_kmeans) &lt;- data.frame(\n  ID = 1:4,\n  landcover = c(\"water\",\"green vegetation\",\"urban\", \"soil/dead grass\")\n)"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#plot-results-1",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#plot-results-1",
+    "title": "Week 8: Lab",
+    "section": "5. Plot Results",
+    "text": "5. Plot Results\nNow we can plot the results and check out our land cover map!\n\n# plot results\nkmeans_plot &lt;- tm_shape(SB_classification_kmeans) +\n  tm_raster(\n    col.scale = tm_scale(\n      values = c(\"#6A8EAE\", \"#8DB580\", \"#7E8987\", \"#F2DDA4\"),\n      labels = c(\"water\", \"green vegetation\", \"urban\", \"soil/dead grass\")\n    ),\n    col.legend = tm_legend(\"Landcover type\")\n  ) +\n  tm_title(text = \"K- Means Landcover Classification\") +\n  tm_layout(legend.position = c(\"left\", \"bottom\"))\n\nkmeans_plot"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html#compare-our-decision-tree-and-kmeans-algorithm-classification",
+    "href": "course-materials/labs/notes/week8_notes_v2.html#compare-our-decision-tree-and-kmeans-algorithm-classification",
+    "title": "Week 8: Lab",
+    "section": "6. Compare our decision tree and kmeans algorithm classification",
+    "text": "6. Compare our decision tree and kmeans algorithm classification\nNow let’s compare our two approaches side-by-side! The decision tree used labeled training data to learn classification rules, while k-means found natural groupings without any training.\n\ntmap_arrange(dt_plot, kmeans_plot, nrow = 1)"
+  },
+  {
+    "objectID": "course-materials/labs/notes/week8_notes_v2.html",
+    "href": "course-materials/labs/notes/week8_notes_v2.html",
+    "title": "Week 8: Lab",
+    "section": "",
+    "text": "NoteSource Materials\n\n\n\nThe following materials are based on materials developed by Dr. Chris Kibler for the UCSB Geography Department."
   }
 ]

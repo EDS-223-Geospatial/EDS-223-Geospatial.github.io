@@ -1,0 +1,15 @@
+{
+  "hash": "eb2eef2bc6b50aaefd61b59b42ff4c0e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Active Remote Sensing\"\nsubtitle: \"Week 9\"\n---\n\n\n\n::: {.cell layout-align=\"center\"}\n::: {.cell-output-display}\n![](images/drones.png){fig-align='center' width=80%}\n:::\n:::\n\n\n::: {.gray-text .center-text}\n[Your Name in Landsat](https://landsat.gsfc.nasa.gov/apps/YourNameInLandsat-main/index.html){target=\"_blank\"}\n:::\n\n## {{< fa person-chalkboard title=\"a person pointing at a chalkboard\" >}} Class Materials\n\n| Session                                                                         | Materials                                             |\n|---------------------------------------------------------------------------------|-------------------------------------------------------|\n| {{< fa person-chalkboard title=\"A person motioning at a chalkboard\" >}} Lecture | [Active Remote Sensing](https://docs.google.com/presentation/d/1nS2KrXvse-Zmr32fAtzNsz8bjE_c1UJ8UnRnxpya-9Y/edit?usp=sharing)                 |\n| {{< fa laptop-code title=\"A laptop with on-screen code\" >}} Lab                 | No Lab this week - Thanksgiving Break!       |\n| {{< fa comments title=\"two speech bubbles\" >}} Discussion |No Discussion this week - Thanksgiving Break!\n\n## {{< fa pencil title=\"pencil\" >}} Assignment Reminders {#assignment-reminders}\n\n:::{.callout-important icon=true}\n## Important\nAll assignments are **due at 11:59 PM** on the date listed.\n:::\n\n| Assignment Type | Assignment Title                              | Date Assigned | Date Due   |\n|-----------------|-----------------------------------------------|---------------|------------|\n| PR              | [Portfolio Repository](../assignments/PR.qmd){target=\"_blank\"}    | 11/12/2026    | 12/02/2026 |\n\n\n## {{< fa clipboard-list title=\"a clipboard with a To Do list\" >}} Background Reading\n- [Remote Sensing of the Environment, Chapter 9](/readings/Jensen-chapter9.pdf){target=\"_blank\"}\n- [Introduction to Interpreting Digital RADAR Images](/readings/MicroImages-RADAR-tutorial.pdf){target=\"_blank\"}\n- [Introduction to Light Detection and Ranging (Lidar) Remote Sensing Data](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/){target=\"_blank\"} (Earth Lab, CU Boulder)\n- [What is Synthetic Aperture Radar?](https://www.earthdata.nasa.gov/learn/backgrounders/what-is-sar){target=\"_blank\"} (NASA)\n- [Get To Know SAR: Polarimetry](https://nisar.jpl.nasa.gov/mission/get-to-know-sar/polarimetry/){target=\"_blank\"} (NASA)\n\n\n## {{< fa clipboard-list title=\"a clipboard with a To Do list\" >}} Additional Resources\n- [Explore Lidar Points in Plas.io](https://www.earthdatascience.org/courses/use-data-open-source-python/data-stories/what-is-lidar-data/explore-lidar-point-clouds-plasio/){target=\"_blank\"} (Earth Lab, CU Boulder)",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
